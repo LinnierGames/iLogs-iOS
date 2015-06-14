@@ -14,6 +14,8 @@
 		E17EEC3C1B2E1AD4007C1E91 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC3B1B2E1AD4007C1E91 /* Images.xcassets */; };
 		E17EEC3F1B2E1AD4007C1E91 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC3D1B2E1AD4007C1E91 /* LaunchScreen.xib */; };
 		E17EEC4B1B2E1AD4007C1E91 /* iLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC4A1B2E1AD4007C1E91 /* iLogTests.m */; };
+		E17EEC571B2E1C58007C1E91 /* DiaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC551B2E1C58007C1E91 /* DiaryViewController.m */; };
+		E17EEC581B2E1C58007C1E91 /* DiaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC561B2E1C58007C1E91 /* DiaryViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,9 @@
 		E17EEC441B2E1AD4007C1E91 /* iLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17EEC491B2E1AD4007C1E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E17EEC4A1B2E1AD4007C1E91 /* iLogTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iLogTests.m; sourceTree = "<group>"; };
+		E17EEC541B2E1C58007C1E91 /* DiaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryViewController.h; sourceTree = "<group>"; };
+		E17EEC551B2E1C58007C1E91 /* DiaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryViewController.m; sourceTree = "<group>"; };
+		E17EEC561B2E1C58007C1E91 /* DiaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiaryViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +90,7 @@
 				E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */,
 				E17EEC351B2E1AD4007C1E91 /* ViewController.h */,
 				E17EEC361B2E1AD4007C1E91 /* ViewController.m */,
+				E17EEC591B2E1C5B007C1E91 /* Apps */,
 				E17EEC381B2E1AD4007C1E91 /* Main.storyboard */,
 				E17EEC3B1B2E1AD4007C1E91 /* Images.xcassets */,
 				E17EEC3D1B2E1AD4007C1E91 /* LaunchScreen.xib */,
@@ -117,6 +123,24 @@
 				E17EEC491B2E1AD4007C1E91 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E17EEC591B2E1C5B007C1E91 /* Apps */ = {
+			isa = PBXGroup;
+			children = (
+				E17EEC5A1B2E1C63007C1E91 /* Diary */,
+			);
+			name = Apps;
+			sourceTree = "<group>";
+		};
+		E17EEC5A1B2E1C63007C1E91 /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				E17EEC541B2E1C58007C1E91 /* DiaryViewController.h */,
+				E17EEC551B2E1C58007C1E91 /* DiaryViewController.m */,
+				E17EEC561B2E1C58007C1E91 /* DiaryViewController.xib */,
+			);
+			name = Diary;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +223,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E17EEC581B2E1C58007C1E91 /* DiaryViewController.xib in Resources */,
 				E17EEC3A1B2E1AD4007C1E91 /* Main.storyboard in Resources */,
 				E17EEC3F1B2E1AD4007C1E91 /* LaunchScreen.xib in Resources */,
 				E17EEC3C1B2E1AD4007C1E91 /* Images.xcassets in Resources */,
@@ -219,6 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E17EEC571B2E1C58007C1E91 /* DiaryViewController.m in Sources */,
 				E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */,
 				E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */,
 				E17EEC311B2E1AD4007C1E91 /* main.m in Sources */,
