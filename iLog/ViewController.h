@@ -10,6 +10,7 @@
 
 @interface ViewController : UIViewController
 
+- (IBAction)pressDiary:(id)sender;
 
 @end
 

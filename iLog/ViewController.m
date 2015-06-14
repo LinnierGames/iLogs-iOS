@@ -8,15 +8,46 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+#import "DiaryViewController.h"
+
+@interface ViewController () {
+    DiaryViewController *viewDiary;
+    
+}
 
 @end
 
 @implementation ViewController
 
+#pragma mark - Return Functions
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil];
+    if (self) {
+        //Customize
+        
+    }
+    
+    return self;
+    
+}
+
+#pragma mark - Void's
+
+#pragma mark - IBActions
+
+- (IBAction)pressDiary:(id)sender {
+    [self presentViewController: viewDiary animated: YES completion: ^{ }];
+    
+}
+
+#pragma mark - View Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    viewDiary = [[DiaryViewController alloc] initWithNibName: @"DiaryViewController" bundle: [NSBundle mainBundle]];
+    
 }
 
 - (void)didReceiveMemoryWarning {
