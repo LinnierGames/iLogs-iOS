@@ -37,7 +37,7 @@
 #pragma mark - IBActions
 
 - (IBAction)pressDiary:(id)sender {
-    [self presentViewController: viewDiary animated: YES completion: ^{ }];
+    [self presentViewController: [[NSBundle mainBundle] loadNibNamed: @"DiaryViewController" owner: self options: NULL][0] animated: YES completion: ^{ }];
     
 }
 
