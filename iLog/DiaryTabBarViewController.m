@@ -1,43 +1,22 @@
 //
-//  DiaryViewController.m
+//  DiaryTabBarViewController.m
 //  iLog
 //
-//  Created by Erick Sanchez on 6/14/15.
+//  Created by Erick Sanchez on 6/15/15.
 //  Copyright (c) 2015 Erick Sanchez. All rights reserved.
 //
 
-#import "DiaryViewController.h"
+#import "DiaryTabBarViewController.h"
 
-@interface DiaryViewController ()
+@interface DiaryTabBarViewController ()
 
 @end
 
-@implementation DiaryViewController
-
-#pragma mark - Return Functions
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil];
-    if (self) {
-        //Customize
-        
-    }
-    
-    return self;
-    
-}
-
-#pragma mark - Void's
-
-#pragma mark - IBActions
-
-#pragma mark - View Lifecycle
-
-
+@implementation DiaryTabBarViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {

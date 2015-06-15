@@ -8,10 +8,10 @@
 
 #import "ViewController.h"
 
-#import "DiaryViewController.h"
+#import "DiaryTabBarViewController.h"
 
 @interface ViewController () {
-    DiaryViewController *viewDiary;
+    DiaryTabBarViewController *viewDiary;
     
 }
 
@@ -37,7 +37,7 @@
 #pragma mark - IBActions
 
 - (IBAction)pressDiary:(id)sender {
-    [self presentViewController: [[NSBundle mainBundle] loadNibNamed: @"DiaryViewController" owner: self options: NULL][0] animated: YES completion: ^{ }];
+    [self presentViewController: viewDiary animated: YES completion: ^{ }];
     
 }
 
@@ -46,7 +46,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    viewDiary = [[DiaryViewController alloc] initWithNibName: @"DiaryViewController" bundle: [NSBundle mainBundle]];
+    viewDiary = [[[NSBundle mainBundle] loadNibNamed: @"DiaryTabBarViewController" owner: self options: NULL] objectAtIndex: 0];
     
 }
 
