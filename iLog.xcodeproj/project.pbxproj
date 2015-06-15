@@ -16,6 +16,7 @@
 		E17EEC4B1B2E1AD4007C1E91 /* iLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC4A1B2E1AD4007C1E91 /* iLogTests.m */; };
 		E17EEC581B2E1C58007C1E91 /* DiaryTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC561B2E1C58007C1E91 /* DiaryTabBarViewController.xib */; };
 		E17EEC921B2F47C4007C1E91 /* DiaryTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC911B2F47C4007C1E91 /* DiaryTabBarViewController.m */; };
+		E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC941B2F9442007C1E91 /* UniversalOperations.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,9 @@
 		E17EEC561B2E1C58007C1E91 /* DiaryTabBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiaryTabBarViewController.xib; sourceTree = "<group>"; };
 		E17EEC901B2F47C4007C1E91 /* DiaryTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryTabBarViewController.h; sourceTree = "<group>"; };
 		E17EEC911B2F47C4007C1E91 /* DiaryTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryTabBarViewController.m; sourceTree = "<group>"; };
+		E17EEC931B2F9442007C1E91 /* UniversalOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalOperations.h; sourceTree = "<group>"; };
+		E17EEC941B2F9442007C1E91 /* UniversalOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniversalOperations.m; sourceTree = "<group>"; };
+		E17EEC961B2F9C51007C1E91 /* iLog.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iLog.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +92,8 @@
 			children = (
 				E17EEC321B2E1AD4007C1E91 /* AppDelegate.h */,
 				E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */,
+				E17EEC931B2F9442007C1E91 /* UniversalOperations.h */,
+				E17EEC941B2F9442007C1E91 /* UniversalOperations.m */,
 				E17EEC351B2E1AD4007C1E91 /* ViewController.h */,
 				E17EEC361B2E1AD4007C1E91 /* ViewController.m */,
 				E17EEC591B2E1C5B007C1E91 /* Apps */,
@@ -104,6 +110,7 @@
 			children = (
 				E17EEC2F1B2E1AD4007C1E91 /* Info.plist */,
 				E17EEC301B2E1AD4007C1E91 /* main.m */,
+				E17EEC961B2F9C51007C1E91 /* iLog.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -245,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E17EEC921B2F47C4007C1E91 /* DiaryTabBarViewController.m in Sources */,
+				E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */,
 				E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */,
 				E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */,
 				E17EEC311B2E1AD4007C1E91 /* main.m in Sources */,
@@ -373,6 +381,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = iLog/iLog.pch;
 				INFOPLIST_FILE = iLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -383,6 +392,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = iLog/iLog.pch;
 				INFOPLIST_FILE = iLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
