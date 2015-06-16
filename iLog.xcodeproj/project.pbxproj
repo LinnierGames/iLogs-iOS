@@ -17,6 +17,9 @@
 		E17EEC581B2E1C58007C1E91 /* DiaryTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC561B2E1C58007C1E91 /* DiaryTabBarViewController.xib */; };
 		E17EEC921B2F47C4007C1E91 /* DiaryTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC911B2F47C4007C1E91 /* DiaryTabBarViewController.m */; };
 		E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC941B2F9442007C1E91 /* UniversalOperations.m */; };
+		E17EEC991B2F9D77007C1E91 /* DiaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC981B2F9D77007C1E91 /* DiaryViewController.m */; };
+		E17EEC9D1B2F9DA1007C1E91 /* DIaryMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC9C1B2F9DA1007C1E91 /* DIaryMapViewController.m */; };
+		E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA11B2F9FA2007C1E91 /* SettingsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,12 @@
 		E17EEC931B2F9442007C1E91 /* UniversalOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalOperations.h; sourceTree = "<group>"; };
 		E17EEC941B2F9442007C1E91 /* UniversalOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniversalOperations.m; sourceTree = "<group>"; };
 		E17EEC961B2F9C51007C1E91 /* iLog.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iLog.pch; sourceTree = "<group>"; };
+		E17EEC971B2F9D77007C1E91 /* DiaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryViewController.h; sourceTree = "<group>"; };
+		E17EEC981B2F9D77007C1E91 /* DiaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryViewController.m; sourceTree = "<group>"; };
+		E17EEC9B1B2F9DA1007C1E91 /* DIaryMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIaryMapViewController.h; sourceTree = "<group>"; };
+		E17EEC9C1B2F9DA1007C1E91 /* DIaryMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIaryMapViewController.m; sourceTree = "<group>"; };
+		E17EECA01B2F9FA2007C1E91 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		E17EECA11B2F9FA2007C1E91 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,9 +154,39 @@
 			children = (
 				E17EEC901B2F47C4007C1E91 /* DiaryTabBarViewController.h */,
 				E17EEC911B2F47C4007C1E91 /* DiaryTabBarViewController.m */,
+				E17EEC9A1B2F9D7E007C1E91 /* Today's Diary */,
+				E17EEC9E1B2F9DBA007C1E91 /* Diary Map */,
+				E17EEC9F1B2F9F92007C1E91 /* Settings */,
 				E17EEC561B2E1C58007C1E91 /* DiaryTabBarViewController.xib */,
 			);
 			name = Diary;
+			sourceTree = "<group>";
+		};
+		E17EEC9A1B2F9D7E007C1E91 /* Today's Diary */ = {
+			isa = PBXGroup;
+			children = (
+				E17EEC971B2F9D77007C1E91 /* DiaryViewController.h */,
+				E17EEC981B2F9D77007C1E91 /* DiaryViewController.m */,
+			);
+			name = "Today's Diary";
+			sourceTree = "<group>";
+		};
+		E17EEC9E1B2F9DBA007C1E91 /* Diary Map */ = {
+			isa = PBXGroup;
+			children = (
+				E17EEC9B1B2F9DA1007C1E91 /* DIaryMapViewController.h */,
+				E17EEC9C1B2F9DA1007C1E91 /* DIaryMapViewController.m */,
+			);
+			name = "Diary Map";
+			sourceTree = "<group>";
+		};
+		E17EEC9F1B2F9F92007C1E91 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				E17EECA01B2F9FA2007C1E91 /* SettingsViewController.h */,
+				E17EECA11B2F9FA2007C1E91 /* SettingsViewController.m */,
+			);
+			name = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,6 +292,9 @@
 			files = (
 				E17EEC921B2F47C4007C1E91 /* DiaryTabBarViewController.m in Sources */,
 				E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */,
+				E17EEC991B2F9D77007C1E91 /* DiaryViewController.m in Sources */,
+				E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */,
+				E17EEC9D1B2F9DA1007C1E91 /* DIaryMapViewController.m in Sources */,
 				E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */,
 				E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */,
 				E17EEC311B2E1AD4007C1E91 /* main.m in Sources */,
