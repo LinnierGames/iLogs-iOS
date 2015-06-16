@@ -20,6 +20,7 @@
 		E17EEC991B2F9D77007C1E91 /* DiaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC981B2F9D77007C1E91 /* DiaryViewController.m */; };
 		E17EEC9D1B2F9DA1007C1E91 /* DIaryMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC9C1B2F9DA1007C1E91 /* DIaryMapViewController.m */; };
 		E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA11B2F9FA2007C1E91 /* SettingsViewController.m */; };
+		E17EECA51B2FA04F007C1E91 /* DiaryController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA41B2FA04F007C1E91 /* DiaryController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		E17EEC9C1B2F9DA1007C1E91 /* DIaryMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIaryMapViewController.m; sourceTree = "<group>"; };
 		E17EECA01B2F9FA2007C1E91 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		E17EECA11B2F9FA2007C1E91 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		E17EECA31B2FA04F007C1E91 /* DiaryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryController.h; sourceTree = "<group>"; };
+		E17EECA41B2FA04F007C1E91 /* DiaryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +157,8 @@
 			children = (
 				E17EEC901B2F47C4007C1E91 /* DiaryTabBarViewController.h */,
 				E17EEC911B2F47C4007C1E91 /* DiaryTabBarViewController.m */,
+				E17EECA31B2FA04F007C1E91 /* DiaryController.h */,
+				E17EECA41B2FA04F007C1E91 /* DiaryController.m */,
 				E17EEC9A1B2F9D7E007C1E91 /* Today's Diary */,
 				E17EEC9E1B2F9DBA007C1E91 /* Diary Map */,
 				E17EEC9F1B2F9F92007C1E91 /* Settings */,
@@ -297,6 +302,7 @@
 				E17EEC9D1B2F9DA1007C1E91 /* DIaryMapViewController.m in Sources */,
 				E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */,
 				E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */,
+				E17EECA51B2FA04F007C1E91 /* DiaryController.m in Sources */,
 				E17EEC311B2E1AD4007C1E91 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

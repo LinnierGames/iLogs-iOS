@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DiaryController.h"
 
 @interface DIaryMapViewController : UIViewController
 
