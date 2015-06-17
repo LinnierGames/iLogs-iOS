@@ -216,12 +216,76 @@ static const int SQL_ENTRIES_dateCreated = 8;
 @implementation UniversalFunctions (SQL_Entries_)
 
 + (void)SQL_ENTRIES_voidInsertRowWithArray:(const NSArray *)arrayEntry {
+    sqlite3 *database;
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries withDatabase: &database]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, body, hasImage, hasAudioMemo, isBookmarked, date, dateCreated, diaryID) values (\"%@\", \"%@\", %d, %d, %d, %@, %@, %lu);", [arrayEntry objectEntry_subject], [arrayEntry objectEntry_body], [arrayEntry objectEntry_hasImage], [arrayEntry objectEntry_hasAudioMemo], [arrayEntry objectEntry_isBookmarked], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[[arrayEntry options] objectForKey: @"diaryID"] unsignedLongValue]];
+        char *err;
+        if (!SQLQueryMake( database, sqlStatement, &err)) {
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            sqlite3_close( database);
+            NSLog( @"***Failed to Add to Table: +SQL_ENTRIES_voidInsertRowWithArray:");
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_ENTRIES_voidInsertRowWithArray:", arrayEntry);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
+        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
+        
+    }
+    
 }
 
 + (void)SQL_ENTRIES_voidUpdateRowForArray:(const NSArray *)arrayEntry {
+    sqlite3 *database;
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries withDatabase: &database]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entires SET subject = \"%@\", body = \"%@\", hasImage = %d, hasAudioMemo = %d, isBookmarked = %d, date = \"%@\" dateCreated = \"%@\", diaryID = %lu);", [arrayEntry objectEntry_subject], [arrayEntry objectEntry_body], [arrayEntry objectEntry_hasImage], [arrayEntry objectEntry_hasAudioMemo], [arrayEntry objectEntry_isBookmarked], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]], [[[arrayEntry options] objectForKey: @"diaryID"] unsignedLongValue]];
+        char *err;
+        if (!SQLQueryMake( database, sqlStatement, &err)) {
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            sqlite3_close( database);
+            NSLog( @"***Failed to Update row: +SQL_ENTRIES_voidUpdateRowForArray:");
+            
+        } else
+            NSLog( @"Updated row: %@: +SQL_ENTRIES_voidUpdateRowForArray:", arrayEntry);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
+        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
+        
+    }
+    
 }
 
 + (void)SQL_ENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry {
+    sqlite3 *database;
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries withDatabase: &database]) {
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Entries where id = %lu;", [[[arrayEntry options] objectForKey: @"id"] unsignedLongValue]];
+        char *err;
+        if (!SQLQueryMake( database, sqlStatement, &err)) {
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            sqlite3_close( database);
+            NSLog( @"***Failed to Delete row: +SQL_ENTRIES_voidDeleteRowWithArray:");
+            
+        } else
+            NSLog( @"Deleted row: %@: +SQL_ENTRIES_voidDeleteRowWithArray:", arrayEntry);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
+        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
+        
+    }
+    
 }
 
 @end
