@@ -114,7 +114,7 @@ static const int SQL_DIARY_dateCreated = 2;
 + (void)SQL_DIARIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry {
     sqlite3 *database;
     if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries withDatabase: &database]) {
-        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Diaries where id = %lu;", (unsigned long)[[[arrayEntry index] objectForKey: @"id"] integerValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Diaries where id = %lu;", [[[arrayEntry options] objectForKey: @"id"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( database, sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
@@ -196,7 +196,7 @@ static const NSUInteger ENTRIES_dateCreated = 6;
 }
 
 - (NSDate *)objectEntry_dateCreated {
-    return [self objectAtIndex: ENTRIES_date];
+    return [self objectAtIndex: ENTRIES_dateCreated];
     
 }
 
