@@ -16,13 +16,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x21-gL-5cx">
-                                <rect key="frame" x="-40" y="86" width="600" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x21-gL-5cx">
+                                <rect key="frame" x="0.0" y="86" width="600" height="30"/>
                                 <state key="normal" title="Diary">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="pressDiary:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="lEQ-ZD-TB0"/>
+                                    <action selector="pressDiary:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="61J-Hb-iwe"/>
                                 </connections>
                             </button>
                         </subviews>
