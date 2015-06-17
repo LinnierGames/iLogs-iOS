@@ -14,7 +14,7 @@
 
 @interface NSArray (ARRAY_)
 
-- (NSDictionary *)index;
+- (NSDictionary *)options;
 
 @end
 

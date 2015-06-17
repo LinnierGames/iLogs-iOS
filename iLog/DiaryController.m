@@ -14,7 +14,7 @@
 
 @implementation NSArray (ARRAY_)
 
-- (NSDictionary *)index {
+- (NSDictionary *)options {
     return (NSDictionary *)[self lastObject];
     
 }
