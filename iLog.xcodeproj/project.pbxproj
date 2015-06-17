@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		E14036CA1B313194005D2608 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */; };
 		E14036CB1B3131A4005D2608 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E17EECB21B312C5E007C1E91 /* libz.dylib */; };
+		E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC381B2E1AD4007C1E91 /* Main.storyboard */; };
+		E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC3D1B2E1AD4007C1E91 /* LaunchScreen.xib */; };
 		E17EEC311B2E1AD4007C1E91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC301B2E1AD4007C1E91 /* main.m */; };
 		E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */; };
 		E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC361B2E1AD4007C1E91 /* ViewController.m */; };
@@ -298,6 +300,8 @@
 			files = (
 				E17EEC581B2E1C58007C1E91 /* DiaryTabBarViewController.xib in Resources */,
 				E17EEC3C1B2E1AD4007C1E91 /* Images.xcassets in Resources */,
+				E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */,
+				E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
