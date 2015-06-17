@@ -21,8 +21,8 @@
 
 @end
 
-const NSUInteger DIARY_title = 0;
-const NSUInteger DIARY_dateCreated = 1;
+static const NSUInteger DIARY_title = 0;
+static const NSUInteger DIARY_dateCreated = 1;
 
 @implementation NSArray (ARRAY_Diaries_)
 
@@ -53,9 +53,9 @@ const NSUInteger DIARY_dateCreated = 1;
 
 @end
 
-const int SQL_DIARY_id = 0;
-const int SQL_DIARY_title = 1;
-const int SQL_DIARY_dateCreated = 2;
+static const int SQL_DIARY_id = 0;
+static const int SQL_DIARY_title = 1;
+static const int SQL_DIARY_dateCreated = 2;
 
 @implementation UniversalFunctions (SQL_Diaries_)
 

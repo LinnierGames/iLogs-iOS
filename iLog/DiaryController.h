@@ -18,8 +18,8 @@
 
 @end
 
-const NSUInteger DIARY_title;
-const NSUInteger DIARY_dateCreated;
+static const NSUInteger DIARY_title;
+static const NSUInteger DIARY_dateCreated;
 
 @interface NSArray (ARRAY_Diaries_)
 
@@ -31,9 +31,9 @@ const NSUInteger DIARY_dateCreated;
 
 @end
 
-const int SQL_DIARY_id;
-const int SQL_DIARY_title;
-const int SQL_DIARY_dateCreated;
+static const int SQL_DIARY_id;
+static const int SQL_DIARY_title;
+static const int SQL_DIARY_dateCreated;
 
 /**
  * From the parameter list, an array is produced in Diary format
