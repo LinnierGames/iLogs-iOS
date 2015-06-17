@@ -72,10 +72,10 @@ static const int SQL_DIARY_dateCreated = 2;
         if (!SQLQueryMake( database, sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
             sqlite3_close( database);
-            NSLog( @"***Failed to Add to Table: +SQL_ACTIVITY_voidInsertRowWithArray:");
+            NSLog( @"***Failed to Add to Table: +SQL_DIARIES_voidInsertRowWithArray:");
             
         } else
-            NSLog( @"Added to Table: %@: +SQL_ACTIVITY_voidInsertRowWithArray:", arrayEntry);
+            NSLog( @"Added to Table: %@: +SQL_DIARIES_voidInsertRowWithArray:", arrayEntry);
         
     } else {
         [UniversalFunctions SQL_voidCreateTable: CTSQLDiaries];
@@ -86,10 +86,49 @@ static const int SQL_DIARY_dateCreated = 2;
 }
 
 + (void)SQL_DIARIES_voidUpdateRowForArray:(const NSArray *)arrayEntry {
+    sqlite3 *database;
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries withDatabase: &database]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Diaries SET title = \"%@\", dateCreated = \"%@\");", [arrayEntry objectDiary_title], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]]];
+        char *err;
+        if (!SQLQueryMake( database, sqlStatement, &err)) {
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            sqlite3_close( database);
+            NSLog( @"***Failed to Update row: +SQL_DIARIES_voidUpdateRowForArray:");
+            
+        } else
+            NSLog( @"Updated row: %@: +SQL_DIARIES_voidUpdateRowForArray:", arrayEntry);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLDiaries];
+        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
+        
+    }
     
 }
 
 + (void)SQL_DIARIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry {
+    sqlite3 *database;
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries withDatabase: &database]) {
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Diaries where id = %lu;", (unsigned long)[[[arrayEntry index] objectForKey: @"index"] integerValue]];
+        char *err;
+        if (!SQLQueryMake( database, sqlStatement, &err)) {
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            sqlite3_close( database);
+            NSLog( @"***Failed to Delete row: +SQL_DIARIES_voidDeleteRowWithArray:");
+            
+        } else
+            NSLog( @"Deleted row: %@: +SQL_DIARIES_voidDeleteRowWithArray:", arrayEntry);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLDiaries];
+        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
+        
+    }
     
 }
 
