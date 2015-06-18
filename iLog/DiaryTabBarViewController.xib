@@ -8,7 +8,7 @@
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tabBarController id="93d-OE-a5w" customClass="DiaryTabBarViewController">
             <nil key="simulatedBottomBarMetrics"/>
-            <tabBar key="tabBar" contentMode="scaleToFill" id="Ma5-wZ-zqO">
+            <tabBar key="tabBar" contentMode="scaleToFill" selectedItem="6dm-YJ-Z1z" id="Ma5-wZ-zqO">
                 <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -21,7 +21,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <viewControllers>
-                        <viewController title="Today's Diary" id="Rg9-6o-sGp">
+                        <viewController title="Today's Diary" id="Rg9-6o-sGp" customClass="DiaryViewController">
                             <layoutGuides>
                                 <viewControllerLayoutGuide type="top" id="6Jb-Qj-hEW"/>
                                 <viewControllerLayoutGuide type="bottom" id="1Ka-bd-PJH"/>
@@ -33,6 +33,10 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Wbc-Ni-4FE">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="Rg9-6o-sGp" id="gXD-J6-c0L"/>
+                                            <outlet property="delegate" destination="Rg9-6o-sGp" id="kuJ-jt-pxC"/>
+                                        </connections>
                                     </tableView>
                                 </subviews>
                                 <constraints>
@@ -44,6 +48,9 @@
                             </view>
                             <tabBarItem key="tabBarItem" title="Today's Diary" id="g8W-gp-1TA"/>
                             <navigationItem key="navigationItem" title="Today's Diary" prompt="Prompt" id="a4W-BR-deC"/>
+                            <connections>
+                                <outlet property="table" destination="Wbc-Ni-4FE" id="JZK-IN-krp"/>
+                            </connections>
                         </viewController>
                     </viewControllers>
                 </navigationController>
@@ -54,7 +61,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <viewControllers>
-                        <viewController title="Today's Diary" id="pnk-ZD-CbD">
+                        <viewController title="Today's Diary" id="pnk-ZD-CbD" customClass="DIaryMapViewController">
                             <layoutGuides>
                                 <viewControllerLayoutGuide type="top" id="iVV-P2-PH5"/>
                                 <viewControllerLayoutGuide type="bottom" id="ELh-TI-1do"/>
@@ -77,6 +84,39 @@
                             </view>
                             <tabBarItem key="tabBarItem" title="Diary Map" id="YjI-0W-aiV"/>
                             <navigationItem key="navigationItem" title="Diary Map" prompt="Prompt" id="rS7-X1-djw"/>
+                        </viewController>
+                    </viewControllers>
+                </navigationController>
+                <navigationController id="q32-Qd-Mie" userLabel="Settings">
+                    <tabBarItem key="tabBarItem" title="Settings" id="03c-zL-bQ9"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zSa-en-Vwq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <viewControllers>
+                        <viewController title="Settings" id="dnU-zJ-xeD" customClass="SettingsViewController">
+                            <layoutGuides>
+                                <viewControllerLayoutGuide type="top" id="rhx-hn-cXC"/>
+                                <viewControllerLayoutGuide type="bottom" id="t6i-h1-cND"/>
+                            </layoutGuides>
+                            <view key="view" contentMode="scaleToFill" id="xNW-pX-HOm">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2yY-du-7nt">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="2yY-du-7nt" secondAttribute="bottom" id="2U5-cx-Cwn"/>
+                                    <constraint firstItem="2yY-du-7nt" firstAttribute="leading" secondItem="xNW-pX-HOm" secondAttribute="leading" id="Fjo-ec-hBD"/>
+                                    <constraint firstAttribute="trailing" secondItem="2yY-du-7nt" secondAttribute="trailing" id="qOr-X4-Sna"/>
+                                    <constraint firstItem="2yY-du-7nt" firstAttribute="top" secondItem="xNW-pX-HOm" secondAttribute="top" id="zUb-Fc-rCu"/>
+                                </constraints>
+                            </view>
+                            <tabBarItem key="tabBarItem" title="Settings" id="wdg-LQ-HnA"/>
+                            <navigationItem key="navigationItem" title="Settings" prompt="Prompt" id="glA-UU-vIs"/>
                         </viewController>
                     </viewControllers>
                 </navigationController>
