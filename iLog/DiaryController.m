@@ -14,15 +14,16 @@
 
 @implementation NSArray (ARRAY_)
 
-- (NSDictionary *)options {
-    return (NSDictionary *)[self lastObject];
+- (NSMutableDictionary *)options {
+    return (NSMutableDictionary *)[self lastObject];
     
 }
 
 @end
 
-static const NSUInteger DIARY_title = 0;
-static const NSUInteger DIARY_dateCreated = 1;
+#pragma mark - Entries
+
+#pragma mark NSArray category (ARRAY_Diaries_)
 
 @implementation NSArray (ARRAY_Diaries_)
 
@@ -32,11 +33,11 @@ static const NSUInteger DIARY_dateCreated = 1;
 }
 
 + (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue {
-    return [NSMutableArray arrayNEWDiaryWithTitle: stringTitleValue dateCreated: dateCreatedValue index: @{}];
+    return [NSMutableArray arrayNEWDiaryWithTitle: stringTitleValue dateCreated: dateCreatedValue index: [NSMutableDictionary dictionary]];
     
 }
 
-+ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue index:(NSDictionary *)dicIndex {
++ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue index:(NSMutableDictionary *)dicIndex {
     return [NSMutableArray arrayWithObjects: stringTitleValue, dateCreatedValue, dicIndex, nil];
     
 }
@@ -53,9 +54,7 @@ static const NSUInteger DIARY_dateCreated = 1;
 
 @end
 
-static const int SQL_DIARY_id = 0;
-static const int SQL_DIARY_title = 1;
-static const int SQL_DIARY_dateCreated = 2;
+#pragma mark UniversalFunctions category (SQL_DIARIES_)
 
 @implementation UniversalFunctions (SQL_Diaries_)
 
@@ -93,7 +92,7 @@ static const int SQL_DIARY_dateCreated = 2;
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Diaries SET title = \"%@\", dateCreated = \"%@\");", [arrayEntry objectDiary_title], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Diaries SET title = \"%@\", dateCreated = \"%@\" where id = %lu;", [arrayEntry objectDiary_title], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]], [[[arrayEntry options] objectForKey: @"id"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( database, sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
@@ -134,14 +133,13 @@ static const int SQL_DIARY_dateCreated = 2;
 
 @end
 
+#pragma mark UniversalVariables category (DIARIES_)
 
-static const NSUInteger ENTRIES_subject = 0;
-static const NSUInteger ENTRIES_body = 1;
-static const NSUInteger ENTRIES_hasImage = 2;
-static const NSUInteger ENTRIES_hasAudioMemo = 3;
-static const NSUInteger ENTRIES_isBookmarked = 4;
-static const NSUInteger ENTRIES_date = 5;
-static const NSUInteger ENTRIES_dateCreated = 6;
+
+
+#pragma mark - Entries
+
+#pragma mark NSArray category (ARRAY_Entries_)
 
 @implementation NSArray (ARRAY_Entries_)
 
@@ -203,15 +201,7 @@ static const NSUInteger ENTRIES_dateCreated = 6;
 
 @end
 
-static const int SQL_ENTRIES_id = 0;
-static const int SQL_ENTRIES_diaryID = 1;
-static const int SQL_ENTRIES_subject = 2;
-static const int SQL_ENTRIES_body = 3;
-static const int SQL_ENTRIES_hasImage = 4;
-static const int SQL_ENTRIES_hasAudioMemo = 5;
-static const int SQL_ENTRIES_isBookmarked = 6;
-static const int SQL_ENTRIES_date = 7;
-static const int SQL_ENTRIES_dateCreated = 8;
+#pragma mark UniversalFunctions category (SQL_Entries_)
 
 @implementation UniversalFunctions (SQL_Entries_)
 
@@ -249,7 +239,7 @@ static const int SQL_ENTRIES_dateCreated = 8;
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entires SET subject = \"%@\", body = \"%@\", hasImage = %d, hasAudioMemo = %d, isBookmarked = %d, date = \"%@\" dateCreated = \"%@\", diaryID = %lu);", [arrayEntry objectEntry_subject], [arrayEntry objectEntry_body], [arrayEntry objectEntry_hasImage], [arrayEntry objectEntry_hasAudioMemo], [arrayEntry objectEntry_isBookmarked], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]], [[[arrayEntry options] objectForKey: @"diaryID"] unsignedLongValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entires SET subject = \"%@\", body = \"%@\", hasImage = %d, hasAudioMemo = %d, isBookmarked = %d, date = \"%@\" dateCreated = \"%@\", diaryID = %lu;", [arrayEntry objectEntry_subject], [arrayEntry objectEntry_body], [arrayEntry objectEntry_hasImage], [arrayEntry objectEntry_hasAudioMemo], [arrayEntry objectEntry_isBookmarked], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]], [[[arrayEntry options] objectForKey: @"diaryID"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( database, sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
@@ -289,3 +279,5 @@ static const int SQL_ENTRIES_dateCreated = 8;
 }
 
 @end
+
+#pragma mark UniversalVariables category (ENTRIES_)

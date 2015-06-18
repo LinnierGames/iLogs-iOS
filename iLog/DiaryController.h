@@ -14,26 +14,32 @@
 
 @interface NSArray (ARRAY_)
 
-- (NSDictionary *)options;
+- (NSMutableDictionary *)options;
 
 @end
 
-static const NSUInteger DIARY_title;
-static const NSUInteger DIARY_dateCreated;
+#pragma mark - Diaries
+
+#pragma mark NSArray category (ARRAY_Diaries_)
+
+static const NSUInteger DIARY_title = 0;
+static const NSUInteger DIARY_dateCreated = 1;
 
 @interface NSArray (ARRAY_Diaries_)
 
 + (id)arrayNEWDiary;
 + (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue;
-+ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue index:(NSDictionary *)dicIndex;
++ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue index:(NSMutableDictionary *)dicIndex;
 - (NSString *)objectDiary_title;
 - (NSDate *)objectDiary_dateCreated;
 
 @end
 
-static const int SQL_DIARY_id;
-static const int SQL_DIARY_title;
-static const int SQL_DIARY_dateCreated;
+#pragma mark UniversalFunctions category (SQL_DIARIES_)
+
+static const int SQL_DIARY_id = 0;
+static const int SQL_DIARY_title = 1;
+static const int SQL_DIARY_dateCreated = 2;
 
 /**
  * From the parameter list, an array is produced in Diary format
@@ -50,7 +56,7 @@ static inline NSMutableArray * SQLStatementRowIntoDiaryEntry( sqlite3_stmt *stat
     
     NSDate *dateCreated = [dateFormatter dateFromString: [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_DIARY_dateCreated)]];
     
-    return [NSMutableArray arrayNEWDiaryWithTitle: stringTitle dateCreated: dateCreated index: @{@"index": [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_DIARY_id)]}];
+    return [NSMutableArray arrayNEWDiaryWithTitle: stringTitle dateCreated: dateCreated index: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_DIARY_id)], @"id", nil]];
     
 };
 
@@ -74,13 +80,27 @@ static inline NSMutableArray * SQLStatementRowIntoDiaryEntry( sqlite3_stmt *stat
 
 @end
 
-static const NSUInteger ENTRIES_subject;
-static const NSUInteger ENTRIES_body;
-static const NSUInteger ENTRIES_hasImage;
-static const NSUInteger ENTRIES_hasAudioMemo;
-static const NSUInteger ENTRIES_isBookmarked;
-static const NSUInteger ENTRIES_date;
-static const NSUInteger ENTRIES_dateCreated;
+#pragma mark UniversalVariables category (DIARIES_)
+
+@interface UniversalVariables (DIARIES_)
+
+- (void)DIARIES_writeNewForDiary:(NSArray *)arrayDiary;
+- (void)DIARIES_updateForDiary:(NSArray *)arrayDiary;
+- (void)DIARIES_deleteForDiary:(NSArray *)arrayDiary;
+
+@end
+
+#pragma mark - Entries
+
+#pragma mark NSArray category (ARRAY_Entries_)
+
+static const NSUInteger ENTRIES_subject = 0;
+static const NSUInteger ENTRIES_body = 1;
+static const NSUInteger ENTRIES_hasImage = 2;
+static const NSUInteger ENTRIES_hasAudioMemo = 3;
+static const NSUInteger ENTRIES_isBookmarked = 4;
+static const NSUInteger ENTRIES_date = 5;
+static const NSUInteger ENTRIES_dateCreated = 6;
 
 @interface NSArray (ARRAY_Entries_)
 
@@ -98,15 +118,17 @@ static const NSUInteger ENTRIES_dateCreated;
 
 @end
 
-static const int SQL_ENTRIES_id;
-static const int SQL_ENTRIES_diaryID;
-static const int SQL_ENTRIES_subject;
-static const int SQL_ENTRIES_body;
-static const int SQL_ENTRIES_hasImage;
-static const int SQL_ENTRIES_hasAudioMemo;
-static const int SQL_ENTRIES_isBookmarked;
-static const int SQL_ENTRIES_date;
-static const int SQL_ENTRIES_dateCreated;
+#pragma mark UniversalFunctions category (SQL_Entries_)
+
+static const int SQL_ENTRIES_id = 0;
+static const int SQL_ENTRIES_diaryID = 1;
+static const int SQL_ENTRIES_subject = 2;
+static const int SQL_ENTRIES_body = 3;
+static const int SQL_ENTRIES_hasImage = 4;
+static const int SQL_ENTRIES_hasAudioMemo = 5;
+static const int SQL_ENTRIES_isBookmarked = 6;
+static const int SQL_ENTRIES_date = 7;
+static const int SQL_ENTRIES_dateCreated = 8;
 
 /**
  * From the parameter list, an array is produced in Entry format
@@ -149,5 +171,11 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
  * @param [in] arrayEntry: Entries
  */
 + (void)SQL_ENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry;
+
+@end
+
+#pragma mark UniversalVariables category (ENTRIES_)
+
+@interface UniversalVariables (ENTRIES_)
 
 @end
