@@ -43,22 +43,22 @@ NSString *SQLDatabase = @"database";
     NSString *sqlQuery = @"";
     switch (table) {
         case CTSQLDiaries:
-            sqlQuery = @"CREATE TABLE Diaries (id INTEGER PRIMARY KEY UNIQUE, title TEXT, dateCreated TEXT);";
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS Diaries (id INTEGER PRIMARY KEY UNIQUE, title TEXT, dateCreated TEXT);";
             break;
         case CTSQLEntries:
-            sqlQuery = @"CREATE TABLE Entries (id INTEGER PRIMARY KEY UNIQUE, diaryID INTEGER, subject TEXT, body TEXT, hasImage BOOLEAN, hasAudioMemo BOOLEAN, isBookmarked BOOLEAN, date TEXT, dateCreated TEXT, FOREIGN KEY (diaryID) REFERENCES Diaries(id) ON DELETE CASCADE);";
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS Entries (id INTEGER PRIMARY KEY UNIQUE, diaryID INTEGER, subject TEXT, body TEXT, hasImage BOOLEAN, hasAudioMemo BOOLEAN, isBookmarked BOOLEAN, date TEXT, dateCreated TEXT, FOREIGN KEY (diaryID) REFERENCES Diaries(id) ON DELETE CASCADE);";
             break;
         case CTSQLStories:
-            sqlQuery = @"CREATE TABLE Stories (id INTEGER PRIMARY KEY UNIQUE, title TEXT, description TEXT);";
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS Stories (id INTEGER PRIMARY KEY UNIQUE, title TEXT, description TEXT);";
             break;
         case CTSQLStoryEntriesRelationship:
             sqlQuery = @"CREATE TABLE StoryEntriesRelationship (id INTEGER PRIMARY KEY UNIQUE, storyID INTEGER, entryID INTEGER, FOREIGN KEY (storyID) REFERENCES Stories(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
             break;
         case CTSQLTags:
-            sqlQuery = @"CREATE TABLE Tags (id INTEGER PRIMARY KEY UNIQUE, title TEXT);";
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS Tags (id INTEGER PRIMARY KEY UNIQUE, title TEXT);";
             break;
         case CTSQLTagEntriesRelationship:
-            sqlQuery = @"CREATE TABLE TagEntriesRelationship (id INTEGER PRIMARY KEY UNIQUE, tagID INTEGER, entryID INTEGER, FOREIGN KEY (tagID) REFERENCES Tags(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS TagEntriesRelationship (id INTEGER PRIMARY KEY UNIQUE, tagID INTEGER, entryID INTEGER, FOREIGN KEY (tagID) REFERENCES Tags(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
             break;
             
     }
@@ -82,13 +82,13 @@ NSString *SQLDatabase = @"database";
                 sqlQuery = @"DELETE FROM Diaries";
                 break;
             case CTSQLEntries:
-                sqlQuery = @"DELETE FROM Diaries";
+                sqlQuery = @"DELETE FROM Entries";
                 break;
             case CTSQLStories:
-                sqlQuery = @"DELETE FROM Diaries";
+                sqlQuery = @"DELETE FROM Stories";
                 break;
             case CTSQLTags:
-                sqlQuery = @"DELETE FROM Diaries";
+                sqlQuery = @"DELETE FROM Tags";
                 break;
                 
             default:
@@ -130,8 +130,26 @@ NSString *SQLDatabase = @"database";
 + (BOOL)SQL_returnStatusOfTable:(CDSQLTables)table withDatabase:(sqlite3 **)database {
     switch (table) {
         case CTSQLDiaries: case CTSQLEntries: case CTSQLStories: case CTSQLStoryEntriesRelationship: case CTSQLTags: case CTSQLTagEntriesRelationship: {
-            return [self SQL_returnStatusOfDatabase: database];
-            break;
+            BOOL status = [self SQL_returnStatusOfDatabase: database];
+            SQL3Statement *statement; const char *err;
+            
+            [UniversalFunctions SQL_voidCreateTable: table];
+            
+            return YES;
+            
+            if (SQLQueryPrepare( *database, @"create database lol;", &statement, &err)) {
+                while (SQLStatementStep( statement)) {
+                    NSLog( @"%@", [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, 0)]);
+                    
+                }
+                
+            } else {
+                status = NO;
+                NSAssert( 0, [NSString stringWithUTF8String: err]);
+                
+            }
+            
+            return status; break;
             
         }
             
@@ -148,8 +166,12 @@ NSString *SQLDatabase = @"database";
         switch (table) {
             case CTSQLDiaries: {
                 if (SQLQueryPrepare( database, @"SELECT * FROM Diaries;", &statement, &err)) {
-                    while (SQLStatementStep( statement))
-                        [arrayContents addObject: SQLStatementRowIntoDiaryEntry( statement)];
+                    while (SQLStatementStep( statement)) {
+                        NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+//                        [[array options] setValue: [NSArray new] forKey: @"stories"];
+                        [arrayContents addObject: array];
+                        
+                    }
                     
                 } else
                     NSAssert( 0, [NSString stringWithUTF8String: err]);
