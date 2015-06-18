@@ -135,7 +135,24 @@
 
 #pragma mark UniversalVariables category (DIARIES_)
 
+@implementation UniversalVariables (DIARIES_)
 
+- (void)DIARIES_writeNewForDiary:(NSArray *)arrayDiary {
+    [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayDiary];
+    
+}
+
+- (void)DIARIES_updateForDiary:(NSArray *)arrayDiary {
+    [UniversalFunctions SQL_DIARIES_voidUpdateRowForArray: arrayDiary];
+    
+}
+
+- (void)DIARIES_deleteForDiary:(NSArray *)arrayDiary {
+    [UniversalFunctions SQL_DIARIES_voidDeleteRowWithArray: arrayDiary];
+    
+}
+
+@end
 
 #pragma mark - Entries
 
