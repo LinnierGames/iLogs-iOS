@@ -8,10 +8,11 @@
 
 #import "DiaryViewController.h"
 
-@interface DiaryViewController () < UIAlertViewDelegate> {
+@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayTable;
-    
+        NSMutableArray *arrayDiaries;
+    NSMutableArray *array;
 }
 
 @end
@@ -48,9 +49,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
     if (!cell)
-        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier: @"cell"];
     //Customize Cell
-    [cell.textLabel setText: [[arrayTable objectAtIndex: indexPath.row] objectDiary_title]];
+    [cell.textLabel setFont: [UIFont boldSystemFontOfSize: 12]];
+    [cell.textLabel setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject]];
+    [cell.detailTextLabel setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body]];
     
     return cell;
     
@@ -59,7 +62,8 @@
 #pragma mark - Void's
 
 - (void)reloadTable {
-    arrayTable = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
+    arrayTable = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLEntries]];
+    arrayDiaries = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
     [table reloadData];
     
 }
@@ -85,6 +89,39 @@
             }
             break;
             
+        } case 2: { //Add Entry
+            if (buttonIndex == 1) { //Next
+                array = [NSMutableArray arrayNEWEntryWithSubject: [alertView textFieldAtIndex: 0].text body: [alertView textFieldAtIndex: 1].text];
+                UIActionSheet *actionDiaries = [[UIActionSheet alloc] initWithTitle: @"New Entry" delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: nil];
+                [actionDiaries setTag: 1];
+                for (NSArray *arrayDiary in arrayDiaries)
+                    [actionDiaries addButtonWithTitle: [arrayDiary objectDiary_title]];
+                [actionDiaries showInView: self.view];
+                
+            }
+            break;
+            
+        }
+            
+        default:
+            break;
+    }
+    
+}
+
+#pragma mark Void's > Pre-Defined Functions (ACTION SHEET)
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch ([actionSheet tag]) {
+        case 1: { //Add Entry > Select Diary
+            if (buttonIndex != 0) {
+                buttonIndex -= 1;
+                [[array options] setValue: [[(NSArray *)[arrayDiaries objectAtIndex: buttonIndex] options] objectForKey: @"id"] forKey: @"diaryID"];
+                [[UniversalVariables globalVariables] ENTRIES_writeNewForEntry: array];
+                
+            }
+            break;
+            
         }
             
         default:
@@ -105,6 +142,21 @@
 }
 
 - (void)pressNavRight:(id)sender {
+    if ([arrayDiaries count] > 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Entry" message: @"enter the subject and body of this new entry" delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"Next", nil];
+        [alert setTag: 2];
+        [alert setAlertViewStyle: UIAlertViewStyleLoginAndPasswordInput];
+        [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
+        [[alert textFieldAtIndex: 1] setSecureTextEntry: NO];
+        [[alert textFieldAtIndex: 1] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
+        [alert show];
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Diary" message: @"there must be a Diary before adding an entry. Please add a Diary" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
+        [alert show];
+        
+    }
+    
     
 }
 
@@ -116,6 +168,8 @@
     [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target: self action: @selector( pressNavLeft:)]];
     [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCompose target: self action: @selector( pressNavRight:)]];
     arrayTable = [NSMutableArray new];
+    arrayDiaries = [NSMutableArray new];
+    array = [NSMutableArray new];
     
 }
 

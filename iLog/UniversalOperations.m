@@ -165,7 +165,7 @@ NSString *SQLDatabase = @"database";
         NSMutableArray *arrayContents = [NSMutableArray array];
         switch (table) {
             case CTSQLDiaries: {
-                if (SQLQueryPrepare( database, @"SELECT * FROM Diaries;", &statement, &err)) {
+                if (SQLQueryPrepare( database, @"SELECT * FROM Diaries ORDER BY title DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
 //                        [[array options] setValue: [NSArray new] forKey: @"stories"];
@@ -180,7 +180,7 @@ NSString *SQLDatabase = @"database";
             } case CTSQLEntries: {
                 if (SQLQueryPrepare( database, @"SELECT * FROM Entries;", &statement, &err)) {
                     while (SQLStatementStep( statement))
-                        [arrayContents addObject: SQLStatementRowIntoDiaryEntry( statement)];
+                        [arrayContents addObject: SQLStatementRowIntoEntryEntry( statement)];
                     
                 } else
                     NSAssert( 0, [NSString stringWithUTF8String: err]);

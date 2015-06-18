@@ -149,8 +149,7 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
     
     NSDate *date = [dateFormatter dateFromString: [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_ENTRIES_date)]];
     NSDate *dateCreated = [dateFormatter dateFromString: [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_ENTRIES_dateCreated)]];
-    
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubject body: stringBody hasImage: hasImage hasAudioMemo: hasAudioMemo isBookmarked: isBookmarked date: date dateCreated: dateCreated index: @{@"id": [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_id)], @"diaryID": [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_diaryID)]}];
+    return [NSMutableArray arrayNEWEntryWithSubject: stringSubject body: stringBody hasImage: hasImage hasAudioMemo: hasAudioMemo isBookmarked: isBookmarked date: date dateCreated: dateCreated index: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_id)], @"id", [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_diaryID)], @"diaryID", nil]];
     
 };
 

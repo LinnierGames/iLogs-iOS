@@ -230,7 +230,7 @@
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, body, hasImage, hasAudioMemo, isBookmarked, date, dateCreated, diaryID) values (\"%@\", \"%@\", %d, %d, %d, %@, %@, %lu);", [arrayEntry objectEntry_subject], [arrayEntry objectEntry_body], [arrayEntry objectEntry_hasImage], [arrayEntry objectEntry_hasAudioMemo], [arrayEntry objectEntry_isBookmarked], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[[arrayEntry options] objectForKey: @"diaryID"] unsignedLongValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, body, hasImage, hasAudioMemo, isBookmarked, date, dateCreated, diaryID) values (\"%@\", \"%@\", %d, %d, %d, \"%@\", \"%@\", %lu);", [arrayEntry objectEntry_subject], [arrayEntry objectEntry_body], [arrayEntry objectEntry_hasImage], [arrayEntry objectEntry_hasAudioMemo], [arrayEntry objectEntry_isBookmarked], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[[arrayEntry options] objectForKey: @"diaryID"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( database, sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
