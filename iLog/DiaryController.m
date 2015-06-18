@@ -171,11 +171,11 @@
 }
 
 + (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue body:(NSString *)stringBodyValue hasImage:(BOOL)boolImageValue hasAudioMemo:(BOOL)boolAudioMemoValue isBookmarked:(BOOL)boolBookmarkedValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue {
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue body: stringBodyValue hasImage: boolImageValue hasAudioMemo: boolAudioMemoValue isBookmarked: boolBookmarkedValue date: dateValue dateCreated: dateCreatedValue index: @{}];
+    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue body: stringBodyValue hasImage: boolImageValue hasAudioMemo: boolAudioMemoValue isBookmarked: boolBookmarkedValue date: dateValue dateCreated: dateCreatedValue index: [NSMutableDictionary dictionary]];
     
 }
 
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue body:(NSString *)stringBodyValue hasImage:(BOOL)boolImageValue hasAudioMemo:(BOOL)boolAudioMemoValue isBookmarked:(BOOL)boolBookmarkedValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue index:(NSDictionary *)dicIndex {
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue body:(NSString *)stringBodyValue hasImage:(BOOL)boolImageValue hasAudioMemo:(BOOL)boolAudioMemoValue isBookmarked:(BOOL)boolBookmarkedValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue index:(NSMutableDictionary *)dicIndex {
     return [NSMutableArray arrayWithObjects: stringSubjectValue, stringBodyValue, [NSNumber numberWithBool: boolImageValue], [NSNumber numberWithBool: boolAudioMemoValue], [NSNumber numberWithBool: boolBookmarkedValue], dateValue, dateCreatedValue, dicIndex, nil];
     
 }
