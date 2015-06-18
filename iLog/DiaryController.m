@@ -298,3 +298,22 @@
 @end
 
 #pragma mark UniversalVariables category (ENTRIES_)
+
+@implementation UniversalVariables (ENTRIES_)
+
+- (void)ENTRIES_writeNewForEntry:(NSArray *)arrayEntry {
+    [UniversalFunctions SQL_ENTRIES_voidInsertRowWithArray: arrayEntry];
+    
+}
+
+- (void)ENTRIES_updateForEntry:(NSArray *)arrayEntry {
+    [UniversalFunctions SQL_ENTRIES_voidUpdateRowForArray: arrayEntry];
+    
+}
+
+- (void)ENTRIES_deleteForEntry:(NSArray *)arrayEntry {
+    [UniversalFunctions SQL_ENTRIES_voidDeleteRowWithArray: arrayEntry];
+    
+}
+
+@end

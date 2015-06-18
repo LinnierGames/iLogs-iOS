@@ -178,4 +178,8 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
 
 @interface UniversalVariables (ENTRIES_)
 
+- (void)ENTRIES_writeNewForEntry:(NSArray *)arrayEntry;
+- (void)ENTRIES_updateForEntry:(NSArray *)arrayEntry;
+- (void)ENTRIES_deleteForEntry:(NSArray *)arrayEntry;
+
 @end
