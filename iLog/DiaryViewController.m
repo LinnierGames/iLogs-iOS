@@ -8,7 +8,7 @@
 
 #import "DiaryViewController.h"
 
-@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate> {
+@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayTable;
         NSMutableArray *arrayDiaries;
@@ -79,6 +79,8 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (alertView.tag) {
         case 1: { //Add Diary
+            if ([[alertView textFieldAtIndex: 0] isFirstResponder])
+                [[alertView textFieldAtIndex: 0] resignFirstResponder];
             if (buttonIndex == 1) { //Add
                 NSMutableArray *arrayNewDiary = [NSMutableArray arrayNEWDiaryWithTitle: [alertView textFieldAtIndex: 0].text dateCreated: [NSDate date]];
                 [[UniversalVariables globalVariables] DIARIES_writeNewForDiary: arrayNewDiary];
@@ -90,6 +92,10 @@
             break;
             
         } case 2: { //Add Entry
+            if ([[alertView textFieldAtIndex: 0] isFirstResponder])
+                [[alertView textFieldAtIndex: 0] resignFirstResponder];
+            if ([[alertView textFieldAtIndex: 1] isFirstResponder])
+                [[alertView textFieldAtIndex: 1] resignFirstResponder];
             if (buttonIndex == 1) { //Next
                 array = [NSMutableArray arrayNEWEntryWithSubject: [alertView textFieldAtIndex: 0].text body: [alertView textFieldAtIndex: 1].text];
                 UIActionSheet *actionDiaries = [[UIActionSheet alloc] initWithTitle: @"New Entry" delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: nil];
@@ -118,6 +124,7 @@
                 buttonIndex -= 1;
                 [[array options] setValue: [[(NSArray *)[arrayDiaries objectAtIndex: buttonIndex] options] objectForKey: @"id"] forKey: @"diaryID"];
                 [[UniversalVariables globalVariables] ENTRIES_writeNewForEntry: array];
+                [self reloadTable];
                 
             }
             break;
@@ -127,6 +134,14 @@
         default:
             break;
     }
+    
+}
+
+#pragma mark Void's > Pre-Defined Functions (TABLE VIEW)
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject] message: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body] delegate: nil cancelButtonTitle: @"Dismiss" otherButtonTitles: nil];
+    [alert show];
     
 }
 
@@ -147,8 +162,10 @@
         [alert setTag: 2];
         [alert setAlertViewStyle: UIAlertViewStyleLoginAndPasswordInput];
         [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
+        [[alert textFieldAtIndex: 0] setAutocorrectionType: UITextAutocorrectionTypeYes];
         [[alert textFieldAtIndex: 1] setSecureTextEntry: NO];
-        [[alert textFieldAtIndex: 1] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
+        [[alert textFieldAtIndex: 1] setAutocapitalizationType: UITextAutocapitalizationTypeSentences];
+        [[alert textFieldAtIndex: 1] setAutocorrectionType: UITextAutocorrectionTypeYes];
         [alert show];
         
     } else {

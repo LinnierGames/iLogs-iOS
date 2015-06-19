@@ -178,7 +178,7 @@ NSString *SQLDatabase = @"database";
                 break;
                 
             } case CTSQLEntries: {
-                if (SQLQueryPrepare( database, @"SELECT * FROM Entries;", &statement, &err)) {
+                if (SQLQueryPrepare( database, @"SELECT * FROM Entries WHERE date >= date('now') ORDER BY date ASC;", &statement, &err)) {
                     while (SQLStatementStep( statement))
                         [arrayContents addObject: SQLStatementRowIntoEntryEntry( statement)];
                     
