@@ -267,6 +267,7 @@
 				TargetAttributes = {
 					E17EEC2A1B2E1AD4007C1E91 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 8U3L6K9JA6;
 					};
 					E17EEC431B2E1AD4007C1E91 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -457,6 +458,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = iLog/iLog.pch;
 				INFOPLIST_FILE = iLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -469,6 +471,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = iLog/iLog.pch;
 				INFOPLIST_FILE = iLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
