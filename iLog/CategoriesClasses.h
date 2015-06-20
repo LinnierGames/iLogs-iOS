@@ -13,3 +13,9 @@
 - (NSMutableDictionary *)options;
 
 @end
+
+@interface NSString (STRING_)
+
+- (NSString *)reformatForSQLQuries;
+
+@end

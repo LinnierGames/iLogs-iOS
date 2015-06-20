@@ -17,3 +17,16 @@
 
 @end
 
+@implementation NSString (STRING_)
+
+- (NSString *)reformatForSQLQuries {
+    NSString *string = self;
+    
+//    string = [string stringByReplacingOccurrencesOfString: @"'" withString: @"''"];
+    string = [string stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""];
+    
+    return string;
+    
+}
+
+@end
