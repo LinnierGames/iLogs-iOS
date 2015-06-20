@@ -11,6 +11,11 @@
 		E14036CB1B3131A4005D2608 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E17EECB21B312C5E007C1E91 /* libz.dylib */; };
 		E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC381B2E1AD4007C1E91 /* Main.storyboard */; };
 		E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC3D1B2E1AD4007C1E91 /* LaunchScreen.xib */; };
+		E146E49C1B347037006DC1EC /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E49A1B347037006DC1EC /* EntryViewController.m */; };
+		E146E49D1B347037006DC1EC /* EntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E146E49B1B347037006DC1EC /* EntryViewController.xib */; };
+		E146E4A21B347A45006DC1EC /* UICustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4A01B347A45006DC1EC /* UICustomTableViewCell.m */; };
+		E146E4A31B347A45006DC1EC /* UICustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E146E4A11B347A45006DC1EC /* UICustomTableViewCell.xib */; };
+		E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */; };
 		E17EEC311B2E1AD4007C1E91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC301B2E1AD4007C1E91 /* main.m */; };
 		E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */; };
 		E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC361B2E1AD4007C1E91 /* ViewController.m */; };
@@ -38,6 +43,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E146E4991B347037006DC1EC /* EntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryViewController.h; sourceTree = "<group>"; };
+		E146E49A1B347037006DC1EC /* EntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryViewController.m; sourceTree = "<group>"; };
+		E146E49B1B347037006DC1EC /* EntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryViewController.xib; sourceTree = "<group>"; };
+		E146E49F1B347A45006DC1EC /* UICustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustomTableViewCell.h; sourceTree = "<group>"; };
+		E146E4A01B347A45006DC1EC /* UICustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICustomTableViewCell.m; sourceTree = "<group>"; };
+		E146E4A11B347A45006DC1EC /* UICustomTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UICustomTableViewCell.xib; sourceTree = "<group>"; };
+		E146E4A61B347A5C006DC1EC /* UICustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustom.h; sourceTree = "<group>"; };
+		E146E4A91B348B79006DC1EC /* CategoriesClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesClasses.h; sourceTree = "<group>"; };
+		E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesClasses.m; sourceTree = "<group>"; };
 		E17EEC2B1B2E1AD4007C1E91 /* iLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17EEC2F1B2E1AD4007C1E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E17EEC301B2E1AD4007C1E91 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -92,6 +106,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E146E49E1B34703D006DC1EC /* Editors */ = {
+			isa = PBXGroup;
+			children = (
+				E146E4991B347037006DC1EC /* EntryViewController.h */,
+				E146E49A1B347037006DC1EC /* EntryViewController.m */,
+				E146E49B1B347037006DC1EC /* EntryViewController.xib */,
+			);
+			name = Editors;
+			sourceTree = "<group>";
+		};
+		E146E4A41B347A48006DC1EC /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				E146E49E1B34703D006DC1EC /* Editors */,
+				E146E49F1B347A45006DC1EC /* UICustomTableViewCell.h */,
+				E146E4A01B347A45006DC1EC /* UICustomTableViewCell.m */,
+				E146E4A11B347A45006DC1EC /* UICustomTableViewCell.xib */,
+			);
+			name = headers;
+			sourceTree = "<group>";
+		};
+		E146E4A51B347A4E006DC1EC /* UICustom */ = {
+			isa = PBXGroup;
+			children = (
+				E146E4A61B347A5C006DC1EC /* UICustom.h */,
+				E146E4A41B347A48006DC1EC /* headers */,
+			);
+			name = UICustom;
+			sourceTree = "<group>";
+		};
 		E17EEC221B2E1AD4007C1E91 = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +161,8 @@
 				E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */,
 				E17EEC931B2F9442007C1E91 /* UniversalOperations.h */,
 				E17EEC941B2F9442007C1E91 /* UniversalOperations.m */,
+				E146E4A91B348B79006DC1EC /* CategoriesClasses.h */,
+				E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */,
 				E17EEC351B2E1AD4007C1E91 /* ViewController.h */,
 				E17EEC361B2E1AD4007C1E91 /* ViewController.m */,
 				E17EEC591B2E1C5B007C1E91 /* Apps */,
@@ -124,6 +170,7 @@
 				E17EEC3B1B2E1AD4007C1E91 /* Images.xcassets */,
 				E17EEC3D1B2E1AD4007C1E91 /* LaunchScreen.xib */,
 				E17EEC2E1B2E1AD4007C1E91 /* Supporting Files */,
+				E146E4A51B347A4E006DC1EC /* UICustom */,
 			);
 			path = iLog;
 			sourceTree = "<group>";
@@ -299,8 +346,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E146E4A31B347A45006DC1EC /* UICustomTableViewCell.xib in Resources */,
 				E17EEC581B2E1C58007C1E91 /* DiaryTabBarViewController.xib in Resources */,
 				E17EEC3C1B2E1AD4007C1E91 /* Images.xcassets in Resources */,
+				E146E49D1B347037006DC1EC /* EntryViewController.xib in Resources */,
 				E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */,
 				E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */,
 			);
@@ -321,6 +370,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E17EEC921B2F47C4007C1E91 /* DiaryTabBarViewController.m in Sources */,
+				E146E4A21B347A45006DC1EC /* UICustomTableViewCell.m in Sources */,
+				E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */,
+				E146E49C1B347037006DC1EC /* EntryViewController.m in Sources */,
 				E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */,
 				E17EEC991B2F9D77007C1E91 /* DiaryViewController.m in Sources */,
 				E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */,
