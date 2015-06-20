@@ -28,8 +28,9 @@ typedef sqlite3_stmt SQL3Statement;
  * Used instead of sqlite3_exec(..);
  * @warning statement is compared to SQLITE_OK
  */
-static inline BOOL SQLQueryMake( sqlite3 *database, NSString *sqlStatement, char **err) {
-    return (sqlite3_exec( database, [sqlStatement UTF8String], NULL, NULL, &*err) == SQLITE_OK);
+static inline BOOL SQLQueryMake( sqlite3 *database, NSString *sqlQuery, char **err) {
+    NSLog( @"QUERY: %@", sqlQuery);
+    return (sqlite3_exec( database, [sqlQuery UTF8String], NULL, NULL, &*err) == SQLITE_OK);
     
 };
 static inline BOOL SQLQueryMakeTrigger( sqlite3 *database, NSString *sqlStatement, NSString *sqlTriggerLogic, char **err) {
