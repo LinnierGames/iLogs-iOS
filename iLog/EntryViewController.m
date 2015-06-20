@@ -89,7 +89,7 @@
         case 0:{
             switch (indexPath.row) {
                 case 0:
-                    return 32; break;
+                    return 34; break;
                 case 1:
                     return 44; break;
                 default:

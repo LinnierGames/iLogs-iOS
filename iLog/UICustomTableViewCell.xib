@@ -97,49 +97,34 @@
             </connections>
             <point key="canvasLocation" x="461" y="587.5"/>
         </tableViewCell>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Diary - Entry - Attributes" id="CZd-p9-7m7" userLabel="Textfield" customClass="UICustomTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="32"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Diary - Entry - Attributes" rowHeight="41" id="CZd-p9-7m7" userLabel="Textfield" customClass="UICustomTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="34"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CZd-p9-7m7" id="uHq-tz-gVV">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jgo-7D-xqe">
-                        <rect key="frame" x="200" y="2" width="28" height="28"/>
-                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="28" id="DxN-hw-kh1"/>
-                            <constraint firstAttribute="height" constant="28" id="URV-bh-YMs"/>
-                        </constraints>
-                        <state key="normal">
+                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jgo-7D-xqe">
+                        <rect key="frame" x="204" y="5" width="28" height="28"/>
+                        <state key="normal" image="misc_emtion-disabled.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
                             <action selector="pressButton:" destination="CZd-p9-7m7" eventType="touchUpInside" id="RFS-FG-LaT"/>
                         </connections>
                     </button>
-                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q8u-TE-YQ5">
-                        <rect key="frame" x="242" y="2" width="28" height="28"/>
-                        <color key="backgroundColor" red="1" green="0.80000001192092896" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="28" id="GhX-MA-Z54"/>
-                            <constraint firstAttribute="height" constant="28" id="epW-Np-t4Y"/>
-                        </constraints>
-                        <state key="normal">
+                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q8u-TE-YQ5">
+                        <rect key="frame" x="242" y="0.0" width="32" height="33"/>
+                        <state key="normal" image="misc_weather-disabled.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
                             <action selector="pressButton:" destination="CZd-p9-7m7" eventType="touchUpInside" id="g2S-Cf-EVN"/>
                         </connections>
                     </button>
-                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Erb-Rx-6gi">
-                        <rect key="frame" x="284" y="2" width="28" height="28"/>
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="28" id="IgO-PD-10M"/>
-                            <constraint firstAttribute="width" constant="28" id="WVH-Dp-JvD"/>
-                        </constraints>
-                        <state key="normal">
+                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Erb-Rx-6gi">
+                        <rect key="frame" x="279" y="8" width="25" height="25"/>
+                        <state key="normal" image="misc_bookmark-disabled.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
@@ -148,15 +133,20 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="centerY" secondItem="q8u-TE-YQ5" secondAttribute="centerY" id="5Bd-h0-YOB"/>
-                    <constraint firstItem="q8u-TE-YQ5" firstAttribute="leading" secondItem="Jgo-7D-xqe" secondAttribute="trailing" constant="14" id="NPi-WU-8Dd"/>
-                    <constraint firstAttribute="centerY" secondItem="Erb-Rx-6gi" secondAttribute="centerY" id="Vgk-lf-vIC"/>
-                    <constraint firstItem="Erb-Rx-6gi" firstAttribute="leading" secondItem="q8u-TE-YQ5" secondAttribute="trailing" constant="14" id="led-L9-c5g"/>
-                    <constraint firstItem="Erb-Rx-6gi" firstAttribute="trailing" secondItem="uHq-tz-gVV" secondAttribute="trailingMargin" id="mbJ-E8-Pic"/>
-                    <constraint firstAttribute="centerY" secondItem="Jgo-7D-xqe" secondAttribute="centerY" id="pzl-14-Wv3"/>
+                    <constraint firstItem="q8u-TE-YQ5" firstAttribute="bottom" secondItem="Erb-Rx-6gi" secondAttribute="bottom" id="BhN-9P-r7q"/>
+                    <constraint firstItem="q8u-TE-YQ5" firstAttribute="bottom" secondItem="Jgo-7D-xqe" secondAttribute="bottom" id="Ihd-PP-WL7"/>
+                    <constraint firstItem="Erb-Rx-6gi" firstAttribute="leading" secondItem="q8u-TE-YQ5" secondAttribute="trailing" constant="5" id="RQT-7j-oNW"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Erb-Rx-6gi" secondAttribute="trailing" constant="8" id="YyE-K2-Uxb"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Erb-Rx-6gi" secondAttribute="bottom" constant="-7.5" id="j79-1o-HYl"/>
+                    <constraint firstItem="q8u-TE-YQ5" firstAttribute="leading" secondItem="Jgo-7D-xqe" secondAttribute="trailing" constant="10" id="jqK-42-TLV"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="461" y="689"/>
+            <point key="canvasLocation" x="461" y="684.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="misc_bookmark-disabled.png" width="25" height="25"/>
+        <image name="misc_emtion-disabled.png" width="27" height="28"/>
+        <image name="misc_weather-disabled.png" width="32" height="33"/>
+    </resources>
 </document>
