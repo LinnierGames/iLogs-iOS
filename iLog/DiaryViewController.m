@@ -8,10 +8,11 @@
 
 #import "DiaryViewController.h"
 
-@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate> {
+@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, EntryViewConrollerDelegate> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayTable;
         NSMutableArray *arrayDiaries;
+        NSIndexPath *indexpath;
     NSMutableArray *array;
 }
 
@@ -46,6 +47,14 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [[[arrayTable objectAtIndex: indexPath.row] objectEntry_body] boundingRectWithSize:CGSizeMake(320, 0)
+                                                                                      options: NSStringDrawingUsesLineFragmentOrigin
+                                                                                   attributes: NULL
+                                                                                      context: nil].size.height +28;
+    
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
     if (!cell)
@@ -53,6 +62,7 @@
     //Customize Cell
     [cell.textLabel setFont: [UIFont boldSystemFontOfSize: 12]];
     [cell.textLabel setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject]];
+    [cell.detailTextLabel setNumberOfLines: 25];
     [cell.detailTextLabel setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body]];
     
     return cell;
@@ -107,6 +117,13 @@
             }
             break;
             
+        } case 3: { //View Entry > Edit Entry
+            if (buttonIndex == 1) {
+                UINavigationController *viewEdit = [EntryViewController modifyEntry: [arrayTable objectAtIndex: indexpath.row] delegate: self];
+                [self presentViewController: viewEdit animated: YES completion: ^{ }];
+                
+            }
+            
         }
             
         default:
@@ -140,8 +157,17 @@
 #pragma mark Void's > Pre-Defined Functions (TABLE VIEW)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject] message: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body] delegate: nil cancelButtonTitle: @"Dismiss" otherButtonTitles: nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject] message: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body] delegate: self cancelButtonTitle: @"Dismiss" otherButtonTitles: @"Edit", nil];
+    [alert setTag: 3];
+    indexpath = indexPath;
     [alert show];
+    
+}
+
+#pragma mark Void's > Pre-Defined Functions (ENTRY VIEW CONTROLLER)
+
+- (void)entryViewController:(EntryViewController *)entry didFinishWithEntry:(const NSArray *)array {
+    [self reloadTable];
     
 }
 
@@ -158,6 +184,10 @@
 
 - (void)pressNavRight:(id)sender {
     if ([arrayDiaries count] > 0) {
+        UINavigationController *viewNew = [EntryViewController newEntryWithDelegate: self];
+        [self presentViewController: viewNew animated: YES completion: ^{ }];
+        
+        return;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Entry" message: @"enter the subject and body of this new entry" delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"Next", nil];
         [alert setTag: 2];
         [alert setAlertViewStyle: UIAlertViewStyleLoginAndPasswordInput];
@@ -187,11 +217,11 @@
     arrayTable = [NSMutableArray new];
     arrayDiaries = [NSMutableArray new];
     array = [NSMutableArray new];
+    [self reloadTable];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self reloadTable];
     
 }
 

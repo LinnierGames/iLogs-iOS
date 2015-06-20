@@ -12,12 +12,6 @@
 
 @end
 
-@interface NSArray (ARRAY_)
-
-- (NSMutableDictionary *)options;
-
-@end
-
 #pragma mark - Diaries
 
 #pragma mark NSArray category (ARRAY_Diaries_)

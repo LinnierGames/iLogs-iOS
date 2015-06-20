@@ -12,15 +12,6 @@
 
 @end
 
-@implementation NSArray (ARRAY_)
-
-- (NSMutableDictionary *)options {
-    return (NSMutableDictionary *)[self lastObject];
-    
-}
-
-@end
-
 #pragma mark - Entries
 
 #pragma mark NSArray category (ARRAY_Diaries_)
