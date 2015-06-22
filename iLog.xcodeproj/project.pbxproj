@@ -16,18 +16,6 @@
 		E146E4A21B347A45006DC1EC /* UICustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4A01B347A45006DC1EC /* UICustomTableViewCell.m */; };
 		E146E4A31B347A45006DC1EC /* UICustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E146E4A11B347A45006DC1EC /* UICustomTableViewCell.xib */; };
 		E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */; };
-		E146E4C51B35C515006DC1EC /* misc_bookmark-disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = E146E4B91B35C515006DC1EC /* misc_bookmark-disabled.png */; };
-		E146E4C61B35C515006DC1EC /* misc_bookmark-disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E146E4BA1B35C515006DC1EC /* misc_bookmark-disabled@2x.png */; };
-		E146E4C71B35C515006DC1EC /* misc_bookmark-enabled.png in Resources */ = {isa = PBXBuildFile; fileRef = E146E4BB1B35C515006DC1EC /* misc_bookmark-enabled.png */; };
-		E146E4C81B35C515006DC1EC /* misc_bookmark-enabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E146E4BC1B35C515006DC1EC /* misc_bookmark-enabled@2x.png */; };
-		E146E4C91B35C515006DC1EC /* misc_emtion-disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = E146E4BD1B35C515006DC1EC /* misc_emtion-disabled.png */; };
-		E146E4CA1B35C515006DC1EC /* misc_emtion-disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E146E4BE1B35C515006DC1EC /* misc_emtion-disabled@2x.png */; };
-		E146E4CB1B35C515006DC1EC /* misc_emtion-enabled.png in Resources */ = {isa = PBXBuildFile; fileRef = E146E4BF1B35C515006DC1EC /* misc_emtion-enabled.png */; };
-		E146E4CC1B35C515006DC1EC /* misc_emtion-enabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E146E4C01B35C515006DC1EC /* misc_emtion-enabled@2x.png */; };
-		E146E4CD1B35C515006DC1EC /* misc_weather-disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = E146E4C11B35C515006DC1EC /* misc_weather-disabled.png */; };
-		E146E4CE1B35C515006DC1EC /* misc_weather-disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E146E4C21B35C515006DC1EC /* misc_weather-disabled@2x.png */; };
-		E146E4CF1B35C515006DC1EC /* misc_weather-enabled.png in Resources */ = {isa = PBXBuildFile; fileRef = E146E4C31B35C515006DC1EC /* misc_weather-enabled.png */; };
-		E146E4D01B35C515006DC1EC /* misc_weather-enabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E146E4C41B35C515006DC1EC /* misc_weather-enabled@2x.png */; };
 		E17EEC311B2E1AD4007C1E91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC301B2E1AD4007C1E91 /* main.m */; };
 		E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */; };
 		E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC361B2E1AD4007C1E91 /* ViewController.m */; };
@@ -64,18 +52,6 @@
 		E146E4A61B347A5C006DC1EC /* UICustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustom.h; sourceTree = "<group>"; };
 		E146E4A91B348B79006DC1EC /* CategoriesClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesClasses.h; sourceTree = "<group>"; };
 		E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesClasses.m; sourceTree = "<group>"; };
-		E146E4B91B35C515006DC1EC /* misc_bookmark-disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "misc_bookmark-disabled.png"; sourceTree = "<group>"; };
-		E146E4BA1B35C515006DC1EC /* misc_bookmark-disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "misc_bookmark-disabled@2x.png"; sourceTree = "<group>"; };
-		E146E4BB1B35C515006DC1EC /* misc_bookmark-enabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "misc_bookmark-enabled.png"; sourceTree = "<group>"; };
-		E146E4BC1B35C515006DC1EC /* misc_bookmark-enabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "misc_bookmark-enabled@2x.png"; sourceTree = "<group>"; };
-		E146E4BD1B35C515006DC1EC /* misc_emtion-disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "misc_emtion-disabled.png"; sourceTree = "<group>"; };
-		E146E4BE1B35C515006DC1EC /* misc_emtion-disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "misc_emtion-disabled@2x.png"; sourceTree = "<group>"; };
-		E146E4BF1B35C515006DC1EC /* misc_emtion-enabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "misc_emtion-enabled.png"; sourceTree = "<group>"; };
-		E146E4C01B35C515006DC1EC /* misc_emtion-enabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "misc_emtion-enabled@2x.png"; sourceTree = "<group>"; };
-		E146E4C11B35C515006DC1EC /* misc_weather-disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "misc_weather-disabled.png"; sourceTree = "<group>"; };
-		E146E4C21B35C515006DC1EC /* misc_weather-disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "misc_weather-disabled@2x.png"; sourceTree = "<group>"; };
-		E146E4C31B35C515006DC1EC /* misc_weather-enabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "misc_weather-enabled.png"; sourceTree = "<group>"; };
-		E146E4C41B35C515006DC1EC /* misc_weather-enabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "misc_weather-enabled@2x.png"; sourceTree = "<group>"; };
 		E17EEC2B1B2E1AD4007C1E91 /* iLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17EEC2F1B2E1AD4007C1E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E17EEC301B2E1AD4007C1E91 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -164,18 +140,6 @@
 		E146E4B81B35C0A2006DC1EC /* RES */ = {
 			isa = PBXGroup;
 			children = (
-				E146E4B91B35C515006DC1EC /* misc_bookmark-disabled.png */,
-				E146E4BA1B35C515006DC1EC /* misc_bookmark-disabled@2x.png */,
-				E146E4BB1B35C515006DC1EC /* misc_bookmark-enabled.png */,
-				E146E4BC1B35C515006DC1EC /* misc_bookmark-enabled@2x.png */,
-				E146E4BD1B35C515006DC1EC /* misc_emtion-disabled.png */,
-				E146E4BE1B35C515006DC1EC /* misc_emtion-disabled@2x.png */,
-				E146E4BF1B35C515006DC1EC /* misc_emtion-enabled.png */,
-				E146E4C01B35C515006DC1EC /* misc_emtion-enabled@2x.png */,
-				E146E4C11B35C515006DC1EC /* misc_weather-disabled.png */,
-				E146E4C21B35C515006DC1EC /* misc_weather-disabled@2x.png */,
-				E146E4C31B35C515006DC1EC /* misc_weather-enabled.png */,
-				E146E4C41B35C515006DC1EC /* misc_weather-enabled@2x.png */,
 			);
 			name = RES;
 			sourceTree = "<group>";
@@ -390,23 +354,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E146E4CA1B35C515006DC1EC /* misc_emtion-disabled@2x.png in Resources */,
-				E146E4CD1B35C515006DC1EC /* misc_weather-disabled.png in Resources */,
-				E146E4CF1B35C515006DC1EC /* misc_weather-enabled.png in Resources */,
-				E146E4C61B35C515006DC1EC /* misc_bookmark-disabled@2x.png in Resources */,
 				E146E4A31B347A45006DC1EC /* UICustomTableViewCell.xib in Resources */,
-				E146E4C81B35C515006DC1EC /* misc_bookmark-enabled@2x.png in Resources */,
-				E146E4C51B35C515006DC1EC /* misc_bookmark-disabled.png in Resources */,
-				E146E4CB1B35C515006DC1EC /* misc_emtion-enabled.png in Resources */,
-				E146E4CC1B35C515006DC1EC /* misc_emtion-enabled@2x.png in Resources */,
-				E146E4C91B35C515006DC1EC /* misc_emtion-disabled.png in Resources */,
-				E146E4CE1B35C515006DC1EC /* misc_weather-disabled@2x.png in Resources */,
-				E146E4D01B35C515006DC1EC /* misc_weather-enabled@2x.png in Resources */,
 				E17EEC581B2E1C58007C1E91 /* DiaryTabBarViewController.xib in Resources */,
 				E17EEC3C1B2E1AD4007C1E91 /* Images.xcassets in Resources */,
 				E146E49D1B347037006DC1EC /* EntryViewController.xib in Resources */,
 				E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */,
-				E146E4C71B35C515006DC1EC /* misc_bookmark-enabled.png in Resources */,
 				E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
