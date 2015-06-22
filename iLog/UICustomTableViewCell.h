@@ -23,6 +23,10 @@ typedef NS_ENUM(NSUInteger, CDUICustomTableViewCells) {
 
 @property ( nonatomic, retain) IBOutlet UILabel *labelTitle;
 @property ( nonatomic, retain) IBOutlet UILabel *labelSubtitle;
+@property ( nonatomic, retain) IBOutlet UIButton *button;
+@property ( nonatomic, retain) IBOutlet UIButton *button1;
+@property ( nonatomic, retain) IBOutlet UIButton *button2;
+@property ( nonatomic, retain) IBOutlet UIButton *button3;
 @property ( nonatomic, retain) IBOutlet UITextField *textfield;
 @property ( nonatomic, retain) IBOutlet UITextView *textview;
 

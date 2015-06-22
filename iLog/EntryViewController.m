@@ -117,6 +117,28 @@
                     if (!cell)
                         cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellDiaryEntryAttributes];
                     
+                    switch ([arrayM objectEntry_emotion]) {
+                        case CTEntryEmotionNoone:
+                            [cell.button1 setImage: [UIImage imageNamed: @"misc_emotion-disabled"] forState: UIControlStateNormal];
+                            break;
+                        default:
+                            [cell.button1 setImage: [UIImage imageNamed: @"misc_emotion-enabled"] forState: UIControlStateNormal];
+                            break;
+                            
+                    }
+                    switch ([arrayM objectEntry_weather]) {
+                        case CTEntryWeatherNoone:
+                            [cell.button2 setImage: [UIImage imageNamed: @"misc_weather-disabled"] forState: UIControlStateNormal];
+                            break;
+                        default:
+                            [cell.button2 setImage: [UIImage imageNamed: @"misc_weather-enabled"] forState: UIControlStateNormal];
+                            break;
+                            
+                    }
+                    if ([arrayM objectEntry_isBookmarked])
+                        [cell.button3 setImage: [UIImage imageNamed: @"misc_bookmark-enabled"] forState: UIControlStateNormal];
+                    else
+                        [cell.button3 setImage: [UIImage imageNamed: @"misc_bookmark-disabled"] forState: UIControlStateNormal];
                     [cell setDelegate: self];
                     
                     return cell;
@@ -228,6 +250,35 @@
         [arrayM replaceObjectAtIndex: ENTRIES_body withObject: textView.text];
         
     }
+    
+}
+
+#pragma mark Void's > Pre-Defined Functions (CUSTOM TABLE VIEW CELL)
+
+- (void)customCell:(UICustomTableViewCell *)cell buttonPressed:(id)button {
+    switch ([button tag]) {
+        case 1: { //Emotions
+            if ([arrayM objectEntry_emotion] == CTEntryEmotionNoone)
+                [arrayM replaceObjectAtIndex: ENTRIES_emotion withObject: [NSNumber numberWithInt: CTEntryEmotionHappy]];
+            else
+                [arrayM replaceObjectAtIndex: ENTRIES_emotion withObject: [NSNumber numberWithInt: CTEntryEmotionNoone]];
+            break;
+            
+        } case 2: { //Weather
+            if ([arrayM objectEntry_weather] == CTEntryWeatherNoone)
+                [arrayM replaceObjectAtIndex: ENTRIES_weather withObject: [NSNumber numberWithInt: CTEntryWeatherClear]];
+            else
+                [arrayM replaceObjectAtIndex: ENTRIES_weather withObject: [NSNumber numberWithInt: CTEntryWeatherNoone]];
+            break;
+            
+        } case 3: { //Bookmark
+            [arrayM replaceObjectAtIndex: ENTRIES_isBookmarked withObject: [NSNumber numberWithBool: [arrayM objectEntry_isBookmarked] ? NO : YES]];
+            break;
+            
+        }
+            
+    }
+    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 0 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
     
 }
 

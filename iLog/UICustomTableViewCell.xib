@@ -141,6 +141,11 @@
                     <constraint firstItem="q8u-TE-YQ5" firstAttribute="leading" secondItem="Jgo-7D-xqe" secondAttribute="trailing" constant="10" id="jqK-42-TLV"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="button1" destination="Jgo-7D-xqe" id="wTa-Kn-2cP"/>
+                <outlet property="button2" destination="q8u-TE-YQ5" id="DjC-YK-S40"/>
+                <outlet property="button3" destination="Erb-Rx-6gi" id="LWl-5w-ilu"/>
+            </connections>
             <point key="canvasLocation" x="461" y="684.5"/>
         </tableViewCell>
     </objects>
