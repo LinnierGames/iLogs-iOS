@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "ISO8601DateFormatter.h"
+#import <UIKit/UIKit.h>
+
+static CGFloat CVTableViewCellDefaultCellHeight = 38;
 
 @interface UniversalVariables : NSObject
 
