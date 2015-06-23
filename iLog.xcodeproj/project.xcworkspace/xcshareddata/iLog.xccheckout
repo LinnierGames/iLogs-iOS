@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>62AABAB1-2D81-4DAB-850A-AF9DF82C739E</string>
 	<key>IDESourceControlProjectName</key>
-	<string>iLog</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>F9907B97B1E6D5CCA2BF9FC6B27E07D3DCCCF69B</key>
 		<string>https://github.com/LinnierGames/iLog.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>iLog.xcodeproj</string>
+	<string>iLog.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>F9907B97B1E6D5CCA2BF9FC6B27E07D3DCCCF69B</key>

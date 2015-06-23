@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E12640591B38709300E423E7 /* UIContentPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E12640581B38709300E423E7 /* UIContentPicker.m */; };
+		E126405B1B3870A000E423E7 /* UIContentPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = E126405A1B3870A000E423E7 /* UIContentPicker.xib */; };
 		E14036CA1B313194005D2608 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */; };
 		E14036CB1B3131A4005D2608 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E17EECB21B312C5E007C1E91 /* libz.dylib */; };
 		E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC381B2E1AD4007C1E91 /* Main.storyboard */; };
@@ -43,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E12640571B38709300E423E7 /* UIContentPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIContentPicker.h; sourceTree = "<group>"; };
+		E12640581B38709300E423E7 /* UIContentPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIContentPicker.m; sourceTree = "<group>"; };
+		E126405A1B3870A000E423E7 /* UIContentPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UIContentPicker.xib; sourceTree = "<group>"; };
 		E146E4991B347037006DC1EC /* EntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryViewController.h; sourceTree = "<group>"; };
 		E146E49A1B347037006DC1EC /* EntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryViewController.m; sourceTree = "<group>"; };
 		E146E49B1B347037006DC1EC /* EntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryViewController.xib; sourceTree = "<group>"; };
@@ -124,6 +129,9 @@
 				E146E49F1B347A45006DC1EC /* UICustomTableViewCell.h */,
 				E146E4A01B347A45006DC1EC /* UICustomTableViewCell.m */,
 				E146E4A11B347A45006DC1EC /* UICustomTableViewCell.xib */,
+				E12640571B38709300E423E7 /* UIContentPicker.h */,
+				E12640581B38709300E423E7 /* UIContentPicker.m */,
+				E126405A1B3870A000E423E7 /* UIContentPicker.xib */,
 			);
 			name = headers;
 			sourceTree = "<group>";
@@ -360,6 +368,7 @@
 				E146E49D1B347037006DC1EC /* EntryViewController.xib in Resources */,
 				E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */,
 				E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */,
+				E126405B1B3870A000E423E7 /* UIContentPicker.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +386,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E12640591B38709300E423E7 /* UIContentPicker.m in Sources */,
 				E17EEC921B2F47C4007C1E91 /* DiaryTabBarViewController.m in Sources */,
 				E146E4A21B347A45006DC1EC /* UICustomTableViewCell.m in Sources */,
 				E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */,
