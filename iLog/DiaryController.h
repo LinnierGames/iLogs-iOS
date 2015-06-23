@@ -88,19 +88,88 @@ static inline NSMutableArray * SQLStatementRowIntoDiaryEntry( sqlite3_stmt *stat
 
 typedef NS_ENUM(int, CDEntryEmotions) {
     CTEntryEmotionNoone = 0,
-    CTEntryEmotionHappy = 1,
-    CTEntryEmotionNeutral = 2,
-    CTEntryEmotionUnhappy = 3,
-    CTEntryEmotionMad = 4
+    CTEntryEmotionVeryHappy = 1,
+    CTEntryEmotionHappy = 2,
+    CTEntryEmotionStrongWellFit = 3,
+    CTEntryEmotionDetermined = 4,
+    CTEntryEmotionAccomplished = 5,
+    CTEntryEmotionWondering = 6,
+    CTEntryEmotionProductive = 7,
+    CTEntryEmotionRelieved = 8,
+    CTEntryEmotionRecovering = 32,
+    CTEntryEmotionProud = 9,
+    CTEntryEmotionCool = 10,
+    CTEntryEmotionOkay = 11,
+    CTEntryEmotionNeutral = 12,
+    CTEntryEmotionMeh = 13,
+    CTEntryEmotionTired = 14,
+    CTEntryEmotionExhausted = 15,
+    CTEntryEmotionLazy = 16,
+    CTEntryEmotionWorried = 17,
+    CTEntryEmotionShocked = 18,
+    CTEntryEmotionDisappointed = 19,
+    CTEntryEmotionAnnoyed = 20,
+    CTEntryEmotionOverwhealmed = 21,
+    CTEntryEmotionOutOfShape = 22,
+    CTEntryEmotionInPain = 23,
+    CTEntryEmotionSick = 24,
+    CTEntryEmotionSad = 25,
+    CTEntryEmotionUpset = 26,
+    CTEntryEmotionUnhappy = 27,
+    CTEntryEmotionDepressed = 29,
+    CTEntryEmotionMad = 30,
+    CTEntryEmotionAngry = 31
+    
 };
 
-typedef NS_ENUM(int, CDEntryWeather) {
-    CTEntryWeatherNoone = 0,
-    CTEntryWeatherClear = 1,
-    CTEntryWeatherCouldy = 2,
-    CTEntryWeatherWindy = 3,
-    CTEntryWeatherRainy = 4,
-    CTEntryWeatherSnowy = 5,
+static inline UIImage* NSImageByEmotion(CDEntryEmotions emotion) {
+    switch (emotion) {
+        case CTEntryEmotionNoone:
+            return [UIImage imageNamed: @"misc_emotionNeutral-disabled"]; break;
+        case CTEntryEmotionVeryHappy:
+            return [UIImage imageNamed: @"misc_emotionVeryHappy"]; break;
+        case CTEntryEmotion<#Noone#>:
+            return [UIImage imageNamed: @"misc_emotion<#Neutral-disabled#>"]; break;
+        default:
+            return NSImageByEmotion( CTEntryEmotionNoone); break;
+            
+    }
+    
+}
+
+static inline NSString* NSTitleByEmotion(CDEntryEmotions emotion) {
+    switch (emotion) {
+        case CTEntryEmotionNoone:
+            return @"None"; break;
+        case CTEntryEmotion<#Noone#>:
+            return @"<#None#>"; break;
+        default:
+            return NSTitleByEmotion( CTEntryEmotionNoone); break;
+            
+    }
+    
+}
+
+typedef NS_ENUM(int, CDEntryWeatherCondition) {
+    CTEntryWeatherConditionNoone = 0,
+    CTEntryWeatherConditionSunny = 1,
+    CTEntryWeatherConditionCloudy = 2,
+    CTEntryWeatherConditionWindy = 3,
+    CTEntryWeatherConditionFoggy = 4,
+    CTEntryWeatherConditionMisty = 5,
+    CTEntryWeatherConditionRainy = 6,
+    CTEntryWeatherConditionSnowy = 7
+    
+};
+
+typedef NS_ENUM(int, CDEntryTemerature) {
+    CTEntryTemperatureNoone = 0,
+    CTEntryTemperatureHot = 1,
+    CTEntryTemperatureHumid = 2,
+    CTEntryTemperatureWarm = 3,
+    CTEntryTemperatureJustRight = 4,
+    CTEntryTemperatureCool = 5,
+    CTEntryTemperatureFreezing = 6
     
 };
 
@@ -120,14 +189,14 @@ static const NSUInteger ENTRIES_hasAudioMemo = 8;
 
 + (id)arrayNEWEntry;
 + (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue body:(NSString *)stringBodyValue;
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weather:(CDEntryWeather)weatherValue isBookmarked:(BOOL)boolBookmarkedValue hasImage:(BOOL)boolImageValue hasAudioMemo:(BOOL)boolAudioMemoValue;
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weather:(CDEntryWeather)weatherValue isBookmarked:(BOOL)boolBookmarkedValue hasImage:(BOOL)boolImageValue hasAudioMemo:(BOOL)boolAudioMemoValue options:(NSMutableDictionary *)dicIndex;
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weather:(CDEntryWeatherCondition)weatherValue isBookmarked:(BOOL)boolBookmarkedValue hasImage:(BOOL)boolImageValue hasAudioMemo:(BOOL)boolAudioMemoValue;
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weather:(CDEntryWeatherCondition)weatherValue isBookmarked:(BOOL)boolBookmarkedValue hasImage:(BOOL)boolImageValue hasAudioMemo:(BOOL)boolAudioMemoValue options:(NSMutableDictionary *)dicIndex;
 - (NSString *)objectEntry_subject;
 - (NSDate *)objectEntry_date;
 - (NSDate *)objectEntry_dateCreated;
 - (NSString *)objectEntry_body;
 - (CDEntryEmotions)objectEntry_emotion;
-- (CDEntryWeather)objectEntry_weather;
+- (CDEntryWeatherCondition)objectEntry_weather;
 - (BOOL)objectEntry_isBookmarked;
 - (BOOL)objectEntry_hasImage;
 - (BOOL)objectEntry_hasAudioMemo;
@@ -167,7 +236,7 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
     NSString *stringBody = [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_ENTRIES_body)];
     
     CDEntryEmotions emotion = sqlite3_column_int( statement, SQL_ENTRIES_emotion);
-    CDEntryWeather weather = sqlite3_column_int( statement, SQL_ENTRIES_weather);
+    CDEntryWeatherCondition weather = sqlite3_column_int( statement, SQL_ENTRIES_weather);
     BOOL isBookmarked = sqlite3_column_int( statement, SQL_ENTRIES_isBookmarked);
     BOOL hasImage = sqlite3_column_int( statement, SQL_ENTRIES_hasImage);
     BOOL hasAudioMemo = sqlite3_column_int( statement, SQL_ENTRIES_hasAudioMemo);

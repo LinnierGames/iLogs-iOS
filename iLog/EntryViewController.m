@@ -127,7 +127,7 @@
                             
                     }
                     switch ([arrayM objectEntry_weather]) {
-                        case CTEntryWeatherNoone:
+                        case CTEntryWeatherConditionNoone:
                             [cell.button2 setImage: [UIImage imageNamed: @"misc_weather-disabled"] forState: UIControlStateNormal];
                             break;
                         default:
@@ -265,10 +265,10 @@
             break;
             
         } case 2: { //Weather
-            if ([arrayM objectEntry_weather] == CTEntryWeatherNoone)
-                [arrayM replaceObjectAtIndex: ENTRIES_weather withObject: [NSNumber numberWithInt: CTEntryWeatherClear]];
+            if ([arrayM objectEntry_weather] == CTEntryWeatherConditionNoone)
+                [arrayM replaceObjectAtIndex: ENTRIES_weather withObject: [NSNumber numberWithInt: CTEntryWeatherConditionSunny]];
             else
-                [arrayM replaceObjectAtIndex: ENTRIES_weather withObject: [NSNumber numberWithInt: CTEntryWeatherNoone]];
+                [arrayM replaceObjectAtIndex: ENTRIES_weather withObject: [NSNumber numberWithInt: CTEntryWeatherConditionNoone]];
             break;
             
         } case 3: { //Bookmark

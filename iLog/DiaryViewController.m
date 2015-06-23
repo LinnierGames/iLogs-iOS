@@ -187,16 +187,6 @@
         UINavigationController *viewNew = [EntryViewController newEntryWithDelegate: self];
         [self presentViewController: viewNew animated: YES completion: ^{ }];
         
-        return;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Entry" message: @"enter the subject and body of this new entry" delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"Next", nil];
-        [alert setTag: 2];
-        [alert setAlertViewStyle: UIAlertViewStyleLoginAndPasswordInput];
-        [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
-        [[alert textFieldAtIndex: 0] setAutocorrectionType: UITextAutocorrectionTypeYes];
-        [[alert textFieldAtIndex: 1] setSecureTextEntry: NO];
-        [[alert textFieldAtIndex: 1] setAutocapitalizationType: UITextAutocapitalizationTypeSentences];
-        [[alert textFieldAtIndex: 1] setAutocorrectionType: UITextAutocorrectionTypeYes];
-        [alert show];
         
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Diary" message: @"there must be a Diary before adding an entry. Please add a Diary" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
