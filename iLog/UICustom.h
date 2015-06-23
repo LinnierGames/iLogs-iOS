@@ -18,5 +18,6 @@ typedef NS_ENUM(NSUInteger, CRUD) {
 #import "EntryViewController.h"
 
 #import "UICustomTableViewCell.h"
+#import "UIContentPicker.h"
 
 #endif

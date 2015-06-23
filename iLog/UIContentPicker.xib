@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="gqx-rX-lrP" customClass="UIContentPicker">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Tq-Db-m4J">
+                    <rect key="frame" x="0.0" y="327" width="320" height="241"/>
+                    <subviews>
+                        <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lF-iF-dj6">
+                            <rect key="frame" x="0.0" y="79" width="320" height="162"/>
+                            <connections>
+                                <outlet property="dataSource" destination="gqx-rX-lrP" id="1AX-n8-cRe"/>
+                                <outlet property="delegate" destination="gqx-rX-lrP" id="42H-vn-v28"/>
+                            </connections>
+                        </pickerView>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="LMB-cP-maI">
+                            <rect key="frame" x="8" y="43" width="304" height="29"/>
+                            <segments>
+                                <segment title="Basic"/>
+                                <segment title="Natural"/>
+                                <segment title="Deadly"/>
+                                <segment title="Grays"/>
+                                <segment title="All"/>
+                            </segments>
+                            <connections>
+                                <action selector="changeSegTheme:" destination="gqx-rX-lrP" eventType="valueChanged" id="arw-fk-h0g"/>
+                            </connections>
+                        </segmentedControl>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2hy-Qm-BjF">
+                            <rect key="frame" x="36" y="6" width="249" height="30"/>
+                            <color key="backgroundColor" red="0.49411767719999999" green="0.7254902124" blue="0.98823535439999999" alpha="1" colorSpace="deviceRGB"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <state key="normal" title="Select">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="pressDone:" destination="gqx-rX-lrP" eventType="touchUpInside" id="wjy-TG-mCN"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="button" destination="2hy-Qm-BjF" id="jTy-Nv-LhR"/>
+                <outlet property="contentView" destination="2Tq-Db-m4J" id="ADG-6n-U05"/>
+                <outlet property="picker" destination="8lF-iF-dj6" id="qKb-Jj-Qwq"/>
+                <outlet property="segTheme" destination="LMB-cP-maI" id="U8b-Hg-4LJ"/>
+            </connections>
+            <point key="canvasLocation" x="599" y="80"/>
+        </view>
+    </objects>
+</document>
