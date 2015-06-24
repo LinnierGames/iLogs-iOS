@@ -268,6 +268,44 @@ static inline NSString* NSTitleByEmotion(CDEntryEmotions emotion) {
     
 }
 
+static inline NSArray* NSEmotionArray() {
+    return [NSArray arrayWithObjects:
+            @(CTEntryEmotionVeryHappy),
+            @(CTEntryEmotionNoone),
+            @(CTEntryEmotionVeryHappy),
+            @(CTEntryEmotionHappy),
+            @(CTEntryEmotionStrongWellFit),
+            @(CTEntryEmotionDetermined),
+            @(CTEntryEmotionAccomplished),
+            @(CTEntryEmotionWondering),
+            @(CTEntryEmotionProductive),
+            @(CTEntryEmotionRelieved),
+            @(CTEntryEmotionRecovering),
+            @(CTEntryEmotionProud),
+            @(CTEntryEmotionCool),
+            @(CTEntryEmotionOkay),
+            @(CTEntryEmotionNeutral),
+            @(CTEntryEmotionMeh),
+            @(CTEntryEmotionTired),
+            @(CTEntryEmotionExhausted),
+            @(CTEntryEmotionLazy),
+            @(CTEntryEmotionWorried),
+            @(CTEntryEmotionShocked),
+            @(CTEntryEmotionDisappointed),
+            @(CTEntryEmotionAnnoyed),
+            @(CTEntryEmotionOverwhealmed),
+            @(CTEntryEmotionOutOfShape),
+            @(CTEntryEmotionInPain),
+            @(CTEntryEmotionSick),
+            @(CTEntryEmotionSad),
+            @(CTEntryEmotionUpset),
+            @(CTEntryEmotionUnhappy),
+            @(CTEntryEmotionDepressed),
+            @(CTEntryEmotionMad),
+            @(CTEntryEmotionAngry), nil];
+    
+}
+
 typedef NS_ENUM(int, CDEntryWeatherCondition) {
     CTEntryWeatherConditionNoone = 0,
     CTEntryWeatherConditionSunny = 1,
