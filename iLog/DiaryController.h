@@ -125,7 +125,7 @@ typedef NS_ENUM(int, CDEntryEmotions) {
 static inline UIImage* NSImageByEmotion(CDEntryEmotions emotion) {
     switch (emotion) {
         case CTEntryEmotionNoone:
-            return [UIImage imageNamed: @"misc_emotionNeutral-disabled"]; break;
+            return [UIImage imageNamed: @"misc_emotion-disabled"]; break;
         case CTEntryEmotionVeryHappy:
             return [UIImage imageNamed: @"misc_emotionVeryHappy"]; break;
         case CTEntryEmotionHappy:
