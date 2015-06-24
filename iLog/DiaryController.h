@@ -337,9 +337,61 @@ typedef NS_ENUM(int, CDEntryTemerature) {
     CTEntryTemperatureWarm = 3,
     CTEntryTemperatureJustRight = 4,
     CTEntryTemperatureCool = 5,
-    CTEntryTemperatureFreezing = 6
+    CTEntryTemperatureCold = 6,
+    CTEntryTemperatureFreezing = 7
     
 };
+
+static inline UIImage* NSImageByTemperature(CDEntryTemerature temperature) {
+    switch (temperature) {
+        case CTEntryTemperatureNoone:
+            return [UIImage imageNamed: @"misc_temperature-disabled"]; break;
+        case CTEntryTemperatureHot:
+            return [UIImage imageNamed: @"misc_temperatureHot"]; break;
+        case CTEntryTemperatureHumid:
+            return [UIImage imageNamed: @"misc_temperatureHumid"]; break;
+        case CTEntryTemperatureWarm:
+            return [UIImage imageNamed: @"misc_temperatureWarm"]; break;
+        case CTEntryTemperatureJustRight:
+            return [UIImage imageNamed: @"misc_temperatureJustRight"]; break;
+        case CTEntryTemperatureCool:
+            return [UIImage imageNamed: @"misc_temperatureCool"]; break;
+        case CTEntryTemperatureCold:
+            return [UIImage imageNamed: @"misc_temperatureCold"]; break;
+        case CTEntryTemperatureFreezing:
+            return [UIImage imageNamed: @"misc_temperatureFreezing"]; break;
+        default:
+            return NSImageByTemperature( CTEntryTemperatureNoone); break;
+            
+    }
+    
+}
+
+            
+static inline NSString* NSTitleByTemperature(CDEntryTemerature temperature) {
+    switch (temperature) {
+        case CTEntryTemperatureNoone:
+            return @"None"; break;
+        case CTEntryTemperatureHot:
+            return @"Hot"; break;
+        case CTEntryTemperatureHumid:
+            return @"Humid"; break;
+        case CTEntryTemperatureWarm:
+            return @"Warm"; break;
+        case CTEntryTemperatureJustRight:
+            return @"JustRight"; break;
+        case CTEntryTemperatureCool:
+            return @"Cool"; break;
+        case CTEntryTemperatureCold:
+            return @"Cold"; break;
+        case CTEntryTemperatureFreezing:
+            return @"Freezing"; break;
+        default:
+            return NSTitleByTemperature( CTEntryTemperatureNoone); break;
+            
+    }
+    
+}
 
 #pragma mark NSArray category (ARRAY_Entries_)
 
