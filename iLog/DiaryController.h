@@ -280,6 +280,56 @@ typedef NS_ENUM(int, CDEntryWeatherCondition) {
     
 };
 
+static inline UIImage* NSImageByWeatherCondition(CDEntryWeatherCondition weatherCondition) {
+    switch (weatherCondition) {
+        case CTEntryWeatherConditionNoone:
+            return [UIImage imageNamed: @"misc_weather-disabled"]; break;
+        case CTEntryWeatherConditionSunny:
+            return [UIImage imageNamed: @"misc_weatherSunny"]; break;
+        case CTEntryWeatherConditionCloudy:
+            return [UIImage imageNamed: @"misc_weatherCloudy"]; break;
+        case CTEntryWeatherConditionWindy:
+            return [UIImage imageNamed: @"misc_weatherWindy"]; break;
+        case CTEntryWeatherConditionFoggy:
+            return [UIImage imageNamed: @"misc_weatherFoggy"]; break;
+        case CTEntryWeatherConditionMisty:
+            return [UIImage imageNamed: @"misc_weatherMisty"]; break;
+        case CTEntryWeatherConditionRainy:
+            return [UIImage imageNamed: @"misc_weatherRainy"]; break;
+        case CTEntryWeatherConditionSnowy:
+            return [UIImage imageNamed: @"misc_weatherSnowy"]; break;
+        default:
+            return NSImageByWeatherCondition( CTEntryWeatherConditionNoone); break;
+            
+    }
+    
+}
+
+static inline NSString* NSTitleByWeatherCondition(CDEntryWeatherCondition weatherCondition) {
+    switch (weatherCondition) {
+        case CTEntryWeatherConditionNoone:
+            return @"None"; break;
+        case CTEntryWeatherConditionSunny:
+            return @"Sunny"; break;
+        case CTEntryWeatherConditionCloudy:
+            return @"Cloudy"; break;
+        case CTEntryWeatherConditionWindy:
+            return @"Windy"; break;
+        case CTEntryWeatherConditionFoggy:
+            return @"Foggy"; break;
+        case CTEntryWeatherConditionMisty:
+            return @"Misty"; break;
+        case CTEntryWeatherConditionRainy:
+            return @"Rainy"; break;
+        case CTEntryWeatherConditionSnowy:
+            return @"Snowy"; break;
+        default:
+            return NSTitleByWeatherCondition( CTEntryWeatherConditionNoone); break;
+            
+    }
+    
+}
+
 typedef NS_ENUM(int, CDEntryTemerature) {
     CTEntryTemperatureNoone = 0,
     CTEntryTemperatureHot = 1,
