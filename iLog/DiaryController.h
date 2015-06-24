@@ -444,6 +444,19 @@ static inline NSString* NSTitleByTemperature(CDEntryTemerature temperature) {
     
 }
 
+static inline NSArray* NSTemperatureArray() {
+    return [NSArray arrayWithObjects:
+            @(CTEntryTemperatureNoone),
+            @(CTEntryTemperatureHot),
+            @(CTEntryTemperatureHumid),
+            @(CTEntryTemperatureWarm),
+            @(CTEntryTemperatureJustRight),
+            @(CTEntryTemperatureCool),
+            @(CTEntryTemperatureCold),
+            @(CTEntryTemperatureFreezing), nil];
+    
+}
+
 #pragma mark NSArray category (ARRAY_Entries_)
 
 static const NSUInteger ENTRIES_subject = 0;
