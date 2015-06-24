@@ -128,8 +128,66 @@ static inline UIImage* NSImageByEmotion(CDEntryEmotions emotion) {
             return [UIImage imageNamed: @"misc_emotionNeutral-disabled"]; break;
         case CTEntryEmotionVeryHappy:
             return [UIImage imageNamed: @"misc_emotionVeryHappy"]; break;
-        case CTEntryEmotion<#Noone#>:
-            return [UIImage imageNamed: @"misc_emotion<#Neutral-disabled#>"]; break;
+        case CTEntryEmotionHappy:
+            return [UIImage imageNamed: @"misc_emotionHappy"]; break;
+        case CTEntryEmotionStrongWellFit:
+            return [UIImage imageNamed: @"misc_emotionStrongWellFit"]; break;
+        case CTEntryEmotionDetermined:
+            return [UIImage imageNamed: @"misc_emotionDetermined"]; break;
+        case CTEntryEmotionAccomplished:
+            return [UIImage imageNamed: @"misc_emotionAccomplished"]; break;
+        case CTEntryEmotionWondering:
+            return [UIImage imageNamed: @"misc_emotionWondering"]; break;
+        case CTEntryEmotionProductive:
+            return [UIImage imageNamed: @"misc_emotionProductive"]; break;
+        case CTEntryEmotionRelieved:
+            return [UIImage imageNamed: @"misc_emotionRelieved"]; break;
+        case CTEntryEmotionRecovering:
+            return [UIImage imageNamed: @"misc_emotionRecovering"]; break;
+        case CTEntryEmotionProud:
+            return [UIImage imageNamed: @"misc_emotionProud"]; break;
+        case CTEntryEmotionCool:
+            return [UIImage imageNamed: @"misc_emotionCool"]; break;
+        case CTEntryEmotionOkay:
+            return [UIImage imageNamed: @"misc_emotionOkay"]; break;
+        case CTEntryEmotionNeutral:
+            return [UIImage imageNamed: @"misc_emotionNeutral"]; break;
+        case CTEntryEmotionMeh:
+            return [UIImage imageNamed: @"misc_emotionMeh"]; break;
+        case CTEntryEmotionTired:
+            return [UIImage imageNamed: @"misc_emotionTired"]; break;
+        case CTEntryEmotionExhausted:
+            return [UIImage imageNamed: @"misc_emotionExhausted"]; break;
+        case CTEntryEmotionLazy:
+            return [UIImage imageNamed: @"misc_emotionLazy"]; break;
+        case CTEntryEmotionWorried:
+            return [UIImage imageNamed: @"misc_emotionWorried"]; break;
+        case CTEntryEmotionShocked:
+            return [UIImage imageNamed: @"misc_emotionShocked"]; break;
+        case CTEntryEmotionDisappointed:
+            return [UIImage imageNamed: @"misc_emotionDisappointed"]; break;
+        case CTEntryEmotionAnnoyed:
+            return [UIImage imageNamed: @"misc_emotionAnnoyed"]; break;
+        case CTEntryEmotionOverwhealmed:
+            return [UIImage imageNamed: @"misc_emotionOverwhealmed"]; break;
+        case CTEntryEmotionOutOfShape:
+            return [UIImage imageNamed: @"misc_emotionOutOfShape"]; break;
+        case CTEntryEmotionInPain:
+            return [UIImage imageNamed: @"misc_emotionInPain"]; break;
+        case CTEntryEmotionSick:
+            return [UIImage imageNamed: @"misc_emotionSick"]; break;
+        case CTEntryEmotionSad:
+            return [UIImage imageNamed: @"misc_emotionSad"]; break;
+        case CTEntryEmotionUpset:
+            return [UIImage imageNamed: @"misc_emotionUpset"]; break;
+        case CTEntryEmotionUnhappy:
+            return [UIImage imageNamed: @"misc_emotionUnhappy"]; break;
+        case CTEntryEmotionDepressed:
+            return [UIImage imageNamed: @"misc_emotionDepressed"]; break;
+        case CTEntryEmotionMad:
+            return [UIImage imageNamed: @"misc_emotionMad"]; break;
+        case CTEntryEmotionAngry:
+            return [UIImage imageNamed: @"misc_emotionAngry"]; break;
         default:
             return NSImageByEmotion( CTEntryEmotionNoone); break;
             
@@ -141,8 +199,68 @@ static inline NSString* NSTitleByEmotion(CDEntryEmotions emotion) {
     switch (emotion) {
         case CTEntryEmotionNoone:
             return @"None"; break;
-        case CTEntryEmotion<#Noone#>:
-            return @"<#None#>"; break;
+        case CTEntryEmotionVeryHappy:
+            return @"Very Happy"; break;
+        case CTEntryEmotionHappy:
+            return @"Happy"; break;
+        case CTEntryEmotionStrongWellFit:
+            return @"Strong or Well Fit"; break;
+        case CTEntryEmotionDetermined:
+            return @"Determined"; break;
+        case CTEntryEmotionAccomplished:
+            return @"Accomplished"; break;
+        case CTEntryEmotionWondering:
+            return @"Wondering"; break;
+        case CTEntryEmotionProductive:
+            return @"Productive"; break;
+        case CTEntryEmotionRelieved:
+            return @"Relieved"; break;
+        case CTEntryEmotionRecovering:
+            return @"Recovering"; break;
+        case CTEntryEmotionProud:
+            return @"Proud"; break;
+        case CTEntryEmotionCool:
+            return @"Cool"; break;
+        case CTEntryEmotionOkay:
+            return @"Okay"; break;
+        case CTEntryEmotionNeutral:
+            return @"Neutral"; break;
+        case CTEntryEmotionMeh:
+            return @"Meh"; break;
+        case CTEntryEmotionTired:
+            return @"Tired"; break;
+        case CTEntryEmotionExhausted:
+            return @"Exhausted"; break;
+        case CTEntryEmotionLazy:
+            return @"Lazy"; break;
+        case CTEntryEmotionWorried:
+            return @"Worried"; break;
+        case CTEntryEmotionShocked:
+            return @"Shocked"; break;
+        case CTEntryEmotionDisappointed:
+            return @"Disappointed"; break;
+        case CTEntryEmotionAnnoyed:
+            return @"Annoyed"; break;
+        case CTEntryEmotionOverwhealmed:
+            return @"Overwhealmed"; break;
+        case CTEntryEmotionOutOfShape:
+            return @"Out of Shape"; break;
+        case CTEntryEmotionInPain:
+            return @"In Pain"; break;
+        case CTEntryEmotionSick:
+            return @"Sick"; break;
+        case CTEntryEmotionSad:
+            return @"Sad"; break;
+        case CTEntryEmotionUpset:
+            return @"Upset"; break;
+        case CTEntryEmotionUnhappy:
+            return @"Unhappy"; break;
+        case CTEntryEmotionDepressed:
+            return @"Depressed"; break;
+        case CTEntryEmotionMad:
+            return @"Mad"; break;
+        case CTEntryEmotionAngry:
+            return @"Angry"; break;
         default:
             return NSTitleByEmotion( CTEntryEmotionNoone); break;
             
