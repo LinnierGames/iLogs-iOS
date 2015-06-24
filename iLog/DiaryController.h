@@ -368,6 +368,19 @@ static inline NSString* NSTitleByWeatherCondition(CDEntryWeatherCondition weathe
     
 }
 
+static inline NSArray* NSWeatherConditionArray() {
+    return [NSArray arrayWithObjects:
+            @(CTEntryWeatherConditionNoone),
+            @(CTEntryWeatherConditionSunny),
+            @(CTEntryWeatherConditionCloudy),
+            @(CTEntryWeatherConditionWindy),
+            @(CTEntryWeatherConditionFoggy),
+            @(CTEntryWeatherConditionMisty),
+            @(CTEntryWeatherConditionRainy),
+            @(CTEntryWeatherConditionSnowy), nil];
+    
+}
+
 typedef NS_ENUM(int, CDEntryTemerature) {
     CTEntryTemperatureNoone = 0,
     CTEntryTemperatureHot = 1,
