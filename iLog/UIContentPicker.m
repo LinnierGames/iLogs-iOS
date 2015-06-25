@@ -21,17 +21,34 @@
 @end
 
 @implementation UIContentPicker
-@synthesize delegate, isShowing;
+@synthesize delegate, contentPicker, isShowing;
 
 #pragma mark - Return Functions
 
 - (id)initWithSelectedColor:(CDColorTraits)colorValue delegate:(id< UIContentPickerDelegate>)delegateValue {
-    self = [[[NSBundle mainBundle] loadNibNamed: @"UIContentPicker" owner: self options: NULL] objectAtIndex: 0];
+    self = [[[NSBundle mainBundle] loadNibNamed: @"UIContentPicker" owner: self options: NULL] objectAtIndex: CTContentColorPicker];
+    [self setFrame: CGRectCurrentDevice()];
+    contentPicker = CTContentColorPicker;
     delegate = delegateValue;
-    array = NSColorArrayByTheme();
+    array = [[NSArray alloc] initWithArray: NSColorArrayByTheme()];
     NSInteger theme, row;
     [self statusOfColor: colorValue withSeg: &theme withRow: &row];
     [segTheme setSelectedSegmentIndex: theme];
+    [picker selectRow: row inComponent: 0 animated: NO];
+    [self pickerView: picker didSelectRow: [picker selectedRowInComponent: 0] inComponent: 0];
+    
+    return self;
+    
+}
+
+- (id)initWithSelectedEmotion:(CDEntryEmotions)emotionValue delegate:(id< UIContentPickerDelegate>)delegateValue {
+    self = [[[NSBundle mainBundle] loadNibNamed: @"UIContentPicker" owner: self options: NULL] objectAtIndex: CTContentEmotionPicker];
+    [self setFrame: CGRectCurrentDevice()];
+    contentPicker = CTContentEmotionPicker;
+    delegate = delegateValue;
+    array = [[NSArray alloc] initWithArray: NSEmotionArray()];
+    NSInteger row;
+    [self statusOfEntryEmotion: emotionValue withRow: &row];
     [picker selectRow: row inComponent: 0 animated: NO];
     [self pickerView: picker didSelectRow: [picker selectedRowInComponent: 0] inComponent: 0];
     
@@ -47,13 +64,23 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    switch (segTheme.selectedSegmentIndex) {
-        case 0: case 1: case 2: case 3:
-            return [[NSColorArrayByTheme() objectAtIndex: component] count];
-        case 4:
-            return 37; break;
+    switch (contentPicker) {
+        case CTContentColorPicker: {
+            switch (segTheme.selectedSegmentIndex) {
+                case 0: case 1: case 2: case 3:
+                    return [[NSColorArrayByTheme() objectAtIndex: component] count];
+                case 4:
+                    return 37; break;
+                    
+                default: return 0; break;
+                    
+            }
+            break;
             
-        default: return 0; break;
+        } case CTContentEmotionPicker: {
+            return [array count]; break;
+            
+        } default: return 0; break;
             
     }
     
@@ -65,19 +92,36 @@
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
-    static UILabel *labelContent = nil;
-    if (!view) {
-        view = [[UIView alloc] initWithFrame: CGRectMake( 0, 0, 320, CVTableViewCellDefaultCellHeight)];
-        labelContent = [[UILabel alloc] initWithFrame: view.frame];
-        [labelContent setText: @"Label"];
-        [labelContent setTextAlignment: NSTextAlignmentCenter];
-        //        [view addSubview: labelContent];
-        
+    switch (contentPicker) {
+        case CTContentColorPicker: {
+            UILabel *label;
+            if (!view)
+                view = label = [[UILabel alloc] initWithFrame: CGRectMake( 0, 0, pickerView.frame.size.width, CVTableViewCellDefaultCellHeight)];
+            [view setBackgroundColor: NSColorByTrait( [[[array objectAtIndex: segTheme.selectedSegmentIndex] objectAtIndex: row] intValue], 1)];
+            [label setTextAlignment: NSTextAlignmentCenter];
+            [label setText: NSTitleByColorTrait( [[[array objectAtIndex: segTheme.selectedSegmentIndex] objectAtIndex: row] intValue])];
+            
+            return view; break;
+            
+        } case CTContentEmotionPicker: {
+            UILabel *label;
+            UIImageView *image;
+            if (!view) {
+                view = [[UIView alloc] initWithFrame: CGRectMake( 0, 0, pickerView.frame.size.width, CVTableViewCellDefaultCellHeight)];
+                label = [[UILabel alloc] initWithFrame: view.frame]; [view addSubview: label];
+                image = [[UIImageView alloc] initWithFrame: CGRectMake( 16, 0, CVDiaryEntryIconImageSize, CVDiaryEntryIconImageSize)]; [view addSubview: image];
+                
+            }
+            [label setTextAlignment: NSTextAlignmentCenter];
+            [label setText: NSTitleByEmotion( [[array objectAtIndex: row] intValue])];
+            [image setImage: [UIImage imageNamed: @"misc_bookmark-enabled"]];
+            
+            return view;
+            
+        } case CTContentWeatherConditionPicker: {
+            return nil; break;
+            
     }
-    [labelContent setText: NSTitleByColorTrait( NSColorTraitByIndex( [array[segTheme.selectedSegmentIndex][row] intValue]))];
-    [view setBackgroundColor: NSColorByTrait( NSColorTraitByIndex( [array[segTheme.selectedSegmentIndex][row] intValue]), 1)];
-    
-    return view;
     
 }
 
@@ -99,6 +143,18 @@
     
 }
 
+- (void)statusOfEntryEmotion:(CDEntryEmotions)emotionValue withRow:(NSInteger *)rowIndex {
+        for (int index = 0; index < [array count]; index += 1) {
+            if ([array[index] intValue] == emotionValue) {
+                *rowIndex = index;
+                break;
+                
+            }
+            
+        }
+    
+}
+
 - (void)selectByTrait:(CDColorTraits)colorValue {
     NSInteger theme, row;
     [self statusOfColor: colorValue withSeg: &theme withRow: &row];
@@ -112,7 +168,17 @@
 #pragma mark Void's > Pre-Defined Functions (PICKER VIEW)
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    [button setTitle: NSTitleByColorTrait( NSColorTraitByIndex( [array[segTheme.selectedSegmentIndex][row] intValue])) forState: UIControlStateNormal];
+    switch (contentPicker) {
+        case CTContentColorPicker:
+            [button setTitle: NSTitleByColorTrait( NSColorTraitByIndex( [array[segTheme.selectedSegmentIndex][row] intValue])) forState: UIControlStateNormal];
+            break;
+        case CTContentEmotionPicker:
+            [button setTitle: NSTitleByEmotion( [array[row] intValue]) forState: UIControlStateNormal];
+            break;
+            
+        default:
+            break;
+    }
     
 }
 
@@ -125,9 +191,20 @@
 }
 
 - (IBAction)pressDone:(id)sender {
-    if ([delegate respondsToSelector: @selector( colorPicker:didFinishWithColor:)]) {
-        [delegate colorPicker: self didFinishWithColor: NSColorTraitByIndex( [array[segTheme.selectedSegmentIndex][(int)[picker selectedRowInComponent: 0]] intValue])];
-        
+    switch (contentPicker) {
+        case CTContentColorPicker: {
+            if ([delegate respondsToSelector: @selector( contentPicker:didFinishWithColor:)])
+                [delegate contentPicker: self didFinishWithColor: NSColorTraitByIndex( [array[segTheme.selectedSegmentIndex][(int)[picker selectedRowInComponent: 0]] intValue])];
+            break;
+            
+        } case CTContentEmotionPicker: {
+            if ([delegate respondsToSelector: @selector( contentPicker:didFinishWithEntryEmotion:)])
+                [delegate contentPicker: self didFinishWithEntryEmotion: [[array objectAtIndex: [picker selectedRowInComponent: 0]] intValue]];
+            break;
+            
+        } default:
+            break;
+            
     }
     [self dismissAnimated: YES];
     
@@ -137,16 +214,11 @@
 
 - (void)showAnimated:(BOOL)animated {
     if (animated) {
-        [contentView setCenter: CGPointMake( 160, 480 + contentView.frame.size.height/2)];
-        
         [UIView beginAnimations: NULL context: nil];
         [UIView setAnimationDuration: 0.25];
         [UIView setAnimationDelegate: delegate];
-        [contentView setCenter: CGPointMake( 160, 480 - contentView.frame.size.height/2)];
+        [contentView setTransform: CGAffineTransformMakeTranslation( 0, -contentView.frame.size.height)];
         [UIView commitAnimations];
-        
-    } else {
-        [contentView setCenter: CGPointMake( 160, 480 - contentView.frame.size.height/2)];
         
     }
     [[[[UIApplication sharedApplication] windows] objectAtIndex: 0] addSubview: self];
@@ -155,21 +227,20 @@
     
 }
 
-
 - (void)dismissAnimated:(BOOL)animated {
     if (animated) {
         [UIView beginAnimations: NULL context: nil];
         [UIView setAnimationDuration: 0.25];
+        [UIView setAnimationDidStopSelector: @selector( removeFromSuperview)];
         [UIView setAnimationDelegate: self];
-        [contentView setTransform: CGAffineTransformMakeTranslation( 0, +contentView.frame.size.height)];
+        [contentView setTransform: CGAffineTransformMakeTranslation( 0, contentView.frame.size.height)];
         [self setAlpha: 0];
         [UIView commitAnimations];
         
     } else
-        [self setTransform: CGAffineTransformMakeTranslation( 0, +contentView.frame.size.height)];
+        [self setTransform: CGAffineTransformMakeTranslation( 0, contentView.frame.size.height)];
     
     isShowing = false;
-    [NSTimer scheduledTimerWithTimeInterval: 0.25 target: self selector: @selector( removeFromSuperview) userInfo: nil repeats: NO];
     
 }
 

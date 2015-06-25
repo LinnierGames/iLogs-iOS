@@ -9,7 +9,7 @@
 #import "EntryViewController.h"
 #import "DiaryController.h"
 
-@interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate> {
+@interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, UIContentPickerDelegate> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayM;
         UICustomTableViewCell *cellSubject;
@@ -258,10 +258,8 @@
 - (void)customCell:(UICustomTableViewCell *)cell buttonPressed:(id)button {
     switch ([button tag]) {
         case 1: { //Emotions
-            if ([arrayM objectEntry_emotion] == CTEntryEmotionNoone)
-                [arrayM replaceObjectAtIndex: ENTRIES_emotion withObject: [NSNumber numberWithInt: CTEntryEmotionHappy]];
-            else
-                [arrayM replaceObjectAtIndex: ENTRIES_emotion withObject: [NSNumber numberWithInt: CTEntryEmotionNoone]];
+            UIContentPicker *pickerEmotion = [[UIContentPicker alloc] initWithSelectedEmotion: [arrayM objectEntry_emotion] delegate: self];
+            [pickerEmotion showAnimated: YES];
             break;
             
         } case 2: { //Weather
@@ -279,6 +277,14 @@
             
     }
     [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 0 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
+    
+}
+
+#pragma mark Void's > Pre-Defined Functions (CONTENT PICKER)
+
+- (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryEmotion:(CDEntryEmotions)selectedEmotion {
+    [arrayM replaceObjectAtIndex: ENTRIES_emotion withObject: [NSNumber numberWithInt: selectedEmotion]];
+    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 0 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
     
 }
 

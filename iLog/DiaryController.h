@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+static CGFloat CVDiaryEntryIconImageSize = 36;
+static CGFloat CVDiaryEntryIconImageSize_enlarged = 98;
+
 @interface DiaryController : NSObject
 
 @end
@@ -270,8 +273,8 @@ static inline NSString* NSTitleByEmotion(CDEntryEmotions emotion) {
 
 static inline NSArray* NSEmotionArray() {
     return [NSArray arrayWithObjects:
-            @(CTEntryEmotionVeryHappy),
             @(CTEntryEmotionNoone),
+            @(CTEntryEmotionVeryHappy),
             @(CTEntryEmotionVeryHappy),
             @(CTEntryEmotionHappy),
             @(CTEntryEmotionStrongWellFit),

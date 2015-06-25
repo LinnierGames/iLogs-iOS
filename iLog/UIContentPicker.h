@@ -12,17 +12,18 @@
 @protocol UIContentPickerDelegate;
 
 typedef NS_ENUM(NSUInteger, CDContentPicker) {
-    CTColorPicker,
-    CTEmotionPicker,
-    CTWeatherConditionPicker,
-    CTTemperaturePicker,
-    CTIconPicker
+    CTContentColorPicker = 0,
+    CTContentEmotionPicker = 1,
+    CTContentWeatherConditionPicker = 2,
+    CTContentTemperaturePicker = 3,
+    CTContentIconPicker = 4
     
 };
 
 @interface UIContentPicker : UIView
 
 @property ( assign) id< UIContentPickerDelegate>  delegate;
+@property ( assign) CDContentPicker contentPicker;
 @property ( readonly) BOOL isShowing;
 
 - (id)initWithSelectedColor:(CDColorTraits)colorValue delegate:(id< UIContentPickerDelegate>)delegateValue;
@@ -37,7 +38,8 @@ typedef NS_ENUM(NSUInteger, CDContentPicker) {
 
 @protocol UIContentPickerDelegate <NSObject>
 
-- (void)colorPicker:(UIContentPicker *)colorPicker didFinishWithColor:(CDColorTraits)selectedColor;
+- (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithColor:(CDColorTraits)selectedColor;
+- (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryEmotion:(CDEntryEmotions)selectedEmotion;
 
 - (void)colorPickerWillAppear:(UIContentPicker *)colorPicker;
 - (void)colorPickerDidAppear:(UIContentPicker *)colorPicker;

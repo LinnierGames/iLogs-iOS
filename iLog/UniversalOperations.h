@@ -10,6 +10,12 @@
 #import "ISO8601DateFormatter.h"
 #import <UIKit/UIKit.h>
 
+static inline CGRect CGRectCurrentDevice() {
+    CGRect rect = [[UIApplication sharedApplication] keyWindow].frame;
+    return CGRectMake( 0, 0, rect.size.width, rect.size.height);
+    
+}
+
 static CGFloat CVTableViewCellDefaultCellHeight = 38;
 
 @interface UniversalVariables : NSObject
