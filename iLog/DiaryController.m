@@ -157,17 +157,17 @@
 }
 
 + (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue body:(NSString *)stringBodyValue {
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: [NSDate date] dateCreated: [NSDate date] body: stringBodyValue emotion: CTEntryEmotionNoone weather: CTEntryWeatherConditionNoone isBookmarked: NO hasImage: NO hasAudioMemo: NO];
+    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: [NSDate date] dateCreated: [NSDate date] body: stringBodyValue emotion: CTEntryEmotionNoone weatherCondition: CTEntryWeatherConditionNoone temperature: CTEntryTemperatureNoone isBookmarked: NO];
     
 }
 
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weather:(CDEntryWeatherCondition)weatherValue isBookmarked:(BOOL)boolBookmarkedValue hasImage:(BOOL)boolImageValue hasAudioMemo:(BOOL)boolAudioMemoValue {
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue emotion: emotionValue weather: weatherValue isBookmarked: boolBookmarkedValue hasImage: boolImageValue hasAudioMemo: boolAudioMemoValue options: [NSMutableDictionary dictionary]];
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue isBookmarked:(BOOL)boolBookmarkedValue {
+    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue emotion: emotionValue weatherCondition: weatherValue temperature: temperatureValue isBookmarked: boolBookmarkedValue options: [NSMutableDictionary dictionary]];
     
 }
 
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weather:(CDEntryWeatherCondition)weatherValue isBookmarked:(BOOL)boolBookmarkedValue hasImage:(BOOL)boolImageValue hasAudioMemo:(BOOL)boolAudioMemoValue options:(NSMutableDictionary *)dicIndex {
-    return [NSMutableArray arrayWithObjects: stringSubjectValue, dateValue, dateCreatedValue, stringBodyValue, [NSNumber numberWithInt: emotionValue], [NSNumber numberWithInt: weatherValue], [NSNumber numberWithBool: boolBookmarkedValue], [NSNumber numberWithBool: boolImageValue], [NSNumber numberWithBool: boolAudioMemoValue], dicIndex, nil];
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue isBookmarked:(BOOL)boolBookmarkedValue options:(NSMutableDictionary *)dicIndex {
+    return [NSMutableArray arrayWithObjects: stringSubjectValue, dateValue, dateCreatedValue, stringBodyValue, [NSNumber numberWithInt: emotionValue], [NSNumber numberWithInt: weatherValue], [NSNumber numberWithInt: temperatureValue], [NSNumber numberWithBool: boolBookmarkedValue], dicIndex, nil];
     
 }
 
@@ -201,21 +201,15 @@
     
 }
 
-- (CDEntryWeatherCondition)objectEntry_weather {
-    return [[self objectAtIndex: ENTRIES_weather] intValue];
+- (CDEntryWeatherCondition)objectEntry_weatherCondition {
+    return [[self objectAtIndex: ENTRIES_weatherCondition] intValue];
     
 }
 
-- (BOOL)objectEntry_hasImage {
-    return [[self objectAtIndex: ENTRIES_hasImage] boolValue];
+- (CDEntryTemerature)objectEntry_temperature {
+    return [[self objectAtIndex: ENTRIES_temperature] intValue];
     
 }
-
-- (BOOL)objectEntry_hasAudioMemo {
-    return [[self objectAtIndex: ENTRIES_hasAudioMemo] boolValue];
-    
-}
-
 
 @end
 
@@ -230,7 +224,7 @@
         if (!dateFormatter)
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
-        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, date, dateCreated, body, emotion, weather, isBookmarked, hasImage, hasAudioMemo, diaryID) values (\"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d, %lu);", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weather], [arrayEntry objectEntry_isBookmarked], [arrayEntry objectEntry_hasImage], [arrayEntry objectEntry_hasAudioMemo], [[[arrayEntry options] objectForKey: @"diaryID"] unsignedLongValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, date, dateCreated, body, emotion, weatherCondition, temperature, isBookmarked, diaryID) values (\"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %lu);", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[arrayEntry options] objectForKey: @"diaryID"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( database, sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
@@ -256,7 +250,7 @@
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entries SET subject = \"%@\", date = \"%@\", dateCreated = \"%@\", body = \"%@\", emotion = %d, weather = %d, isBookmarked = %d, hasImage = %d, hasAudioMemo = %d, diaryID = %lu where id = %lu;", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weather], [arrayEntry objectEntry_isBookmarked], [arrayEntry objectEntry_hasImage], [arrayEntry objectEntry_hasAudioMemo], [[[arrayEntry options] objectForKey: @"diaryID"] unsignedLongValue], [[[arrayEntry options] objectForKey: @"id"] unsignedLongValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entries SET subject = \"%@\", date = \"%@\", dateCreated = \"%@\", body = \"%@\", emotion = %d, weatherCondition = %d, temperature = %d, isBookmarked = %d, diaryID = %lu where id = %lu;", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[arrayEntry options] objectForKey: @"diaryID"] unsignedLongValue], [[[arrayEntry options] objectForKey: @"id"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( database, sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);

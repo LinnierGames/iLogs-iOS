@@ -126,7 +126,7 @@
                             break;
                             
                     }
-                    switch ([arrayM objectEntry_weather]) {
+                    switch ([arrayM objectEntry_weatherCondition]) {
                         case CTEntryWeatherConditionNoone:
                             [cell.button2 setImage: [UIImage imageNamed: @"misc_weather-disabled"] forState: UIControlStateNormal];
                             break;
@@ -218,7 +218,7 @@
     
 }
 
-- (void)dimissFirstResponder {
+- (void)dismissFirstResponder {
     if ([cellSubject.textfield isFirstResponder])
         [cellSubject.textfield resignFirstResponder];
     if ([cellBody.textview isFirstResponder])
@@ -229,7 +229,7 @@
 #pragma mark Void's > Pre-Defined Functions (SCROLL VIEW)
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self dimissFirstResponder];
+    [self dismissFirstResponder];
     
 }
 
@@ -259,11 +259,13 @@
     switch ([button tag]) {
         case 1: { //Emotions
             UIContentPicker *pickerEmotion = [[UIContentPicker alloc] initWithSelectedEmotion: [arrayM objectEntry_emotion] delegate: self];
+            [self dismissFirstResponder];
             [pickerEmotion showAnimated: YES];
             break;
             
         } case 2: { //Weather
-            UIContentPicker *pickerWeatherCondition = [[UIContentPicker alloc] initWithSelectedWeatherCondition: [arrayM objectEntry_weather] temperature: CTEntryTemperatureNoone delegate: self];
+            UIContentPicker *pickerWeatherCondition = [[UIContentPicker alloc] initWithSelectedWeatherCondition: [arrayM objectEntry_weatherCondition] temperature: [arrayM objectEntry_temperature] delegate: self];
+            [self dismissFirstResponder];
             [pickerWeatherCondition showAnimated: YES];
             break;
             
@@ -287,7 +289,8 @@
 }
 
 - (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryWeatherCondition:(CDEntryWeatherCondition)selectedWeatherCondition temperature:(CDEntryTemerature)selectedTemperature {
-    [arrayM replaceObjectAtIndex: ENTRIES_weather withObject: [NSNumber numberWithInt: selectedWeatherCondition]];
+    [arrayM replaceObjectAtIndex: ENTRIES_weatherCondition withObject: [NSNumber numberWithInt: selectedWeatherCondition]];
+    [arrayM replaceObjectAtIndex: ENTRIES_temperature withObject: [NSNumber numberWithInt: selectedTemperature]];
     [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 0 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
     
 }
@@ -295,13 +298,13 @@
 #pragma mark - IBActions
 
 - (void)pressNavLeft:(id)sender {
-    [self dimissFirstResponder];
+    [self dismissFirstResponder];
     [self dismissViewControllerAnimated: YES completion: ^{ }];
     
 }
 
 - (void)pressNavRight:(id)sender {
-    [self dimissFirstResponder];
+    [self dismissFirstResponder];
     switch (option) {
         case CTCreate: {
             [[UniversalVariables globalVariables] ENTRIES_writeNewForEntry: arrayM];

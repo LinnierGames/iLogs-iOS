@@ -467,26 +467,24 @@ static const NSUInteger ENTRIES_date = 1;
 static const NSUInteger ENTRIES_dateCreated = 2;
 static const NSUInteger ENTRIES_body = 3;
 static const NSUInteger ENTRIES_emotion = 4;
-static const NSUInteger ENTRIES_weather = 5;
-static const NSUInteger ENTRIES_isBookmarked = 6;
-static const NSUInteger ENTRIES_hasImage = 7;
-static const NSUInteger ENTRIES_hasAudioMemo = 8;
+static const NSUInteger ENTRIES_weatherCondition = 5;
+static const NSUInteger ENTRIES_temperature = 6;
+static const NSUInteger ENTRIES_isBookmarked = 7;
 
 @interface NSArray (ARRAY_Entries_)
 
 + (id)arrayNEWEntry;
 + (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue body:(NSString *)stringBodyValue;
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weather:(CDEntryWeatherCondition)weatherValue isBookmarked:(BOOL)boolBookmarkedValue hasImage:(BOOL)boolImageValue hasAudioMemo:(BOOL)boolAudioMemoValue;
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weather:(CDEntryWeatherCondition)weatherValue isBookmarked:(BOOL)boolBookmarkedValue hasImage:(BOOL)boolImageValue hasAudioMemo:(BOOL)boolAudioMemoValue options:(NSMutableDictionary *)dicIndex;
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue isBookmarked:(BOOL)boolBookmarkedValue;
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue isBookmarked:(BOOL)boolBookmarkedValue options:(NSMutableDictionary *)dicIndex;
 - (NSString *)objectEntry_subject;
 - (NSDate *)objectEntry_date;
 - (NSDate *)objectEntry_dateCreated;
 - (NSString *)objectEntry_body;
 - (CDEntryEmotions)objectEntry_emotion;
-- (CDEntryWeatherCondition)objectEntry_weather;
+- (CDEntryWeatherCondition)objectEntry_weatherCondition;
+- (CDEntryTemerature)objectEntry_temperature;
 - (BOOL)objectEntry_isBookmarked;
-- (BOOL)objectEntry_hasImage;
-- (BOOL)objectEntry_hasAudioMemo;
 
 @end
 
@@ -499,10 +497,11 @@ static const int SQL_ENTRIES_date = 3;
 static const int SQL_ENTRIES_dateCreated = 4;
 static const int SQL_ENTRIES_body = 5;
 static const int SQL_ENTRIES_emotion = 6;
-static const int SQL_ENTRIES_weather = 7;
-static const int SQL_ENTRIES_isBookmarked = 8;
-static const int SQL_ENTRIES_hasImage = 9;
-static const int SQL_ENTRIES_hasAudioMemo = 10;
+static const int SQL_ENTRIES_weatherCondition = 7;
+static const int SQL_ENTRIES_temperature = 8;
+static const int SQL_ENTRIES_isBookmarked = 9;
+static const int SQL_ENTRIES_hasImage = 10;
+static const int SQL_ENTRIES_hasAudioMemo = 11;
 
 /**
  * From the parameter list, an array is produced in Entry format
@@ -523,12 +522,11 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
     NSString *stringBody = [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_ENTRIES_body)];
     
     CDEntryEmotions emotion = sqlite3_column_int( statement, SQL_ENTRIES_emotion);
-    CDEntryWeatherCondition weather = sqlite3_column_int( statement, SQL_ENTRIES_weather);
+    CDEntryWeatherCondition weatherCondition = sqlite3_column_int( statement, SQL_ENTRIES_weatherCondition);
+    CDEntryTemerature temperature = sqlite3_column_int( statement, SQL_ENTRIES_temperature);
     BOOL isBookmarked = sqlite3_column_int( statement, SQL_ENTRIES_isBookmarked);
-    BOOL hasImage = sqlite3_column_int( statement, SQL_ENTRIES_hasImage);
-    BOOL hasAudioMemo = sqlite3_column_int( statement, SQL_ENTRIES_hasAudioMemo);
     
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubject date: date dateCreated: dateCreated body: stringBody emotion: emotion weather: weather isBookmarked: isBookmarked hasImage: hasImage hasAudioMemo: hasAudioMemo options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_id)], @"id", [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_diaryID)], @"diaryID", nil]];
+    return [NSMutableArray arrayNEWEntryWithSubject: stringSubject date: date dateCreated: dateCreated body: stringBody emotion: emotion weatherCondition: weatherCondition temperature: temperature isBookmarked: isBookmarked options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_id)], @"id", [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_diaryID)], @"diaryID", nil]];
     
 };
 
