@@ -144,7 +144,7 @@ static NSUInteger DIARY_ENTRY_temperature = 1;
             }
             [label setTextAlignment: NSTextAlignmentCenter];
             [label setText: NSTitleByEmotion( [[array objectAtIndex: row] intValue])];
-            [image setImage: [UIImage imageNamed: @"misc_bookmark-enabled"]];
+            [image setImage: NSImageByEmotion( [[array objectAtIndex: row] intValue])];
             
             return view;
             
@@ -161,12 +161,12 @@ static NSUInteger DIARY_ENTRY_temperature = 1;
             switch (component) {
                 case 0: { //WeatherCondition
                     [label setText: NSTitleByWeatherCondition( [[[array objectAtIndex: component] objectAtIndex: row] intValue])];
-                    [image setImage: [UIImage imageNamed: @"misc_bookmark-enabled"]];
+                    [image setImage: NSImageByWeatherCondition( [[[array objectAtIndex: component] objectAtIndex: row] intValue])];
                     break;
                     
                 } case 1: { //Temperature
                     [label setText: NSTitleByTemperature( [[[array objectAtIndex: component] objectAtIndex: row] intValue])];
-                    [image setImage: [UIImage imageNamed: @"misc_bookmark-enabled"]];
+                    [image setImage: NSImageByTemperature( [[[array objectAtIndex: component] objectAtIndex: row] intValue])];
                     break;
                     
                 }

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 static CGFloat CVDiaryEntryIconImageSize = 36;
 static CGFloat CVDiaryEntryIconImageSize_enlarged = 98;
 
@@ -207,7 +208,7 @@ static inline NSString* NSTitleByEmotion(CDEntryEmotions emotion) {
         case CTEntryEmotionHappy:
             return @"Happy"; break;
         case CTEntryEmotionStrongWellFit:
-            return @"Strong or Well Fit"; break;
+            return @"Well Fit"; break;
         case CTEntryEmotionDetermined:
             return @"Determined"; break;
         case CTEntryEmotionAccomplished:
@@ -433,7 +434,7 @@ static inline NSString* NSTitleByTemperature(CDEntryTemerature temperature) {
         case CTEntryTemperatureWarm:
             return @"Warm"; break;
         case CTEntryTemperatureJustRight:
-            return @"JustRight"; break;
+            return @"Just Right"; break;
         case CTEntryTemperatureCool:
             return @"Cool"; break;
         case CTEntryTemperatureCold:
@@ -557,5 +558,7 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
 - (void)ENTRIES_writeNewForEntry:(NSArray *)arrayEntry;
 - (void)ENTRIES_updateForEntry:(NSArray *)arrayEntry;
 - (void)ENTRIES_deleteForEntry:(NSArray *)arrayEntry;
+
+- (NSArray *)ENTRIES_returnEntriesOptions;
 
 @end

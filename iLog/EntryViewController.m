@@ -74,7 +74,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 2; break;
+            return 3; break;
         case 1: case 2: case 3:
             return 1; break;
         default:
@@ -88,21 +88,21 @@
     switch (indexPath.section) {
         case 0:{
             switch (indexPath.row) {
-                case 0:
-                    return 34; break;
-                case 1:
-                    return 44; break;
+                case 0: case 1:
+                    return CVTableViewCellDefaultCellHeight; break;
+                case 2:
+                    return 40; break;
                 default:
-                    return 44; break;
+                    return CVTableViewCellDefaultCellHeight; break;
                     
             } break;
             
         } case 1: case 2:
-            return 44; break;
+            return CVTableViewCellDefaultCellHeight; break;
         case 3:
             return 84; break;
         default:
-            return 44; break;
+            return CVTableViewCellDefaultCellHeight; break;
             
     }
     
@@ -113,47 +113,72 @@
         case 0:{
             switch (indexPath.row) {
                 case 0: {
-                    UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Diary - Entry - Attributes"];
-                    if (!cell)
-                        cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellDiaryEntryAttributes];
-                    
-                    switch ([arrayM objectEntry_emotion]) {
-                        case CTEntryEmotionNoone:
-                            [cell.button1 setImage: [UIImage imageNamed: @"misc_emotion-disabled"] forState: UIControlStateNormal];
-                            break;
-                        default:
-                            [cell.button1 setImage: [UIImage imageNamed: @"misc_emotion-enabled"] forState: UIControlStateNormal];
-                            break;
-                            
-                    }
-                    switch ([arrayM objectEntry_weatherCondition]) {
-                        case CTEntryWeatherConditionNoone:
-                            [cell.button2 setImage: [UIImage imageNamed: @"misc_weather-disabled"] forState: UIControlStateNormal];
-                            break;
-                        default:
-                            [cell.button2 setImage: [UIImage imageNamed: @"misc_weather-enabled"] forState: UIControlStateNormal];
-                            break;
-                            
-                    }
-                    if ([arrayM objectEntry_isBookmarked])
-                        [cell.button3 setImage: [UIImage imageNamed: @"misc_bookmark-enabled"] forState: UIControlStateNormal];
-                    else
-                        [cell.button3 setImage: [UIImage imageNamed: @"misc_bookmark-disabled"] forState: UIControlStateNormal];
-                    [cell setDelegate: self];
-                    
-                    return cell;
-                    
-                } case 1: {
                     UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Textfield"];
                     if (!cell)
                         cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTextField];
                     
-                    [cell.textfield setDelegate: self];
                     [cell.textfield setTag: 1];
+                    [cell.textfield setBorderStyle: UITextBorderStyleNone];
+                    [cell.textfield setClearButtonMode: UITextFieldViewModeWhileEditing];
                     [cell.textfield setPlaceholder: @"Subject"];
                     [cell.textfield setText: [arrayM objectEntry_subject]];
+                    [cell.textfield setDelegate: self];
                     
-                    cellSubject = cell; return cell;
+                    cellSubject = cell; return cell; break;
+                    
+                } case 1: {
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                    if (!cell)
+                        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
+                    
+                    [cell.textLabel setText: [[[arrayM options] objectForKey: @"diaryID"] objectDiary_title]];
+                    
+                    return cell; break;
+                    
+                } case 2: {
+                    UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Diary - Entry - Attributes"];
+                    if (!cell)
+                        cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellDiaryEntryAttributes];
+                    
+                    [cell.imageview1 setImage: NSImageByEmotion( [arrayM objectEntry_emotion])];
+                    switch ([arrayM objectEntry_emotion]) {
+                        case CTEntryEmotionNoone: {
+                            [cell.button1 setBackgroundImage: [UIImage imageNamed: @"misc_button-disabled"] forState: UIControlStateNormal];
+                            [cell.button1 setTitle: @"empty" forState: UIControlStateNormal];
+                            break;
+                            
+                        } default: {
+                            [cell.button1 setBackgroundImage: [UIImage imageNamed: @"misc_emotionButton-enabled"] forState: UIControlStateNormal];
+                            [cell.button1 setTitle: NSTitleByEmotion( [arrayM objectEntry_emotion]) forState: UIControlStateNormal];
+                            break;
+                            
+                        }
+                            
+                    }
+                    BOOL weather = [arrayM objectEntry_weatherCondition] != CTEntryWeatherConditionNoone, temperature = [arrayM objectEntry_temperature] != CTEntryTemperatureNoone;
+                    if (weather) {
+                        [cell.imageview2 setImage: NSImageByWeatherCondition( [arrayM objectEntry_weatherCondition])];
+                        [cell.button2 setBackgroundImage: [UIImage imageNamed: @"misc_weatherButton-enabled"] forState: UIControlStateNormal];
+                        [cell.button2 setTitle: NSTitleByWeatherCondition( [arrayM objectEntry_weatherCondition]) forState: UIControlStateNormal];
+                        
+                    } else if (temperature) {
+                        [cell.imageview2 setImage: NSImageByTemperature( [arrayM objectEntry_temperature])];
+                        [cell.button2 setBackgroundImage: [UIImage imageNamed: @"misc_weatherButton-enabled"] forState: UIControlStateNormal];
+                        [cell.button2 setTitle: NSTitleByTemperature( [arrayM objectEntry_temperature]) forState: UIControlStateNormal];
+                        
+                    } else {
+                        [cell.button2 setBackgroundImage: [UIImage imageNamed: @"misc_button-disabled"] forState: UIControlStateNormal];
+                        [cell.imageview2 setImage: [UIImage imageNamed: @"misc_weather-disabled"]];
+                        [cell.button2 setTitle: @"empty" forState: UIControlStateNormal];
+                        
+                    }
+                    if ([arrayM objectEntry_isBookmarked])
+                        [cell.button3 setBackgroundImage: [UIImage imageNamed: @"misc_bookmark-enabled"] forState: UIControlStateNormal];
+                    else
+                        [cell.button3 setBackgroundImage: [UIImage imageNamed: @"misc_bookmark-disabled"] forState: UIControlStateNormal];
+                    [cell setDelegate: self];
+                    
+                    return cell; break;
                     
                 } default:
                     return nil; break;
@@ -169,11 +194,13 @@
             switch (indexPath.section) {
                 case 1: {
                     [cell.textfield setTag: 2];
+                    [cell.textfield setBorderStyle: UITextBorderStyleNone];
                     [cell.textfield setPlaceholder: @"Stories"];
                     break;
                     
                 } case 2: {
                     [cell.textfield setTag: 3];
+                    [cell.textfield setBorderStyle: UITextBorderStyleNone];
                     [cell.textfield setPlaceholder: @"Tags"];
                     break;
                     
@@ -223,6 +250,29 @@
         [cellSubject.textfield resignFirstResponder];
     if ([cellBody.textview isFirstResponder])
         [cellBody.textview resignFirstResponder];
+    
+}
+
+#pragma mark Void's > Pre-Defined Functions (TABLE VIEW) 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 0: {
+            switch (indexPath.row) {
+                case 1: {
+                    
+                    break;
+                    
+                } default:
+                    break;
+                    
+            }
+            break;
+            
+        } default:
+            break;
+            
+    }
     
 }
 
@@ -276,7 +326,7 @@
         }
             
     }
-    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 0 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
+    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
     
 }
 
@@ -284,14 +334,14 @@
 
 - (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryEmotion:(CDEntryEmotions)selectedEmotion {
     [arrayM replaceObjectAtIndex: ENTRIES_emotion withObject: [NSNumber numberWithInt: selectedEmotion]];
-    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 0 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
+    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
     
 }
 
 - (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryWeatherCondition:(CDEntryWeatherCondition)selectedWeatherCondition temperature:(CDEntryTemerature)selectedTemperature {
     [arrayM replaceObjectAtIndex: ENTRIES_weatherCondition withObject: [NSNumber numberWithInt: selectedWeatherCondition]];
     [arrayM replaceObjectAtIndex: ENTRIES_temperature withObject: [NSNumber numberWithInt: selectedTemperature]];
-    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 0 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
+    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
     
 }
 

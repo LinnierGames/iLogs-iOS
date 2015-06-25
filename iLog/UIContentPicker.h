@@ -15,7 +15,7 @@ typedef NS_ENUM(NSUInteger, CDContentPicker) {
     CTContentColorPicker = 0,
     CTContentEmotionPicker = 1,
     CTContentWeatherConditionPicker = 2,
-    CTContentTemperaturePicker = 3,
+    CTContentDiaryPicker = 3,
     CTContentIconPicker = 4
     
 };

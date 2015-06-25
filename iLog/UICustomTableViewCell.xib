@@ -15,15 +15,18 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IwD-Kr-5pa">
-                        <rect key="frame" x="17" y="7" width="286" height="30"/>
+                        <rect key="frame" x="15" y="7" width="290" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="XPZ-RT-O5D"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="IwD-Kr-5pa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="9" id="3Uq-TC-AHO"/>
+                    <constraint firstItem="IwD-Kr-5pa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="3Uq-TC-AHO"/>
                     <constraint firstAttribute="centerY" secondItem="IwD-Kr-5pa" secondAttribute="centerY" id="BbI-y7-liu"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="IwD-Kr-5pa" secondAttribute="trailing" constant="9" id="Nfq-J3-6Dj"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="IwD-Kr-5pa" secondAttribute="trailing" constant="7" id="Nfq-J3-6Dj"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -97,61 +100,67 @@
             </connections>
             <point key="canvasLocation" x="461" y="587.5"/>
         </tableViewCell>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Diary - Entry - Attributes" rowHeight="41" id="CZd-p9-7m7" userLabel="Textfield" customClass="UICustomTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="34"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Diary - Entry - Attributes" rowHeight="37" id="CZd-p9-7m7" userLabel="Diary Entry Attributes" customClass="UICustomTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CZd-p9-7m7" id="uHq-tz-gVV">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jgo-7D-xqe">
-                        <rect key="frame" x="204" y="5" width="28" height="28"/>
-                        <state key="normal" image="misc_emtion-disabled.png">
+                    <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bDm-Il-4Oz">
+                        <rect key="frame" x="17" y="15" width="87" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <state key="normal" backgroundImage="misc_button-disabled">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
-                            <action selector="pressButton:" destination="CZd-p9-7m7" eventType="touchUpInside" id="RFS-FG-LaT"/>
+                            <action selector="pressButton:" destination="CZd-p9-7m7" eventType="touchUpInside" id="AQs-7n-jBn"/>
                         </connections>
                     </button>
-                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q8u-TE-YQ5">
-                        <rect key="frame" x="242" y="0.0" width="32" height="33"/>
-                        <state key="normal" image="misc_weather-disabled.png">
+                    <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I87-KK-1L5">
+                        <rect key="frame" x="117" y="15" width="87" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <state key="normal" backgroundImage="misc_button-disabled">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
-                            <action selector="pressButton:" destination="CZd-p9-7m7" eventType="touchUpInside" id="g2S-Cf-EVN"/>
+                            <action selector="pressButton:" destination="CZd-p9-7m7" eventType="touchUpInside" id="Qrq-98-0kR"/>
                         </connections>
                     </button>
-                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Erb-Rx-6gi">
-                        <rect key="frame" x="279" y="8" width="25" height="25"/>
-                        <state key="normal" image="misc_bookmark-disabled.png">
+                    <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K7s-kg-mie">
+                        <rect key="frame" x="216" y="15" width="87" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <state key="normal" backgroundImage="misc_bookmark-disabled">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
-                            <action selector="pressButton:" destination="CZd-p9-7m7" eventType="touchUpInside" id="7yl-gq-SBw"/>
+                            <action selector="pressButton:" destination="CZd-p9-7m7" eventType="touchUpInside" id="fMW-Gk-ytY"/>
                         </connections>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="misc_weather-disabled" translatesAutoresizingMaskIntoConstraints="NO" id="LW3-jh-vfc">
+                        <rect key="frame" x="180" y="-1" width="36" height="36"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="misc_weather-disabled" translatesAutoresizingMaskIntoConstraints="NO" id="qmB-2l-1MX">
+                        <rect key="frame" x="81" y="-1" width="36" height="36"/>
+                    </imageView>
                 </subviews>
-                <constraints>
-                    <constraint firstItem="q8u-TE-YQ5" firstAttribute="bottom" secondItem="Erb-Rx-6gi" secondAttribute="bottom" id="BhN-9P-r7q"/>
-                    <constraint firstItem="q8u-TE-YQ5" firstAttribute="bottom" secondItem="Jgo-7D-xqe" secondAttribute="bottom" id="Ihd-PP-WL7"/>
-                    <constraint firstItem="Erb-Rx-6gi" firstAttribute="leading" secondItem="q8u-TE-YQ5" secondAttribute="trailing" constant="5" id="RQT-7j-oNW"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Erb-Rx-6gi" secondAttribute="trailing" constant="8" id="YyE-K2-Uxb"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Erb-Rx-6gi" secondAttribute="bottom" constant="-7.5" id="j79-1o-HYl"/>
-                    <constraint firstItem="q8u-TE-YQ5" firstAttribute="leading" secondItem="Jgo-7D-xqe" secondAttribute="trailing" constant="10" id="jqK-42-TLV"/>
-                </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="button1" destination="Jgo-7D-xqe" id="wTa-Kn-2cP"/>
-                <outlet property="button2" destination="q8u-TE-YQ5" id="DjC-YK-S40"/>
-                <outlet property="button3" destination="Erb-Rx-6gi" id="LWl-5w-ilu"/>
+                <outlet property="button1" destination="bDm-Il-4Oz" id="gYl-Uy-UqG"/>
+                <outlet property="button2" destination="I87-KK-1L5" id="FF6-SN-rwz"/>
+                <outlet property="button3" destination="K7s-kg-mie" id="WAq-Dr-Kwh"/>
+                <outlet property="imageview1" destination="qmB-2l-1MX" id="9Ew-WT-NdF"/>
+                <outlet property="imageview2" destination="LW3-jh-vfc" id="fgr-Af-wnB"/>
             </connections>
-            <point key="canvasLocation" x="461" y="684.5"/>
+            <point key="canvasLocation" x="596" y="87"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="misc_bookmark-disabled.png" width="25" height="25"/>
-        <image name="misc_emtion-disabled.png" width="27" height="28"/>
-        <image name="misc_weather-disabled.png" width="32" height="33"/>
+        <image name="misc_bookmark-disabled" width="104" height="25"/>
+        <image name="misc_button-disabled" width="9" height="9"/>
+        <image name="misc_weather-disabled" width="36" height="36"/>
     </resources>
 </document>
