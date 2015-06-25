@@ -28,8 +28,8 @@ typedef NS_ENUM(NSUInteger, CDContentPicker) {
 
 - (id)initWithSelectedColor:(CDColorTraits)colorValue delegate:(id< UIContentPickerDelegate>)delegateValue;
 - (id)initWithSelectedEmotion:(CDEntryEmotions)emotionValue delegate:(id< UIContentPickerDelegate>)delegateValue;
-- (id)initWithSelectedWeatherCondition:(CDEntryWeatherCondition)emotionValue delegate:(id< UIContentPickerDelegate>)delegateValue;
-- (id)initWithSelectedTemperature:(CDEntryEmotions)emotionValue delegate:(id< UIContentPickerDelegate>)delegateValue;
+- (id)initWithSelectedWeatherCondition:(CDEntryWeatherCondition)weatherConditionValue temperature:(CDEntryTemerature)temperatureValue delegate:(id< UIContentPickerDelegate>)delegateValue;
+
 - (void)showAnimated:(BOOL)animated;
 - (void)selectByTrait:(CDColorTraits)colorValue;
 - (void)dismissAnimated:(BOOL)animated;
@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, CDContentPicker) {
 
 - (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithColor:(CDColorTraits)selectedColor;
 - (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryEmotion:(CDEntryEmotions)selectedEmotion;
+- (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryWeatherCondition:(CDEntryWeatherCondition)selectedWeatherCondition temperature:(CDEntryTemerature)selectedTemperature;
 
 - (void)colorPickerWillAppear:(UIContentPicker *)colorPicker;
 - (void)colorPickerDidAppear:(UIContentPicker *)colorPicker;

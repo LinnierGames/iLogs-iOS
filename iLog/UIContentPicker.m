@@ -8,6 +8,9 @@
 
 #import "UIContentPicker.h"
 
+static NSUInteger DIARY_ENTRY_weatherCondition = 0;
+static NSUInteger DIARY_ENTRY_temperature = 1;
+
 @interface UIContentPicker () < UIPickerViewDataSource, UIPickerViewDelegate> {
     IBOutlet UIView *contentView;
     IBOutlet UIPickerView *picker;
@@ -56,10 +59,34 @@
     
 }
 
+- (id)initWithSelectedWeatherCondition:(CDEntryWeatherCondition)weatherConditionValue temperature:(CDEntryTemerature)temperatureValue delegate:(id< UIContentPickerDelegate>)delegateValue {
+    self = [[[NSBundle mainBundle] loadNibNamed: @"UIContentPicker" owner: self options: NULL] objectAtIndex: CTContentEmotionPicker];
+    [self setFrame: CGRectCurrentDevice()];
+    contentPicker = CTContentWeatherConditionPicker;
+    delegate = delegateValue;
+    array = [[NSArray alloc] initWithObjects: NSWeatherConditionArray(), NSTemperatureArray(), nil];
+    NSInteger weatherCondition, temperature;
+    [self statusOfEntryWeatherCondition: weatherConditionValue temperature: temperatureValue withWeatherCondition: &weatherCondition withTemperature: &temperature];
+    [picker selectRow: weatherConditionValue inComponent: DIARY_ENTRY_weatherCondition animated: NO];
+    [picker selectRow: temperatureValue inComponent: DIARY_ENTRY_temperature animated: NO];
+    [self pickerView: picker didSelectRow: [picker selectedRowInComponent: 0] inComponent: 0];
+    
+    return self;
+    
+}
+
 #pragma mark Return Functions > Pre-Defined Functions (PICKER VIEW)
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
+    switch (contentPicker) {
+        case CTContentColorPicker: case CTContentEmotionPicker:
+            return 1; break;
+        case CTContentWeatherConditionPicker:
+            return 2; break;
+        default:
+            return 0; break;
+            
+    }
     
 }
 
@@ -79,6 +106,9 @@
             
         } case CTContentEmotionPicker: {
             return [array count]; break;
+            
+        } case CTContentWeatherConditionPicker: {
+            return [[array objectAtIndex: component] count]; break;
             
         } default: return 0; break;
             
@@ -109,7 +139,7 @@
             if (!view) {
                 view = [[UIView alloc] initWithFrame: CGRectMake( 0, 0, pickerView.frame.size.width, CVTableViewCellDefaultCellHeight)];
                 label = [[UILabel alloc] initWithFrame: view.frame]; [view addSubview: label];
-                image = [[UIImageView alloc] initWithFrame: CGRectMake( 16, 0, CVDiaryEntryIconImageSize, CVDiaryEntryIconImageSize)]; [view addSubview: image];
+                image = [[UIImageView alloc] initWithFrame: CGRectMake( 16, 1, CVDiaryEntryIconImageSize, CVDiaryEntryIconImageSize)]; [view addSubview: image];
                 
             }
             [label setTextAlignment: NSTextAlignmentCenter];
@@ -119,6 +149,35 @@
             return view;
             
         } case CTContentWeatherConditionPicker: {
+            UILabel *label;
+            UIImageView *image;
+            if (!view) {
+                view = [[UIView alloc] initWithFrame: CGRectMake( 0, 0, pickerView.frame.size.width/2, CVTableViewCellDefaultCellHeight)];
+                label = [[UILabel alloc] initWithFrame: view.frame]; [view addSubview: label];
+                image = [[UIImageView alloc] initWithFrame: CGRectMake( 8, 1, CVDiaryEntryIconImageSize, CVDiaryEntryIconImageSize)]; [view addSubview: image];
+                
+            }
+            [label setTextAlignment: NSTextAlignmentCenter];
+            switch (component) {
+                case 0: { //WeatherCondition
+                    [label setText: NSTitleByWeatherCondition( [[[array objectAtIndex: component] objectAtIndex: row] intValue])];
+                    [image setImage: [UIImage imageNamed: @"misc_bookmark-enabled"]];
+                    break;
+                    
+                } case 1: { //Temperature
+                    [label setText: NSTitleByTemperature( [[[array objectAtIndex: component] objectAtIndex: row] intValue])];
+                    [image setImage: [UIImage imageNamed: @"misc_bookmark-enabled"]];
+                    break;
+                    
+                }
+                    
+                default:
+                    break;
+            }
+            
+            return view; break;
+            
+        } default:
             return nil; break;
             
     }
@@ -144,14 +203,34 @@
 }
 
 - (void)statusOfEntryEmotion:(CDEntryEmotions)emotionValue withRow:(NSInteger *)rowIndex {
-        for (int index = 0; index < [array count]; index += 1) {
-            if ([array[index] intValue] == emotionValue) {
-                *rowIndex = index;
-                break;
-                
-            }
+    for (int index = 0; index < [array count]; index += 1) {
+        if ([array[index] intValue] == emotionValue) {
+            *rowIndex = index;
+            break;
             
         }
+        
+    }
+    
+}
+
+- (void)statusOfEntryWeatherCondition:(CDEntryWeatherCondition)weatherConditionValue temperature:(CDEntryTemerature)temperatureValue withWeatherCondition:(NSInteger *)weatherConditionIndex withTemperature:(NSInteger *)temperatureIndex {
+    for (int index = 0; index < [array[DIARY_ENTRY_weatherCondition] count]; index += 1) {
+        if ([array[DIARY_ENTRY_weatherCondition][index] intValue] == weatherConditionValue) {
+            *weatherConditionIndex = index;
+            break;
+            
+        }
+        
+    }
+    for (int index = 0; index < [array[DIARY_ENTRY_temperature] count]; index += 1) {
+        if ([array[DIARY_ENTRY_temperature][index] intValue] == temperatureValue) {
+            *temperatureIndex = index;
+            break;
+            
+        }
+        
+    }
     
 }
 
@@ -175,6 +254,11 @@
         case CTContentEmotionPicker:
             [button setTitle: NSTitleByEmotion( [array[row] intValue]) forState: UIControlStateNormal];
             break;
+        case CTContentWeatherConditionPicker: {
+            [button setTitle: [NSString stringWithFormat: @"%@ : %@", NSTitleByWeatherCondition( [[array[DIARY_ENTRY_weatherCondition] objectAtIndex: [pickerView selectedRowInComponent: DIARY_ENTRY_weatherCondition]] intValue]), NSTitleByTemperature( [[array[DIARY_ENTRY_temperature] objectAtIndex: [pickerView selectedRowInComponent: DIARY_ENTRY_temperature]] intValue])] forState: UIControlStateNormal];
+            break;
+            
+        }
             
         default:
             break;
@@ -200,6 +284,11 @@
         } case CTContentEmotionPicker: {
             if ([delegate respondsToSelector: @selector( contentPicker:didFinishWithEntryEmotion:)])
                 [delegate contentPicker: self didFinishWithEntryEmotion: [[array objectAtIndex: [picker selectedRowInComponent: 0]] intValue]];
+            break;
+            
+        } case CTContentWeatherConditionPicker: {
+            if ([delegate respondsToSelector: @selector( contentPicker:didFinishWithEntryWeatherCondition:temperature:)])
+                [delegate contentPicker: self didFinishWithEntryWeatherCondition: [[array[DIARY_ENTRY_weatherCondition] objectAtIndex: [picker selectedRowInComponent: DIARY_ENTRY_weatherCondition]] intValue] temperature: [[array[DIARY_ENTRY_temperature] objectAtIndex: [picker selectedRowInComponent: DIARY_ENTRY_temperature]] intValue]];
             break;
             
         } default:

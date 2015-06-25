@@ -263,10 +263,8 @@
             break;
             
         } case 2: { //Weather
-            if ([arrayM objectEntry_weather] == CTEntryWeatherConditionNoone)
-                [arrayM replaceObjectAtIndex: ENTRIES_weather withObject: [NSNumber numberWithInt: CTEntryWeatherConditionSunny]];
-            else
-                [arrayM replaceObjectAtIndex: ENTRIES_weather withObject: [NSNumber numberWithInt: CTEntryWeatherConditionNoone]];
+            UIContentPicker *pickerWeatherCondition = [[UIContentPicker alloc] initWithSelectedWeatherCondition: [arrayM objectEntry_weather] temperature: CTEntryTemperatureNoone delegate: self];
+            [pickerWeatherCondition showAnimated: YES];
             break;
             
         } case 3: { //Bookmark
@@ -284,6 +282,12 @@
 
 - (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryEmotion:(CDEntryEmotions)selectedEmotion {
     [arrayM replaceObjectAtIndex: ENTRIES_emotion withObject: [NSNumber numberWithInt: selectedEmotion]];
+    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 0 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
+    
+}
+
+- (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryWeatherCondition:(CDEntryWeatherCondition)selectedWeatherCondition temperature:(CDEntryTemerature)selectedTemperature {
+    [arrayM replaceObjectAtIndex: ENTRIES_weather withObject: [NSNumber numberWithInt: selectedWeatherCondition]];
     [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 0 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
     
 }
