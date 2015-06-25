@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iLog/DiaryController.m"
-            timestampString = "456515165.386059"
+            timestampString = "456902226.426268"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
             landmarkName = "+SQL_ENTRIES_voidUpdateRowForArray:"
             landmarkType = "5">
          </BreakpointContent>
