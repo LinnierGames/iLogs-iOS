@@ -86,6 +86,8 @@ static inline NSMutableArray * SQLStatementRowIntoDiaryEntry( sqlite3_stmt *stat
 - (void)DIARIES_updateForDiary:(NSArray *)arrayDiary;
 - (void)DIARIES_deleteForDiary:(NSArray *)arrayDiary;
 
+- (NSArray *)DIARIES_returnFirstDiary;
+
 @end
 
 #pragma mark - Entries

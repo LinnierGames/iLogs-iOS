@@ -11,7 +11,7 @@
 
 @interface NSArray (ARRAY_)
 
-- (NSMutableDictionary *)options;
+- (NSMutableDictionary *)optionsDictionary;
 
 @end
 

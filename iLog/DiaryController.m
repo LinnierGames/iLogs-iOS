@@ -83,7 +83,7 @@
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Diaries SET title = \"%@\", dateCreated = \"%@\" where id = %lu;", [[arrayEntry objectDiary_title] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]], [[[arrayEntry options] objectForKey: @"id"] unsignedLongValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Diaries SET title = \"%@\", dateCreated = \"%@\" where id = %lu;", [[arrayEntry objectDiary_title] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]], [[[arrayEntry optionsDictionary] objectForKey: @"id"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( database, sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
@@ -104,7 +104,7 @@
 + (void)SQL_DIARIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry {
     sqlite3 *database;
     if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries withDatabase: &database]) {
-        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Diaries where id = %lu;", [[[arrayEntry options] objectForKey: @"id"] unsignedLongValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Diaries where id = %lu;", [[[arrayEntry optionsDictionary] objectForKey: @"id"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( database, sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
@@ -143,6 +143,11 @@
     
 }
 
+- (NSArray *)DIARIES_returnFirstDiary {
+    return [[UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries] objectAtIndex: 0];
+    
+}
+
 @end
 
 #pragma mark - Entries
@@ -162,7 +167,7 @@
 }
 
 + (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue isBookmarked:(BOOL)boolBookmarkedValue {
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue emotion: emotionValue weatherCondition: weatherValue temperature: temperatureValue isBookmarked: boolBookmarkedValue options: [NSMutableDictionary dictionary]];
+    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue emotion: emotionValue weatherCondition: weatherValue temperature: temperatureValue isBookmarked: boolBookmarkedValue options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [[UniversalVariables globalVariables] DIARIES_returnFirstDiary], @"diary", nil]];
     
 }
 
@@ -224,7 +229,7 @@
         if (!dateFormatter)
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
-        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, date, dateCreated, body, emotion, weatherCondition, temperature, isBookmarked, diaryID) values (\"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %lu);", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[arrayEntry options] objectForKey: @"diaryID"] unsignedLongValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, date, dateCreated, body, emotion, weatherCondition, temperature, isBookmarked, diaryID) values (\"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %lu);", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[arrayEntry optionsDictionary] objectForKey: @"diaryID"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( database, sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
@@ -250,7 +255,7 @@
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entries SET subject = \"%@\", date = \"%@\", dateCreated = \"%@\", body = \"%@\", emotion = %d, weatherCondition = %d, temperature = %d, isBookmarked = %d, diaryID = %lu where id = %lu;", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[arrayEntry options] objectForKey: @"diaryID"] unsignedLongValue], [[[arrayEntry options] objectForKey: @"id"] unsignedLongValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entries SET subject = \"%@\", date = \"%@\", dateCreated = \"%@\", body = \"%@\", emotion = %d, weatherCondition = %d, temperature = %d, isBookmarked = %d, diaryID = %lu where id = %lu;", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[arrayEntry optionsDictionary] objectForKey: @"diaryID"] unsignedLongValue], [[[arrayEntry optionsDictionary] objectForKey: @"id"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( database, sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
@@ -271,7 +276,7 @@
 + (void)SQL_ENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry {
     sqlite3 *database;
     if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries withDatabase: &database]) {
-        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Entries where id = %lu;", [[[arrayEntry options] objectForKey: @"id"] unsignedLongValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Entries where id = %lu;", [[[arrayEntry optionsDictionary] objectForKey: @"id"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( database, sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
@@ -307,6 +312,40 @@
 
 - (void)ENTRIES_deleteForEntry:(NSArray *)arrayEntry {
     [UniversalFunctions SQL_ENTRIES_voidDeleteRowWithArray: arrayEntry];
+    
+}
+
+- (NSArray *)ENTRIES_returnEntriesOptions {
+    sqlite3 *database;
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries withDatabase: &database]) {
+        NSLog( @"Table OK: +ENTRIES_returnEntriesOptions");
+        sqlite3_stmt *statement; const char *err;
+        NSMutableArray *arrayContents = [NSMutableArray array];
+        if (SQLQueryPrepare( database, @"SELECT * FROM Entries ORDER BY date DESC;", &statement, &err)) {
+            while (SQLStatementStep( statement))
+                [arrayContents addObject: SQLStatementRowIntoEntryEntry( statement)];
+            
+        } else
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+        
+        if (SQLQueryPrepare( database, @"SELECT * FROM Diaries where id IN (SELECT diaryID FROM Entries ORDER BY date DESC);", &statement, &err)) {
+            int index = 0;
+            while (SQLStatementStep( statement)) {
+                [[[arrayContents objectAtIndex: index] optionsDictionary] setValue: SQLStatementRowIntoDiaryEntry( statement) forKey: @"diary"];
+                
+            }
+            
+        } else
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+        
+        
+        return [NSArray arrayWithArray: arrayContents];
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
+        return [UniversalFunctions SQL_returnContentsOfTable: CTSQLEntries];
+        
+    }
     
 }
 

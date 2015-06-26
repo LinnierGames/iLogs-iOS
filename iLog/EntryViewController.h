@@ -15,7 +15,7 @@
 @property ( assign) id< EntryViewConrollerDelegate> delegate;
 
 + (UINavigationController *)newEntryWithDelegate:(id< EntryViewConrollerDelegate>)delegateValue;
-+ (UINavigationController *)modifyEntry:(const NSArray *)arrayEntry delegate:(id< EntryViewConrollerDelegate>)delegateValue;
++ (UINavigationController *)modifyEntry:(NSArray *)arrayEntry delegate:(id< EntryViewConrollerDelegate>)delegateValue;
 
 @end
 

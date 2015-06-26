@@ -9,11 +9,12 @@
 #import "EntryViewController.h"
 #import "DiaryController.h"
 
-@interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, UIContentPickerDelegate> {
+@interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, UIContentPickerDelegate, UIActionSheetDelegate> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayM;
         UICustomTableViewCell *cellSubject;
         UICustomTableViewCell *cellBody;
+    NSMutableArray *array;
     
 }
 
@@ -42,16 +43,17 @@
     
 }
 
-+ (UINavigationController *)modifyEntry:(const NSArray *)arrayEntry delegate:(id<EntryViewConrollerDelegate>)delegateValue {
++ (UINavigationController *)modifyEntry:(NSArray *)arrayEntry delegate:(id<EntryViewConrollerDelegate>)delegateValue {
     return [[UINavigationController alloc] initWithRootViewController: [[EntryViewController alloc] initWithCRUD: CTRead entry: arrayEntry delegate: delegateValue]];
     
 }
 
-- (id)initWithCRUD:(CRUD)value entry:(const NSArray *)arrayEntry delegate:(id< EntryViewConrollerDelegate>)delegateValue {
+- (id)initWithCRUD:(CRUD)value entry:(NSArray *)arrayEntry delegate:(id< EntryViewConrollerDelegate>)delegateValue {
     self = [super initWithNibName: @"EntryViewController" bundle: [NSBundle mainBundle]];
     
     if (self) {
         arrayM = [[NSMutableArray alloc] initWithArray: arrayEntry];
+        array = [NSMutableArray new];
         
         option = value;
         delegate = delegateValue;
@@ -100,7 +102,7 @@
         } case 1: case 2:
             return CVTableViewCellDefaultCellHeight; break;
         case 3:
-            return 84; break;
+            return 216; break;
         default:
             return CVTableViewCellDefaultCellHeight; break;
             
@@ -131,7 +133,7 @@
                     if (!cell)
                         cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
                     
-                    [cell.textLabel setText: [[[arrayM options] objectForKey: @"diaryID"] objectDiary_title]];
+                    [cell.textLabel setText: [[[arrayM optionsDictionary] objectForKey: @"diary"] objectDiary_title]];
                     
                     return cell; break;
                     
@@ -218,8 +220,16 @@
             [cell.textview setTag: 1];
             [cell.textview setText: [arrayM objectEntry_body]];
             
-            cellBody = cell; return cell;
-            break;
+            cellBody = cell; return cell; break;
+            
+            /*
+             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+             if (!cell)
+             cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
+             
+             [cell.textLabel setText: @"Edit Body"];
+             
+             return cell; break;*/
             
         } default:
             return nil; break;
@@ -260,13 +270,22 @@
         case 0: {
             switch (indexPath.row) {
                 case 1: {
-                    
+                    UIActionSheet *actionDiaries = [[UIActionSheet alloc] initWithTitle: @"select a diary" delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: nil];
+                    [actionDiaries setTag: 1];
+                    array = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
+                    for (NSArray *arrayDiary in array)
+                        [actionDiaries addButtonWithTitle: [arrayDiary objectDiary_title]];
+                    [actionDiaries showInView: self.view];
                     break;
                     
                 } default:
                     break;
                     
             }
+            break;
+            
+        } case 3: {
+            [self.navigationController pushViewController: [[UITableViewModuleViewController alloc] initWithContent: [NSArray array]] animated: YES];
             break;
             
         } default:
@@ -279,7 +298,8 @@
 #pragma mark Void's > Pre-Defined Functions (SCROLL VIEW)
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self dismissFirstResponder];
+    if ([scrollView isEqual: table])
+        [self dismissFirstResponder];
     
 }
 
@@ -295,10 +315,34 @@
 
 #pragma mark Void's > Pre-Defined Functions (TEXT VIEW)
 
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    [table setContentOffset: CGPointMake( 0, 124) animated: YES];
+    
+}
+
 - (void)textViewDidEndEditing:(UITextView *)textView {
     if ([textView isEqual: cellBody.textview]) {
         [arrayM replaceObjectAtIndex: ENTRIES_body withObject: textView.text];
         
+    }
+    
+}
+
+#pragma mark Void's > Pre-Defined Functions (ACTION SHEET)
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch ([actionSheet tag]) {
+        case 1: { //Select Diary
+            if (buttonIndex != 0) {
+                [[arrayM optionsDictionary] setValue: [[[array objectAtIndex: buttonIndex -1] optionsDictionary] objectForKey: @"id"] forKey: @"diaryID"];
+                [[arrayM optionsDictionary] setValue: [array objectAtIndex: buttonIndex -1] forKey: @"diary"];
+                [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
+                
+            }
+            break;
+            
+        } default:
+            break;
     }
     
 }
@@ -334,14 +378,14 @@
 
 - (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryEmotion:(CDEntryEmotions)selectedEmotion {
     [arrayM replaceObjectAtIndex: ENTRIES_emotion withObject: [NSNumber numberWithInt: selectedEmotion]];
-    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
+    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
     
 }
 
 - (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryWeatherCondition:(CDEntryWeatherCondition)selectedWeatherCondition temperature:(CDEntryTemerature)selectedTemperature {
     [arrayM replaceObjectAtIndex: ENTRIES_weatherCondition withObject: [NSNumber numberWithInt: selectedWeatherCondition]];
     [arrayM replaceObjectAtIndex: ENTRIES_temperature withObject: [NSNumber numberWithInt: selectedTemperature]];
-    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
+    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
     
 }
 
@@ -384,7 +428,8 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [cellSubject.textfield becomeFirstResponder];
+    if (option == CTCreate)
+        [cellSubject.textfield becomeFirstResponder];
     
 }
 

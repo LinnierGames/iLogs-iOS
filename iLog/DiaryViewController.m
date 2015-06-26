@@ -72,7 +72,7 @@
 #pragma mark - Void's
 
 - (void)reloadTable {
-    arrayTable = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLEntries]];
+    arrayTable = [NSMutableArray arrayWithArray: [[UniversalVariables globalVariables] ENTRIES_returnEntriesOptions]];
     arrayDiaries = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
     [table reloadData];
     
@@ -139,7 +139,7 @@
         case 1: { //Add Entry > Select Diary
             if (buttonIndex != 0) {
                 buttonIndex -= 1;
-                [[array options] setValue: [[(NSArray *)[arrayDiaries objectAtIndex: buttonIndex] options] objectForKey: @"id"] forKey: @"diaryID"];
+                [[array optionsDictionary] setValue: [[(NSArray *)[arrayDiaries objectAtIndex: buttonIndex] optionsDictionary] objectForKey: @"id"] forKey: @"diaryID"];
                 [[UniversalVariables globalVariables] ENTRIES_writeNewForEntry: array];
                 [self reloadTable];
                 
@@ -212,6 +212,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self reloadTable];
     
 }
 

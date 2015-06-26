@@ -10,7 +10,7 @@
 
 @implementation NSArray (ARRAY_)
 
-- (NSMutableDictionary *)options {
+- (NSMutableDictionary *)optionsDictionary {
     return (NSMutableDictionary *)[self lastObject];
     
 }

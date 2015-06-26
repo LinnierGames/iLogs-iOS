@@ -168,7 +168,6 @@ NSString *SQLDatabase = @"database";
                 if (SQLQueryPrepare( database, @"SELECT * FROM Diaries ORDER BY title DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
-//                        [[array options] setValue: [NSArray new] forKey: @"stories"];
                         [arrayContents addObject: array];
                         
                     }
