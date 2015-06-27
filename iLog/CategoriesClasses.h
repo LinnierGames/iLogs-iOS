@@ -15,6 +15,12 @@
 
 @end
 
+@interface NSMutableArray (ARRAY_)
+
+- (void)updateOptionsDictionary:(NSDictionary *)dictionaryValue;
+
+@end
+
 @interface UIColor (CustomUIColor)
 
 + (UIColor *)incomeColorWithAlpha:(CGFloat)alpha;

@@ -178,8 +178,11 @@ NSString *SQLDatabase = @"database";
                 
             } case CTSQLEntries: {
                 if (SQLQueryPrepare( database, @"SELECT * FROM Entries ORDER BY date DESC;", &statement, &err)) {
-                    while (SQLStatementStep( statement))
+                    while (SQLStatementStep( statement)) {
                         [arrayContents addObject: SQLStatementRowIntoEntryEntry( statement)];
+                        [[arrayContents lastObject] updateOptionsDictionary: [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: [arrayContents lastObject]]];
+                        
+                    }
                     
                 } else
                     NSAssert( 0, [NSString stringWithUTF8String: err]);

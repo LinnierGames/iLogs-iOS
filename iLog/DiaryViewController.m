@@ -72,7 +72,7 @@
 #pragma mark - Void's
 
 - (void)reloadTable {
-    arrayTable = [NSMutableArray arrayWithArray: [[UniversalVariables globalVariables] ENTRIES_returnEntriesOptions]];
+    arrayTable = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLEntries]];
     arrayDiaries = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
     [table reloadData];
     
@@ -101,23 +101,7 @@
             }
             break;
             
-        } case 2: { //Add Entry
-            if ([[alertView textFieldAtIndex: 0] isFirstResponder])
-                [[alertView textFieldAtIndex: 0] resignFirstResponder];
-            if ([[alertView textFieldAtIndex: 1] isFirstResponder])
-                [[alertView textFieldAtIndex: 1] resignFirstResponder];
-            if (buttonIndex == 1) { //Next
-                array = [NSMutableArray arrayNEWEntryWithSubject: [alertView textFieldAtIndex: 0].text body: [alertView textFieldAtIndex: 1].text];
-                UIActionSheet *actionDiaries = [[UIActionSheet alloc] initWithTitle: @"New Entry" delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: nil];
-                [actionDiaries setTag: 1];
-                for (NSArray *arrayDiary in arrayDiaries)
-                    [actionDiaries addButtonWithTitle: [arrayDiary objectDiary_title]];
-                [actionDiaries showInView: self.view];
-                
-            }
-            break;
-            
-        } case 3: { //View Entry > Edit Entry
+        } case 2: { //View Entry > Edit Entry
             if (buttonIndex == 1) {
                 UINavigationController *viewEdit = [EntryViewController modifyEntry: [arrayTable objectAtIndex: indexpath.row] delegate: self];
                 [self presentViewController: viewEdit animated: YES completion: ^{ }];
@@ -158,7 +142,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject] message: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body] delegate: self cancelButtonTitle: @"Dismiss" otherButtonTitles: @"Edit", nil];
-    [alert setTag: 3];
+    [alert setTag: 2];
     indexpath = indexPath;
     [alert show];
     

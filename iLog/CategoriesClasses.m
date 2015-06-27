@@ -17,6 +17,19 @@
 
 @end
 
+@implementation NSMutableArray (ARRAY_)
+
+- (void)updateOptionsDictionary:(NSDictionary *)dictionaryValue {
+    if ([[self lastObject] isKindOfClass: [NSMutableDictionary class]] || [[self lastObject] isKindOfClass: [NSDictionary class]]) {
+        [self removeLastObject];
+        [self addObject: dictionaryValue];
+        
+    }
+    
+}
+
+@end
+
 @implementation UIColor (HEXColors)
 
 + (UIColor *)colorFromHexString:(NSString *)hexString withAlpha:(CGFloat)alpha {

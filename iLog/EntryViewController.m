@@ -334,7 +334,6 @@
     switch ([actionSheet tag]) {
         case 1: { //Select Diary
             if (buttonIndex != 0) {
-                [[arrayM optionsDictionary] setValue: [[[array objectAtIndex: buttonIndex -1] optionsDictionary] objectForKey: @"id"] forKey: @"diaryID"];
                 [[arrayM optionsDictionary] setValue: [array objectAtIndex: buttonIndex -1] forKey: @"diary"];
                 [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
                 
