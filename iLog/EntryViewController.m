@@ -275,6 +275,7 @@
                     array = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
                     for (NSArray *arrayDiary in array)
                         [actionDiaries addButtonWithTitle: [arrayDiary objectDiary_title]];
+                    [self dismissFirstResponder];
                     [actionDiaries showInView: self.view];
                     break;
                     
@@ -285,7 +286,7 @@
             break;
             
         } case 3: {
-            [self.navigationController pushViewController: [[UITableViewModuleViewController alloc] initWithContent: [NSArray array]] animated: YES];
+//            [self.navigationController pushViewController: [[UITableViewModuleViewController alloc] initWithContent: [NSArray array]] animated: YES];
             break;
             
         } default:
@@ -364,12 +365,12 @@
             
         } case 3: { //Bookmark
             [arrayM replaceObjectAtIndex: ENTRIES_isBookmarked withObject: [NSNumber numberWithBool: [arrayM objectEntry_isBookmarked] ? NO : YES]];
+            [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
             break;
             
         }
             
     }
-    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
     
 }
 

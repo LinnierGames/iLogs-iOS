@@ -278,7 +278,6 @@ static inline NSArray* NSEmotionArray() {
     return [NSArray arrayWithObjects:
             @(CTEntryEmotionNoone),
             @(CTEntryEmotionVeryHappy),
-            @(CTEntryEmotionVeryHappy),
             @(CTEntryEmotionHappy),
             @(CTEntryEmotionStrongWellFit),
             @(CTEntryEmotionDetermined),
@@ -562,5 +561,6 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
 - (void)ENTRIES_deleteForEntry:(NSArray *)arrayEntry;
 
 - (NSArray *)ENTRIES_returnEntriesOptions;
+- (NSMutableDictionary *)ENTRIES_returnEntryOptionsForEntry:(NSArray *)arrayEntry;
 
 @end
