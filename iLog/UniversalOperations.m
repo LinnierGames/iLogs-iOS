@@ -132,24 +132,35 @@ NSString *SQLDatabase = @"database";
         case CTSQLDiaries: case CTSQLEntries: case CTSQLStories: case CTSQLStoryEntriesRelationship: case CTSQLTags: case CTSQLTagEntriesRelationship: {
             BOOL status = [self SQL_returnStatusOfDatabase: database];
             SQL3Statement *statement; const char *err;
-            
-            [UniversalFunctions SQL_voidCreateTable: table];
-            
-            return YES;
-            
-            if (SQLQueryPrepare( *database, @"create database lol;", &statement, &err)) {
+            NSString *stringFocusTableTitle = @"";
+            switch (table) {
+                case CTSQLDiaries:
+                    stringFocusTableTitle = @"Diaries";
+                    break;
+                case CTSQLEntries:
+                    stringFocusTableTitle = @"Entries";
+                    break;
+                default:
+                    break;
+                    
+            } BOOL isFound = false;
+            if (SQLQueryPrepare( *database, @"SELECT name FROM sqlite_master WHERE type IN ('table','view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN ('table','view') ORDER BY 1;", &statement, &err)) {
                 while (SQLStatementStep( statement)) {
-                    NSLog( @"%@", [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, 0)]);
+                    if ([[NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, 0)] isEqualToString: stringFocusTableTitle]) {
+                        isFound = true;
+                        
+                    }
                     
                 }
                 
             } else {
                 status = NO;
+                sqlite3_close( *database);
                 NSAssert( 0, [NSString stringWithUTF8String: err]);
                 
             }
             
-            return status; break;
+            return isFound; break;
             
         }
             
