@@ -317,35 +317,30 @@
 
 - (NSArray *)ENTRIES_returnEntriesOptions {
     sqlite3 *database;
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries withDatabase: &database]) {
-        NSLog( @"Table OK: +ENTRIES_returnEntriesOptions");
-        sqlite3_stmt *statement; const char *err;
-        NSMutableArray *arrayContents = [NSMutableArray array];
-        if (SQLQueryPrepare( database, @"SELECT * FROM Entries ORDER BY date DESC;", &statement, &err)) {
-            while (SQLStatementStep( statement))
-                [arrayContents addObject: SQLStatementRowIntoEntryEntry( statement)];
+    [UniversalFunctions SQL_returnStatusOfDatabase: &database];
+    
+    NSLog( @"Table OK: +ENTRIES_returnEntriesOptions");
+    sqlite3_stmt *statement; const char *err;
+    NSMutableArray *arrayContents = [NSMutableArray array];
+    if (SQLQueryPrepare( database, @"SELECT * FROM Entries ORDER BY date DESC;", &statement, &err)) {
+        while (SQLStatementStep( statement))
+            [arrayContents addObject: SQLStatementRowIntoEntryEntry( statement)];
+        
+    } else
+        NSAssert( 0, [NSString stringWithUTF8String: err]);
+    
+    if (SQLQueryPrepare( database, @"SELECT * FROM Diaries where id IN (SELECT diaryID FROM Entries ORDER BY date DESC);", &statement, &err)) {
+        int index = 0;
+        while (SQLStatementStep( statement)) {
+            [[[arrayContents objectAtIndex: index] optionsDictionary] setValue: SQLStatementRowIntoDiaryEntry( statement) forKey: @"diary"];
             
-        } else
-            NSAssert( 0, [NSString stringWithUTF8String: err]);
+        }
         
-        if (SQLQueryPrepare( database, @"SELECT * FROM Diaries where id IN (SELECT diaryID FROM Entries ORDER BY date DESC);", &statement, &err)) {
-            int index = 0;
-            while (SQLStatementStep( statement)) {
-                [[[arrayContents objectAtIndex: index] optionsDictionary] setValue: SQLStatementRowIntoDiaryEntry( statement) forKey: @"diary"];
-                
-            }
-            
-        } else
-            NSAssert( 0, [NSString stringWithUTF8String: err]);
-        
-        
-        return [NSArray arrayWithArray: arrayContents];
-        
-    } else {
-        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
-        return [[UniversalVariables globalVariables] ENTRIES_returnEntriesOptions];
-        
-    }
+    } else
+        NSAssert( 0, [NSString stringWithUTF8String: err]);
+    
+    
+    return [NSArray arrayWithArray: arrayContents];
     
 }
 
@@ -353,29 +348,21 @@
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [arrayEntry optionsDictionary]];
     
     sqlite3 *database;
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries withDatabase: &database]) {
-        NSLog( @"Table OK: +ENTRIES_returnEntryOptionsForEntry:");
-        sqlite3_stmt *statement; const char *err;
-        
-        if (SQLQueryPrepare( database, [NSString stringWithFormat: @"SELECT * FROM Diaries where id = %d;", [[[arrayEntry optionsDictionary] objectForKey: @"diaryID"] intValue]], &statement, &err)) {
-            while (SQLStatementStep( statement)) {
-                [dictionary setValue: SQLStatementRowIntoDiaryEntry( statement) forKey: @"diary"];
-                [dictionary removeObjectForKey: @"diaryID"];
-                
-            }
-            
-        } else
-            NSAssert( 0, [NSString stringWithUTF8String: err]);
-        
-        
-        return dictionary;
-        
-    } else {
-        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
-        return [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: arrayEntry];
-        
-    }
+    [UniversalFunctions SQL_returnStatusOfDatabase: &database];
+    NSLog( @"Table OK: +ENTRIES_returnEntryOptionsForEntry:");
+    sqlite3_stmt *statement; const char *err;
     
+    if (SQLQueryPrepare( database, [NSString stringWithFormat: @"SELECT * FROM Diaries where id = %d;", [[[arrayEntry optionsDictionary] objectForKey: @"diaryID"] intValue]], &statement, &err)) {
+        while (SQLStatementStep( statement)) {
+            [dictionary setValue: SQLStatementRowIntoDiaryEntry( statement) forKey: @"diary"];
+            [dictionary removeObjectForKey: @"diaryID"];
+            
+        }
+        
+    } else
+        NSAssert( 0, [NSString stringWithUTF8String: err]);
+    
+    return dictionary;
     
 }
 

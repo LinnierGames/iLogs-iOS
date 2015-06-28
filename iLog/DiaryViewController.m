@@ -191,7 +191,6 @@
     arrayTable = [NSMutableArray new];
     arrayDiaries = [NSMutableArray new];
     array = [NSMutableArray new];
-    [self reloadTable];
     
 }
 

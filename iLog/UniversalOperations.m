@@ -116,11 +116,11 @@ NSString *SQLDatabase = @"database";
     NSString *filePath = [[paths objectAtIndex: 0] stringByAppendingPathComponent: SQLDatabase];
     if (sqlite3_open( [filePath UTF8String], &*database) != SQLITE_OK) {
         sqlite3_close( *database);
-        NSLog( @"***Failed to Open: +SQL_returnStatusOfTable:withDatabase:");
+        NSLog( @"***Failed to Open: +SQL_returnStatusOfDatabase:");
         return NO;
         
     } else {
-        NSLog( @"Opened: +SQL_returnStatusOfTable:withDatabase:");
+        NSLog( @"Opened: +SQL_returnStatusOfDatabase:");
         return YES;
         
     }
@@ -191,7 +191,7 @@ NSString *SQLDatabase = @"database";
                 if (SQLQueryPrepare( database, @"SELECT * FROM Entries ORDER BY date DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         [arrayContents addObject: SQLStatementRowIntoEntryEntry( statement)];
-                        [[arrayContents lastObject] updateOptionsDictionary: [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: [arrayContents lastObject]]];
+//                        [[arrayContents lastObject] updateOptionsDictionary: [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: [arrayContents lastObject]]];
                         
                     }
                     

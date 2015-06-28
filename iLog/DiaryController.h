@@ -490,6 +490,19 @@ static const NSUInteger ENTRIES_isBookmarked = 7;
 
 @end
 
+#pragma mark UniversalVariables category (ENTRIES_)
+
+@interface UniversalVariables (ENTRIES_)
+
+- (void)ENTRIES_writeNewForEntry:(NSArray *)arrayEntry;
+- (void)ENTRIES_updateForEntry:(NSArray *)arrayEntry;
+- (void)ENTRIES_deleteForEntry:(NSArray *)arrayEntry;
+
+- (NSArray *)ENTRIES_returnEntriesOptions;
+- (NSMutableDictionary *)ENTRIES_returnEntryOptionsForEntry:(NSArray *)arrayEntry;
+
+@end
+
 #pragma mark UniversalFunctions category (SQL_Entries_)
 
 static const int SQL_ENTRIES_id = 0;
@@ -528,7 +541,11 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
     CDEntryTemerature temperature = sqlite3_column_int( statement, SQL_ENTRIES_temperature);
     BOOL isBookmarked = sqlite3_column_int( statement, SQL_ENTRIES_isBookmarked);
     
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubject date: date dateCreated: dateCreated body: stringBody emotion: emotion weatherCondition: weatherCondition temperature: temperature isBookmarked: isBookmarked options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_id)], @"id", [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_diaryID)], @"diaryID", nil]];
+    NSMutableArray *array = [NSMutableArray arrayNEWEntryWithSubject: stringSubject date: date dateCreated: dateCreated body: stringBody emotion: emotion weatherCondition: weatherCondition temperature: temperature isBookmarked: isBookmarked options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_id)], @"id", [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_diaryID)], @"diaryID", nil]];
+    
+    [array updateOptionsDictionary: [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: array]];
+    
+    return array;
     
 };
 
@@ -549,18 +566,5 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
  * @param [in] arrayEntry: Entries
  */
 + (void)SQL_ENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry;
-
-@end
-
-#pragma mark UniversalVariables category (ENTRIES_)
-
-@interface UniversalVariables (ENTRIES_)
-
-- (void)ENTRIES_writeNewForEntry:(NSArray *)arrayEntry;
-- (void)ENTRIES_updateForEntry:(NSArray *)arrayEntry;
-- (void)ENTRIES_deleteForEntry:(NSArray *)arrayEntry;
-
-- (NSArray *)ENTRIES_returnEntriesOptions;
-- (NSMutableDictionary *)ENTRIES_returnEntryOptionsForEntry:(NSArray *)arrayEntry;
 
 @end
