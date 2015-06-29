@@ -103,12 +103,12 @@ typedef enum {
  * Checks if the file is loaded
  * @return BOOL
  */
-+ (BOOL)SQL_returnStatusOfDatabase:(sqlite3 **)database;
++ (BOOL)SQL_returnStatusOfDatabase;
 /**
  * Checks if the table is created as well as the file
  * @return BOOL
  */
-+ (BOOL)SQL_returnStatusOfTable:(CDSQLTables)table withDatabase:(sqlite3 **)database;
++ (BOOL)SQL_returnStatusOfTable:(CDSQLTables)table;
 /**
  * Converts table into an array formatted according to table
  * @warning index dicitonary included

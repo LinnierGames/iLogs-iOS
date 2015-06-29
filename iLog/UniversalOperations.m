@@ -37,8 +37,7 @@ NSString *SQLDatabase = @"database";
 @implementation UniversalFunctions (SQL_)
 
 + (void)SQL_voidCreateTable:(CDSQLTables)table {
-    sqlite3 *database;
-    [self SQL_returnStatusOfDatabase: &database];
+    [self SQL_returnStatusOfDatabase];
     char *err;
     NSString *sqlQuery = @"";
     switch (table) {
@@ -62,9 +61,9 @@ NSString *SQLDatabase = @"database";
             break;
             
     }
-    if (!SQLQueryMake( database, sqlQuery, &err)) {
+    if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlQuery, &err)) {
         NSAssert(0, [NSString stringWithUTF8String: err]);
-        sqlite3_close( database);
+        sqlite3_close( [[UniversalVariables globalVariables] database]);
         NSLog( @"Table NOT CREATED: +SQL_voidCreateTable");
         
     } else
@@ -73,8 +72,7 @@ NSString *SQLDatabase = @"database";
 }
 
 + (void)SQL_voidClearRowsFromTable:(CDSQLTables)table {
-    sqlite3 *database;
-    if ([self SQL_returnStatusOfTable: table withDatabase: &database]) {
+    if ([self SQL_returnStatusOfTable: table]) {
         char *err;
         NSString *sqlQuery = @"";
         switch (table) {
@@ -95,9 +93,9 @@ NSString *SQLDatabase = @"database";
                 NSAssert(table != CTSQLStoryEntriesRelationship || table != CTSQLTagEntriesRelationship, @"Cannont clear a relationship table");
                 break;
         }
-        if (!SQLQueryMake( database, sqlQuery, &err)) {
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlQuery, &err)) {
             NSAssert(0, [NSString stringWithUTF8String: err]);
-            sqlite3_close( database);
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
             NSLog( @"Table NOT CLEARED: +SQL_voidClearRowsFromTable");
             
         } else
@@ -111,7 +109,7 @@ NSString *SQLDatabase = @"database";
     
 }
 
-+ (BOOL)SQL_returnStatusOfDatabase:(sqlite3 **)database {
++ (BOOL)SQL_returnStatusOfDatabase {
     sqlite3 *sqlite3;
     NSArray *paths = NSSearchPathForDirectoriesInDomains( NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *filePath = [[paths objectAtIndex: 0] stringByAppendingPathComponent: SQLDatabase];
@@ -129,10 +127,10 @@ NSString *SQLDatabase = @"database";
     
 }
 
-+ (BOOL)SQL_returnStatusOfTable:(CDSQLTables)table withDatabase:(sqlite3 **)database {
++ (BOOL)SQL_returnStatusOfTable:(CDSQLTables)table {
     switch (table) {
         case CTSQLDiaries: case CTSQLEntries: case CTSQLStories: case CTSQLStoryEntriesRelationship: case CTSQLTags: case CTSQLTagEntriesRelationship: {
-            BOOL status = [self SQL_returnStatusOfDatabase: nil];
+            BOOL status = [self SQL_returnStatusOfDatabase];
             SQL3Statement *statement; const char *err;
             NSString *stringFocusTableTitle = @"";
             switch (table) {
@@ -171,8 +169,7 @@ NSString *SQLDatabase = @"database";
 }
 
 + (NSArray *)SQL_returnContentsOfTable:(CDSQLTables)table {
-    sqlite3 *database;
-    if ([UniversalFunctions SQL_returnStatusOfTable: table withDatabase: nil]) {
+    if ([UniversalFunctions SQL_returnStatusOfTable: table]) {
         NSLog( @"Table OK: +SQL_returnContentsOfFile");
         sqlite3_stmt *statement; const char *err;
         NSMutableArray *arrayContents = [NSMutableArray array];
@@ -196,8 +193,11 @@ NSString *SQLDatabase = @"database";
                         
                     }
                     
-                } else
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
                     NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
                 break;
                 
             }
@@ -223,13 +223,12 @@ NSString *SQLDatabase = @"database";
 
 + (NSNumber *)SQL_returnNumberOfRowsInTable:(CDSQLTables)table withQuerySuffix:(NSString *)sqlQuery {
     int intValue = 0;
-    sqlite3 *database;
-    if ([UniversalFunctions SQL_returnStatusOfTable: table withDatabase: &database]) {
+    if ([UniversalFunctions SQL_returnStatusOfTable: table]) {
         sqlite3_stmt *statement;
         const char *err;
         switch (table) {
             case CTSQLDiaries: {
-                if (SQLQueryPrepare( database, [@"SELECT COUNT(*) FROM Diaries " stringByAppendingString: sqlQuery], &statement, &err)) {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [@"SELECT COUNT(*) FROM Diaries " stringByAppendingString: sqlQuery], &statement, &err)) {
                     while (SQLStatementStep( statement))
                         intValue = sqlite3_column_int( statement, 0);
                     

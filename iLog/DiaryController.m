@@ -50,8 +50,7 @@
 @implementation UniversalFunctions (SQL_Diaries_)
 
 + (void)SQL_DIARIES_voidInsertRowWithArray:(const NSArray *)arrayEntry {
-    sqlite3 *database;
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries withDatabase: &database]) {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries]) {
         static ISO8601DateFormatter *dateFormatter = nil;
         if (!dateFormatter)
             dateFormatter = [[ISO8601DateFormatter alloc] init];
@@ -59,9 +58,9 @@
         
         NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Diaries (title, dateCreated) values (\"%@\", \"%@\");", [[arrayEntry objectDiary_title] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]]];
         char *err;
-        if (!SQLQueryMake( database, sqlStatement, &err)) {
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
-            sqlite3_close( database);
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
             NSLog( @"***Failed to Add to Table: +SQL_DIARIES_voidInsertRowWithArray:");
             
         } else
@@ -76,8 +75,7 @@
 }
 
 + (void)SQL_DIARIES_voidUpdateRowForArray:(const NSArray *)arrayEntry {
-    sqlite3 *database;
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries withDatabase: &database]) {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries]) {
         static ISO8601DateFormatter *dateFormatter = nil;
         if (!dateFormatter)
             dateFormatter = [[ISO8601DateFormatter alloc] init];
@@ -85,9 +83,9 @@
         
         NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Diaries SET title = \"%@\", dateCreated = \"%@\" where id = %lu;", [[arrayEntry objectDiary_title] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]], [[[arrayEntry optionsDictionary] objectForKey: @"id"] unsignedLongValue]];
         char *err;
-        if (!SQLQueryMake( database, sqlStatement, &err)) {
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
-            sqlite3_close( database);
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
             NSLog( @"***Failed to Update row: +SQL_DIARIES_voidUpdateRowForArray:");
             
         } else
@@ -102,13 +100,12 @@
 }
 
 + (void)SQL_DIARIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry {
-    sqlite3 *database;
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries withDatabase: &database]) {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries]) {
         NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Diaries where id = %lu;", [[[arrayEntry optionsDictionary] objectForKey: @"id"] unsignedLongValue]];
         char *err;
-        if (!SQLQueryMake( database, sqlStatement, &err)) {
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             NSAssert( 0, [NSString stringWithUTF8String: err]);
-            sqlite3_close( database);
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
             NSLog( @"***Failed to Delete row: +SQL_DIARIES_voidDeleteRowWithArray:");
             
         } else
@@ -151,21 +148,22 @@
 - (NSMutableDictionary *)DIARIES_returnEntriesOptionsForDiary:(NSArray *)arrayDiary {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [arrayDiary optionsDictionary]];
     
-    sqlite3 *database;
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries withDatabase: &database]) {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries]) {
         NSLog( @"Table OK: +DIARIES_returnEntriesOptionsForDiary:");
         sqlite3_stmt *statement; const char *err;
         
-        if (SQLQueryPrepare( database, [NSString stringWithFormat: @"SELECT * FROM Entries where diaryID = %d", [[[arrayDiary optionsDictionary] objectForKey: @"id"] intValue]], &statement, &err)) {
+        if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Entries where diaryID = %d", [[[arrayDiary optionsDictionary] objectForKey: @"id"] intValue]], &statement, &err)) {
             NSMutableArray *arrayEntries = [NSMutableArray array];
             while (SQLStatementStep( statement)) {
                 
                 
             }
             
-        } else
+        } else {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
             NSAssert( 0, [NSString stringWithUTF8String: err]);
-        
+            
+        }
         
         return dictionary;
         
@@ -253,8 +251,7 @@
 @implementation UniversalFunctions (SQL_Entries_)
 
 + (void)SQL_ENTRIES_voidInsertRowWithArray:(const NSArray *)arrayEntry {
-    sqlite3 *database;
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries withDatabase: nil]) {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries]) {
         static ISO8601DateFormatter *dateFormatter = nil;
         if (!dateFormatter)
             dateFormatter = [[ISO8601DateFormatter alloc] init];
@@ -278,8 +275,7 @@
 }
 
 + (void)SQL_ENTRIES_voidUpdateRowForArray:(const NSArray *)arrayEntry {
-    sqlite3 *database;
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries withDatabase: nil]) {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries]) {
         static ISO8601DateFormatter *dateFormatter = nil;
         if (!dateFormatter)
             dateFormatter = [[ISO8601DateFormatter alloc] init];
@@ -304,8 +300,7 @@
 }
 
 + (void)SQL_ENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry {
-    sqlite3 *database;
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries withDatabase: nil]) {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries]) {
         NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Entries where id = %d;", [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
@@ -346,9 +341,6 @@
 }
 
 - (NSArray *)ENTRIES_returnEntriesOptions {
-    sqlite3 *database;
-//    [UniversalFunctions SQL_returnStatusOfDatabase: nil];
-    
     NSLog( @"Table OK: +ENTRIES_returnEntriesOptions");
     sqlite3_stmt *statement; const char *err;
     NSMutableArray *arrayContents = [NSMutableArray array];
@@ -377,8 +369,6 @@
 - (NSMutableDictionary *)ENTRIES_returnEntryOptionsForEntry:(NSArray *)arrayEntry {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [arrayEntry optionsDictionary]];
     
-    sqlite3 *database;
-//    [UniversalFunctions SQL_returnStatusOfDatabase: nil];
     NSLog( @"Table OK: +ENTRIES_returnEntryOptionsForEntry:");
     sqlite3_stmt *statement; const char *err;
     
