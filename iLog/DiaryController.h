@@ -42,7 +42,7 @@ static const NSUInteger DIARY_dateCreated = 1;
 - (void)DIARIES_deleteForDiary:(NSArray *)arrayDiary;
 
 - (NSArray *)DIARIES_returnFirstDiary;
-- (NSMutableDictionary *)DIARIES_returnEntriesOptionsForDiary:(NSArray *)arrayDiary;
+- (NSMutableDictionary *)DIARIES_returnDiaryOptionsForDiary:(NSArray *)arrayDiary;
 
 @end
 
@@ -67,7 +67,9 @@ static inline NSMutableArray * SQLStatementRowIntoDiaryEntry( sqlite3_stmt *stat
     
     NSDate *dateCreated = [dateFormatter dateFromString: [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_DIARY_dateCreated)]];
     
-    return [NSMutableArray arrayNEWDiaryWithTitle: stringTitle dateCreated: dateCreated index: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_DIARY_id)], @"id", nil]];
+    NSMutableArray *array = [NSMutableArray arrayNEWDiaryWithTitle: stringTitle dateCreated: dateCreated index: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_DIARY_id)], @"id", nil]];
+    
+    return array;
     
 };
 
@@ -543,8 +545,6 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
     BOOL isBookmarked = sqlite3_column_int( statement, SQL_ENTRIES_isBookmarked);
     
     NSMutableArray *array = [NSMutableArray arrayNEWEntryWithSubject: stringSubject date: date dateCreated: dateCreated body: stringBody emotion: emotion weatherCondition: weatherCondition temperature: temperature isBookmarked: isBookmarked options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_id)], @"id", [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_diaryID)], @"diaryID", nil]];
-    
-    [array updateOptionsDictionary: [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: array]];
     
     return array;
     

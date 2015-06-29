@@ -145,7 +145,7 @@
     
 }
 
-- (NSMutableDictionary *)DIARIES_returnEntriesOptionsForDiary:(NSArray *)arrayDiary {
+- (NSMutableDictionary *)DIARIES_returnDiaryOptionsForDiary:(NSArray *)arrayDiary {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [arrayDiary optionsDictionary]];
     
     if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries]) {
@@ -155,9 +155,10 @@
         if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Entries where diaryID = %d", [[[arrayDiary optionsDictionary] objectForKey: @"id"] intValue]], &statement, &err)) {
             NSMutableArray *arrayEntries = [NSMutableArray array];
             while (SQLStatementStep( statement)) {
-                
+                [arrayEntries addObject: SQLStatementRowIntoEntryEntry( statement)];
                 
             }
+            [dictionary setValue: arrayEntries forKey: @"entries"];
             
         } else {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
@@ -169,7 +170,7 @@
         
     } else {
         [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
-        return [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: arrayDiary];
+        return [[UniversalVariables globalVariables] DIARIES_returnDiaryOptionsForDiary: arrayDiary];
         
     }
     

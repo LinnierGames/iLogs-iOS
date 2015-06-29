@@ -178,6 +178,7 @@ NSString *SQLDatabase = @"database";
                 if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Diaries ORDER BY title DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+                        [array updateOptionsDictionary: [[UniversalVariables globalVariables] DIARIES_returnDiaryOptionsForDiary: array]];
                         [arrayContents addObject: array];
                         
                     }
@@ -192,7 +193,9 @@ NSString *SQLDatabase = @"database";
             } case CTSQLEntries: {
                 if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Entries ORDER BY date DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
-                        [arrayContents addObject: SQLStatementRowIntoEntryEntry( statement)];
+                        NSMutableArray *array =  SQLStatementRowIntoEntryEntry( statement);
+                        [array updateOptionsDictionary: [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: array]];
+                        [arrayContents addObject: array];
                         
                     }
                     
