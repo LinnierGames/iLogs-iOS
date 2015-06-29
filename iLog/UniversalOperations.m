@@ -62,9 +62,9 @@ NSString *SQLDatabase = @"database";
             
     }
     if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlQuery, &err)) {
-        NSAssert(0, [NSString stringWithUTF8String: err]);
         sqlite3_close( [[UniversalVariables globalVariables] database]);
         NSLog( @"Table NOT CREATED: +SQL_voidCreateTable");
+        NSAssert(0, [NSString stringWithUTF8String: err]);
         
     } else
         NSLog(  @"Table CREATED: +SQL_voidCreateTable");
@@ -94,9 +94,9 @@ NSString *SQLDatabase = @"database";
                 break;
         }
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlQuery, &err)) {
-            NSAssert(0, [NSString stringWithUTF8String: err]);
             sqlite3_close( [[UniversalVariables globalVariables] database]);
             NSLog( @"Table NOT CLEARED: +SQL_voidClearRowsFromTable");
+            NSAssert(0, [NSString stringWithUTF8String: err]);
             
         } else
             NSLog( @"Table CREATED: +SQL_voidClearRowsFromTable");
@@ -182,8 +182,11 @@ NSString *SQLDatabase = @"database";
                         
                     }
                     
-                } else
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
                     NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
                 break;
                 
             } case CTSQLEntries: {
@@ -231,6 +234,10 @@ NSString *SQLDatabase = @"database";
                 if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [@"SELECT COUNT(*) FROM Diaries " stringByAppendingString: sqlQuery], &statement, &err)) {
                     while (SQLStatementStep( statement))
                         intValue = sqlite3_column_int( statement, 0);
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
                     
                 }
                 break;

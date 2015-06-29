@@ -59,9 +59,9 @@
         NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Diaries (title, dateCreated) values (\"%@\", \"%@\");", [[arrayEntry objectDiary_title] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
-            NSAssert( 0, [NSString stringWithUTF8String: err]);
             sqlite3_close( [[UniversalVariables globalVariables] database]);
             NSLog( @"***Failed to Add to Table: +SQL_DIARIES_voidInsertRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
             
         } else
             NSLog( @"Added to Table: %@: +SQL_DIARIES_voidInsertRowWithArray:", arrayEntry);
@@ -84,9 +84,9 @@
         NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Diaries SET title = \"%@\", dateCreated = \"%@\" where id = %lu;", [[arrayEntry objectDiary_title] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]], [[[arrayEntry optionsDictionary] objectForKey: @"id"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
-            NSAssert( 0, [NSString stringWithUTF8String: err]);
             sqlite3_close( [[UniversalVariables globalVariables] database]);
             NSLog( @"***Failed to Update row: +SQL_DIARIES_voidUpdateRowForArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
             
         } else
             NSLog( @"Updated row: %@: +SQL_DIARIES_voidUpdateRowForArray:", arrayEntry);
@@ -104,9 +104,9 @@
         NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Diaries where id = %lu;", [[[arrayEntry optionsDictionary] objectForKey: @"id"] unsignedLongValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
-            NSAssert( 0, [NSString stringWithUTF8String: err]);
             sqlite3_close( [[UniversalVariables globalVariables] database]);
             NSLog( @"***Failed to Delete row: +SQL_DIARIES_voidDeleteRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
             
         } else
             NSLog( @"Deleted row: %@: +SQL_DIARIES_voidDeleteRowWithArray:", arrayEntry);
@@ -246,81 +246,6 @@
 
 @end
 
-#pragma mark UniversalFunctions category (SQL_Entries_)
-
-@implementation UniversalFunctions (SQL_Entries_)
-
-+ (void)SQL_ENTRIES_voidInsertRowWithArray:(const NSArray *)arrayEntry {
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries]) {
-        static ISO8601DateFormatter *dateFormatter = nil;
-        if (!dateFormatter)
-            dateFormatter = [[ISO8601DateFormatter alloc] init];
-        [dateFormatter setIncludeTime: YES];
-        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, date, dateCreated, body, emotion, weatherCondition, temperature, isBookmarked, diaryID) values (\"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d);", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue]];
-        char *err;
-        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
-            NSAssert( 0, [NSString stringWithUTF8String: err]);
-            sqlite3_close( [[UniversalVariables globalVariables] database]);
-            NSLog( @"***Failed to Add to Table: +SQL_ENTRIES_voidInsertRowWithArray:");
-            
-        } else
-            NSLog( @"Added to Table: %@: +SQL_ENTRIES_voidInsertRowWithArray:", arrayEntry);
-        
-    } else {
-        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
-        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
-        
-    }
-    
-}
-
-+ (void)SQL_ENTRIES_voidUpdateRowForArray:(const NSArray *)arrayEntry {
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries]) {
-        static ISO8601DateFormatter *dateFormatter = nil;
-        if (!dateFormatter)
-            dateFormatter = [[ISO8601DateFormatter alloc] init];
-        [dateFormatter setIncludeTime: YES];
-        
-        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entries SET subject = \"%@\", date = \"%@\", dateCreated = \"%@\", body = \"%@\", emotion = %d, weatherCondition = %d, temperature = %d, isBookmarked = %d, diaryID = %d where id = %d;", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue], [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]];
-        char *err;
-        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
-            NSAssert( 0, [NSString stringWithUTF8String: err]);
-            sqlite3_close( [[UniversalVariables globalVariables] database]);
-            NSLog( @"***Failed to Update row: +SQL_ENTRIES_voidUpdateRowForArray:");
-            
-        } else
-            NSLog( @"Updated row: %@: +SQL_ENTRIES_voidUpdateRowForArray:", arrayEntry);
-        
-    } else {
-        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
-        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
-        
-    }
-    
-}
-
-+ (void)SQL_ENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry {
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries]) {
-        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Entries where id = %d;", [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]];
-        char *err;
-        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
-            NSAssert( 0, [NSString stringWithUTF8String: err]);
-            sqlite3_close( [[UniversalVariables globalVariables] database]);
-            NSLog( @"***Failed to Delete row: +SQL_ENTRIES_voidDeleteRowWithArray:");
-            
-        } else
-            NSLog( @"Deleted row: %@: +SQL_ENTRIES_voidDeleteRowWithArray:", arrayEntry);
-        
-    } else {
-        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
-        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
-        
-    }
-    
-}
-
-@end
-
 #pragma mark UniversalVariables category (ENTRIES_)
 
 @implementation UniversalVariables (ENTRIES_)
@@ -348,8 +273,11 @@
         while (SQLStatementStep( statement))
             [arrayContents addObject: SQLStatementRowIntoEntryEntry( statement)];
         
-    } else
+    } else {
+        sqlite3_close( [[UniversalVariables globalVariables] database]);
         NSAssert( 0, [NSString stringWithUTF8String: err]);
+        
+    }
     
     if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Diaries where id IN (SELECT diaryID FROM Entries ORDER BY date DESC);", &statement, &err)) {
         int index = 0;
@@ -358,9 +286,11 @@
             
         }
         
-    } else
+    } else {
+        sqlite3_close( [[UniversalVariables globalVariables] database]);
         NSAssert( 0, [NSString stringWithUTF8String: err]);
-    
+        
+    }
     
     return [NSArray arrayWithArray: arrayContents];
     
@@ -379,10 +309,88 @@
             
         }
         
-    } else
+    } else {
+        sqlite3_close( [[UniversalVariables globalVariables] database]);
         NSAssert( 0, [NSString stringWithUTF8String: err]);
+        
+    }
     
     return dictionary;
+    
+}
+
+@end
+
+#pragma mark UniversalFunctions category (SQL_Entries_)
+
+@implementation UniversalFunctions (SQL_Entries_)
+
++ (void)SQL_ENTRIES_voidInsertRowWithArray:(const NSArray *)arrayEntry {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, date, dateCreated, body, emotion, weatherCondition, temperature, isBookmarked, diaryID) values (\"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d);", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_ENTRIES_voidInsertRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_ENTRIES_voidInsertRowWithArray:", arrayEntry);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
+        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
+        
+    }
+    
+}
+
++ (void)SQL_ENTRIES_voidUpdateRowForArray:(const NSArray *)arrayEntry {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entries SET subject = \"%@\", date = \"%@\", dateCreated = \"%@\", body = \"%@\", emotion = %d, weatherCondition = %d, temperature = %d, isBookmarked = %d, diaryID = %d where id = %d;", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue], [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Update row: +SQL_ENTRIES_voidUpdateRowForArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Updated row: %@: +SQL_ENTRIES_voidUpdateRowForArray:", arrayEntry);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
+        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
+        
+    }
+    
+}
+
++ (void)SQL_ENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLEntries]) {
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Entries where id = %d;", [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Delete row: +SQL_ENTRIES_voidDeleteRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Deleted row: %@: +SQL_ENTRIES_voidDeleteRowWithArray:", arrayEntry);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
+        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
+        
+    }
     
 }
 
