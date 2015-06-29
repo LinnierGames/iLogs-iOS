@@ -33,6 +33,19 @@ static const NSUInteger DIARY_dateCreated = 1;
 
 @end
 
+#pragma mark UniversalVariables category (DIARIES_)
+
+@interface UniversalVariables (DIARIES_)
+
+- (void)DIARIES_writeNewForDiary:(NSArray *)arrayDiary;
+- (void)DIARIES_updateForDiary:(NSArray *)arrayDiary;
+- (void)DIARIES_deleteForDiary:(NSArray *)arrayDiary;
+
+- (NSArray *)DIARIES_returnFirstDiary;
+- (NSMutableDictionary *)DIARIES_returnEntriesOptionsForDiary:(NSArray *)arrayDiary;
+
+@end
+
 #pragma mark UniversalFunctions category (SQL_DIARIES_)
 
 static const int SQL_DIARY_id = 0;
@@ -75,18 +88,6 @@ static inline NSMutableArray * SQLStatementRowIntoDiaryEntry( sqlite3_stmt *stat
  * @param [in] arrayEntry: Diaries
  */
 + (void)SQL_DIARIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry;
-
-@end
-
-#pragma mark UniversalVariables category (DIARIES_)
-
-@interface UniversalVariables (DIARIES_)
-
-- (void)DIARIES_writeNewForDiary:(NSArray *)arrayDiary;
-- (void)DIARIES_updateForDiary:(NSArray *)arrayDiary;
-- (void)DIARIES_deleteForDiary:(NSArray *)arrayDiary;
-
-- (NSArray *)DIARIES_returnFirstDiary;
 
 @end
 

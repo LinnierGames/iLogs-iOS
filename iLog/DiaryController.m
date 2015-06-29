@@ -148,6 +148,36 @@
     
 }
 
+- (NSMutableDictionary *)DIARIES_returnEntriesOptionsForDiary:(NSArray *)arrayDiary {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [arrayDiary optionsDictionary]];
+    
+    sqlite3 *database;
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries withDatabase: &database]) {
+        NSLog( @"Table OK: +DIARIES_returnEntriesOptionsForDiary:");
+        sqlite3_stmt *statement; const char *err;
+        
+        if (SQLQueryPrepare( database, [NSString stringWithFormat: @"SELECT * FROM Entries where diaryID = %d", [[[arrayDiary optionsDictionary] objectForKey: @"id"] intValue]], &statement, &err)) {
+            NSMutableArray *arrayEntries = [NSMutableArray array];
+            while (SQLStatementStep( statement)) {
+                
+                
+            }
+            
+        } else
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+        
+        
+        return dictionary;
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
+        return [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: arrayDiary];
+        
+    }
+    
+    
+}
+
 @end
 
 #pragma mark - Entries
