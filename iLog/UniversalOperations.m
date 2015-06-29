@@ -112,15 +112,17 @@ NSString *SQLDatabase = @"database";
 }
 
 + (BOOL)SQL_returnStatusOfDatabase:(sqlite3 **)database {
+    sqlite3 *sqlite3;
     NSArray *paths = NSSearchPathForDirectoriesInDomains( NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *filePath = [[paths objectAtIndex: 0] stringByAppendingPathComponent: SQLDatabase];
-    if (sqlite3_open( [filePath UTF8String], &*database) != SQLITE_OK) {
-        sqlite3_close( *database);
+    if (sqlite3_open( [filePath UTF8String], &sqlite3) != SQLITE_OK) {
+        sqlite3_close( sqlite3);
         NSLog( @"***Failed to Open: +SQL_returnStatusOfDatabase:");
         return NO;
         
     } else {
         NSLog( @"Opened: +SQL_returnStatusOfDatabase:");
+        [[UniversalVariables globalVariables] setDatabase: sqlite3];
         return YES;
         
     }
@@ -130,7 +132,7 @@ NSString *SQLDatabase = @"database";
 + (BOOL)SQL_returnStatusOfTable:(CDSQLTables)table withDatabase:(sqlite3 **)database {
     switch (table) {
         case CTSQLDiaries: case CTSQLEntries: case CTSQLStories: case CTSQLStoryEntriesRelationship: case CTSQLTags: case CTSQLTagEntriesRelationship: {
-            BOOL status = [self SQL_returnStatusOfDatabase: database];
+            BOOL status = [self SQL_returnStatusOfDatabase: nil];
             SQL3Statement *statement; const char *err;
             NSString *stringFocusTableTitle = @"";
             switch (table) {
@@ -144,7 +146,7 @@ NSString *SQLDatabase = @"database";
                     break;
                     
             } BOOL isFound = false;
-            if (SQLQueryPrepare( *database, @"SELECT name FROM sqlite_master WHERE type IN ('table','view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN ('table','view') ORDER BY 1;", &statement, &err)) {
+            if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT name FROM sqlite_master WHERE type IN ('table','view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN ('table','view') ORDER BY 1;", &statement, &err)) {
                 while (SQLStatementStep( statement)) {
                     if ([[NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, 0)] isEqualToString: stringFocusTableTitle]) {
                         isFound = true;
@@ -155,7 +157,7 @@ NSString *SQLDatabase = @"database";
                 
             } else {
                 status = NO;
-                sqlite3_close( *database);
+                sqlite3_close( [[UniversalVariables globalVariables] database]);
                 NSAssert( 0, [NSString stringWithUTF8String: err]);
                 
             }
@@ -170,13 +172,13 @@ NSString *SQLDatabase = @"database";
 
 + (NSArray *)SQL_returnContentsOfTable:(CDSQLTables)table {
     sqlite3 *database;
-    if ([UniversalFunctions SQL_returnStatusOfTable: table withDatabase: &database]) {
+    if ([UniversalFunctions SQL_returnStatusOfTable: table withDatabase: nil]) {
         NSLog( @"Table OK: +SQL_returnContentsOfFile");
         sqlite3_stmt *statement; const char *err;
         NSMutableArray *arrayContents = [NSMutableArray array];
         switch (table) {
             case CTSQLDiaries: {
-                if (SQLQueryPrepare( database, @"SELECT * FROM Diaries ORDER BY title DESC;", &statement, &err)) {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Diaries ORDER BY title DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
                         [arrayContents addObject: array];
@@ -188,10 +190,9 @@ NSString *SQLDatabase = @"database";
                 break;
                 
             } case CTSQLEntries: {
-                if (SQLQueryPrepare( database, @"SELECT * FROM Entries ORDER BY date DESC;", &statement, &err)) {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Entries ORDER BY date DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         [arrayContents addObject: SQLStatementRowIntoEntryEntry( statement)];
-//                        [[arrayContents lastObject] updateOptionsDictionary: [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: [arrayContents lastObject]]];
                         
                     }
                     

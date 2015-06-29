@@ -10,6 +10,8 @@
 #import "ISO8601DateFormatter.h"
 #import <UIKit/UIKit.h>
 
+#import <sqlite3.h>
+
 static inline CGRect CGRectCurrentDevice() {
     CGRect rect = [[UIApplication sharedApplication] keyWindow].frame;
     return CGRectMake( 0, 0, rect.size.width, rect.size.height);
@@ -20,6 +22,8 @@ static CGFloat CVTableViewCellDefaultCellHeight = 38;
 
 @interface UniversalVariables : NSObject
 
+@property sqlite3 *database;
+
 + (UniversalVariables *)globalVariables;
 
 @end
@@ -27,8 +31,6 @@ static CGFloat CVTableViewCellDefaultCellHeight = 38;
 @interface UniversalFunctions : NSObject
 
 @end
-
-#import <sqlite3.h>
 
 typedef sqlite3 SQL3Database;
 typedef sqlite3_stmt SQL3Statement;
