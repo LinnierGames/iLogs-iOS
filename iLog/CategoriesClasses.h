@@ -504,6 +504,17 @@ static inline NSArray* NSColorArrayByTheme() {
 
 @interface NSString (STRING_)
 
+/**
+ * Used to format a persentable style; tabs where a return key is found, tab at the begging of the string, ect
+ * @warning @"\t" is used to create tabs
+ * @return NSString *
+ */
+- (NSString *)presentationString;
+
+/**
+ * Allowing Qoutation marks inside a string to be saved in a SQL column with the string format sourrounded by @"\"%@\""
+ * @return NSString *
+ */
 - (NSString *)reformatForSQLQuries;
 
 @end

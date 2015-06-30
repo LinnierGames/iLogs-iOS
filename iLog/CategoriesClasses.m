@@ -294,6 +294,14 @@
 
 @implementation NSString (STRING_)
 
+- (NSString *)presentationString {
+    NSString *string = [@"\t" stringByAppendingString: self]; //Adding tab at the begging of the string
+    string = [string stringByReplacingOccurrencesOfString: @"\n" withString: @"\n\t"]; //adding tabs wherever a return key is found
+    
+    return string;
+    
+}
+
 - (NSString *)reformatForSQLQuries {
     NSString *string = self;
 //    string = [string stringByReplacingOccurrencesOfString: @"'" withString: @"''"];

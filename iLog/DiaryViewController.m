@@ -63,7 +63,7 @@
     [cell.textLabel setFont: [UIFont boldSystemFontOfSize: 12]];
     [cell.textLabel setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject]];
     [cell.detailTextLabel setNumberOfLines: 25];
-    [cell.detailTextLabel setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body]];
+    [cell.detailTextLabel setText: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_body] presentationString]];
     
     return cell;
     
