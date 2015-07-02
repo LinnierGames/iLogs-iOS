@@ -8,11 +8,14 @@
 
 #import "DIaryMapViewController.h"
 
-@interface DIaryMapViewController ()
+@interface DiaryMapViewController () {
+    IBOutlet UIView *viewCenter;
+    
+}
 
 @end
 
-@implementation DIaryMapViewController
+@implementation DiaryMapViewController
 
 #pragma mark - Return Functions
 
@@ -36,6 +39,17 @@
 }
 
 #pragma mark - IBActions
+
+- (IBAction)panScreenEdge:(UISwipeGestureRecognizer *)sender {
+    [UIView beginAnimations: NULL context: nil];
+    [UIView setAnimationDuration: 0.35];
+    if (sender.direction == UISwipeGestureRecognizerDirectionLeft)
+        [viewCenter setTransform: CGAffineTransformTranslate( viewCenter.transform, -self.view.frame.size.width, 0)];
+    else if (sender.direction == UISwipeGestureRecognizerDirectionRight)
+        [viewCenter setTransform: CGAffineTransformTranslate( viewCenter.transform, self.view.frame.size.width, 0)];
+    [UIView commitAnimations];
+    
+}
 
 #pragma mark - View Lifecycle
 

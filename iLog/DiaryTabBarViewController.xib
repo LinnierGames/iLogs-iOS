@@ -61,29 +61,49 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <viewControllers>
-                        <viewController title="Today's Diary" id="pnk-ZD-CbD" customClass="DIaryMapViewController">
+                        <viewController title="Diary Map" id="pnk-ZD-CbD" customClass="DiaryMapViewController">
                             <layoutGuides>
-                                <viewControllerLayoutGuide type="top" id="iVV-P2-PH5"/>
-                                <viewControllerLayoutGuide type="bottom" id="ELh-TI-1do"/>
+                                <viewControllerLayoutGuide type="top" id="4JV-Yc-xKb"/>
+                                <viewControllerLayoutGuide type="bottom" id="gnt-RX-GjF"/>
                             </layoutGuides>
-                            <view key="view" contentMode="scaleToFill" id="5L8-O7-JzO">
+                            <view key="view" contentMode="scaleToFill" id="SR1-i5-hm0">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Vlw-uS-idr">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phT-od-2w7" userLabel="content">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </tableView>
+                                        <subviews>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EMS-Aq-XdA">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </tableView>
+                                        </subviews>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="leading" secondItem="phT-od-2w7" secondAttribute="leading" id="8Gf-AE-sTV"/>
+                                            <constraint firstAttribute="bottom" secondItem="EMS-Aq-XdA" secondAttribute="bottom" id="Yve-S7-mEo"/>
+                                            <constraint firstAttribute="trailing" secondItem="EMS-Aq-XdA" secondAttribute="trailing" id="iMM-NS-oEY"/>
+                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="top" secondItem="phT-od-2w7" secondAttribute="top" id="nTY-QJ-z41"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Vlw-uS-idr" secondAttribute="trailing" id="JC0-eD-sn0"/>
-                                    <constraint firstItem="Vlw-uS-idr" firstAttribute="top" secondItem="5L8-O7-JzO" secondAttribute="top" id="RLY-xO-dlf"/>
-                                    <constraint firstAttribute="bottom" secondItem="Vlw-uS-idr" secondAttribute="bottom" id="ahs-Kb-GLt"/>
-                                    <constraint firstItem="Vlw-uS-idr" firstAttribute="leading" secondItem="5L8-O7-JzO" secondAttribute="leading" id="jvP-kn-5wu"/>
+                                    <constraint firstItem="phT-od-2w7" firstAttribute="top" secondItem="SR1-i5-hm0" secondAttribute="top" id="2GP-xb-nP2"/>
+                                    <constraint firstAttribute="bottom" secondItem="phT-od-2w7" secondAttribute="bottom" id="Vf7-8K-Ylk"/>
+                                    <constraint firstAttribute="trailing" secondItem="phT-od-2w7" secondAttribute="trailing" id="Xxr-pH-wFW"/>
+                                    <constraint firstItem="phT-od-2w7" firstAttribute="leading" secondItem="SR1-i5-hm0" secondAttribute="leading" id="eUw-9P-aEv"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="TlP-9J-O8z" appends="YES" id="A6C-gf-Pcg"/>
+                                    <outletCollection property="gestureRecognizers" destination="CgV-bd-jT1" appends="YES" id="OB1-kP-cLv"/>
+                                </connections>
                             </view>
                             <tabBarItem key="tabBarItem" title="Diary Map" id="YjI-0W-aiV"/>
                             <navigationItem key="navigationItem" title="Diary Map" prompt="Prompt" id="rS7-X1-djw"/>
+                            <connections>
+                                <outlet property="viewCenter" destination="phT-od-2w7" id="a7T-vX-ng0"/>
+                            </connections>
                         </viewController>
                     </viewControllers>
                 </navigationController>
@@ -123,5 +143,15 @@
             </viewControllers>
             <point key="canvasLocation" x="0.0" y="0.0"/>
         </tabBarController>
+        <swipeGestureRecognizer delaysTouchesEnded="NO" direction="left" id="TlP-9J-O8z">
+            <connections>
+                <action selector="panScreenEdge:" destination="pnk-ZD-CbD" id="LJI-VP-gzs"/>
+            </connections>
+        </swipeGestureRecognizer>
+        <swipeGestureRecognizer delaysTouchesEnded="NO" direction="right" id="CgV-bd-jT1">
+            <connections>
+                <action selector="panScreenEdge:" destination="pnk-ZD-CbD" id="KLj-Ef-b0b"/>
+            </connections>
+        </swipeGestureRecognizer>
     </objects>
 </document>
