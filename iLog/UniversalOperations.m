@@ -184,7 +184,7 @@ NSString *SQLDatabase = @"database";
         NSMutableArray *arrayContents = [NSMutableArray array];
         switch (table) {
             case CTSQLDiaries: {
-                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Diaries ORDER BY title DESC;", &statement, &err)) {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Diaries ORDER BY title ASC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
                         [array updateOptionsDictionary: [[UniversalVariables globalVariables] DIARIES_returnDiaryOptionsForDiary: array]];
@@ -200,7 +200,11 @@ NSString *SQLDatabase = @"database";
                 break;
                 
             } case CTSQLEntries: {
-                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Entries where strftime('%d',date) = strftime('%d','now') ORDER BY date DESC;", &statement, &err)) {
+                static ISO8601DateFormatter *dateFormatter = nil;
+                if (!dateFormatter)
+                    dateFormatter = [[ISO8601DateFormatter alloc] init];
+                [dateFormatter setIncludeTime: YES];
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Entries where strftime('%%d','%@') is strftime('%%d',date) ORDER BY date DESC;", [dateFormatter stringFromDate: [NSDate date]]], &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array =  SQLStatementRowIntoEntryEntry( statement);
                         [array updateOptionsDictionary: [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: array]];
