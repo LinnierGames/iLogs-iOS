@@ -81,6 +81,7 @@ static inline BOOL SQLStatementStep( sqlite3_stmt *statement) {
 typedef enum {
     CTSQLDiaries,
     CTSQLEntries,
+    CTSQLOutilnes,
     CTSQLStories,
     CTSQLStoryEntriesRelationship,
     CTSQLTags,

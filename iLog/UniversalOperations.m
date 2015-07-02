@@ -42,19 +42,22 @@ NSString *SQLDatabase = @"database";
     NSString *sqlQuery = @"";
     switch (table) {
         case CTSQLDiaries:
-            sqlQuery = @"CREATE TABLE IF NOT EXISTS Diaries (id INTEGER PRIMARY KEY UNIQUE, title TEXT, dateCreated TEXT);";
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS Diaries (id INTEGER PRIMARY KEY UNIQUE, title TEXT, dateCreated TEXT, colorTrait INTEGER, isProtected INTEGER, passcode TEXT, maskTitle TEXT);";
             break;
         case CTSQLEntries:
             sqlQuery = @"CREATE TABLE IF NOT EXISTS Entries (id INTEGER PRIMARY KEY UNIQUE, diaryID INTEGER, subject TEXT, date TEXT, dateCreated TEXT, body TEXT, emotion INTEGER, weatherCondition INTEGER, temperature INTEGER, isBookmarked BOOLEAN, FOREIGN KEY (diaryID) REFERENCES Diaries(id) ON DELETE CASCADE);";
             break;
+        case CTSQLOutilnes:
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS Outlines (id INTEGER PRIMARY KEY UNIQUE, entryID INTEGER, body TEXT, dateCreated TEXT, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
+            break;
         case CTSQLStories:
-            sqlQuery = @"CREATE TABLE IF NOT EXISTS Stories (id INTEGER PRIMARY KEY UNIQUE, title TEXT, description TEXT);";
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS Stories (id INTEGER PRIMARY KEY UNIQUE, diaryID INTEGER, title TEXT, description TEXT, colorTrait INTEGER, isProtected INTEGER, passcode TEXT, maskTitle TEXT, authenticationRequired INTEGER, FOREIGN KEY (diaryID) REFERENCES Diaries(id) ON DELETE CASCADE);";
             break;
         case CTSQLStoryEntriesRelationship:
             sqlQuery = @"CREATE TABLE StoryEntriesRelationship (id INTEGER PRIMARY KEY UNIQUE, storyID INTEGER, entryID INTEGER, FOREIGN KEY (storyID) REFERENCES Stories(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
             break;
         case CTSQLTags:
-            sqlQuery = @"CREATE TABLE IF NOT EXISTS Tags (id INTEGER PRIMARY KEY UNIQUE, title TEXT);";
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS Tags (id INTEGER PRIMARY KEY UNIQUE, title TEXT, dateCreated TEXT);";
             break;
         case CTSQLTagEntriesRelationship:
             sqlQuery = @"CREATE TABLE IF NOT EXISTS TagEntriesRelationship (id INTEGER PRIMARY KEY UNIQUE, tagID INTEGER, entryID INTEGER, FOREIGN KEY (tagID) REFERENCES Tags(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
@@ -81,6 +84,9 @@ NSString *SQLDatabase = @"database";
                 break;
             case CTSQLEntries:
                 sqlQuery = @"DELETE FROM Entries";
+                break;
+            case CTSQLOutilnes:
+                sqlQuery = @"DELETE FROM Outlines";
                 break;
             case CTSQLStories:
                 sqlQuery = @"DELETE FROM Stories";
@@ -129,7 +135,7 @@ NSString *SQLDatabase = @"database";
 
 + (BOOL)SQL_returnStatusOfTable:(CDSQLTables)table {
     switch (table) {
-        case CTSQLDiaries: case CTSQLEntries: case CTSQLStories: case CTSQLStoryEntriesRelationship: case CTSQLTags: case CTSQLTagEntriesRelationship: {
+        case CTSQLDiaries: case CTSQLEntries: case CTSQLOutilnes: case CTSQLStories: case CTSQLStoryEntriesRelationship: case CTSQLTags: case CTSQLTagEntriesRelationship: {
             BOOL status = [self SQL_returnStatusOfDatabase];
             SQL3Statement *statement; const char *err;
             NSString *stringFocusTableTitle = @"";
@@ -139,6 +145,9 @@ NSString *SQLDatabase = @"database";
                     break;
                 case CTSQLEntries:
                     stringFocusTableTitle = @"Entries";
+                    break;
+                case CTSQLOutilnes:
+                    stringFocusTableTitle = @"Outlines";
                     break;
                 default:
                     break;
@@ -191,7 +200,23 @@ NSString *SQLDatabase = @"database";
                 break;
                 
             } case CTSQLEntries: {
-                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Entries ORDER BY date DESC;", &statement, &err)) {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Entries where strftime('%d',date) = strftime('%d','now') ORDER BY date DESC;", &statement, &err)) {
+                    while (SQLStatementStep( statement)) {
+                        NSMutableArray *array =  SQLStatementRowIntoEntryEntry( statement);
+                        [array updateOptionsDictionary: [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: array]];
+                        [arrayContents addObject: array];
+                        
+                    }
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
+                break;
+                
+            } case CTSQLOutilnes: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Outlines ORDER BY id DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array =  SQLStatementRowIntoEntryEntry( statement);
                         [array updateOptionsDictionary: [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: array]];

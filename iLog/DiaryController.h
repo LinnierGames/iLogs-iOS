@@ -569,3 +569,78 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
 + (void)SQL_ENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry;
 
 @end
+
+#pragma mark - Outlines
+
+#pragma mark NSArray category (ARRAY_OUTLINES__)
+
+static const NSUInteger OUTLINES_body = 0;
+static const NSUInteger OUTLINES_dateCreated = 1;
+
+@interface NSArray (ARRAY_OUTLINES__)
+
++ (id)arrayNEWOutline;
++ (id)arrayNEWOutlineWithBody:(NSString *)stringBodyValue;
++ (id)arrayNEWOutlineWithBody:(NSString *)stringBodyValue dateCreated:(NSDate *)dateCreatedValue;
++ (id)arrayNEWOutlineWithBody:(NSString *)stringBodyValue dateCreated:(NSDate *)dateCreatedValue options:(NSMutableDictionary *)dicIndex;
+- (NSString *)objectOutline_body;
+- (NSDate *)objectOutline_dateCreated;
+
+@end
+
+#pragma mark UniversalVariables category (OUTLINES_)
+
+@interface UniversalVariables (OUTLINES_)
+
+- (void)ENTRIES_writeNewForEntry:(NSArray *)arrayEntry;
+- (void)ENTRIES_updateForEntry:(NSArray *)arrayEntry;
+- (void)ENTRIES_deleteForEntry:(NSArray *)arrayEntry;
+
+@end
+
+static const int SQL_OUTLINES_id = 0;
+static const int SQL_OUTLINES_entryID = 1;
+static const int SQL_OUTLINES_body = 2;
+static const int SQL_OUTLINES_dateCreated = 3;
+
+/**
+ * From the parameter list, an array is produced in Outline format
+ * @param [in] statement incoming value from previous call SQLSTatementStep(..)
+ * @return NSArray: Outline format
+ */
+static inline NSMutableArray * SQLStatementRowIntoOutlineEntry( sqlite3_stmt *statement) {
+    NSString *stringBody = [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_OUTLINES_body)];
+    
+    static ISO8601DateFormatter *dateFormatter = nil;
+    if (!dateFormatter)
+        dateFormatter = [[ISO8601DateFormatter alloc] init];
+    [dateFormatter setIncludeTime: YES];
+    
+    NSDate *dateCreated = [dateFormatter dateFromString: [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_OUTLINES_dateCreated)]];
+    
+    NSMutableArray *array = [NSMutableArray arrayNEWOutlineWithBody: stringBody dateCreated: dateCreated options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_OUTLINES_id)], @"id", [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_OUTLINES_entryID)], @"entryID", nil]];
+    
+    return array;
+    
+};
+
+@interface UniversalFunctions (SQL_OUTLINES_)
+
+/**
+ * Inserts a row to the table Outlines
+ * @param [in] arrayEntry: Outlines
+ */
++ (void)SQL_OUTLINES_voidInsertRowWithArray:(const NSArray *)arrayEntry;
+/**
+ * Updates an exisiting row to the table Outlines
+ * @param [in] arrayEntry: Outlines
+ */
++ (void)SQL_OUTLINES_voidUpdateRowForArray:(const NSArray *)arrayEntry;
+/**
+ * Deletes a row to the table Outlines
+ * @param [in] arrayEntry: Outlines
+ */
++ (void)SQL_OUTLINES_voidDeleteRowWithArray:(const NSArray *)arrayEntry;
+
+@end
+
