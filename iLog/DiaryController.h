@@ -501,7 +501,6 @@ static const NSUInteger ENTRIES_isBookmarked = 7;
 - (void)ENTRIES_updateForEntry:(NSArray *)arrayEntry;
 - (void)ENTRIES_deleteForEntry:(NSArray *)arrayEntry;
 
-- (NSArray *)ENTRIES_returnEntriesOptions;
 - (NSMutableDictionary *)ENTRIES_returnEntryOptionsForEntry:(NSArray *)arrayEntry;
 
 @end
@@ -592,11 +591,15 @@ static const NSUInteger OUTLINES_dateCreated = 1;
 
 @interface UniversalVariables (OUTLINES_)
 
-- (void)ENTRIES_writeNewForEntry:(NSArray *)arrayEntry;
-- (void)ENTRIES_updateForEntry:(NSArray *)arrayEntry;
-- (void)ENTRIES_deleteForEntry:(NSArray *)arrayEntry;
+- (void)OUTLINES_writeNewForEntry:(NSArray *)arrayOutline;
+- (void)OUTLINES_updateForEntry:(NSArray *)arrayOutline;
+- (void)OUTLINES_deleteForEntry:(NSArray *)arrayOutline;
+
+- (NSMutableDictionary *)OUTLINES_returnOutlineOptionsForOutline:(NSArray *)arrayOutine;
 
 @end
+
+#pragma mark UniversalFunctions category (SQL_OUTLINES_)
 
 static const int SQL_OUTLINES_id = 0;
 static const int SQL_OUTLINES_entryID = 1;

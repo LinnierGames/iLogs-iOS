@@ -266,37 +266,6 @@
     
 }
 
-- (NSArray *)ENTRIES_returnEntriesOptions {
-    NSLog( @"Table OK: +ENTRIES_returnEntriesOptions");
-    sqlite3_stmt *statement; const char *err;
-    NSMutableArray *arrayContents = [NSMutableArray array];
-    if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Entries ORDER BY date DESC;", &statement, &err)) {
-        while (SQLStatementStep( statement))
-            [arrayContents addObject: SQLStatementRowIntoEntryEntry( statement)];
-        
-    } else {
-        sqlite3_close( [[UniversalVariables globalVariables] database]);
-        NSAssert( 0, [NSString stringWithUTF8String: err]);
-        
-    }
-    
-    if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Diaries where id IN (SELECT diaryID FROM Entries ORDER BY date DESC);", &statement, &err)) {
-        int index = 0;
-        while (SQLStatementStep( statement)) {
-            [[[arrayContents objectAtIndex: index] optionsDictionary] setValue: SQLStatementRowIntoDiaryEntry( statement) forKey: @"diary"];
-            
-        }
-        
-    } else {
-        sqlite3_close( [[UniversalVariables globalVariables] database]);
-        NSAssert( 0, [NSString stringWithUTF8String: err]);
-        
-    }
-    
-    return [NSArray arrayWithArray: arrayContents];
-    
-}
-
 - (NSMutableDictionary *)ENTRIES_returnEntryOptionsForEntry:(NSArray *)arrayEntry {
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [arrayEntry optionsDictionary]];
     
@@ -332,6 +301,7 @@
         if (!dateFormatter)
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
+        
         NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, date, dateCreated, body, emotion, weatherCondition, temperature, isBookmarked, diaryID) values (\"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d);", [[arrayEntry objectEntry_subject] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] reformatForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
@@ -344,7 +314,7 @@
         
     } else {
         [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
-        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
+        [UniversalFunctions SQL_ENTRIES_voidInsertRowWithArray: arrayEntry];
         
     }
     
@@ -369,7 +339,7 @@
         
     } else {
         [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
-        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
+        [UniversalFunctions SQL_ENTRIES_voidUpdateRowForArray: arrayEntry];
         
     }
     
@@ -389,10 +359,182 @@
         
     } else {
         [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
-        [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: arrayEntry];
+        [UniversalFunctions SQL_ENTRIES_voidDeleteRowWithArray: arrayEntry];
         
     }
     
 }
+
+@end
+
+#pragma mark - Outlines
+
+#pragma mark NSArray category (ARRAY_OUTLINES__)
+
+@implementation NSArray (ARRAY_OUTLINES__)
+
++ (id)arrayNEWOutline {
+    return [NSMutableArray arrayNEWOutlineWithBody: @""];
+    
+}
+
++ (id)arrayNEWOutlineWithBody:(NSString *)stringBodyValue {
+    return [NSMutableArray arrayNEWOutlineWithBody: stringBodyValue dateCreated: [NSDate date]];
+    
+}
+
++ (id)arrayNEWOutlineWithBody:(NSString *)stringBodyValue dateCreated:(NSDate *)dateCreatedValue {
+    return [NSMutableArray arrayNEWOutlineWithBody: stringBodyValue dateCreated: dateCreatedValue options: [NSMutableDictionary dictionary]];
+    
+}
+
++ (id)arrayNEWOutlineWithBody:(NSString *)stringBodyValue dateCreated:(NSDate *)dateCreatedValue options:(NSMutableDictionary *)dicIndex {
+    return [NSMutableArray arrayWithObjects: stringBodyValue, dateCreatedValue, dicIndex, nil];
+    
+}
+
+- (NSString *)objectOutline_body {
+    return [self objectAtIndex: OUTLINES_body];
+    
+}
+
+- (NSDate *)objectOutline_dateCreated {
+    return [self objectAtIndex: OUTLINES_dateCreated];
+    
+}
+
+
+@end
+
+#pragma mark UniversalVariables category (OUTLINES_)
+
+@implementation UniversalVariables (OUTLINES_)
+
+- (void)OUTLINES_writeNewForOutline:(NSArray *)arrayOutline {
+    [UniversalFunctions SQL_OUTLINES_voidInsertRowWithArray: arrayOutline];
+    
+}
+
+- (void)OUTLINES_updateForOutline:(NSArray *)arrayOutline {
+    [UniversalFunctions SQL_OUTLINES_voidUpdateRowForArray: arrayOutline];
+    
+}
+
+- (void)OUTLINES_deleteForOutline:(NSArray *)arrayOutline {
+    [UniversalFunctions SQL_OUTLINES_voidDeleteRowWithArray: arrayOutline];
+    
+}
+
+- (NSMutableDictionary *)OUTLINES_returnOutlineOptionsForOutline:(NSArray *)arrayOutine {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [arrayOutine optionsDictionary]];
+    
+    NSLog( @"Table OK: +OUTLINES_returnOutlineOptionsForOutline:");
+    sqlite3_stmt *statement; const char *err;
+    
+    if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Entries where id = %d;", [[[arrayOutine optionsDictionary] objectForKey: @"entryID"] intValue]], &statement, &err)) {
+        while (SQLStatementStep( statement)) {
+            [dictionary setValue: SQLStatementRowIntoEntryEntry( statement) forKey: @"entry"];
+            [dictionary removeObjectForKey: @"entryID"];
+            
+        }
+        
+    } else {
+        sqlite3_close( [[UniversalVariables globalVariables] database]);
+        NSAssert( 0, [NSString stringWithUTF8String: err]);
+        
+    }
+    
+    return dictionary;
+    
+}
+
+@end
+
+#pragma mark UniversalFunctions category (SQL_OUTLINES_)
+
+@implementation UniversalFunctions (SQL_OUTLINES_)
+
+/**
+ * Inserts a row to the table Outlines
+ * @param [in] arrayOutline: Outlines
+ */
++ (void)SQL_OUTLINES_voidInsertRowWithArray:(const NSArray *)arrayOutline {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLOutilnes]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Outlines (body, dateCreated, entryID) values (\"%@\", \"%@\", %d);", [arrayOutline objectOutline_body], [dateFormatter stringFromDate: [arrayOutline objectOutline_dateCreated]], [[[[[arrayOutline optionsDictionary] objectForKey: @"entry"] optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_OUTLINES_voidInsertRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_OUTLINES_voidInsertRowWithArray:", arrayOutline);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLOutilnes];
+        [UniversalFunctions SQL_OUTLINES_voidInsertRowWithArray: arrayOutline];
+        
+    }
+    
+}
+
+/**
+ * Updates an exisiting row to the table Outlines
+ * @param [in] arrayOutline: Outlines
+ */
++ (void)SQL_OUTLINES_voidUpdateRowForArray:(const NSArray *)arrayOutline {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLOutilnes]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Outlines SET body = \"%@\", dateCreated = \"%@\", entryID = %d where id = %d;", [arrayOutline objectOutline_body], [dateFormatter stringFromDate: [arrayOutline objectOutline_dateCreated]], [[[[[arrayOutline optionsDictionary] objectForKey: @"entry"] optionsDictionary] objectForKey: @"id"] intValue], [[[arrayOutline optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_OUTLINES_voidUpdateRowForArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_OUTLINES_voidUpdateRowForArray:", arrayOutline);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLOutilnes];
+        [UniversalFunctions SQL_OUTLINES_voidUpdateRowForArray: arrayOutline];
+        
+    }
+    
+}
+
+/**
+ * Deletes a row to the table Outlines
+ * @param [in] arrayOutline: Outlines
+ */
++ (void)SQL_OUTLINES_voidDeleteRowWithArray:(const NSArray *)arrayOutline {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLOutilnes]) {
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Outlines where id = %d;", [[[arrayOutline optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_OUTLINES_voidDeleteRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_OUTLINES_voidDeleteRowWithArray:", arrayOutline);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLOutilnes];
+        [UniversalFunctions SQL_OUTLINES_voidDeleteRowWithArray: arrayOutline];
+        
+    }
+    
+}
+
 
 @end
