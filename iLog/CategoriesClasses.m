@@ -295,8 +295,8 @@
 @implementation NSString (STRING_)
 
 - (NSString *)presentationString {
-    NSString *string = [@"\t" stringByAppendingString: self]; //Adding tab at the begging of the string
-    string = [string stringByReplacingOccurrencesOfString: @"\n" withString: @"\n\t"]; //adding tabs wherever a return key is found
+    NSString *string = [@"   " stringByAppendingString: self]; //Adding tab at the begging of the string
+    string = [string stringByReplacingOccurrencesOfString: @"\n" withString: @"\n   "]; //adding tabs wherever a return key is found
     
     return string;
     
