@@ -19,17 +19,22 @@
 @implementation NSArray (ARRAY_Diaries_)
 
 + (id)arrayNEWDiary {
-    return [NSMutableArray arrayNEWDiaryWithTitle: @"Untitled" dateCreated: [NSDate date]];
+    return [NSMutableArray arrayNEWDiaryWithTitle: @"Untitled"];
     
 }
 
-+ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue {
-    return [NSMutableArray arrayNEWDiaryWithTitle: stringTitleValue dateCreated: dateCreatedValue index: [NSMutableDictionary dictionary]];
++ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue {
+    return [NSMutableArray arrayNEWDiaryWithTitle: stringTitleValue dateCreated: [NSDate date] colorTrait: CTColorNormal isProtected: NO passcode: @"" maskTitle: @"Locked Diary"];
     
 }
 
-+ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue index:(NSMutableDictionary *)dicIndex {
-    return [NSMutableArray arrayWithObjects: stringTitleValue, dateCreatedValue, dicIndex, nil];
++ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue {
+    return [NSMutableArray arrayNEWDiaryWithTitle: stringTitleValue dateCreated: dateCreatedValue colorTrait: colorTraitValue isProtected: boolProtectedValue passcode: stringPasscodeValue maskTitle: stringMaskTitleValue index: [NSMutableDictionary dictionary]];
+    
+}
+
++ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue index:(NSMutableDictionary *)dicIndex {
+    return [NSMutableArray arrayWithObjects: stringTitleValue, dateCreatedValue, [NSNumber numberWithInt: colorTraitValue], [NSNumber numberWithBool: boolProtectedValue], stringPasscodeValue, stringMaskTitleValue, dicIndex, nil];
     
 }
 
@@ -40,6 +45,26 @@
 
 - (NSDate *)objectDiary_dateCreated {
     return [self objectAtIndex: DIARY_dateCreated];
+    
+}
+
+- (CDColorTraits)objectDiary_colorTrait {
+    return [[self objectAtIndex: DIARY_colorTrait] intValue];
+    
+}
+
+- (BOOL)objectDiary_isProtected {
+    return [[self objectAtIndex: DIARY_isProtected] boolValue];
+    
+}
+
+- (NSString *)objectDiary_passcode {
+    return [self objectAtIndex: DIARY_passcode];
+    
+}
+
+- (NSString *)objectDiary_maskTitle {
+    return [self objectAtIndex: DIARY_maskTitle];
     
 }
 
@@ -56,7 +81,7 @@
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Diaries (title, dateCreated) values (\"%@\", \"%@\");", [[arrayEntry objectDiary_title] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Diaries (title, dateCreated, colorTrait, isProtected, passcode, maskTitle) values (\"%@\", \"%@\", %d, %d, \"%@\", \"%@\");", [[arrayEntry objectDiary_title] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]], [arrayEntry objectDiary_colorTrait], [arrayEntry objectDiary_isProtected], [arrayEntry objectDiary_passcode], [arrayEntry objectDiary_maskTitle]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
@@ -81,7 +106,7 @@
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Diaries SET title = \"%@\", dateCreated = \"%@\" where id = %lu;", [[arrayEntry objectDiary_title] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]], [[[arrayEntry optionsDictionary] objectForKey: @"id"] unsignedLongValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Diaries SET title = \"%@\", dateCreated = \"%@\", colorTrait = %d, isProtected = %d, passcode = \"%@\", maskTitle = \"%@\" where id = %u;", [[arrayEntry objectDiary_title] reformatForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectDiary_dateCreated]], [arrayEntry objectDiary_colorTrait], [arrayEntry objectDiary_isProtected], [arrayEntry objectDiary_passcode], [arrayEntry objectDiary_maskTitle], [[[arrayEntry optionsDictionary] objectForKey: @"id"] unsignedIntValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
@@ -101,7 +126,7 @@
 
 + (void)SQL_DIARIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry {
     if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries]) {
-        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Diaries where id = %lu;", [[[arrayEntry optionsDictionary] objectForKey: @"id"] unsignedLongValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Diaries where id = %u;", [[[arrayEntry optionsDictionary] objectForKey: @"id"] unsignedIntValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
@@ -141,7 +166,29 @@
 }
 
 - (NSArray *)DIARIES_returnFirstDiary {
-    return [[UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries] objectAtIndex: 0];
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLDiaries]) {
+        NSLog( @"Table OK: +DIARIES_returnFirstDiary:");
+        sqlite3_stmt *statement; const char *err; NSArray *array = [NSArray array];
+        
+        if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Diaries ORDER BY title LIMIT 1;", &statement, &err)) {
+            while (SQLStatementStep( statement)) {
+                array = [NSArray arrayWithArray: SQLStatementRowIntoDiaryEntry( statement)];
+                
+            }
+            
+        } else {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        }
+        
+        return array;
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLDiaries];
+        return [[UniversalVariables globalVariables] DIARIES_returnFirstDiary];
+        
+    }
     
 }
 
@@ -152,7 +199,7 @@
         NSLog( @"Table OK: +DIARIES_returnEntriesOptionsForDiary:");
         sqlite3_stmt *statement; const char *err;
         
-        if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Entries where diaryID = %d", [[[arrayDiary optionsDictionary] objectForKey: @"id"] intValue]], &statement, &err)) {
+        if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Entries where diaryID = %u", [[[arrayDiary optionsDictionary] objectForKey: @"id"] unsignedIntValue]], &statement, &err)) {
             NSMutableArray *arrayEntries = [NSMutableArray array];
             while (SQLStatementStep( statement)) {
                 [arrayEntries addObject: SQLStatementRowIntoEntryEntry( statement)];
@@ -169,7 +216,7 @@
         return dictionary;
         
     } else {
-        [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
+        [UniversalFunctions SQL_voidCreateTable: CTSQLDiaries];
         return [[UniversalVariables globalVariables] DIARIES_returnDiaryOptionsForDiary: arrayDiary];
         
     }

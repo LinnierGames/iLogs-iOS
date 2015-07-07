@@ -22,14 +22,23 @@ static CGFloat CVDiaryEntryIconImageSize_enlarged = 98;
 
 static const NSUInteger DIARY_title = 0;
 static const NSUInteger DIARY_dateCreated = 1;
+static const NSUInteger DIARY_colorTrait = 2;
+static const NSUInteger DIARY_isProtected = 3;
+static const NSUInteger DIARY_passcode = 4;
+static const NSUInteger DIARY_maskTitle = 5;
 
 @interface NSArray (ARRAY_Diaries_)
 
 + (id)arrayNEWDiary;
-+ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue;
-+ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue index:(NSMutableDictionary *)dicIndex;
++ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue;
++ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue;
++ (id)arrayNEWDiaryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue index:(NSMutableDictionary *)dicIndex;
 - (NSString *)objectDiary_title;
 - (NSDate *)objectDiary_dateCreated;
+- (CDColorTraits)objectDiary_colorTrait;
+- (BOOL)objectDiary_isProtected;
+- (NSString *)objectDiary_passcode;
+- (NSString *)objectDiary_maskTitle;
 
 @end
 
@@ -51,6 +60,10 @@ static const NSUInteger DIARY_dateCreated = 1;
 static const int SQL_DIARY_id = 0;
 static const int SQL_DIARY_title = 1;
 static const int SQL_DIARY_dateCreated = 2;
+static const int SQL_DIARY_colorTrait = 3;
+static const int SQL_DIARY_isProtected = 4;
+static const int SQL_DIARY_passcode = 5;
+static const int SQL_DIARY_maskTitle = 6;
 
 /**
  * From the parameter list, an array is produced in Diary format
@@ -67,7 +80,12 @@ static inline NSMutableArray * SQLStatementRowIntoDiaryEntry( sqlite3_stmt *stat
     
     NSDate *dateCreated = [dateFormatter dateFromString: [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_DIARY_dateCreated)]];
     
-    NSMutableArray *array = [NSMutableArray arrayNEWDiaryWithTitle: stringTitle dateCreated: dateCreated index: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_DIARY_id)], @"id", nil]];
+    CDColorTraits colorTrait = sqlite3_column_int( statement, SQL_DIARY_colorTrait);
+    bool isProtected = sqlite3_column_int( statement, SQL_DIARY_isProtected);
+    NSString *stringPasscode = [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_DIARY_passcode)];
+    NSString *stringMaskTitle = [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_DIARY_maskTitle)];
+    
+    NSMutableArray *array = [NSMutableArray arrayNEWDiaryWithTitle: stringTitle dateCreated: dateCreated colorTrait: colorTrait isProtected: isProtected passcode: stringPasscode maskTitle: stringMaskTitle index: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_DIARY_id)], @"id", nil]];
     
     return array;
     

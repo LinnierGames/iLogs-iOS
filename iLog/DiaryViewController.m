@@ -92,7 +92,7 @@
             if ([[alertView textFieldAtIndex: 0] isFirstResponder])
                 [[alertView textFieldAtIndex: 0] resignFirstResponder];
             if (buttonIndex == 1) { //Add
-                NSMutableArray *arrayNewDiary = [NSMutableArray arrayNEWDiaryWithTitle: [alertView textFieldAtIndex: 0].text dateCreated: [NSDate date]];
+                NSMutableArray *arrayNewDiary = [NSMutableArray arrayNEWDiaryWithTitle: [alertView textFieldAtIndex: 0].text];
                 [[UniversalVariables globalVariables] DIARIES_writeNewForDiary: arrayNewDiary];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Diary" message: [NSString stringWithFormat: @"new diary, %@, was added!", [alertView textFieldAtIndex: 0].text] delegate: nil cancelButtonTitle: @"Dismiss" otherButtonTitles: nil];
                 [alert show];
