@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x21-gL-5cx">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x21-gL-5cx">
                                 <rect key="frame" x="0.0" y="86" width="600" height="30"/>
                                 <state key="normal" title="Diary">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -29,6 +29,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="x21-gL-5cx" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="66" id="4yQ-tV-sbb"/>
+                            <constraint firstItem="x21-gL-5cx" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="bGk-A2-l5b"/>
                             <constraint firstItem="x21-gL-5cx" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="e1C-Pn-I7N"/>
                         </constraints>
                     </view>

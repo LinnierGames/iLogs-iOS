@@ -187,7 +187,7 @@ NSString *SQLDatabase = @"database";
                 if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Diaries ORDER BY title ASC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
-                        [array updateOptionsDictionary: [[UniversalVariables globalVariables] DIARIES_returnDiaryOptionsForDiary: array]];
+//                        [array updateOptionsDictionary: [[UniversalVariables globalVariables] DIARIES_returnDiaryOptionsForDiary: array]];
                         [arrayContents addObject: array];
                         
                     }
