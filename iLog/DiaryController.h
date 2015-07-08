@@ -599,6 +599,14 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
 
 @end
 
+#pragma mark NSDate category (COLOR_)
+
+@interface NSDate (COLOR_)
+
+- (UIColor *)dayNightColorByTimeOfDay;
+
+@end
+
 #pragma mark - Outlines
 
 #pragma mark NSArray category (ARRAY_OUTLINES__)

@@ -414,6 +414,89 @@
 
 @end
 
+#pragma mark NSDate category (COLOR_)
+
+// macro to convert hex value to UIColor
+#define UIColorFromRGB(rgbValue) \
+[UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0x00FF00) >>  8))/255.0 \
+blue:((float)((rgbValue & 0x0000FF) >>  0))/255.0 \
+alpha:1.0]
+
+@implementation NSDate (COLOR_)
+
+- (UIColor *)colorBetween:(UIColor *)colorA and:(UIColor *)colorB distance:(CGFloat)pct {
+    CGFloat aR, aG, aB, aA;
+    [colorA getRed:&aR green:&aG blue:&aB alpha:&aA];
+    
+    CGFloat bR, bG, bB, bA;
+    [colorB getRed:&bR green:&bG blue:&bB alpha:&bA];
+    
+    CGFloat rR = (1.0-pct)*aR + pct*bR;
+    CGFloat rG = (1.0-pct)*aG + pct*bG;
+    CGFloat rB = (1.0-pct)*aB + pct*bB;
+    CGFloat rA = (1.0-pct)*aA + pct*bA;
+    
+    return [UIColor colorWithRed:rR green:rG blue:rB alpha:rA];
+}
+
+- (NSInteger)minutesSinceMidnightOfDate:(NSDate *)date {
+    
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSIntegerMax fromDate:date];
+    [components setHour:0];
+    [components setMinute:0];
+    [components setSecond:0];
+    
+    NSDate *midnight = [[NSCalendar currentCalendar] dateFromComponents:components];
+    
+    NSDateComponents *diff = [[NSCalendar currentCalendar] components:NSCalendarUnitMinute fromDate:midnight toDate:date options:0];
+    
+    return [diff minute];
+    
+}
+
+- (UIColor *)dayNightColorByTimeOfDay {
+    // look up the bounds of interpolation here
+    NSArray *wheel = @[ @[ @0,    UIColorFromRGB(0x0525FF) ],
+                        @[ @360,  UIColorFromRGB(0xFFF199) ],
+                        @[ @720,  UIColorFromRGB(0xFFD005) ],
+                        @[ @1080, UIColorFromRGB(0x059CFF) ],
+                        @[ @1440, UIColorFromRGB(0x0525FF) ]];
+    
+    NSInteger m = [self minutesSinceMidnightOfDate: self];
+    
+    // find the index in wheel where the minute bound exceeds our date's minutes (m)
+    NSInteger wheelIndex = 0;
+    for (NSArray *pair in wheel) {
+        NSInteger timePosition = [pair[0] intValue];
+        if (m < timePosition) {
+            break;
+        }
+        wheelIndex++;
+    }
+    
+    // wheelIndex will always be in 1..4, get the pair of bounds at wheelIndex
+    // and the preceding pair (-1).
+    NSArray *priorPair = wheel[wheelIndex-1];
+    NSArray *pair = wheel[wheelIndex];
+    
+    CGFloat priorMinutes = [priorPair[0] intValue];
+    CGFloat minutes = [pair[0] intValue];
+    
+    // this is how far we are between the bounds pairs
+    CGFloat minutesPct = ((float)m - priorMinutes) / (minutes - priorMinutes);
+    
+    // and the colors for the bounds pair
+    UIColor *priorColor = priorPair[1];
+    UIColor *color = pair[1];
+    
+    // call the color interpolation
+    return [self colorBetween:priorColor and:color distance:minutesPct];
+    
+}
+
+@end
+
 #pragma mark - Outlines
 
 #pragma mark NSArray category (ARRAY_OUTLINES__)

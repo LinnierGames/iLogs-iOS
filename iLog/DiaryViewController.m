@@ -64,6 +64,7 @@
     [cell.textLabel setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject]];
     [cell.detailTextLabel setNumberOfLines: 25];
     [cell.detailTextLabel setText: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_body] presentationString]];
+    [cell setBackgroundColor: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_date] dayNightColorByTimeOfDay]];
     
     return cell;
     
