@@ -6,10 +6,20 @@
 //  Copyright (c) 2015 Erick Sanchez. All rights reserved.
 //
 
-#import "DIaryMapViewController.h"
+#import "DiaryMapViewController.h"
+
+typedef NS_ENUM(int, CDSelectedMap) {
+    CTStoriesView = 0,
+    CTMapView = 1,
+    CTTags = 2
+    
+};
 
 @interface DiaryMapViewController () {
-    IBOutlet UIView *viewCenter;
+    CDSelectedMap currentView;
+        IBOutlet UIView *viewCenter;
+        IBOutlet UIView *viewStories;
+        IBOutlet UIView *viewTags;
     
 }
 
@@ -43,11 +53,31 @@
 - (IBAction)panScreenEdge:(UISwipeGestureRecognizer *)sender {
     [UIView beginAnimations: NULL context: nil];
     [UIView setAnimationDuration: 0.35];
-    if (sender.direction == UISwipeGestureRecognizerDirectionLeft)
-        [viewCenter setTransform: CGAffineTransformTranslate( viewCenter.transform, -self.view.frame.size.width, 0)];
-    else if (sender.direction == UISwipeGestureRecognizerDirectionRight)
-        [viewCenter setTransform: CGAffineTransformTranslate( viewCenter.transform, self.view.frame.size.width, 0)];
+    switch (sender.direction) {
+        case UISwipeGestureRecognizerDirectionLeft: {
+            if (currentView == CTMapView || currentView == CTStoriesView) {
+                [viewCenter setTransform: CGAffineTransformTranslate( viewCenter.transform, -self.view.frame.size.width, 0)];
+                currentView++;
+                
+            }
+            break;
+            
+        } case UISwipeGestureRecognizerDirectionRight: {
+            if (currentView == CTMapView || currentView == CTTags) {
+                [viewCenter setTransform: CGAffineTransformTranslate( viewCenter.transform, self.view.frame.size.width, 0)];
+                currentView--;
+                
+            }
+            break;
+            
+        }
+            
+        default:
+            break;
+    }
     [UIView commitAnimations];
+    
+    NSLog( @"%d", currentView);
     
 }
 
@@ -56,6 +86,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    currentView = CTMapView;
     
 }
 

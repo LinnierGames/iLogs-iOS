@@ -26,7 +26,7 @@
 		E17EEC921B2F47C4007C1E91 /* DiaryTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC911B2F47C4007C1E91 /* DiaryTabBarViewController.m */; };
 		E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC941B2F9442007C1E91 /* UniversalOperations.m */; };
 		E17EEC991B2F9D77007C1E91 /* DiaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC981B2F9D77007C1E91 /* DiaryViewController.m */; };
-		E17EEC9D1B2F9DA1007C1E91 /* DIaryMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC9C1B2F9DA1007C1E91 /* DIaryMapViewController.m */; };
+		E17EEC9D1B2F9DA1007C1E91 /* DiaryMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC9C1B2F9DA1007C1E91 /* DiaryMapViewController.m */; };
 		E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA11B2F9FA2007C1E91 /* SettingsViewController.m */; };
 		E17EECA51B2FA04F007C1E91 /* DiaryController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA41B2FA04F007C1E91 /* DiaryController.m */; };
 		E17EECAB1B311F15007C1E91 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA91B311F15007C1E91 /* ISO8601DateFormatter.m */; };
@@ -79,8 +79,8 @@
 		E17EEC961B2F9C51007C1E91 /* iLog.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iLog.pch; sourceTree = "<group>"; };
 		E17EEC971B2F9D77007C1E91 /* DiaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryViewController.h; sourceTree = "<group>"; };
 		E17EEC981B2F9D77007C1E91 /* DiaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryViewController.m; sourceTree = "<group>"; };
-		E17EEC9B1B2F9DA1007C1E91 /* DIaryMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIaryMapViewController.h; sourceTree = "<group>"; };
-		E17EEC9C1B2F9DA1007C1E91 /* DIaryMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIaryMapViewController.m; sourceTree = "<group>"; };
+		E17EEC9B1B2F9DA1007C1E91 /* DiaryMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryMapViewController.h; sourceTree = "<group>"; };
+		E17EEC9C1B2F9DA1007C1E91 /* DiaryMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryMapViewController.m; sourceTree = "<group>"; };
 		E17EECA01B2F9FA2007C1E91 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		E17EECA11B2F9FA2007C1E91 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		E17EECA31B2FA04F007C1E91 /* DiaryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryController.h; sourceTree = "<group>"; };
@@ -264,8 +264,8 @@
 		E17EEC9E1B2F9DBA007C1E91 /* Diary Map */ = {
 			isa = PBXGroup;
 			children = (
-				E17EEC9B1B2F9DA1007C1E91 /* DIaryMapViewController.h */,
-				E17EEC9C1B2F9DA1007C1E91 /* DIaryMapViewController.m */,
+				E17EEC9B1B2F9DA1007C1E91 /* DiaryMapViewController.h */,
+				E17EEC9C1B2F9DA1007C1E91 /* DiaryMapViewController.m */,
 			);
 			name = "Diary Map";
 			sourceTree = "<group>";
@@ -404,7 +404,7 @@
 				E1EF7AF21B3C5BBA00C9C995 /* UITableViewModuleViewController.m in Sources */,
 				E17EEC991B2F9D77007C1E91 /* DiaryViewController.m in Sources */,
 				E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */,
-				E17EEC9D1B2F9DA1007C1E91 /* DIaryMapViewController.m in Sources */,
+				E17EEC9D1B2F9DA1007C1E91 /* DiaryMapViewController.m in Sources */,
 				E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */,
 				E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */,
 				E17EECA51B2FA04F007C1E91 /* DiaryController.m in Sources */,
