@@ -17,9 +17,12 @@ typedef NS_ENUM(int, CDSelectedMap) {
 
 @interface DiaryMapViewController () {
     CDSelectedMap currentView;
-        IBOutlet UIView *viewCenter;
         IBOutlet UIView *viewStories;
+            IBOutlet UITableView *tableStories;
+        IBOutlet UIView *viewMap;
+            IBOutlet UITableView *tableMap;
         IBOutlet UIView *viewTags;
+            IBOutlet UITableView *tableTags;
     
 }
 
@@ -56,7 +59,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
     switch (sender.direction) {
         case UISwipeGestureRecognizerDirectionLeft: {
             if (currentView == CTMapView || currentView == CTStoriesView) {
-                [viewCenter setTransform: CGAffineTransformTranslate( viewCenter.transform, -self.view.frame.size.width, 0)];
+                [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, -self.view.frame.size.width, 0)];
                 currentView++;
                 
             }
@@ -64,7 +67,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             
         } case UISwipeGestureRecognizerDirectionRight: {
             if (currentView == CTMapView || currentView == CTTags) {
-                [viewCenter setTransform: CGAffineTransformTranslate( viewCenter.transform, self.view.frame.size.width, 0)];
+                [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, self.view.frame.size.width, 0)];
                 currentView--;
                 
             }
@@ -76,7 +79,6 @@ typedef NS_ENUM(int, CDSelectedMap) {
             break;
     }
     [UIView commitAnimations];
-    
     NSLog( @"%d", currentView);
     
 }
@@ -87,6 +89,8 @@ typedef NS_ENUM(int, CDSelectedMap) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     currentView = CTMapView;
+    [viewStories setHidden: YES];
+    [viewTags setHidden: YES];
     
 }
 

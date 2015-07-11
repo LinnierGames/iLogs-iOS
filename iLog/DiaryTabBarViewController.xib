@@ -8,7 +8,7 @@
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tabBarController id="93d-OE-a5w" customClass="DiaryTabBarViewController">
             <nil key="simulatedBottomBarMetrics"/>
-            <tabBar key="tabBar" contentMode="scaleToFill" id="Ma5-wZ-zqO">
+            <tabBar key="tabBar" contentMode="scaleToFill" selectedItem="UKr-kr-1es" id="Ma5-wZ-zqO">
                 <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -70,7 +70,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phT-od-2w7" userLabel="content">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phT-od-2w7" userLabel="Map">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <subviews>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EMS-Aq-XdA">
@@ -80,29 +80,63 @@
                                         </subviews>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="leading" secondItem="phT-od-2w7" secondAttribute="leading" id="8Gf-AE-sTV"/>
-                                            <constraint firstAttribute="bottom" secondItem="EMS-Aq-XdA" secondAttribute="bottom" id="Yve-S7-mEo"/>
-                                            <constraint firstAttribute="trailing" secondItem="EMS-Aq-XdA" secondAttribute="trailing" id="iMM-NS-oEY"/>
-                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="top" secondItem="phT-od-2w7" secondAttribute="top" id="nTY-QJ-z41"/>
+                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="width" secondItem="phT-od-2w7" secondAttribute="width" id="0Hm-Yb-nFf"/>
+                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="top" secondItem="phT-od-2w7" secondAttribute="top" id="1KR-ia-CQ6"/>
+                                            <constraint firstAttribute="trailing" secondItem="EMS-Aq-XdA" secondAttribute="trailing" id="6Q0-gL-62k"/>
+                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="height" secondItem="phT-od-2w7" secondAttribute="height" id="Sdo-MC-mQd"/>
+                                            <constraint firstAttribute="bottom" secondItem="EMS-Aq-XdA" secondAttribute="bottom" id="xDb-lR-UgU"/>
+                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="leading" secondItem="phT-od-2w7" secondAttribute="leading" id="zDu-x8-NeN"/>
                                         </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ufw-GV-USG" userLabel="Stories">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                        <subviews>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sHf-cn-pGw">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </tableView>
+                                        </subviews>
+                                        <gestureRecognizers/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iNz-Xu-ezJ" userLabel="Tags">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                        <subviews>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7k2-W4-7UN">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </tableView>
+                                        </subviews>
+                                        <gestureRecognizers/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="phT-od-2w7" firstAttribute="top" secondItem="SR1-i5-hm0" secondAttribute="top" id="2GP-xb-nP2"/>
-                                    <constraint firstAttribute="bottom" secondItem="phT-od-2w7" secondAttribute="bottom" id="Vf7-8K-Ylk"/>
-                                    <constraint firstAttribute="trailing" secondItem="phT-od-2w7" secondAttribute="trailing" id="Xxr-pH-wFW"/>
-                                    <constraint firstItem="phT-od-2w7" firstAttribute="leading" secondItem="SR1-i5-hm0" secondAttribute="leading" id="eUw-9P-aEv"/>
+                                    <constraint firstItem="phT-od-2w7" firstAttribute="trailing" secondItem="Ufw-GV-USG" secondAttribute="trailing" id="2at-hy-dSf"/>
+                                    <constraint firstItem="phT-od-2w7" firstAttribute="top" secondItem="SR1-i5-hm0" secondAttribute="top" id="2x8-9r-RZZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="phT-od-2w7" secondAttribute="trailing" id="4W4-Zo-6KV"/>
+                                    <constraint firstAttribute="bottom" secondItem="phT-od-2w7" secondAttribute="bottom" id="5uB-qg-Rmg"/>
+                                    <constraint firstItem="phT-od-2w7" firstAttribute="leading" secondItem="Ufw-GV-USG" secondAttribute="leading" id="9Qb-vb-uRN"/>
+                                    <constraint firstItem="phT-od-2w7" firstAttribute="leading" secondItem="SR1-i5-hm0" secondAttribute="leading" id="9iP-fL-hPk"/>
+                                    <constraint firstItem="phT-od-2w7" firstAttribute="bottom" secondItem="Ufw-GV-USG" secondAttribute="bottom" id="EMW-ps-2yt"/>
+                                    <constraint firstItem="phT-od-2w7" firstAttribute="top" secondItem="Ufw-GV-USG" secondAttribute="top" id="PXv-QD-Kwv"/>
+                                    <constraint firstItem="phT-od-2w7" firstAttribute="bottom" secondItem="iNz-Xu-ezJ" secondAttribute="bottom" id="SYa-mA-LlH"/>
+                                    <constraint firstItem="phT-od-2w7" firstAttribute="top" secondItem="iNz-Xu-ezJ" secondAttribute="top" id="gn0-vj-t6O"/>
+                                    <constraint firstItem="phT-od-2w7" firstAttribute="trailing" secondItem="iNz-Xu-ezJ" secondAttribute="trailing" id="mvf-6E-48Y"/>
+                                    <constraint firstItem="phT-od-2w7" firstAttribute="leading" secondItem="iNz-Xu-ezJ" secondAttribute="leading" id="ny5-Aq-oTl"/>
                                 </constraints>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="TlP-9J-O8z" appends="YES" id="A6C-gf-Pcg"/>
-                                    <outletCollection property="gestureRecognizers" destination="CgV-bd-jT1" appends="YES" id="OB1-kP-cLv"/>
+                                    <outletCollection property="gestureRecognizers" destination="TlP-9J-O8z" appends="YES" id="5bC-pe-IWM"/>
+                                    <outletCollection property="gestureRecognizers" destination="CgV-bd-jT1" appends="YES" id="h6o-H9-hhC"/>
                                 </connections>
                             </view>
                             <tabBarItem key="tabBarItem" title="Diary Map" id="YjI-0W-aiV"/>
                             <navigationItem key="navigationItem" title="Diary Map" prompt="Prompt" id="rS7-X1-djw"/>
                             <connections>
-                                <outlet property="viewCenter" destination="phT-od-2w7" id="a7T-vX-ng0"/>
+                                <outlet property="tableStories" destination="sHf-cn-pGw" id="Shd-m4-4XW"/>
+                                <outlet property="tableTags" destination="7k2-W4-7UN" id="nuh-cQ-MPI"/>
+                                <outlet property="viewMap" destination="phT-od-2w7" id="M8g-3s-GTR"/>
+                                <outlet property="viewStories" destination="Ufw-GV-USG" id="1Wf-mM-5AK"/>
+                                <outlet property="viewTags" destination="iNz-Xu-ezJ" id="FNp-PZ-F9p"/>
                             </connections>
                         </viewController>
                     </viewControllers>
