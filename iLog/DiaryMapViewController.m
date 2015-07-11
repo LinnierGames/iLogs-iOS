@@ -54,12 +54,22 @@ typedef NS_ENUM(int, CDSelectedMap) {
 #pragma mark - IBActions
 
 - (IBAction)panScreenEdge:(UISwipeGestureRecognizer *)sender {
+    CGFloat offset = 26;
     [UIView beginAnimations: NULL context: nil];
     [UIView setAnimationDuration: 0.35];
     switch (sender.direction) {
         case UISwipeGestureRecognizerDirectionLeft: {
             if (currentView == CTMapView || currentView == CTStoriesView) {
-                [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, -self.view.frame.size.width, 0)];
+                [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, -self.view.frame.size.width +offset, 0)];
+                if (currentView == CTMapView) {
+                    [viewMap setUserInteractionEnabled: NO];
+                    [viewTags setAlpha: 1];
+                    
+                } else {
+                    [viewMap setUserInteractionEnabled: YES];
+                    [viewStories setAlpha: 0];
+                    
+                }
                 currentView++;
                 
             }
@@ -67,7 +77,16 @@ typedef NS_ENUM(int, CDSelectedMap) {
             
         } case UISwipeGestureRecognizerDirectionRight: {
             if (currentView == CTMapView || currentView == CTTags) {
-                [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, self.view.frame.size.width, 0)];
+                [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, self.view.frame.size.width -offset, 0)];
+                if (currentView == CTMapView) {
+                    [viewMap setUserInteractionEnabled: NO];
+                    [viewStories setAlpha: 1];
+                    
+                } else {
+                    [viewMap setUserInteractionEnabled: YES];
+                    [viewTags setAlpha: 0];
+                    
+                }
                 currentView--;
                 
             }
@@ -89,8 +108,8 @@ typedef NS_ENUM(int, CDSelectedMap) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     currentView = CTMapView;
-    [viewStories setHidden: YES];
-    [viewTags setHidden: YES];
+    [viewStories setAlpha: 0];
+    [viewTags setAlpha: 0];
     
 }
 
