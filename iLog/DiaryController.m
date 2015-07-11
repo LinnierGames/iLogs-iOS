@@ -441,15 +441,14 @@ alpha:1.0]
 }
 
 - (NSInteger)minutesSinceMidnightOfDate:(NSDate *)date {
-    
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSIntegerMax fromDate:date];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components: NSIntegerMax fromDate:date];
     [components setHour:0];
     [components setMinute:0];
     [components setSecond:0];
     
-    NSDate *midnight = [[NSCalendar currentCalendar] dateFromComponents:components];
+    NSDate *midnight = [[NSCalendar currentCalendar] dateFromComponents: components];
     
-    NSDateComponents *diff = [[NSCalendar currentCalendar] components:NSCalendarUnitMinute fromDate:midnight toDate:date options:0];
+    NSDateComponents *diff = [[NSCalendar currentCalendar] components: NSCalendarUnitMinute fromDate: midnight toDate: date options:0];
     
     return [diff minute];
     
@@ -491,7 +490,7 @@ alpha:1.0]
     UIColor *color = pair[1];
     
     // call the color interpolation
-    return [self colorBetween:priorColor and:color distance:minutesPct];
+    return [self colorBetween: priorColor and: color distance: minutesPct];
     
 }
 
@@ -499,9 +498,9 @@ alpha:1.0]
 
 #pragma mark - Outlines
 
-#pragma mark NSArray category (ARRAY_OUTLINES__)
+#pragma mark NSArray category (ARRAY_OUTLINES_)
 
-@implementation NSArray (ARRAY_OUTLINES__)
+@implementation NSArray (ARRAY_OUTLINES_)
 
 + (id)arrayNEWOutline {
     return [NSMutableArray arrayNEWOutlineWithBody: @""];
@@ -561,10 +560,10 @@ alpha:1.0]
     NSLog( @"Table OK: +OUTLINES_returnOutlineOptionsForOutline:");
     sqlite3_stmt *statement; const char *err;
     
-    if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Entries where id = %d;", [[[arrayOutine optionsDictionary] objectForKey: @"entryID"] intValue]], &statement, &err)) {
+    if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Diaries where id = %d;", [[[arrayOutine optionsDictionary] objectForKey: @"diaryID"] intValue]], &statement, &err)) {
         while (SQLStatementStep( statement)) {
-            [dictionary setValue: SQLStatementRowIntoEntryEntry( statement) forKey: @"entry"];
-            [dictionary removeObjectForKey: @"entryID"];
+            [dictionary setValue: SQLStatementRowIntoDiaryEntry( statement) forKey: @"diary"];
+            [dictionary removeObjectForKey: @"diaryID"];
             
         }
         

@@ -609,12 +609,12 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
 
 #pragma mark - Outlines
 
-#pragma mark NSArray category (ARRAY_OUTLINES__)
+#pragma mark NSArray category (ARRAY_OUTLINES_)
 
 static const NSUInteger OUTLINES_body = 0;
 static const NSUInteger OUTLINES_dateCreated = 1;
 
-@interface NSArray (ARRAY_OUTLINES__)
+@interface NSArray (ARRAY_OUTLINES_)
 
 + (id)arrayNEWOutline;
 + (id)arrayNEWOutlineWithBody:(NSString *)stringBodyValue;
@@ -629,9 +629,9 @@ static const NSUInteger OUTLINES_dateCreated = 1;
 
 @interface UniversalVariables (OUTLINES_)
 
-- (void)OUTLINES_writeNewForEntry:(NSArray *)arrayOutline;
-- (void)OUTLINES_updateForEntry:(NSArray *)arrayOutline;
-- (void)OUTLINES_deleteForEntry:(NSArray *)arrayOutline;
+- (void)OUTLINES_writeNewForOutline:(NSArray *)arrayOutline;
+- (void)OUTLINES_updateForOutline:(NSArray *)arrayOutline;
+- (void)OUTLINES_deleteForOutline:(NSArray *)arrayOutline;
 
 - (NSMutableDictionary *)OUTLINES_returnOutlineOptionsForOutline:(NSArray *)arrayOutine;
 
