@@ -73,7 +73,7 @@
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ufw-GV-USG" userLabel="Stories">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <subviews>
-                                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sHf-cn-pGw">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sHf-cn-pGw">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableView>
@@ -84,7 +84,7 @@
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iNz-Xu-ezJ" userLabel="Tags">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <subviews>
-                                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7k2-W4-7UN">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7k2-W4-7UN">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableView>
@@ -99,19 +99,27 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableView>
+                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8GC-bn-sCJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            </imageView>
                                         </subviews>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="EMS-Aq-XdA" firstAttribute="width" secondItem="phT-od-2w7" secondAttribute="width" id="0Hm-Yb-nFf"/>
                                             <constraint firstItem="EMS-Aq-XdA" firstAttribute="top" secondItem="phT-od-2w7" secondAttribute="top" id="1KR-ia-CQ6"/>
+                                            <constraint firstItem="8GC-bn-sCJ" firstAttribute="leading" secondItem="phT-od-2w7" secondAttribute="leading" id="5ww-9E-kzt"/>
+                                            <constraint firstItem="8GC-bn-sCJ" firstAttribute="top" secondItem="phT-od-2w7" secondAttribute="top" id="6Nh-Qd-xbG"/>
                                             <constraint firstAttribute="trailing" secondItem="EMS-Aq-XdA" secondAttribute="trailing" id="6Q0-gL-62k"/>
+                                            <constraint firstAttribute="trailing" secondItem="8GC-bn-sCJ" secondAttribute="trailing" id="BQc-ud-IcG"/>
                                             <constraint firstItem="EMS-Aq-XdA" firstAttribute="height" secondItem="phT-od-2w7" secondAttribute="height" id="Sdo-MC-mQd"/>
+                                            <constraint firstAttribute="bottom" secondItem="8GC-bn-sCJ" secondAttribute="bottom" id="txc-EQ-sat"/>
                                             <constraint firstAttribute="bottom" secondItem="EMS-Aq-XdA" secondAttribute="bottom" id="xDb-lR-UgU"/>
                                             <constraint firstItem="EMS-Aq-XdA" firstAttribute="leading" secondItem="phT-od-2w7" secondAttribute="leading" id="zDu-x8-NeN"/>
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="phT-od-2w7" firstAttribute="trailing" secondItem="Ufw-GV-USG" secondAttribute="trailing" id="2at-hy-dSf"/>
                                     <constraint firstItem="phT-od-2w7" firstAttribute="top" secondItem="SR1-i5-hm0" secondAttribute="top" id="2x8-9r-RZZ"/>
@@ -134,6 +142,7 @@
                             <tabBarItem key="tabBarItem" title="Diary Map" id="YjI-0W-aiV"/>
                             <navigationItem key="navigationItem" title="Diary Map" prompt="Prompt" id="rS7-X1-djw"/>
                             <connections>
+                                <outlet property="imageviewCurtain" destination="8GC-bn-sCJ" id="C6H-m5-kgo"/>
                                 <outlet property="tableStories" destination="sHf-cn-pGw" id="Shd-m4-4XW"/>
                                 <outlet property="tableTags" destination="7k2-W4-7UN" id="nuh-cQ-MPI"/>
                                 <outlet property="viewMap" destination="phT-od-2w7" id="M8g-3s-GTR"/>

@@ -20,6 +20,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         IBOutlet UIView *viewStories;
             IBOutlet UITableView *tableStories;
         IBOutlet UIView *viewMap;
+            IBOutlet UIImageView *imageviewCurtain;
             IBOutlet UITableView *tableMap;
         IBOutlet UIView *viewTags;
             IBOutlet UITableView *tableTags;
@@ -63,11 +64,15 @@ typedef NS_ENUM(int, CDSelectedMap) {
                 [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, -self.view.frame.size.width +offset, 0)];
                 if (currentView == CTMapView) {
                     [viewMap setUserInteractionEnabled: NO];
+                    [imageviewCurtain setAlpha: 0.45];
                     [viewTags setAlpha: 1];
+                    [viewTags setTransform: CGAffineTransformMakeScale( 1, 1)];
                     
                 } else {
                     [viewMap setUserInteractionEnabled: YES];
+                    [imageviewCurtain setAlpha: 0];
                     [viewStories setAlpha: 0];
+                    [viewStories setTransform: CGAffineTransformMakeScale( 0.85, 0.85)];
                     
                 }
                 currentView++;
@@ -80,11 +85,15 @@ typedef NS_ENUM(int, CDSelectedMap) {
                 [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, self.view.frame.size.width -offset, 0)];
                 if (currentView == CTMapView) {
                     [viewMap setUserInteractionEnabled: NO];
+                    [imageviewCurtain setAlpha: 0.45];
                     [viewStories setAlpha: 1];
+                    [viewStories setTransform: CGAffineTransformMakeScale( 1, 1)];
                     
                 } else {
                     [viewMap setUserInteractionEnabled: YES];
+                    [imageviewCurtain setAlpha: 0];
                     [viewTags setAlpha: 0];
+                    [viewTags setTransform: CGAffineTransformMakeScale( 0.85, 0.85)];
                     
                 }
                 currentView--;
@@ -109,7 +118,9 @@ typedef NS_ENUM(int, CDSelectedMap) {
     // Do any additional setup after loading the view.
     currentView = CTMapView;
     [viewStories setAlpha: 0];
+    [viewStories setTransform: CGAffineTransformMakeScale( 0.85, 0.85)];
     [viewTags setAlpha: 0];
+    [viewTags setTransform: CGAffineTransformMakeScale( 0.85, 0.85)];
     
 }
 
