@@ -72,7 +72,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
                     [viewMap setUserInteractionEnabled: YES];
                     [imageviewCurtain setAlpha: 0];
                     [viewStories setAlpha: 0];
-                    [viewStories setTransform: CGAffineTransformMakeScale( 0.85, 0.85)];
+                    [viewStories setTransform: CGAffineTransformMakeScale( 0.8, 0.8)];
                     
                 }
                 currentView++;
@@ -93,7 +93,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
                     [viewMap setUserInteractionEnabled: YES];
                     [imageviewCurtain setAlpha: 0];
                     [viewTags setAlpha: 0];
-                    [viewTags setTransform: CGAffineTransformMakeScale( 0.85, 0.85)];
+                    [viewTags setTransform: CGAffineTransformMakeScale( 0.8, 0.8)];
                     
                 }
                 currentView--;
