@@ -455,6 +455,9 @@ alpha:1.0]
 }
 
 - (UIColor *)dayNightColorByTimeOfDay {
+    static int COLOR_distanceValue = 0;
+    static int COLOR_color = 1;
+    
     // look up the bounds of interpolation here
     NSArray *wheel = @[ @[ @0,    UIColorFromRGB(0x4A90E2) ],
                         @[ @360,  UIColorFromRGB(0xFABB78) ],
@@ -467,7 +470,7 @@ alpha:1.0]
     // find the index in wheel where the minute bound exceeds our date's minutes (m)
     NSInteger wheelIndex = 0;
     for (NSArray *pair in wheel) {
-        NSInteger timePosition = [pair[0] intValue];
+        NSInteger timePosition = [pair[COLOR_distanceValue] intValue];
         if (m < timePosition) {
             break;
         }
@@ -479,15 +482,15 @@ alpha:1.0]
     NSArray *priorPair = wheel[wheelIndex-1];
     NSArray *pair = wheel[wheelIndex];
     
-    CGFloat priorMinutes = [priorPair[0] intValue];
-    CGFloat minutes = [pair[0] intValue];
+    CGFloat priorMinutes = [priorPair[COLOR_distanceValue] intValue];
+    CGFloat minutes = [pair[COLOR_distanceValue] intValue];
     
     // this is how far we are between the bounds pairs
     CGFloat minutesPct = ((float)m - priorMinutes) / (minutes - priorMinutes);
     
     // and the colors for the bounds pair
-    UIColor *priorColor = priorPair[1];
-    UIColor *color = pair[1];
+    UIColor *priorColor = priorPair[COLOR_color];
+    UIColor *color = pair[COLOR_color];
     
     // call the color interpolation
     return [self colorBetween: priorColor and: color distance: minutesPct];
