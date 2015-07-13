@@ -62,17 +62,19 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case UISwipeGestureRecognizerDirectionLeft: {
             if (currentView == CTMapView || currentView == CTStoriesView) {
                 [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, -self.view.frame.size.width +offset, 0)];
-                if (currentView == CTMapView) {
+                if (currentView == CTMapView) { //To Tags
                     [viewMap setUserInteractionEnabled: NO];
                     [imageviewCurtain setAlpha: 0.4];
                     [viewTags setAlpha: 1];
                     [viewTags setTransform: CGAffineTransformMakeScale( 1, 1)];
+                    [self.navigationItem setPrompt: @"Tags"];
                     
-                } else {
+                } else { //To Map
                     [viewMap setUserInteractionEnabled: YES];
                     [imageviewCurtain setAlpha: 0];
                     [viewStories setAlpha: 0];
                     [viewStories setTransform: CGAffineTransformMakeScale( 0.8, 0.8)];
+                    [self.navigationItem setPrompt: @"Prompt"];
                     
                 }
                 currentView++;
@@ -83,17 +85,19 @@ typedef NS_ENUM(int, CDSelectedMap) {
         } case UISwipeGestureRecognizerDirectionRight: {
             if (currentView == CTMapView || currentView == CTTags) {
                 [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, self.view.frame.size.width -offset, 0)];
-                if (currentView == CTMapView) {
+                if (currentView == CTMapView) { //To Stories
                     [viewMap setUserInteractionEnabled: NO];
                     [imageviewCurtain setAlpha: 0.4];
                     [viewStories setAlpha: 1];
                     [viewStories setTransform: CGAffineTransformMakeScale( 1, 1)];
+                    [self.navigationItem setPrompt: @"Stories"];
                     
-                } else {
+                } else { //To Map
                     [viewMap setUserInteractionEnabled: YES];
                     [imageviewCurtain setAlpha: 0];
                     [viewTags setAlpha: 0];
                     [viewTags setTransform: CGAffineTransformMakeScale( 0.8, 0.8)];
+                    [self.navigationItem setPrompt: @"Prompt"];
                     
                 }
                 currentView--;
