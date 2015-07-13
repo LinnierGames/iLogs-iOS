@@ -135,7 +135,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <subviews>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EMS-Aq-XdA">
-                                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                                <rect key="frame" x="0.0" y="94" width="600" height="458"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableView>
                                             <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8GC-bn-sCJ">
@@ -143,6 +143,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             </imageView>
                                         </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="8GC-bn-sCJ" firstAttribute="leading" secondItem="phT-od-2w7" secondAttribute="leading" id="5ww-9E-kzt"/>
@@ -150,8 +151,8 @@
                                             <constraint firstAttribute="trailing" secondItem="8GC-bn-sCJ" secondAttribute="trailing" id="BQc-ud-IcG"/>
                                             <constraint firstAttribute="trailing" secondItem="EMS-Aq-XdA" secondAttribute="trailing" id="CqX-U9-aKs"/>
                                             <constraint firstItem="EMS-Aq-XdA" firstAttribute="leading" secondItem="phT-od-2w7" secondAttribute="leading" id="Gj6-XQ-bFc"/>
-                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="top" secondItem="phT-od-2w7" secondAttribute="top" id="Mol-Bk-NBg"/>
-                                            <constraint firstAttribute="bottom" secondItem="EMS-Aq-XdA" secondAttribute="bottom" id="T59-gA-fJH"/>
+                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="top" secondItem="phT-od-2w7" secondAttribute="top" constant="94" id="Mol-Bk-NBg"/>
+                                            <constraint firstAttribute="bottom" secondItem="EMS-Aq-XdA" secondAttribute="bottom" constant="48" id="T59-gA-fJH"/>
                                             <constraint firstAttribute="bottom" secondItem="8GC-bn-sCJ" secondAttribute="bottom" id="txc-EQ-sat"/>
                                         </constraints>
                                     </view>
