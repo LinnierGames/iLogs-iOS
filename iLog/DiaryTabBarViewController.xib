@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DiaryViewController"/>
@@ -73,26 +74,50 @@
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ufw-GV-USG" userLabel="Stories">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <subviews>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sHf-cn-pGw">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stories" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5KG-Wb-1eE" userLabel="Header">
+                                                <rect key="frame" x="0.0" y="16" width="600" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="35" id="Qmp-PR-wuP"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sHf-cn-pGw">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableView>
                                         </subviews>
                                         <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstItem="sHf-cn-pGw" firstAttribute="leading" secondItem="Ufw-GV-USG" secondAttribute="leading" id="2EC-Mj-46Z"/>
+                                            <constraint firstAttribute="trailing" secondItem="5KG-Wb-1eE" secondAttribute="trailing" id="64f-ns-d6b"/>
+                                            <constraint firstAttribute="bottom" secondItem="sHf-cn-pGw" secondAttribute="bottom" id="Ia8-8z-eb1"/>
+                                            <constraint firstItem="sHf-cn-pGw" firstAttribute="top" secondItem="Ufw-GV-USG" secondAttribute="top" id="Pet-SN-C0I"/>
+                                            <constraint firstAttribute="trailing" secondItem="sHf-cn-pGw" secondAttribute="trailing" id="a3v-Mg-mrl"/>
+                                            <constraint firstItem="5KG-Wb-1eE" firstAttribute="top" secondItem="Ufw-GV-USG" secondAttribute="topMargin" constant="8" id="cef-s5-hZ0"/>
+                                            <constraint firstItem="5KG-Wb-1eE" firstAttribute="leading" secondItem="Ufw-GV-USG" secondAttribute="leading" id="o9X-Hm-2hg"/>
+                                        </constraints>
                                     </view>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iNz-Xu-ezJ" userLabel="Tags">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <subviews>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7k2-W4-7UN">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="7k2-W4-7UN">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </tableView>
                                         </subviews>
                                         <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="7k2-W4-7UN" secondAttribute="bottom" id="0M2-FG-FWQ"/>
+                                            <constraint firstItem="7k2-W4-7UN" firstAttribute="top" secondItem="iNz-Xu-ezJ" secondAttribute="top" id="daw-il-x84"/>
+                                            <constraint firstItem="7k2-W4-7UN" firstAttribute="leading" secondItem="iNz-Xu-ezJ" secondAttribute="leading" id="jlp-gD-IVQ"/>
+                                            <constraint firstAttribute="trailing" secondItem="7k2-W4-7UN" secondAttribute="trailing" id="sGY-eV-NeQ"/>
+                                        </constraints>
                                     </view>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phT-od-2w7" userLabel="Map">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phT-od-2w7" userLabel="Map">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <subviews>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EMS-Aq-XdA">
@@ -106,16 +131,14 @@
                                         </subviews>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="width" secondItem="phT-od-2w7" secondAttribute="width" id="0Hm-Yb-nFf"/>
-                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="top" secondItem="phT-od-2w7" secondAttribute="top" id="1KR-ia-CQ6"/>
                                             <constraint firstItem="8GC-bn-sCJ" firstAttribute="leading" secondItem="phT-od-2w7" secondAttribute="leading" id="5ww-9E-kzt"/>
                                             <constraint firstItem="8GC-bn-sCJ" firstAttribute="top" secondItem="phT-od-2w7" secondAttribute="top" id="6Nh-Qd-xbG"/>
-                                            <constraint firstAttribute="trailing" secondItem="EMS-Aq-XdA" secondAttribute="trailing" id="6Q0-gL-62k"/>
                                             <constraint firstAttribute="trailing" secondItem="8GC-bn-sCJ" secondAttribute="trailing" id="BQc-ud-IcG"/>
-                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="height" secondItem="phT-od-2w7" secondAttribute="height" id="Sdo-MC-mQd"/>
+                                            <constraint firstAttribute="trailing" secondItem="EMS-Aq-XdA" secondAttribute="trailing" id="CqX-U9-aKs"/>
+                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="leading" secondItem="phT-od-2w7" secondAttribute="leading" id="Gj6-XQ-bFc"/>
+                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="top" secondItem="phT-od-2w7" secondAttribute="top" id="Mol-Bk-NBg"/>
+                                            <constraint firstAttribute="bottom" secondItem="EMS-Aq-XdA" secondAttribute="bottom" id="T59-gA-fJH"/>
                                             <constraint firstAttribute="bottom" secondItem="8GC-bn-sCJ" secondAttribute="bottom" id="txc-EQ-sat"/>
-                                            <constraint firstAttribute="bottom" secondItem="EMS-Aq-XdA" secondAttribute="bottom" id="xDb-lR-UgU"/>
-                                            <constraint firstItem="EMS-Aq-XdA" firstAttribute="leading" secondItem="phT-od-2w7" secondAttribute="leading" id="zDu-x8-NeN"/>
                                         </constraints>
                                     </view>
                                 </subviews>
