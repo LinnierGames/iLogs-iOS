@@ -64,7 +64,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
                 [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, -self.view.frame.size.width +offset, 0)];
                 if (currentView == CTMapView) {
                     [viewMap setUserInteractionEnabled: NO];
-                    [imageviewCurtain setAlpha: 0.65];
+                    [imageviewCurtain setAlpha: 0.4];
                     [viewTags setAlpha: 1];
                     [viewTags setTransform: CGAffineTransformMakeScale( 1, 1)];
                     
@@ -85,7 +85,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
                 [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, self.view.frame.size.width -offset, 0)];
                 if (currentView == CTMapView) {
                     [viewMap setUserInteractionEnabled: NO];
-                    [imageviewCurtain setAlpha: 0.65];
+                    [imageviewCurtain setAlpha: 0.4];
                     [viewStories setAlpha: 1];
                     [viewStories setTransform: CGAffineTransformMakeScale( 1, 1)];
                     
