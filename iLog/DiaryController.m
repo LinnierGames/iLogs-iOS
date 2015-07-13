@@ -456,11 +456,11 @@ alpha:1.0]
 
 - (UIColor *)dayNightColorByTimeOfDay {
     // look up the bounds of interpolation here
-    NSArray *wheel = @[ @[ @0,    UIColorFromRGB(0x0525FF) ],
-                        @[ @360,  UIColorFromRGB(0xFFF199) ],
-                        @[ @720,  UIColorFromRGB(0xFFD005) ],
-                        @[ @1080, UIColorFromRGB(0x059CFF) ],
-                        @[ @1440, UIColorFromRGB(0x0525FF) ]];
+    NSArray *wheel = @[ @[ @0,    UIColorFromRGB(0x4A90E2) ],
+                        @[ @360,  UIColorFromRGB(0xFABB78) ],
+                        @[ @720,  UIColorFromRGB(0xCE6F2D) ],
+                        @[ @1080, UIColorFromRGB(0x92B1F4) ],
+                        @[ @1440, UIColorFromRGB(0x4A90E2) ]];
     
     NSInteger m = [self minutesSinceMidnightOfDate: self];
     
