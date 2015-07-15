@@ -29,6 +29,11 @@
 
 #pragma mark - Void's
 
+- (void)statusBarTappedAction:(NSNotification *)notification {
+    [self dismissViewControllerAnimated: YES completion: ^{}];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -42,6 +47,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[UniversalVariables globalVariables] setViewController: self asCurrentView: self];
     
 }
 

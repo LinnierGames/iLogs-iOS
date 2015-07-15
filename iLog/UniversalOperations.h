@@ -19,12 +19,17 @@ static inline CGRect CGRectCurrentDevice() {
 }
 
 static CGFloat CVTableViewCellDefaultCellHeight = 38;
+static NSString * const kStatusBarTappedNotification = @"statusBarTappedNotification";
 
 @interface UniversalVariables : NSObject
 
+@property UIViewController *currentView;
+@property UIViewController *viewController;
 @property sqlite3 *database;
 
 + (UniversalVariables *)globalVariables;
+
+- (void)setViewController:(UIViewController *)viewControllerValue asCurrentView:(UIViewController *)currentViewValue;
 
 @end
 

@@ -8,6 +8,17 @@
 
 #import "CategoriesClasses.h"
 
+@implementation UIViewController (UIVIEWCONTROLER_)
+
+- (void)presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag {
+    [[UniversalVariables globalVariables] setCurrentView: viewControllerToPresent];
+    [self presentViewController: viewControllerToPresent animated: flag completion: ^{}];
+    
+}
+
+@end
+
+
 @implementation NSArray (ARRAY_)
 
 - (NSMutableDictionary *)optionsDictionary {

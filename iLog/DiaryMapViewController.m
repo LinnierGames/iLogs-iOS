@@ -46,6 +46,11 @@ typedef NS_ENUM(int, CDSelectedMap) {
 
 #pragma mark - Void's
 
+- (void)statusBarTappedAction:(NSNotification *)notification {
+    [self dismissViewControllerAnimated: YES completion: ^{}];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -127,6 +132,11 @@ typedef NS_ENUM(int, CDSelectedMap) {
     [viewMap.layer setShadowOpacity: 1];
     [viewMap.layer setShadowRadius: 12];
     [viewMap.layer setShadowColor: [[UIColor blackColor] CGColor]];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[UniversalVariables globalVariables] setViewController: self asCurrentView: self];
     
 }
 

@@ -9,6 +9,9 @@
 #import "UniversalOperations.h"
 
 @implementation UniversalVariables
+@synthesize database, viewController = view, currentView;
+
+#pragma mark - Return Functions
 
 + (UniversalVariables *)globalVariables {
     static UniversalVariables *globalVariables = nil;
@@ -23,6 +26,33 @@
     return self;
     
 }
+
+#pragma mark - Void's
+
+- (UIViewController *)viewController {
+    return view;
+    
+}
+
+- (void)setViewController:(UIViewController *)viewControllerValue {
+    [self setViewController: viewControllerValue asCurrentView: [[UniversalVariables globalVariables] currentView]];
+    
+}
+
+- (void)setViewController:(UIViewController *)viewControllerValue asCurrentView:(UIViewController *)currentViewValue {
+    [[UniversalVariables globalVariables] setCurrentView: currentViewValue];
+    [[NSNotificationCenter defaultCenter] removeObserver: view name: kStatusBarTappedNotification object: nil];
+    view = viewControllerValue;
+    [[NSNotificationCenter defaultCenter] addObserver: view
+                                             selector: @selector(statusBarTappedAction:)
+                                                 name: kStatusBarTappedNotification
+                                               object: nil];
+    
+}
+
+#pragma mark - IBActions
+
+#pragma mark - View Lifecycle
 
 @end
 

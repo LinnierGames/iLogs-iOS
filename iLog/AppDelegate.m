@@ -42,4 +42,18 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    CGPoint location = [[[event allTouches] anyObject] locationInView:[self window]];
+    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+    if (CGRectContainsPoint(statusBarFrame, location) && [[[UniversalVariables globalVariables] viewController] isEqual: [[UniversalVariables globalVariables] currentView]]) {
+        [self statusBarTouchedAction];
+    }
+}
+
+- (void)statusBarTouchedAction {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kStatusBarTappedNotification
+                                                        object:nil];
+}
+
 @end

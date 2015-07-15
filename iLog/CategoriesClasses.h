@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@interface UIViewController (UIVIEWCONTROLER_)
+
+- (void)presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag;
+
+@end
+
 @interface NSArray (ARRAY_)
 
 - (NSMutableDictionary *)optionsDictionary;

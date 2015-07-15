@@ -79,6 +79,11 @@
     
 }
 
+- (void)statusBarTappedAction:(NSNotification *)notification {
+    [self dismissViewControllerAnimated: YES completion: ^{}];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -170,7 +175,7 @@
 - (void)pressNavRight:(id)sender {
     if ([arrayDiaries count] > 0) {
         UINavigationController *viewNew = [EntryViewController newEntryWithDelegate: self];
-        [self presentViewController: viewNew animated: YES completion: ^{ }];
+        [self presentViewController: viewNew animated: YES];
         
         
     } else {
@@ -196,6 +201,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [[UniversalVariables globalVariables] setViewController: self asCurrentView: self];
     [self reloadTable];
     
 }
