@@ -48,14 +48,28 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [[[arrayTable objectAtIndex: indexPath.row] objectEntry_body] boundingRectWithSize:CGSizeMake(320, 0)
+    return [[[arrayTable objectAtIndex: indexPath.row] objectEntry_body] boundingRectWithSize:CGSizeMake([[UIApplication sharedApplication] keyWindow].frame.size.width, 0)
                                                                                       options: NSStringDrawingUsesLineFragmentOrigin
-                                                                                   attributes: NULL
-                                                                                      context: nil].size.height +28;
+                                                                                   attributes: @{}
+                                                                                      context: nil].size.height +42;
     
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Title - Textview"];
+    if (!cell)
+        cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTitleTextView];
+    
+    [cell.labelTitle setFont: [UIFont boldSystemFontOfSize: 12]];
+    [cell.labelTitle setUserInteractionEnabled: NO];
+    [cell.labelTitle setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject]];
+    [cell.textview setUserInteractionEnabled: NO];
+    [cell.textview setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body]];
+    
+    [cell setBackgroundColor: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_date] dayNightColorByTimeOfDay]];
+    
+    return cell;
+    /*
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
     if (!cell)
         cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier: @"cell"];
@@ -67,7 +81,7 @@
     [cell setBackgroundColor: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_date] dayNightColorByTimeOfDay]];
     
     return cell;
-    
+    */
 }
 
 #pragma mark - Void's

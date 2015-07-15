@@ -68,8 +68,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f94-Rc-nPL">
-                        <rect key="frame" x="0.0" y="25" width="320" height="43.5"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <rect key="frame" x="0.0" y="24" width="320" height="44.5"/>
                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -85,7 +84,7 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="f94-Rc-nPL" firstAttribute="top" secondItem="oYt-Iw-0sU" secondAttribute="top" constant="25" id="A6K-jw-TN1"/>
+                    <constraint firstItem="f94-Rc-nPL" firstAttribute="top" secondItem="oYt-Iw-0sU" secondAttribute="top" constant="24" id="A6K-jw-TN1"/>
                     <constraint firstAttribute="trailing" secondItem="cGs-cw-NEL" secondAttribute="trailing" constant="15" id="CKr-r4-adx"/>
                     <constraint firstItem="cGs-cw-NEL" firstAttribute="leading" secondItem="oYt-Iw-0sU" secondAttribute="leading" constant="15" id="QdT-yN-iFT"/>
                     <constraint firstAttribute="trailing" secondItem="f94-Rc-nPL" secondAttribute="trailing" id="c2d-Jq-LbA"/>
@@ -98,7 +97,7 @@
                 <outlet property="labelTitle" destination="cGs-cw-NEL" id="7te-gh-J0o"/>
                 <outlet property="textview" destination="f94-Rc-nPL" id="GYC-RT-8S0"/>
             </connections>
-            <point key="canvasLocation" x="461" y="587.5"/>
+            <point key="canvasLocation" x="431" y="261.5"/>
         </tableViewCell>
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Diary - Entry - Attributes" rowHeight="37" id="CZd-p9-7m7" userLabel="Diary Entry Attributes" customClass="UICustomTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
