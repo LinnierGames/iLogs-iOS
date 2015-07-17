@@ -524,3 +524,29 @@ static inline NSArray* NSColorArrayByTheme() {
 - (NSString *)reformatForSQLQuries;
 
 @end
+
+typedef enum {
+    CTCharacterDate,
+    CTCharacterDateMonth,
+    CTCharacterDateMonthDay,
+    CTNumericDate,
+    CTNumericDate_Clipped,
+    CTDaysOfWeek,
+    CTDaysOfWeekNumbered,
+    CTTargetDays,
+    CTTargetDays_Extended,
+    CTYear,
+    CTMonth,
+    CTDay,
+    CTHour,
+    CTMinute,
+    CTSecond,
+    CTCharacterDateTime
+    
+} CDDateLayout;
+
+@interface NSDate (DATE_)
+
+- (NSString *)stringValue:(CDDateLayout)layout;
+
+@end

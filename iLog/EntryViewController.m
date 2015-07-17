@@ -424,6 +424,7 @@
     // Do any additional setup after loading the view from its nib.
     [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style: UIBarButtonItemStylePlain target: self action: @selector( pressNavLeft:)]];
     [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleDone target: self action: @selector( pressNavRight:)]];
+    [self.navigationItem setTitle: [[arrayM objectEntry_date] stringValue: CTCharacterDateTime]];
     
 }
 
