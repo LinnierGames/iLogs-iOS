@@ -659,6 +659,22 @@ alpha:1.0]
 }
 
 + (void)SQL_STORIES_voidDeleteRowWithArray:(const NSArray *)arrayStory {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLStories]) {
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Stories where id = %d;", [[[arrayStory optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_STORIES_voidDeleteRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_STORIES_voidDeleteRowWithArray:", arrayStory);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLStories];
+        [UniversalFunctions SQL_STORIES_voidDeleteRowWithArray: arrayStory];
+        
+    }
     
 }
 
