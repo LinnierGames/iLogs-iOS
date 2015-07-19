@@ -513,6 +513,101 @@ alpha:1.0]
 
 @end
 
+#pragma mark - Stories
+
+#pragma mark NSArray category (ARRAY_STORIES_)
+
+@implementation NSArray (ARRAY_STORIES_)
+
++ (id)arrayNEWStory {
+    
+}
+
++ (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue {
+    
+}
+
++ (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue description:(NSString *)stringDescriptionValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolIsProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue authenticationRequired:(BOOL)boolAuthenRequired {
+    
+}
+
++ (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue description:(NSString *)stringDescriptionValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolIsProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue authenticationRequired:(BOOL)boolAuthenRequired options:(NSMutableDictionary *)dicIndex {
+    
+}
+
+- (NSString *)objectStory_title {
+    
+}
+
+- (NSDate *)objectStory_dateCreated {
+    
+}
+
+- (NSString *)objectStory_description {
+    
+}
+
+- (CDColorTraits)objectStory_colorTrait {
+    
+}
+
+- (BOOL)objectStory_isProtected {
+    
+}
+
+- (NSString *)objectStory_passcode {
+    
+}
+
+- (NSString *)objectStory_maskTitle {
+    
+}
+
+- (BOOL)objectStory_authenticationRequired {
+    
+}
+
+
+@end
+
+#pragma mark UniversalVariables category (STORIES_)
+
+@implementation UniversalVariables (STORIES_)
+
+- (void)STORIES_writeNewForStory:(NSArray *)arrayStory {
+    
+}
+
+- (void)STORIES_updateForStory:(NSArray *)arrayStory {
+    
+}
+
+- (void)STORIES_deleteForStory:(NSArray *)arrayStory {
+    
+}
+
+
+@end
+
+#pragma mark UniversalFunctions category (SQL_STORIES_)
+
+@implementation UniversalFunctions (SQL_STORIES_)
+
++ (void)SQL_STORIES_voidInsertRowWithArray:(const NSArray *)arrayStory {
+    
+}
+
++ (void)SQL_STORIES_voidUpdateRowWithArray:(const NSArray *)arrayStory {
+    
+}
+
++ (void)SQL_STORIES_voidDeleteRowWithArray:(const NSArray *)arrayStory {
+    
+}
+
+
+@end
+
 #pragma mark - Outlines
 
 #pragma mark NSArray category (ARRAY_OUTLINES_)
