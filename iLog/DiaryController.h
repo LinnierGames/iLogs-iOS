@@ -607,6 +607,108 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
 
 @end
 
+#pragma mark - Stories
+
+#pragma mark NSArray category (ARRAY_STORIES_)
+
+static const NSUInteger STORIES_title = 0;
+static const NSUInteger STORIES_dateCreated = 1;
+static const NSUInteger STORIES_description = 2;
+static const NSUInteger STORIES_colorTrait = 3;
+static const NSUInteger STORIES_isProtected = 4;
+static const NSUInteger STORIES_passcode = 5;
+static const NSUInteger STORIES_maskTitle = 6;
+static const NSUInteger STORIES_authenticationRequired = 7;
+
+@interface NSArray (ARRAY_STORIES_)
+
++ (id)arrayNEWStory;
++ (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue;
++ (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue description:(NSString *)stringDescriptionValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolIsProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue authenticationRequired:(BOOL)boolAuthenRequired;
++ (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue description:(NSString *)stringDescriptionValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolIsProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue authenticationRequired:(BOOL)boolAuthenRequired options:(NSMutableDictionary *)dicIndex;
+- (NSString *)objectStory_title;
+- (NSDate *)objectStory_dateCreated;
+- (NSString *)objectStory_description;
+- (CDColorTraits)objectStory_colorTrait;
+- (BOOL)objectStory_isProtected;
+- (NSString *)objectStory_passcode;
+- (NSString *)objectStory_maskTitle;
+- (BOOL)objectStory_authenticationRequired;
+
+@end
+
+#pragma mark UniversalVariables category (STORIES_)
+
+@interface UniversalVariables (STORIES_)
+
+- (void)STORIES_writeNewForStory:(NSArray *)arrayStory;
+- (void)STORIES_updateForStory:(NSArray *)arrayStory;
+- (void)STORIES_deleteForStory:(NSArray *)arrayStory;
+
+@end
+
+#pragma mark UniversalFunctions category (SQL_STORIES_)
+
+static const int SQL_STORIES_id = 0;
+static const int SQL_STORIES_diaryID = 1;
+static const int SQL_STORIES_title = 2;
+static const int SQL_STORIES_dateCreated = 3;
+static const int SQL_STORIES_description = 4;
+static const int SQL_STORIES_colorTrait = 5;
+static const int SQL_STORIES_isProtected = 6;
+static const int SQL_STORIES_passcode = 7;
+static const int SQL_STORIES_maskTitle = 8;
+static const int SQL_STORIES_authenticationRequired = 9;
+
+/**
+ * From the parameter list, an array is produced in Story format
+ * @param [in] statement incoming value from previous call SQLStatementStep(..)
+ * @return NSArray: Story format
+ */
+static inline NSMutableArray * SQLStatementRowIntoStoryEntry( sqlite3_stmt *statement) {
+    NSString *stringTitle = [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_STORIES_title)];
+    
+    static ISO8601DateFormatter *dateFormatter = nil;
+    if (!dateFormatter)
+        dateFormatter = [[ISO8601DateFormatter alloc] init];
+    [dateFormatter setIncludeTime: YES];
+    
+    NSDate *dateCreated = [dateFormatter dateFromString: [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_STORIES_dateCreated)]];
+    NSString *stringDescription = [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_STORIES_description)];
+    
+    CDColorTraits colorTrait = sqlite3_column_int( statement, SQL_STORIES_colorTrait);
+    
+    BOOL isProtected = sqlite3_column_int( statement, SQL_STORIES_isProtected);
+    NSString *stringPasscode = [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_STORIES_passcode)];
+    NSString *stringMaskTitle = [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_STORIES_maskTitle)];
+    BOOL authenticationRequired = sqlite3_column_int( statement, SQL_STORIES_authenticationRequired);
+    
+    NSMutableArray *array = [NSMutableArray arrayNEWStoryWithTitle: stringTitle dateCreated: dateCreated description: stringDescription colorTrait: colorTrait isProtected: isProtected passcode: stringPasscode maskTitle: stringMaskTitle authenticationRequired: authenticationRequired options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_STORIES_id)], @"id", [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_STORIES_diaryID)], @"diaryID", nil]];
+    
+    return array;
+    
+};
+
+@interface UniversalFunctions (SQL_STORIES_)
+
+/**
+ * Inserts a row to the table Story
+ * @param [in] arrayEntry: Story
+ */
++ (void)SQL_STORIES_voidInsertRowWithArray:(const NSArray *)arrayStory;
+/**
+ * Updates an existing row to the table Story
+ * @param [in] arrayEntry: Story
+ */
++ (void)SQL_STORIES_voidUpdateRowWithArray:(const NSArray *)arrayStory;
+/**
+ * Deletes a row to the table Story
+ * @param [in] arrayEntry: Story
+ */
++ (void)SQL_STORIES_voidDeleteRowWithArray:(const NSArray *)arrayStory;
+
+@end
+
 #pragma mark - Outlines
 
 #pragma mark NSArray category (ARRAY_OUTLINES_)
