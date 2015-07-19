@@ -587,14 +587,17 @@ alpha:1.0]
 @implementation UniversalVariables (STORIES_)
 
 - (void)STORIES_writeNewForStory:(NSArray *)arrayStory {
+    [UniversalFunctions SQL_STORIES_voidInsertRowWithArray: arrayStory];
     
 }
 
 - (void)STORIES_updateForStory:(NSArray *)arrayStory {
+    [UniversalFunctions SQL_STORIES_voidUpdateRowWithArray: arrayStory];
     
 }
 
 - (void)STORIES_deleteForStory:(NSArray *)arrayStory {
+    [UniversalFunctions SQL_STORIES_voidDeleteRowWithArray: arrayStory];
     
 }
 
