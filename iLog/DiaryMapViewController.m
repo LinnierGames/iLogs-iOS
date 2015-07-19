@@ -25,6 +25,9 @@ typedef NS_ENUM(int, CDSelectedMap) {
         IBOutlet UIView *viewTags;
             IBOutlet UITableView *tableTags;
     
+    NSMutableArray *arrayStories;
+    NSMutableArray *arrayTags;
+    
 }
 
 @end
@@ -41,6 +44,118 @@ typedef NS_ENUM(int, CDSelectedMap) {
     }
     
     return self;
+    
+}
+
+#pragma mark Return Functions > Pre-Defined Functions (TABLE VIEW)
+
+//Sections
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    switch ([tableView tag]) {
+        case 1: //Map
+            return 1; break;
+        case 2: //Stories
+            return 1; break;
+        case 3: //Tags
+            return 1; break;
+        default:
+            return 0; break;
+            
+    }
+    
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch ([tableView tag]) {
+        case 1: //Map
+            return @""; break;
+        case 2: //Stories
+            return @""; break;
+        case 3: //Tags
+            return @""; break;
+        default:
+            return nil; break;
+            
+    }
+    
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    switch ([tableView tag]) {
+        case 1: //Map
+            return @""; break;
+        case 2: //Stories
+            return @""; break;
+        case 3: //Tags
+            return @""; break;
+        default:
+            return nil; break;
+            
+    }
+    
+}
+
+//Rows
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    switch ([tableView tag]) {
+        case 1: //Map
+            return 10; break;
+        case 2: //Stories
+            return 10; break;
+        case 3: //Tags
+            return 10; break;
+        default:
+            return 0; break;
+            
+    }
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch ([tableView tag]) {
+        case 1: //Map
+            return 44; break;
+        case 2: //Stories
+            return 38; break;
+        case 3: //Tags
+            return 38; break;
+        default:
+            return 44; break;
+            
+    }
+    
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch ([tableView tag]) {
+        case 1: { //Map
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+            if (!cell)
+                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+            //Customize Cell
+            
+            return cell; break;
+            
+        } case 2: { //Stories
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+            if (!cell)
+                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+            //Customize Cell
+            
+            return cell; break;
+            
+        } case 3: { //Tags
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+            if (!cell)
+                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+            //Customize Cell
+            
+            return cell; break;
+            
+        } default:
+            return nil; break;
+            
+    }
     
 }
 
@@ -124,6 +239,9 @@ typedef NS_ENUM(int, CDSelectedMap) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    arrayStories = [NSMutableArray new];
+    arrayTags = [NSMutableArray new];
+    
     currentView = CTMapView;
     [viewStories setAlpha: 0];
     [viewStories setTransform: CGAffineTransformMakeScale( 0.85, 0.85)];
