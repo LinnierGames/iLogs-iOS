@@ -711,6 +711,20 @@ static inline NSMutableArray * SQLStatementRowIntoStoryEntry( sqlite3_stmt *stat
 
 @end
 
+#pragma mark UniversalFunctions category (STORIES_)
+
+@interface UniversalFunctions (STORIES_)
+
+/**
+ * Grouping stroies in a dictionary with the similary key of the corresponding diary title
+ * @warning Each array of Stories is then sorted in ascending aplabetical order
+ * @return NSDictionary : values -> Story Format
+ */
++ (NSDictionary *)STORIES_returnGroupedStories;
++ (NSDictionary *)STORIES_returnGroupedStoriesWithStories:(const NSArray *)arrayStories;
+
+@end
+
 #pragma mark - Outlines
 
 #pragma mark NSArray category (ARRAY_OUTLINES_)

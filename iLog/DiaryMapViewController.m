@@ -26,6 +26,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             IBOutlet UITableView *tableTags;
     
     NSMutableArray *arrayStories;
+    NSDictionary *dicStories;
     NSMutableArray *arrayTags;
     
 }
@@ -55,7 +56,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 1: //Map
             return 1; break;
         case 2: //Stories
-            return 1; break;
+            return [[dicStories allKeys] count]; break;
         case 3: //Tags
             return 1; break;
         default:
@@ -70,7 +71,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 1: //Map
             return @""; break;
         case 2: //Stories
-            return @""; break;
+            return [[dicStories allKeys] objectAtIndex: section]; break;
         case 3: //Tags
             return @""; break;
         default:
@@ -101,7 +102,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 1: //Map
             return 10; break;
         case 2: //Stories
-            return 10; break;
+            return [[dicStories objectForKey: [[dicStories allKeys] objectAtIndex: section]] count]; break;
         case 3: //Tags
             return 10; break;
         default:
@@ -160,6 +161,28 @@ typedef NS_ENUM(int, CDSelectedMap) {
 }
 
 #pragma mark - Void's
+
+- (void)reloadTable {
+    [self reloadTableForTable: currentView];
+    
+}
+
+- (void)reloadTableForTable:(CDSelectedMap)map {
+    switch (map) {
+        case CTMapView:
+            [tableMap reloadData];
+            break;
+        case CTStoriesView:
+            dicStories = [UniversalFunctions STORIES_returnGroupedStories];
+            [tableStories reloadData];
+            break;
+        case CTTags:
+            [tableTags reloadData];
+            break;
+            
+    }
+    
+}
 
 - (void)statusBarTappedAction:(NSNotification *)notification {
     [self dismissViewControllerAnimated: YES completion: ^{}];
@@ -240,6 +263,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     arrayStories = [NSMutableArray new];
+    dicStories = [NSDictionary new];
     arrayTags = [NSMutableArray new];
     
     currentView = CTMapView;

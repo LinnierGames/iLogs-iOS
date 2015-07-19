@@ -700,6 +700,62 @@ alpha:1.0]
     
 }
 
+@end
+
+#pragma mark UniversalFunctions category (STORIES_)
+
+@implementation UniversalFunctions (STORIES_)
+
++ (NSDictionary *)STORIES_returnGroupedStories {
+    return [UniversalFunctions STORIES_returnGroupedStoriesWithStories: [UniversalFunctions SQL_returnContentsOfTable: CTSQLStories]];
+    
+}
+
++ (NSDictionary *)STORIES_returnGroupedStoriesWithStories:(const NSArray *)arrayStories {
+    NSMutableDictionary *dicGroupedStories = [NSMutableDictionary dictionary];
+    for (NSArray *arrayStory in arrayStories) {
+        if ([[dicGroupedStories allKeys] count] > 0) {
+            BOOL isFound = false;
+            for (int index = 0; index < [[dicGroupedStories allKeys] count]; index += 1) {
+                if ([[[dicGroupedStories allKeys] objectAtIndex: index] isEqualToString: [[[arrayStory optionsDictionary] objectForKey: @"diary"] objectDiary_title]]) {
+                    [[dicGroupedStories objectForKey: [[[arrayStory optionsDictionary] objectForKey: @"diary"] objectDiary_title]] addObject: arrayStory];
+                    isFound = true;
+                    break;
+                    
+                }
+                
+            }
+            if (!isFound)
+                [dicGroupedStories setValue: [NSMutableArray arrayWithObjects: arrayStory, nil] forKey: [[[arrayStory optionsDictionary] objectForKey: @"diary"] objectDiary_title]];
+            
+        } else
+            [dicGroupedStories setValue: [NSMutableArray arrayWithObjects: arrayStory, nil] forKey: [[[arrayStory optionsDictionary] objectForKey: @"diary"] objectDiary_title]];
+            
+    }
+    
+    return dicGroupedStories;
+    
+    /*
+    NSMutableArray *arrayGroupedStories = [NSMutableArray array];
+    
+    for (NSArray *arrayStory in arrayStories) {
+        if ([arrayGroupedStories count] > 0) {
+            for (int index = 0; index < [arrayGroupedStories count]; index += 1) {
+                if ([[[[[[[arrayGroupedStories objectAtIndex: index] lastObject] optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[[[arrayStory optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"]]) {
+                    [arrayGroupedStories addObject: ar]
+                    
+                }
+                
+            }
+            
+        } else
+            [arrayGroupedStories addObject: [NSMutableArray arrayWithObjects: arrayStory, nil]];
+        
+    }
+    
+    return arrayGroupedStories;*/
+    
+}
 
 @end
 
