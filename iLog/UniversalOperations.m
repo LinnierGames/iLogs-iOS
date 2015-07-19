@@ -234,7 +234,8 @@ NSString *SQLDatabase = @"database";
                 if (!dateFormatter)
                     dateFormatter = [[ISO8601DateFormatter alloc] init];
                 [dateFormatter setIncludeTime: YES];
-                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Entries where strftime('%%d','%@') is strftime('%%d',date) ORDER BY date DESC;", [dateFormatter stringFromDate: [NSDate date]]], &statement, &err)) {
+                NSString *stringDate = [dateFormatter stringFromDate: [NSDate date]];
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Entries where strftime('%%m','%@') is strftime('%%m',date) AND strftime('%%d','%@') is strftime('%%d',date) AND strftime('%%Y','%@') is strftime('%%Y',date) ORDER BY date DESC;", stringDate, stringDate, stringDate], &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array =  SQLStatementRowIntoEntryEntry( statement);
                         [array updateOptionsDictionary: [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: array]];
