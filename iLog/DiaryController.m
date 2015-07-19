@@ -530,7 +530,7 @@ alpha:1.0]
 }
 
 + (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue description:(NSString *)stringDescriptionValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolIsProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue authenticationRequired:(BOOL)boolAuthenRequired {
-    return [NSMutableArray arrayNEWStoryWithTitle: stringTitleValue dateCreated: dateCreatedValue description: stringDescriptionValue colorTrait: colorTraitValue isProtected: boolIsProtectedValue passcode: stringPasscodeValue maskTitle: stringMaskTitleValue authenticationRequired: boolAuthenRequired options: [NSMutableDictionary dictionary]];
+    return [NSMutableArray arrayNEWStoryWithTitle: stringTitleValue dateCreated: dateCreatedValue description: stringDescriptionValue colorTrait: colorTraitValue isProtected: boolIsProtectedValue passcode: stringPasscodeValue maskTitle: stringMaskTitleValue authenticationRequired: boolAuthenRequired options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [[UniversalVariables globalVariables] DIARIES_returnFirstDiary], @"diary", nil]];
     
 }
 
@@ -609,6 +609,27 @@ alpha:1.0]
 @implementation UniversalFunctions (SQL_STORIES_)
 
 + (void)SQL_STORIES_voidInsertRowWithArray:(const NSArray *)arrayStory {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLStories]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Stories (title, dateCreated, description, colorTrait, isProtected, passcode, maskTitle, authenticationRequired, diaryID) values (\"%@\", \"%@\", \"%@\", %d, %d, \"%@\", \"%@\", %d, %d);", [arrayStory objectStory_title], [dateFormatter stringFromDate: [arrayStory objectStory_dateCreated]], [arrayStory objectStory_description], [arrayStory objectStory_colorTrait], [arrayStory objectStory_isProtected], [arrayStory objectStory_passcode], [arrayStory objectStory_maskTitle], [arrayStory objectStory_authenticationRequired], [[[[[arrayStory optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_STORIES_voidInsertRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_STORIES_voidInsertRowWithArray:", arrayStory);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLStories];
+        [UniversalFunctions SQL_STORIES_voidInsertRowWithArray: arrayStory];
+        
+    }
     
 }
 
