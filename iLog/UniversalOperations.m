@@ -256,7 +256,7 @@ NSString *SQLDatabase = @"database";
                 if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Stories ORDER BY id DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array =  SQLStatementRowIntoStoryEntry( statement);
-                        [array updateOptionsDictionary: [[UniversalVariables globalVariables] STORIES_returnEntryOptionsForEntry: array]];
+                        [array updateOptionsDictionary: [[UniversalVariables globalVariables] STORIES_returnStoryOptionsForStory: array]];
                         [arrayContents addObject: array];
                         
                     }

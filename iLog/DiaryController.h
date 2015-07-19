@@ -645,6 +645,8 @@ static const NSUInteger STORIES_authenticationRequired = 7;
 - (void)STORIES_updateForStory:(NSArray *)arrayStory;
 - (void)STORIES_deleteForStory:(NSArray *)arrayStory;
 
+- (NSMutableDictionary *)STORIES_returnStoryOptionsForStory:(NSArray *)arrayStory;
+
 @end
 
 #pragma mark UniversalFunctions category (SQL_STORIES_)

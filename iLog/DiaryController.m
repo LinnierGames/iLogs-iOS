@@ -601,6 +601,28 @@ alpha:1.0]
     
 }
 
+- (NSMutableDictionary *)STORIES_returnStoryOptionsForStory:(NSArray *)arrayStory {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary: [arrayStory optionsDictionary]];
+    
+    NSLog( @"Table OK: +ENTRIES_returnEntryOptionsForEntry:");
+    sqlite3_stmt *statement; const char *err;
+    
+    if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Diaries where id = %d;", [[[arrayStory optionsDictionary] objectForKey: @"diaryID"] intValue]], &statement, &err)) {
+        while (SQLStatementStep( statement)) {
+            [dictionary setValue: SQLStatementRowIntoDiaryEntry( statement) forKey: @"diary"];
+            [dictionary removeObjectForKey: @"diaryID"];
+            
+        }
+        
+    } else {
+        sqlite3_close( [[UniversalVariables globalVariables] database]);
+        NSAssert( 0, [NSString stringWithUTF8String: err]);
+        
+    }
+    
+    return dictionary;
+    
+}
 
 @end
 
