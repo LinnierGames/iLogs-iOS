@@ -520,50 +520,62 @@ alpha:1.0]
 @implementation NSArray (ARRAY_STORIES_)
 
 + (id)arrayNEWStory {
+    return [NSMutableArray arrayNEWStoryWithTitle: @"Untitled"];
     
 }
 
 + (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue {
+    return [NSMutableArray arrayNEWStoryWithTitle: stringTitleValue dateCreated: [NSDate date] description: @"" colorTrait: CTColorNormal isProtected: NO passcode: @"" maskTitle: @"Locked Story" authenticationRequired: NO];
     
 }
 
 + (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue description:(NSString *)stringDescriptionValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolIsProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue authenticationRequired:(BOOL)boolAuthenRequired {
+    return [NSMutableArray arrayNEWStoryWithTitle: stringTitleValue dateCreated: dateCreatedValue description: stringDescriptionValue colorTrait: colorTraitValue isProtected: boolIsProtectedValue passcode: stringPasscodeValue maskTitle: stringMaskTitleValue authenticationRequired: boolAuthenRequired options: [NSMutableDictionary dictionary]];
     
 }
 
 + (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue description:(NSString *)stringDescriptionValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolIsProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue authenticationRequired:(BOOL)boolAuthenRequired options:(NSMutableDictionary *)dicIndex {
+    return [NSMutableArray arrayWithObjects: stringTitleValue, dateCreatedValue, stringDescriptionValue, [NSNumber numberWithInt: colorTraitValue], [NSNumber numberWithBool: boolIsProtectedValue], stringPasscodeValue, stringMaskTitleValue, [NSNumber numberWithBool: boolAuthenRequired], dicIndex, nil];
     
 }
 
 - (NSString *)objectStory_title {
+    return [self objectAtIndex: STORIES_title];
     
 }
 
 - (NSDate *)objectStory_dateCreated {
+    return [self objectAtIndex: STORIES_dateCreated];
     
 }
 
 - (NSString *)objectStory_description {
+    return [self objectAtIndex: STORIES_description];
     
 }
 
 - (CDColorTraits)objectStory_colorTrait {
+    return [[self objectAtIndex: STORIES_colorTrait] intValue];
     
 }
 
 - (BOOL)objectStory_isProtected {
+    return [[self objectAtIndex: STORIES_isProtected] boolValue];
     
 }
 
 - (NSString *)objectStory_passcode {
+    return [self objectAtIndex: STORIES_passcode];
     
 }
 
 - (NSString *)objectStory_maskTitle {
+    return [self objectAtIndex: STORIES_maskTitle];
     
 }
 
 - (BOOL)objectStory_authenticationRequired {
+    return [[self objectAtIndex: STORIES_authenticationRequired] boolValue];
     
 }
 
