@@ -634,6 +634,27 @@ alpha:1.0]
 }
 
 + (void)SQL_STORIES_voidUpdateRowWithArray:(const NSArray *)arrayStory {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLStories]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Stories SET title = \"%@\", dateCreated = \"%@\", description = \"%@\", colorTrait = %d, isProtected = %d, passcode = \"%@\", maskTitle = \"%@\", authenticationRequired = %d, diaryId = %d where id = %d;", [arrayStory objectStory_title], [dateFormatter stringFromDate: [arrayStory objectStory_dateCreated]], [arrayStory objectStory_description], [arrayStory objectStory_colorTrait], [arrayStory objectStory_isProtected], [arrayStory objectStory_passcode], [arrayStory objectStory_maskTitle], [arrayStory objectStory_authenticationRequired], [[[[[arrayStory optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue], [[[arrayStory optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_STORIES_voidUpdateRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_STORIES_voidUpdateRowWithArray:", arrayStory);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLStories];
+        [UniversalFunctions SQL_STORIES_voidUpdateRowWithArray: arrayStory];
+        
+    }
     
 }
 
