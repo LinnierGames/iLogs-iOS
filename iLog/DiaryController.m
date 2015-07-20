@@ -637,7 +637,7 @@ alpha:1.0]
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Stories (title, dateCreated, description, colorTrait, isProtected, passcode, maskTitle, authenticationRequired, diaryID) values (\"%@\", \"%@\", \"%@\", %d, %d, \"%@\", \"%@\", %d, %d);", [arrayStory objectStory_title], [dateFormatter stringFromDate: [arrayStory objectStory_dateCreated]], [arrayStory objectStory_description], [arrayStory objectStory_colorTrait], [arrayStory objectStory_isProtected], [arrayStory objectStory_passcode], [arrayStory objectStory_maskTitle], [arrayStory objectStory_authenticationRequired], [[[[[arrayStory optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Stories (title, dateCreated, description, colorTrait, isProtected, passcode, maskTitle, authenticationRequired, diaryID) values (\"%@\", \"%@\", \"%@\", %d, %d, \"%@\", \"%@\", %d, %d);", [arrayStory objectStory_title], [dateFormatter stringFromDate: [arrayStory objectStory_dateCreated]], [arrayStory objectStory_description], [arrayStory objectStory_colorTrait], [arrayStory objectStory_isProtected], [arrayStory objectStory_passcode], [arrayStory objectStory_maskTitle], [arrayStory objectStory_authenticationRequired], [[[arrayStory optionsDictionary] objectForKey: @"diaryID"] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
