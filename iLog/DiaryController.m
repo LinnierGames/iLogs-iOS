@@ -846,10 +846,6 @@ alpha:1.0]
 
 @implementation UniversalFunctions (SQL_OUTLINES_)
 
-/**
- * Inserts a row to the table Outlines
- * @param [in] arrayOutline: Outlines
- */
 + (void)SQL_OUTLINES_voidInsertRowWithArray:(const NSArray *)arrayOutline {
     if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLOutilnes]) {
         static ISO8601DateFormatter *dateFormatter = nil;
@@ -875,10 +871,6 @@ alpha:1.0]
     
 }
 
-/**
- * Updates an exisiting row to the table Outlines
- * @param [in] arrayOutline: Outlines
- */
 + (void)SQL_OUTLINES_voidUpdateRowForArray:(const NSArray *)arrayOutline {
     if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLOutilnes]) {
         static ISO8601DateFormatter *dateFormatter = nil;
@@ -904,10 +896,6 @@ alpha:1.0]
     
 }
 
-/**
- * Deletes a row to the table Outlines
- * @param [in] arrayOutline: Outlines
- */
 + (void)SQL_OUTLINES_voidDeleteRowWithArray:(const NSArray *)arrayOutline {
     if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLOutilnes]) {
         NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Outlines where id = %d;", [[[arrayOutline optionsDictionary] objectForKey: @"id"] intValue]];
