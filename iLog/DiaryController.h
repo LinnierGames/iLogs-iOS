@@ -623,7 +623,7 @@ static const NSUInteger STORIES_authenticationRequired = 7;
 @interface NSArray (ARRAY_STORIES_)
 
 + (id)arrayNEWStory;
-+ (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue;
++ (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue description:(NSString *)stringDescriptionValue;
 + (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue description:(NSString *)stringDescriptionValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolIsProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue authenticationRequired:(BOOL)boolAuthenRequired;
 + (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue description:(NSString *)stringDescriptionValue colorTrait:(CDColorTraits)colorTraitValue isProtected:(BOOL)boolIsProtectedValue passcode:(NSString *)stringPasscodeValue maskTitle:(NSString *)stringMaskTitleValue authenticationRequired:(BOOL)boolAuthenRequired options:(NSMutableDictionary *)dicIndex;
 - (NSString *)objectStory_title;

@@ -520,12 +520,12 @@ alpha:1.0]
 @implementation NSArray (ARRAY_STORIES_)
 
 + (id)arrayNEWStory {
-    return [NSMutableArray arrayNEWStoryWithTitle: @"Untitled"];
+    return [NSMutableArray arrayNEWStoryWithTitle: @"Untitled" description: @""];
     
 }
 
-+ (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue {
-    return [NSMutableArray arrayNEWStoryWithTitle: stringTitleValue dateCreated: [NSDate date] description: @"" colorTrait: CTColorNormal isProtected: NO passcode: @"" maskTitle: @"Locked Story" authenticationRequired: NO];
++ (id)arrayNEWStoryWithTitle:(NSString *)stringTitleValue description:(NSString *)stringDescriptionValue {
+    return [NSMutableArray arrayNEWStoryWithTitle: stringTitleValue dateCreated: [NSDate date] description: stringDescriptionValue colorTrait: CTColorNormal isProtected: NO passcode: @"" maskTitle: @"Locked Story" authenticationRequired: NO];
     
 }
 

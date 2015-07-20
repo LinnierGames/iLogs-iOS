@@ -15,7 +15,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
     
 };
 
-@interface DiaryMapViewController () {
+@interface DiaryMapViewController () < UIAlertViewDelegate, UIActionSheetDelegate> {
     CDSelectedMap currentView;
         IBOutlet UIView *viewStories;
             IBOutlet UITableView *tableStories;
@@ -25,9 +25,11 @@ typedef NS_ENUM(int, CDSelectedMap) {
         IBOutlet UIView *viewTags;
             IBOutlet UITableView *tableTags;
     
-    NSMutableArray *arrayStories;
+//    NSMutableArray *arrayStories;
     NSDictionary *dicStories;
     NSMutableArray *arrayTags;
+    
+    NSMutableArray *array;
     
 }
 
@@ -140,8 +142,12 @@ typedef NS_ENUM(int, CDSelectedMap) {
         } case 2: { //Stories
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
             if (!cell)
-                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier: @"cell"];
             //Customize Cell
+            NSArray *arrayStory = [[dicStories objectForKey: [[dicStories allKeys] objectAtIndex: indexPath.section]] objectAtIndex: indexPath.row];
+            
+            [cell.textLabel setText: [arrayStory objectStory_title]];
+            [cell.detailTextLabel setText: [arrayStory objectStory_description]];
             
             return cell; break;
             
@@ -161,6 +167,13 @@ typedef NS_ENUM(int, CDSelectedMap) {
 }
 
 #pragma mark - Void's
+
+- (void)reloadData {
+    [self reloadTableForTable: CTMapView];
+    [self reloadTableForTable: CTStoriesView];
+    [self reloadTableForTable: CTTags];
+    
+}
 
 - (void)reloadTable {
     [self reloadTableForTable: currentView];
@@ -184,6 +197,30 @@ typedef NS_ENUM(int, CDSelectedMap) {
     
 }
 
+- (void)reloadLayout {
+    switch (currentView) {
+        case CTMapView: {
+            [self.navigationItem setPrompt: @"Prompt"];
+            [self.navigationItem setRightBarButtonItem: nil animated: YES];
+            [self.navigationItem setLeftBarButtonItem: nil animated: YES];
+            break;
+            
+        } case CTStoriesView: {
+            [self.navigationItem setPrompt: @"Stories"];
+            [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target: self action: @selector( pressedNavRight:)] animated: YES];
+            [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemEdit target: self action: @selector( pressedNavLeft:)] animated: YES];
+            break;
+            
+        } case CTTags: {
+            [self.navigationItem setPrompt: @"Tags"];
+            break;
+            
+        }
+            
+    }
+    
+}
+
 - (void)statusBarTappedAction:(NSNotification *)notification {
     [self dismissViewControllerAnimated: YES completion: ^{}];
     
@@ -192,6 +229,68 @@ typedef NS_ENUM(int, CDSelectedMap) {
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    
+}
+
+#pragma mark Void's > Pre-Defined Functions (ALERT VIEW)
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (currentView) {
+        case CTMapView: {
+            break;
+            
+        } case CTStoriesView: {
+            if ([alertView tag] == 1) { //Adding Story
+                if (buttonIndex == 1) {
+                    array = [NSMutableArray arrayNEWStoryWithTitle: [[alertView textFieldAtIndex: 0] text] description: [[alertView textFieldAtIndex: 1] text]];
+                    UIActionSheet *actionDiaries = [[UIActionSheet alloc] initWithTitle: @"New Story" delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: nil];
+                    [actionDiaries setTag: 1];
+                    NSArray *arrayDiaries = [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries];
+                    for (NSArray *arrayDiary in arrayDiaries)
+                        [actionDiaries addButtonWithTitle: [arrayDiary objectDiary_title]];
+                    [actionDiaries showInView: self.view];
+                    
+                }
+                
+            }
+            break;
+            
+        } case CTTags: {
+            break;
+            
+        }
+            
+    }
+    
+}
+
+#pragma mark Void's > Pre-Defined Functions (ACTION SHEET)
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (currentView) {
+        case CTMapView: {
+            break;
+            
+        } case CTStoriesView: {
+            if ([actionSheet tag] == 1) { //New Story > Select Diary
+                if (buttonIndex != 0) {
+                    buttonIndex -= 1;
+                    NSArray *arrayDiaries = [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries];
+                    [[array optionsDictionary] setValue: [[[arrayDiaries objectAtIndex: buttonIndex] optionsDictionary] objectForKey: @"id"] forKey: @"diaryID"];
+                    [[UniversalVariables globalVariables] STORIES_writeNewForStory: array];
+                    [self reloadTable];
+                    
+                }
+                
+            }
+            break;
+            
+        } case CTTags: {
+            break;
+            
+        }
+            
+    }
     
 }
 
@@ -210,14 +309,12 @@ typedef NS_ENUM(int, CDSelectedMap) {
                     [imageviewCurtain setAlpha: 0.4];
                     [viewTags setAlpha: 1];
                     [viewTags setTransform: CGAffineTransformMakeScale( 1, 1)];
-                    [self.navigationItem setPrompt: @"Tags"];
                     
                 } else { //To Map
                     [viewMap setUserInteractionEnabled: YES];
                     [imageviewCurtain setAlpha: 0];
                     [viewStories setAlpha: 0];
                     [viewStories setTransform: CGAffineTransformMakeScale( 0.8, 0.8)];
-                    [self.navigationItem setPrompt: @"Prompt"];
                     
                 }
                 currentView++;
@@ -233,14 +330,12 @@ typedef NS_ENUM(int, CDSelectedMap) {
                     [imageviewCurtain setAlpha: 0.4];
                     [viewStories setAlpha: 1];
                     [viewStories setTransform: CGAffineTransformMakeScale( 1, 1)];
-                    [self.navigationItem setPrompt: @"Stories"];
                     
                 } else { //To Map
                     [viewMap setUserInteractionEnabled: YES];
                     [imageviewCurtain setAlpha: 0];
                     [viewTags setAlpha: 0];
                     [viewTags setTransform: CGAffineTransformMakeScale( 0.8, 0.8)];
-                    [self.navigationItem setPrompt: @"Prompt"];
                     
                 }
                 currentView--;
@@ -254,6 +349,57 @@ typedef NS_ENUM(int, CDSelectedMap) {
             break;
     }
     [UIView commitAnimations];
+    [self reloadLayout];
+    
+}
+
+- (IBAction)pressedNavRight:(id)sender {
+    switch (currentView) {
+        case CTMapView: {
+            break;
+            
+        } case CTStoriesView: {
+            if ([[UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries] count] > 0) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Story" message: @"enter the title and description" delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"Next", nil];
+                [alert setTag: 1];
+                [alert setAlertViewStyle: UIAlertViewStyleLoginAndPasswordInput];
+                [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
+                [[alert textFieldAtIndex: 0] setAutocorrectionType: UITextAutocorrectionTypeYes];
+                [[alert textFieldAtIndex: 1] setAutocapitalizationType: UITextAutocapitalizationTypeSentences];
+                [[alert textFieldAtIndex: 1] setAutocorrectionType: UITextAutocorrectionTypeYes];
+                [[alert textFieldAtIndex: 1] setSecureTextEntry: NO];
+                [alert show];
+                
+            } else {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Story" message: @"you must have at least one diary to add a story. Stories belong to a diary" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
+                [alert show];
+                
+            }
+            break;
+            
+        } case CTTags: {
+            break;
+            
+        }
+            
+    }
+    
+}
+
+- (IBAction)pressedNavLeft:(id)sender {
+    switch (currentView) {
+        case CTMapView: {
+            break;
+            
+        } case CTStoriesView: {
+            break;
+            
+        } case CTTags: {
+            break;
+            
+        }
+            
+    }
     
 }
 
@@ -262,9 +408,11 @@ typedef NS_ENUM(int, CDSelectedMap) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    arrayStories = [NSMutableArray new];
+//    arrayStories = [NSMutableArray new];
     dicStories = [NSDictionary new];
     arrayTags = [NSMutableArray new];
+    
+    array = [NSMutableArray new];
     
     currentView = CTMapView;
     [viewStories setAlpha: 0];
@@ -279,6 +427,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [[UniversalVariables globalVariables] setViewController: self asCurrentView: self];
+    [self reloadData];
     
 }
 
