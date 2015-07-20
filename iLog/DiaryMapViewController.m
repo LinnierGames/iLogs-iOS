@@ -276,7 +276,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
                 if (buttonIndex != 0) {
                     buttonIndex -= 1;
                     NSArray *arrayDiaries = [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries];
-                    [[array optionsDictionary] setValue: [[[arrayDiaries objectAtIndex: buttonIndex] optionsDictionary] objectForKey: @"id"] forKey: @"diaryID"];
+                    [[array optionsDictionary] setValue: [arrayDiaries objectAtIndex: buttonIndex] forKey: @"diary"];
                     [[UniversalVariables globalVariables] STORIES_writeNewForStory: array];
                     [self reloadTable];
                     
