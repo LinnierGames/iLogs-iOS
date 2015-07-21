@@ -217,7 +217,7 @@ NSString *SQLDatabase = @"database";
         NSMutableArray *arrayContents = [NSMutableArray array];
         switch (table) {
             case CTSQLDiaries: {
-                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Diaries ORDER BY title ASC;", &statement, &err)) {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Diaries ORDER BY lower(title) ASC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
                         [arrayContents addObject: array];

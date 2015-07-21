@@ -733,6 +733,16 @@ alpha:1.0]
             
     }
     
+    for (NSString *key in [dicGroupedStories allKeys]) {
+        [dicGroupedStories setValue: [[dicGroupedStories objectForKey: key] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            NSString *stringA = [[a objectStory_title] lowercaseString];
+            NSString *stringB = [[b objectStory_title] lowercaseString];
+            
+            return [stringA compare: stringB];
+        }] forKey: key];
+        
+    }
+    
     return dicGroupedStories;
     
     /*
