@@ -313,7 +313,7 @@
     
 }
 
-- (NSString *)reformatForSQLQuries {
+- (NSString *)stringByReformatingForSQLQuries {
     NSString *string = self;
 //    string = [string stringByReplacingOccurrencesOfString: @"'" withString: @"''"];
     string = [string stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""];

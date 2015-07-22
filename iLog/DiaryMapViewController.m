@@ -242,7 +242,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         } case CTStoriesView: {
             if ([alertView tag] == 1) { //Adding Story
                 if (buttonIndex == 1) {
-                    array = [NSMutableArray arrayNEWStoryWithTitle: [[alertView textFieldAtIndex: 0] text] description: [[alertView textFieldAtIndex: 1] text]];
+                    array = [NSMutableArray arrayNEWStoryWithTitle: [[[alertView textFieldAtIndex: 0] text] stringByReformatingForSQLQuries] description: [[[alertView textFieldAtIndex: 1] text] stringByReformatingForSQLQuries]];
                     UIActionSheet *actionDiaries = [[UIActionSheet alloc] initWithTitle: @"New Story" delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: nil];
                     [actionDiaries setTag: 1];
                     NSArray *arrayDiaries = [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries];
