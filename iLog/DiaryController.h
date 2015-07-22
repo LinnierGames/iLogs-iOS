@@ -720,8 +720,8 @@ static inline NSMutableArray * SQLStatementRowIntoStoryEntry( sqlite3_stmt *stat
  * @warning Each array of Stories is then sorted in ascending aplabetical order
  * @return NSDictionary : values -> Story Format
  */
-+ (NSDictionary *)STORIES_returnGroupedStories;
-+ (NSDictionary *)STORIES_returnGroupedStoriesWithStories:(const NSArray *)arrayStories;
++ (NSArray *)STORIES_returnGroupedStories;
++ (NSArray *)STORIES_returnGroupedStoriesWithStories:(const NSArray *)arrayStories;
 
 @end
 

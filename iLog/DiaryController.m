@@ -706,19 +706,20 @@ alpha:1.0]
 
 @implementation UniversalFunctions (STORIES_)
 
-+ (NSDictionary *)STORIES_returnGroupedStories {
++ (NSArray *)STORIES_returnGroupedStories {
     return [UniversalFunctions STORIES_returnGroupedStoriesWithStories: [UniversalFunctions SQL_returnContentsOfTable: CTSQLStories]];
     
 }
 
-+ (NSDictionary *)STORIES_returnGroupedStoriesWithStories:(const NSArray *)arrayStories {
-    NSMutableDictionary *dicGroupedStories = [NSMutableDictionary dictionary];
++ (NSArray *)STORIES_returnGroupedStoriesWithStories:(const NSArray *)arrayStories {
+    NSMutableArray *arrayGroupedStories = [NSMutableArray array];
+    
     for (NSArray *arrayStory in arrayStories) {
-        if ([[dicGroupedStories allKeys] count] > 0) {
+        if ([arrayGroupedStories count] > 0) {
             BOOL isFound = false;
-            for (int index = 0; index < [[dicGroupedStories allKeys] count]; index += 1) {
-                if ([[[dicGroupedStories allKeys] objectAtIndex: index] isEqualToString: [[[arrayStory optionsDictionary] objectForKey: @"diary"] objectDiary_title]]) {
-                    [[dicGroupedStories objectForKey: [[[arrayStory optionsDictionary] objectForKey: @"diary"] objectDiary_title]] addObject: arrayStory];
+            for (int index = 0; index < [arrayGroupedStories count]; index += 1) {
+                if ([[[[[[arrayGroupedStories objectAtIndex: index] lastObject] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[[[arrayStory optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"]]) {
+                    [[arrayGroupedStories objectAtIndex: index] insertObject: arrayStory atIndex: 0];
                     isFound = true;
                     break;
                     
@@ -726,44 +727,40 @@ alpha:1.0]
                 
             }
             if (!isFound)
-                [dicGroupedStories setValue: [NSMutableArray arrayWithObjects: arrayStory, nil] forKey: [[[arrayStory optionsDictionary] objectForKey: @"diary"] objectDiary_title]];
+                [arrayGroupedStories addObject: [NSMutableArray arrayWithObjects: arrayStory, @{@"diary": [[arrayStory optionsDictionary] objectForKey: @"diary"]}, nil]];
             
         } else
-            [dicGroupedStories setValue: [NSMutableArray arrayWithObjects: arrayStory, nil] forKey: [[[arrayStory optionsDictionary] objectForKey: @"diary"] objectDiary_title]];
-            
-    }
-    
-    for (NSString *key in [dicGroupedStories allKeys]) {
-        [dicGroupedStories setValue: [[dicGroupedStories objectForKey: key] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-            NSString *stringA = [[a objectStory_title] lowercaseString];
-            NSString *stringB = [[b objectStory_title] lowercaseString];
-            
-            return [stringA compare: stringB];
-        }] forKey: key];
+            [arrayGroupedStories addObject: [NSMutableArray arrayWithObjects: arrayStory, @{@"diary": [[arrayStory optionsDictionary] objectForKey: @"diary"]}, nil]];
         
     }
     
-    return dicGroupedStories;
-    
-    /*
-    NSMutableArray *arrayGroupedStories = [NSMutableArray array];
-    
-    for (NSArray *arrayStory in arrayStories) {
-        if ([arrayGroupedStories count] > 0) {
-            for (int index = 0; index < [arrayGroupedStories count]; index += 1) {
-                if ([[[[[[[arrayGroupedStories objectAtIndex: index] lastObject] optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[[[arrayStory optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"]]) {
-                    [arrayGroupedStories addObject: ar]
-                    
-                }
+    //Sort Stores within each Group
+    for (NSMutableArray *arrayGroup in arrayGroupedStories) {
+        [arrayGroup sortUsingComparator: ^NSComparisonResult(id a, id b) {
+            
+            if ([a isKindOfClass: [NSArray class]] && [b isKindOfClass: [NSArray class]]) {
+                NSString *stringA = [[a objectStory_title] lowercaseString];
+                NSString *stringB = [[b objectStory_title] lowercaseString];
                 
-            }
+                return [stringA compare: stringB];
+                
+            } else
+                return NSOrderedSame;
             
-        } else
-            [arrayGroupedStories addObject: [NSMutableArray arrayWithObjects: arrayStory, nil]];
+        }];
         
     }
     
-    return arrayGroupedStories;*/
+    //Sort Grouped Stories by the Diary Title
+    [arrayGroupedStories sortUsingComparator: ^NSComparisonResult(id a, id b) {
+        NSString *stringA = [[[[a lastObject] objectForKey: @"diary"] objectDiary_title] lowercaseString];
+        NSString *stringB = [[[[b lastObject] objectForKey: @"diary"] objectDiary_title] lowercaseString];
+        
+        return [stringA compare: stringB];
+        
+    }];
+    
+    return arrayGroupedStories;
     
 }
 

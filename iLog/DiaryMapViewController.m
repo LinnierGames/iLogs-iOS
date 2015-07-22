@@ -25,8 +25,8 @@ typedef NS_ENUM(int, CDSelectedMap) {
         IBOutlet UIView *viewTags;
             IBOutlet UITableView *tableTags;
     
-//    NSMutableArray *arrayStories;
-    NSDictionary *dicStories;
+    NSMutableArray *arrayStories;
+//    NSDictionary *dicStories;
     NSMutableArray *arrayTags;
     
     NSMutableArray *array;
@@ -58,7 +58,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 1: //Map
             return 1; break;
         case 2: //Stories
-            return [[dicStories allKeys] count]; break;
+            return [arrayStories count]; break;
         case 3: //Tags
             return 1; break;
         default:
@@ -73,7 +73,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 1: //Map
             return @""; break;
         case 2: //Stories
-            return [[dicStories allKeys] objectAtIndex: section]; break;
+            return [[[[arrayStories objectAtIndex: section] lastObject] objectForKey: @"diary"] objectDiary_title]; break;
         case 3: //Tags
             return @""; break;
         default:
@@ -104,7 +104,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 1: //Map
             return 10; break;
         case 2: //Stories
-            return [[dicStories objectForKey: [[dicStories allKeys] objectAtIndex: section]] count]; break;
+            return [[arrayStories objectAtIndex: section] count] -1; break;
         case 3: //Tags
             return 10; break;
         default:
@@ -144,7 +144,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             if (!cell)
                 cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier: @"cell"];
             //Customize Cell
-            NSArray *arrayStory = [[dicStories objectForKey: [[dicStories allKeys] objectAtIndex: indexPath.section]] objectAtIndex: indexPath.row];
+            NSArray *arrayStory = [[arrayStories objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
             
             [cell.textLabel setText: [arrayStory objectStory_title]];
             [cell.detailTextLabel setText: [arrayStory objectStory_description]];
@@ -186,7 +186,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             [tableMap reloadData];
             break;
         case CTStoriesView:
-            dicStories = [UniversalFunctions STORIES_returnGroupedStories];
+            arrayStories = [NSMutableArray arrayWithArray: [UniversalFunctions STORIES_returnGroupedStories]];
             [tableStories reloadData];
             break;
         case CTTags:
@@ -408,8 +408,8 @@ typedef NS_ENUM(int, CDSelectedMap) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    arrayStories = [NSMutableArray new];
-    dicStories = [NSDictionary new];
+    arrayStories = [NSMutableArray new];
+//    dicStories = [NSDictionary new];
     arrayTags = [NSMutableArray new];
     
     array = [NSMutableArray new];
