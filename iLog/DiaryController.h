@@ -725,6 +725,66 @@ static inline NSMutableArray * SQLStatementRowIntoStoryEntry( sqlite3_stmt *stat
 
 @end
 
+#pragma mark - Tags
+
+#pragma mark NSArray category (ARRAY_TAGS_)
+
+static const NSUInteger TAGS_ = 0;
+
+@interface NSArray (ARRAY_TAGS_)
+
++ (id)arrayNEWTag;
+
+@end
+
+#pragma mark UniversalVariables category (TAGS_)
+
+@interface UniversalVariables (TAGS_)
+
+- (void)TAGS_writeNewForTag:(NSArray *)arrayTag;
+- (void)TAGS_updateForTags:(NSArray *)arrayTag;
+- (void)TAGS_deleteForTag:(NSArray *)arrayTag;
+
+- (NSMutableDictionary *)TAGS_returnOptionsForTag:(NSArray *)arrayTag;
+
+@end
+
+#pragma mark UniversalFunctions category (SQL_TAGS_)
+
+static const int SQL_TAGS_id = 0;
+
+/**
+ * From the parameter list, an array is produced in Tag format
+ * @param [in] statement incoming value from previous call SQLStatementStep(..)
+ * @return NSArray: Tag format
+ */
+static inline NSMutableArray * SQLStatementRowIntoTagEntry( sqlite3_stmt *statement) {
+    NSMutableArray *array;
+    
+    return array;
+    
+};
+
+@interface UniversalFunctions (SQL_TAGS_)
+
+/**
+ * Inserts a row to the table Tags
+ * @param [in] arrayEntry: Tag
+ */
++ (void)SQL_TAGS_voidInsertRowWithArray:(const NSArray *)arrayTag;
+/**
+ * Updates an existing row to the table Tags
+ * @param [in] arrayEntry: Tag
+ */
++ (void)SQL_TAGS_voidUpdateRowWithArray:(const NSArray *)arrayTag;
+/**
+ * Deletes a row to the table Tags
+ * @param [in] arrayEntry: Tag
+ */
++ (void)SQL_TAGS_voidDeleteRowWithArray:(const NSArray *)arrayTag;
+
+@end
+
 #pragma mark - Outlines
 
 #pragma mark NSArray category (ARRAY_OUTLINES_)
