@@ -250,7 +250,24 @@ typedef NS_ENUM(int, CDSelectedMap) {
 #pragma mark Void's > Pre-Defined Functions (TABLE VIEW)
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    switch ([tableView tag]) {
+        case 1: {
+            break;
+            
+        } case 2: {
+            if (editingStyle == UITableViewCellEditingStyleDelete) {
+                [[UniversalVariables globalVariables] STORIES_deleteForStory: [[arrayStories objectAtIndex: indexPath.section] objectAtIndex: indexPath.row]];
+                [self reloadTable];
+                
+            }
+            break;
+            
+        } case 3: {
+            break;
+            
+        }
+            
+    }
     
 }
 
