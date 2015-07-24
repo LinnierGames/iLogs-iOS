@@ -15,7 +15,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
     
 };
 
-@interface DiaryMapViewController () < UIAlertViewDelegate, UIActionSheetDelegate> {
+@interface DiaryMapViewController () < UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate> {
     CDSelectedMap currentView;
         IBOutlet UIView *viewStories;
             IBOutlet UITableView *tableStories;
@@ -129,6 +129,21 @@ typedef NS_ENUM(int, CDSelectedMap) {
     
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch ([tableView tag]) {
+        case 1: //Map
+            return NO; break;
+        case 2: //Stories
+            return YES; break;
+        case 3: //Tags
+            return YES; break;
+        default:
+            return NO; break;
+            
+    }
+    
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch ([tableView tag]) {
         case 1: { //Map
@@ -232,6 +247,13 @@ typedef NS_ENUM(int, CDSelectedMap) {
     
 }
 
+#pragma mark Void's > Pre-Defined Functions (TABLE VIEW)
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+}
+
 #pragma mark Void's > Pre-Defined Functions (ALERT VIEW)
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -305,13 +327,13 @@ typedef NS_ENUM(int, CDSelectedMap) {
             if (currentView == CTMapView || currentView == CTStoriesView) {
                 [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, -self.view.frame.size.width +offset, 0)];
                 if (currentView == CTMapView) { //To Tags
-                    [viewMap setUserInteractionEnabled: NO];
+                    [imageviewCurtain setUserInteractionEnabled: YES];
                     [imageviewCurtain setAlpha: 0.4];
                     [viewTags setAlpha: 1];
                     [viewTags setTransform: CGAffineTransformMakeScale( 1, 1)];
                     
                 } else { //To Map
-                    [viewMap setUserInteractionEnabled: YES];
+                    [imageviewCurtain setUserInteractionEnabled: NO];
                     [imageviewCurtain setAlpha: 0];
                     [viewStories setAlpha: 0];
                     [viewStories setTransform: CGAffineTransformMakeScale( 0.8, 0.8)];
@@ -326,13 +348,13 @@ typedef NS_ENUM(int, CDSelectedMap) {
             if (currentView == CTMapView || currentView == CTTags) {
                 [viewMap setTransform: CGAffineTransformTranslate( viewMap.transform, self.view.frame.size.width -offset, 0)];
                 if (currentView == CTMapView) { //To Stories
-                    [viewMap setUserInteractionEnabled: NO];
+                    [imageviewCurtain setUserInteractionEnabled: YES];
                     [imageviewCurtain setAlpha: 0.4];
                     [viewStories setAlpha: 1];
                     [viewStories setTransform: CGAffineTransformMakeScale( 1, 1)];
                     
                 } else { //To Map
-                    [viewMap setUserInteractionEnabled: YES];
+                    [imageviewCurtain setUserInteractionEnabled: NO];
                     [imageviewCurtain setAlpha: 0];
                     [viewTags setAlpha: 0];
                     [viewTags setTransform: CGAffineTransformMakeScale( 0.8, 0.8)];
@@ -392,6 +414,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             break;
             
         } case CTStoriesView: {
+            [tableStories setEditing: !tableStories.isEditing animated: YES];
             break;
             
         } case CTTags: {
