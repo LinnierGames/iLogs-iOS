@@ -729,11 +729,17 @@ static inline NSMutableArray * SQLStatementRowIntoStoryEntry( sqlite3_stmt *stat
 
 #pragma mark NSArray category (ARRAY_TAGS_)
 
-static const NSUInteger TAGS_ = 0;
+static const NSUInteger TAGS_title = 0;
+static const NSUInteger TAGS_dateCreated = 1;
 
 @interface NSArray (ARRAY_TAGS_)
 
 + (id)arrayNEWTag;
++ (id)arrayNEWTagWithTitle:(NSString *)stringTitleValue;
++ (id)arrayNEWTagWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue;
++ (id)arrayNEWTagWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue options:(NSMutableDictionary *)dicIndex;
+- (NSString *)objectTag_title;
+- (NSDate *)objectTag_dateCreated;
 
 @end
 
@@ -752,6 +758,8 @@ static const NSUInteger TAGS_ = 0;
 #pragma mark UniversalFunctions category (SQL_TAGS_)
 
 static const int SQL_TAGS_id = 0;
+static const int SQL_TAGS_title = 1;
+static const int SQL_TAGS_dateCreated = 2;
 
 /**
  * From the parameter list, an array is produced in Tag format
@@ -759,7 +767,16 @@ static const int SQL_TAGS_id = 0;
  * @return NSArray: Tag format
  */
 static inline NSMutableArray * SQLStatementRowIntoTagEntry( sqlite3_stmt *statement) {
-    NSMutableArray *array;
+    NSString *stringTitle = [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_TAGS_title)];
+    
+    static ISO8601DateFormatter *dateFormatter = nil;
+    if (!dateFormatter)
+        dateFormatter = [[ISO8601DateFormatter alloc] init];
+    [dateFormatter setIncludeTime: YES];
+    
+    NSDate *dateCreated = [dateFormatter dateFromString: [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_TAGS_dateCreated)]];
+    
+    NSMutableArray *array = [NSMutableArray arrayNEWTagWithTitle: stringTitle dateCreated: dateCreated options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_TAGS_id)], @"id", nil]];
     
     return array;
     
