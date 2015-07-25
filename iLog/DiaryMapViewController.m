@@ -59,7 +59,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 2: //Stories
             return [arrayStories count]; break;
         case 3: //Tags
-            return 1; break;
+            return [arrayTags count]; break;
         default:
             return 0; break;
             
@@ -74,7 +74,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 2: //Stories
             return [[[[arrayStories objectAtIndex: section] lastObject] objectForKey: @"diary"] objectDiary_title]; break;
         case 3: //Tags
-            return @""; break;
+            return [[[arrayTags objectAtIndex: section] lastObject] objectForKey: @"letter"]; break;
         default:
             return nil; break;
             
@@ -105,7 +105,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 2: //Stories
             return [[arrayStories objectAtIndex: section] count] -1; break;
         case 3: //Tags
-            return [arrayTags count]; break;
+            return [[arrayTags objectAtIndex: section] count] -1; break;
         default:
             return 0; break;
             
@@ -170,7 +170,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             if (!cell)
                 cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
             //Customize Cell
-            NSArray *arrayTag = [arrayTags objectAtIndex: indexPath.row];
+            NSArray *arrayTag = [[arrayTags objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
             
             [cell.textLabel setText: [arrayTag objectTag_title]];
             
@@ -207,7 +207,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             [tableStories reloadData];
             break;
         case CTTags:
-            arrayTags = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLTags]];
+            arrayTags = [NSMutableArray arrayWithArray: [UniversalFunctions TAGS_returnGroupedTags]];
             [tableTags reloadData];
             break;
             
@@ -302,8 +302,15 @@ typedef NS_ENUM(int, CDSelectedMap) {
         } case CTTags: {
             if ([alertView tag] == 1) { //Adding Tag
                 if (buttonIndex == 1) {
-                    [[UniversalVariables globalVariables] TAGS_writeNewForTag: [NSMutableArray arrayNEWTagWithTitle: [[[alertView textFieldAtIndex: 0] text] stringByReformatingForSQLQuries]]];
-                    [self reloadTable];
+                    if ([alertView textFieldAtIndex: 0].text.length > 0) {
+                        [[UniversalVariables globalVariables] TAGS_writeNewForTag: [NSMutableArray arrayNEWTagWithTitle: [[[alertView textFieldAtIndex: 0] text] stringByReformatingForSQLQuries]]];
+                        [self reloadTable];
+                        
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Tag" message: @"you cannot add a tag with no title value" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
+                        [alert show];
+                        
+                    }
                     
                 }
                 

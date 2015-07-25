@@ -899,6 +899,69 @@ alpha:1.0]
     
 }
 
+@end
+
+#pragma mark UniversalFunctions category (TAGS_)
+
+@implementation UniversalFunctions (TAGS_)
+
++ (NSArray *)TAGS_returnGroupedTags {
+    return [self TAGS_returnGroupedTagsWithTags: [UniversalFunctions SQL_returnContentsOfTable: CTSQLTags]];
+    
+}
+
++ (NSArray *)TAGS_returnGroupedTagsWithTags:(const NSArray *)arrayTags {
+    NSMutableArray *arrayGroupedTags = [NSMutableArray array];
+    
+    for (NSArray *arrayTag in arrayTags) {
+        if ([arrayGroupedTags count] > 0) {
+            BOOL isFound = false;
+            for (int index = 0; index < [arrayGroupedTags count]; index += 1) {
+                if ([[[[arrayGroupedTags objectAtIndex: index] lastObject] objectForKey: @"letter"] isEqualToString: [[arrayTag optionsDictionary] objectForKey: @"letter"]]) {
+                    [[arrayGroupedTags objectAtIndex: index] insertObject: arrayTag atIndex: 0];
+                    isFound = true;
+                    break;
+                    
+                }
+                
+            }
+            if (!isFound)
+                [arrayGroupedTags addObject: [NSMutableArray arrayWithObjects: arrayTag, @{@"letter": [[[arrayTag objectTag_title] substringToIndex: 1] uppercaseString]}, nil]];
+            
+        } else
+            [arrayGroupedTags addObject: [NSMutableArray arrayWithObjects: arrayTag, @{@"letter": [[[arrayTag objectTag_title] substringToIndex: 1] uppercaseString]}, nil]];
+        
+    }
+    
+    //Sort Letters within each Group
+    for (NSMutableArray *arrayGroup in arrayGroupedTags) {
+        [arrayGroup sortUsingComparator: ^NSComparisonResult(id a, id b) {
+            
+            if ([a isKindOfClass: [NSArray class]] && [b isKindOfClass: [NSArray class]]) {
+                NSString *stringA = [[a objectTag_title] lowercaseString];
+                NSString *stringB = [[b objectTag_title] lowercaseString];
+                
+                return [stringA compare: stringB];
+                
+            } else
+                return NSOrderedSame;
+            
+        }];
+        
+    }
+    
+    //Sort Grouped Tags by the First Letter of Title
+    [arrayGroupedTags sortUsingComparator: ^NSComparisonResult(id a, id b) {
+        NSString *stringA = [[[a lastObject] objectForKey: @"letter"] lowercaseString];
+        NSString *stringB = [[[b lastObject] objectForKey: @"letter"] lowercaseString];
+        
+        return [stringA compare: stringB];
+        
+    }];
+    
+    return arrayGroupedTags;
+    
+}
 
 @end
 

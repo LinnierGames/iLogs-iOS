@@ -716,9 +716,9 @@ static inline NSMutableArray * SQLStatementRowIntoStoryEntry( sqlite3_stmt *stat
 @interface UniversalFunctions (STORIES_)
 
 /**
- * Grouping stroies in a dictionary with the similary key of the corresponding diary title
+ * Grouping stroies in an array with a similary key of the corresponding diary title
  * @warning Each array of Stories is then sorted in ascending aplabetical order
- * @return NSDictionary : values -> Story Format
+ * @return NSarray : values -> Story Format
  */
 + (NSArray *)STORIES_returnGroupedStories;
 + (NSArray *)STORIES_returnGroupedStoriesWithStories:(const NSArray *)arrayStories;
@@ -799,6 +799,20 @@ static inline NSMutableArray * SQLStatementRowIntoTagEntry( sqlite3_stmt *statem
  * @param [in] arrayEntry: Tag
  */
 + (void)SQL_TAGS_voidDeleteRowWithArray:(const NSArray *)arrayTag;
+
+@end
+
+#pragma mark UniversalFunctions category (TAGS_)
+
+@interface UniversalFunctions (TAGS_)
+
+/**
+ * Grouping tag in a an array with a similary key of the corresponding tag title
+ * @warning Each array of Tags is then sorted in ascending aplabetical order
+ * @return NSarray : values -> Tag Format
+ */
++ (NSArray *)TAGS_returnGroupedTags;
++ (NSArray *)TAGS_returnGroupedTagsWithTags:(const NSArray *)arrayTags;
 
 @end
 

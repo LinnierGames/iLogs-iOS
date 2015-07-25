@@ -272,7 +272,7 @@ NSString *SQLDatabase = @"database";
                 break;
                 
             } case CTSQLTags: {
-                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Tags ORDER BY title ASC;", &statement, &err)) {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Tags ORDER BY id DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array =  SQLStatementRowIntoTagEntry( statement);
                         [arrayContents addObject: array];
