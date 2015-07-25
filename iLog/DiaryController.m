@@ -861,7 +861,7 @@ alpha:1.0]
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Tags SET where id = %d;", [[[arrayTag optionsDictionary] objectForKey: @"id"] intValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Tags SET title = \"%@\", dateCreated = \"%@\" where id = %d;", [arrayTag objectTag_title], [dateFormatter stringFromDate: [arrayTag objectTag_dateCreated]], [[[arrayTag optionsDictionary] objectForKey: @"id"] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
