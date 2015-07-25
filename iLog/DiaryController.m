@@ -813,7 +813,7 @@ alpha:1.0]
     
 }
 
-- (void)TAGS_updateForTags:(NSArray *)arrayTag {
+- (void)TAGS_updateForTag:(NSArray *)arrayTag {
     [UniversalFunctions SQL_TAGS_voidUpdateRowWithArray: arrayTag];
     
 }

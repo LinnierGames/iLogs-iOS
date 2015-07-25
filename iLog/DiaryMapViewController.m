@@ -24,6 +24,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             IBOutlet UITableView *tableMap;
         IBOutlet UIView *viewTags;
             IBOutlet UITableView *tableTags;
+    NSIndexPath *selectedIndexPath;
     
     NSMutableArray *arrayStories;
     NSMutableArray *arrayTags;
@@ -269,6 +270,30 @@ typedef NS_ENUM(int, CDSelectedMap) {
 
 #pragma mark Void's > Pre-Defined Functions (TABLE VIEW)
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (currentView) {
+        case CTMapView: {
+            break;
+            
+        } case CTStoriesView: {
+            break;
+            
+        } case CTTags: {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Modifying a Tag" message: @"enter the title" delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"Save", nil];
+            [alert setTag: 2];
+            [alert setAlertViewStyle: UIAlertViewStylePlainTextInput];
+            [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
+            [[alert textFieldAtIndex: 0] setAutocorrectionType: UITextAutocorrectionTypeYes];
+            array = [[arrayTags objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
+            [alert show];
+            break;
+            
+        }
+            
+    }
+    
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     switch ([tableView tag]) {
         case 1: {
@@ -283,6 +308,11 @@ typedef NS_ENUM(int, CDSelectedMap) {
             break;
             
         } case 3: {
+            if (editingStyle == UITableViewCellEditingStyleDelete) {
+                [[UniversalVariables globalVariables] TAGS_deleteForTag: [[arrayTags objectAtIndex: indexPath.section] objectAtIndex: indexPath.row]];
+                [self reloadTable];
+                
+            }
             break;
             
         }
@@ -323,6 +353,21 @@ typedef NS_ENUM(int, CDSelectedMap) {
                         
                     } else {
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Tag" message: @"you cannot add a tag with no title value" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
+                        [alert show];
+                        
+                    }
+                    
+                }
+                
+            } else if ([alertView tag] == 2) { //Modifying a Tag
+                if (buttonIndex == 1) {
+                    if ([alertView textFieldAtIndex: 0].text.length > 0) {
+                        [array replaceObjectAtIndex: TAGS_title  withObject: [[alertView textFieldAtIndex: 0].text stringByReformatingForSQLQuries]];
+                        [[UniversalVariables globalVariables] TAGS_updateForTag: array];
+                        [self reloadTable];
+                        
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Modifying a Tag" message: @"you cannot have a tag with no title value" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
                         [alert show];
                         
                     }

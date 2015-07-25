@@ -748,7 +748,7 @@ static const NSUInteger TAGS_dateCreated = 1;
 @interface UniversalVariables (TAGS_)
 
 - (void)TAGS_writeNewForTag:(NSArray *)arrayTag;
-- (void)TAGS_updateForTags:(NSArray *)arrayTag;
+- (void)TAGS_updateForTag:(NSArray *)arrayTag;
 - (void)TAGS_deleteForTag:(NSArray *)arrayTag;
 
 - (NSMutableDictionary *)TAGS_returnOptionsForTag:(NSArray *)arrayTag;
