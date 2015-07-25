@@ -766,6 +766,142 @@ alpha:1.0]
 
 @end
 
+#pragma mark - Tags
+
+#pragma mark NSArray category (ARRAY_TAGS_)
+
+@implementation NSArray (ARRAY_TAGS_)
+
++ (id)arrayNEWTag {
+    return [NSMutableArray arrayNEWTagWithTitle: @"Untitled"];
+    
+}
+
++ (id)arrayNEWTagWithTitle:(NSString *)stringTitleValue {
+    return [NSMutableArray arrayNEWTagWithTitle: stringTitleValue dateCreated: [NSDate date]];
+    
+}
+
++ (id)arrayNEWTagWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue {
+    return [NSMutableArray arrayNEWTagWithTitle: stringTitleValue dateCreated: dateCreatedValue options: [NSMutableDictionary dictionary]];
+    
+}
+
++ (id)arrayNEWTagWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue options:(NSMutableDictionary *)dicIndex {
+    return [NSMutableArray arrayWithObjects: stringTitleValue, dateCreatedValue, dicIndex, nil];
+    
+}
+
+- (NSString *)objectTag_title {
+    return [self objectAtIndex: TAGS_title];
+    
+}
+
+- (NSDate *)objectTag_dateCreated {
+    return [self objectAtIndex: TAGS_dateCreated];
+    
+}
+
+@end
+
+#pragma mark UniversalVariables category (TAGS_)
+
+@implementation UniversalVariables (TAGS_)
+
+- (void)TAGS_writeNewForTag:(NSArray *)arrayTag {
+    [UniversalFunctions SQL_TAGS_voidInsertRowWithArray: arrayTag];
+    
+}
+
+- (void)TAGS_updateForTags:(NSArray *)arrayTag {
+    [UniversalFunctions SQL_TAGS_voidUpdateRowWithArray: arrayTag];
+    
+}
+
+- (void)TAGS_deleteForTag:(NSArray *)arrayTag {
+    [UniversalFunctions SQL_TAGS_voidDeleteRowWithArray: arrayTag];
+    
+}
+
+@end
+
+#pragma mark UniversalFunctions category (SQL_TAGS_)
+
+@implementation UniversalFunctions (SQL_TAGS_)
+
++ (void)SQL_TAGS_voidInsertRowWithArray:(const NSArray *)arrayTag {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTags]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Tags (title, dateCreated) values (\"%@\", \"%@\");", [arrayTag objectTag_title], [dateFormatter stringFromDate: [arrayTag objectTag_dateCreated]]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_TAGS_voidInsertRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_TAGS_voidInsertRowWithArray:", arrayTag);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLTags];
+        [UniversalFunctions SQL_TAGS_voidInsertRowWithArray: arrayTag];
+        
+    }
+    
+}
+
++ (void)SQL_TAGS_voidUpdateRowWithArray:(const NSArray *)arrayTag {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTags]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Tags SET where id = %d;", [[[arrayTag optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_TAGS_voidUpdateRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_TAGS_voidUpdateRowWithArray:", arrayTag);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLTags];
+        [UniversalFunctions SQL_TAGS_voidUpdateRowWithArray: arrayTag];
+        
+    }
+    
+}
+
++ (void)SQL_TAGS_voidDeleteRowWithArray:(const NSArray *)arrayTag {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTags]) {
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM Tags where id = %d;", [[[arrayTag optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_TAGS_voidDeleteRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_TAGS_voidDeleteRowWithArray:", arrayTag);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLTags];
+        [UniversalFunctions SQL_TAGS_voidDeleteRowWithArray: arrayTag];
+        
+    }
+    
+}
+
+
+@end
+
 #pragma mark - Outlines
 
 #pragma mark NSArray category (ARRAY_OUTLINES_)
