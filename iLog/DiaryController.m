@@ -917,7 +917,7 @@ alpha:1.0]
         if ([arrayGroupedTags count] > 0) {
             BOOL isFound = false;
             for (int index = 0; index < [arrayGroupedTags count]; index += 1) {
-                if ([[[[arrayGroupedTags objectAtIndex: index] lastObject] objectForKey: @"letter"] isEqualToString: [[arrayTag optionsDictionary] objectForKey: @"letter"]]) {
+                if ([[[[arrayGroupedTags objectAtIndex: index] lastObject] objectForKey: @"letter"] isEqualToString: [[[arrayTag objectTag_title] substringToIndex: 1] uppercaseString]]) {
                     [[arrayGroupedTags objectAtIndex: index] insertObject: arrayTag atIndex: 0];
                     isFound = true;
                     break;
