@@ -285,6 +285,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
             [[alert textFieldAtIndex: 0] setAutocorrectionType: UITextAutocorrectionTypeYes];
             array = [[arrayTags objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
+            [[alert textFieldAtIndex: 0] setText: [array objectTag_title]];
             [alert show];
             break;
             
@@ -331,7 +332,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         } case CTStoriesView: {
             if ([alertView tag] == 1) { //Adding Story
                 if (buttonIndex == 1) {
-                    array = [NSMutableArray arrayNEWStoryWithTitle: [[[alertView textFieldAtIndex: 0] text] stringByReformatingForSQLQuries] description: [[[alertView textFieldAtIndex: 1] text] stringByReformatingForSQLQuries]];
+                    array = [NSMutableArray arrayNEWStoryWithTitle: [[alertView textFieldAtIndex: 0] text] description: [[alertView textFieldAtIndex: 1] text]];
                     UIActionSheet *actionDiaries = [[UIActionSheet alloc] initWithTitle: @"New Story" delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: nil];
                     [actionDiaries setTag: 1];
                     NSArray *arrayDiaries = [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries];
@@ -348,7 +349,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             if ([alertView tag] == 1) { //Adding Tag
                 if (buttonIndex == 1) {
                     if ([alertView textFieldAtIndex: 0].text.length > 0) {
-                        [[UniversalVariables globalVariables] TAGS_writeNewForTag: [NSMutableArray arrayNEWTagWithTitle: [[[alertView textFieldAtIndex: 0] text] stringByReformatingForSQLQuries]]];
+                        [[UniversalVariables globalVariables] TAGS_writeNewForTag: [NSMutableArray arrayNEWTagWithTitle: [[alertView textFieldAtIndex: 0] text]]];
                         [self reloadTable];
                         
                     } else {
@@ -362,7 +363,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             } else if ([alertView tag] == 2) { //Modifying a Tag
                 if (buttonIndex == 1) {
                     if ([alertView textFieldAtIndex: 0].text.length > 0) {
-                        [array replaceObjectAtIndex: TAGS_title  withObject: [[alertView textFieldAtIndex: 0].text stringByReformatingForSQLQuries]];
+                        [array replaceObjectAtIndex: TAGS_title  withObject: [alertView textFieldAtIndex: 0].text];
                         [[UniversalVariables globalVariables] TAGS_updateForTag: array];
                         [self reloadTable];
                         
