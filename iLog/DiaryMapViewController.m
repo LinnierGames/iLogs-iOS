@@ -26,7 +26,6 @@ typedef NS_ENUM(int, CDSelectedMap) {
             IBOutlet UITableView *tableTags;
     
     NSMutableArray *arrayStories;
-//    NSDictionary *dicStories;
     NSMutableArray *arrayTags;
     
     NSMutableArray *array;
@@ -106,7 +105,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 2: //Stories
             return [[arrayStories objectAtIndex: section] count] -1; break;
         case 3: //Tags
-            return 10; break;
+            return [arrayTags count]; break;
         default:
             return 0; break;
             
@@ -171,6 +170,9 @@ typedef NS_ENUM(int, CDSelectedMap) {
             if (!cell)
                 cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
             //Customize Cell
+            NSArray *arrayTag = [arrayTags objectAtIndex: indexPath.row];
+            
+            [cell.textLabel setText: [arrayTag objectTag_title]];
             
             return cell; break;
             
@@ -205,6 +207,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             [tableStories reloadData];
             break;
         case CTTags:
+            arrayTags = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLTags]];
             [tableTags reloadData];
             break;
             
@@ -228,6 +231,8 @@ typedef NS_ENUM(int, CDSelectedMap) {
             
         } case CTTags: {
             [self.navigationItem setPrompt: @"Tags"];
+            [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target: self action: @selector( pressedNavRight:)] animated: YES];
+            [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemEdit target: self action: @selector( pressedNavLeft:)] animated: YES];
             break;
             
         }
@@ -295,6 +300,14 @@ typedef NS_ENUM(int, CDSelectedMap) {
             break;
             
         } case CTTags: {
+            if ([alertView tag] == 1) { //Adding Tag
+                if (buttonIndex == 1) {
+                    [[UniversalVariables globalVariables] TAGS_writeNewForTag: [NSMutableArray arrayNEWTagWithTitle: [[[alertView textFieldAtIndex: 0] text] stringByReformatingForSQLQuries]]];
+                    [self reloadTable];
+                    
+                }
+                
+            }
             break;
             
         }
@@ -417,6 +430,12 @@ typedef NS_ENUM(int, CDSelectedMap) {
             break;
             
         } case CTTags: {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Tag" message: @"enter the title" delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"Add", nil];
+            [alert setTag: 1];
+            [alert setAlertViewStyle: UIAlertViewStylePlainTextInput];
+            [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
+            [[alert textFieldAtIndex: 0] setAutocorrectionType: UITextAutocorrectionTypeYes];
+            [alert show];
             break;
             
         }
@@ -449,7 +468,6 @@ typedef NS_ENUM(int, CDSelectedMap) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     arrayStories = [NSMutableArray new];
-//    dicStories = [NSDictionary new];
     arrayTags = [NSMutableArray new];
     
     array = [NSMutableArray new];

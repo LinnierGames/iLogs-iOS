@@ -179,6 +179,9 @@ NSString *SQLDatabase = @"database";
                 case CTSQLStories:
                     stringFocusTableTitle = @"Stories";
                     break;
+                case CTSQLTags:
+                    stringFocusTableTitle = @"Tags";
+                    break;
                 case CTSQLOutilnes:
                     stringFocusTableTitle = @"Outlines";
                     break;
@@ -257,6 +260,21 @@ NSString *SQLDatabase = @"database";
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array =  SQLStatementRowIntoStoryEntry( statement);
                         [array updateOptionsDictionary: [[UniversalVariables globalVariables] STORIES_returnStoryOptionsForStory: array]];
+                        [arrayContents addObject: array];
+                        
+                    }
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
+                break;
+                
+            } case CTSQLTags: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Tags ORDER BY title ASC;", &statement, &err)) {
+                    while (SQLStatementStep( statement)) {
+                        NSMutableArray *array =  SQLStatementRowIntoTagEntry( statement);
                         [arrayContents addObject: array];
                         
                     }
