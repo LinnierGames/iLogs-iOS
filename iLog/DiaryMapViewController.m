@@ -144,6 +144,21 @@ typedef NS_ENUM(int, CDSelectedMap) {
     
 }
 
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch ([tableView tag]) {
+        case 1: //Map
+            return NO; break;
+        case 2: //Stories
+            return NO; break;
+        case 3: //Tags
+            return YES; break;
+        default:
+            return NO; break;
+            
+    }
+    
+}
+
 - (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch ([tableView tag]) {
         case 1: //Map
@@ -290,6 +305,25 @@ typedef NS_ENUM(int, CDSelectedMap) {
             break;
             
         }
+            
+    }
+    
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    switch ([tableView tag]) {
+        case 1: { //Map
+            break;
+            
+        } case 2: { //Stories
+            break;
+            
+        } case 3: { //Tags
+            [tableTags reloadData];
+            break;
+            
+        } default:
+            break;
             
     }
     
