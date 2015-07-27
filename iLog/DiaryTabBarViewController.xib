@@ -86,7 +86,6 @@
                                             <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="sHf-cn-pGw">
                                                 <rect key="frame" x="0.0" y="94" width="574" height="458"/>
                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                                <inset key="scrollIndicatorInsets" minX="0.0" minY="94" maxX="0.0" maxY="48"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="pnk-ZD-CbD" id="dA7-XX-G5q"/>
                                                     <outlet property="delegate" destination="pnk-ZD-CbD" id="M1f-Vo-Hjw"/>
@@ -120,7 +119,6 @@
                                             <tableView clipsSubviews="YES" tag="3" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="7k2-W4-7UN">
                                                 <rect key="frame" x="26" y="94" width="574" height="458"/>
                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                                <inset key="scrollIndicatorInsets" minX="0.0" minY="94" maxX="0.0" maxY="48"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="pnk-ZD-CbD" id="zk2-90-gp4"/>
                                                     <outlet property="delegate" destination="pnk-ZD-CbD" id="jEV-aS-yny"/>
