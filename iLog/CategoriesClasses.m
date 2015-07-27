@@ -390,3 +390,8 @@
 }
 
 @end
+
+@implementation UILongPressGesture
+@synthesize tag;
+
+@end

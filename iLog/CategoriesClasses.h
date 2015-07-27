@@ -550,3 +550,9 @@ typedef enum {
 - (NSString *)stringValue:(CDDateLayout)layout;
 
 @end
+
+@interface UILongPressGesture : UILongPressGestureRecognizer
+
+@property (nonatomic) NSUInteger tag;
+
+@end

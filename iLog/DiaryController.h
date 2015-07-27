@@ -892,6 +892,20 @@ static inline NSMutableArray * SQLStatementRowIntoTagEntry( sqlite3_stmt *statem
  */
 + (void)SQL_TAGS_voidDeleteRowWithArray:(const NSArray *)arrayTag;
 
+/**
+ * <#Description#>
+ * @warning calls +SQL_TAGS_voidAssignTagsToTagGroup: 0 fromTagGroup: groupID
+ * @param [in] groupID tags with this value as .groupID will be set to zero
+ */
++ (void)SQL_TAGS_voidAssignTagsToUngrouppedTagsForTagGroupID:(NSUInteger)groupID;
+/**
+ * When deleteing a tag group with tags "inside" this deleting tag group, these tags will be assigned to
+ * the ungroupped tags value, or zero
+ * @param [in] toIndex destination index
+ * @param [in] fromIndex tags with this value as .groupID will be set to toIndex
+ */
++ (void)SQL_TAGS_voidAssignTagsToTagGroup:(NSUInteger)toIndex fromTagGroup:(NSUInteger)fromIndex;
+
 @end
 
 #pragma mark UniversalFunctions category (TAGS_)

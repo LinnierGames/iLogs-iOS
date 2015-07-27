@@ -820,6 +820,7 @@ alpha:1.0]
 }
 
 - (void)TAGGROUPS_deleteForTagGroup:(NSArray *)arrayTagGroup {
+    [UniversalFunctions SQL_TAGS_voidAssignTagsToUngrouppedTagsForTagGroupID: [[[arrayTagGroup optionsDictionary] objectForKey: @"id"] unsignedIntegerValue]];
     [UniversalFunctions SQL_TAGGROUPS_voidDeleteRowWithArray: arrayTagGroup];
     
 }
@@ -1100,6 +1101,31 @@ alpha:1.0]
     } else {
         [UniversalFunctions SQL_voidCreateTable: CTSQLTags];
         [UniversalFunctions SQL_TAGS_voidDeleteRowWithArray: arrayTag];
+        
+    }
+    
+}
+
++ (void)SQL_TAGS_voidAssignTagsToUngrouppedTagsForTagGroupID:(NSUInteger)groupID {
+    [UniversalFunctions SQL_TAGS_voidAssignTagsToTagGroup: 0 fromTagGroup: groupID];
+    
+}
+
++ (void)SQL_TAGS_voidAssignTagsToTagGroup:(NSUInteger)toIndex fromTagGroup:(NSUInteger)fromIndex {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTags]) {
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Tags SET groupID = %d where groupID = %d;", (int)toIndex, (int)fromIndex];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Update Table: +SQL_TAGS_voidAssignTagsToTagGroup:fromTagGroup:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Updated Table: %d to %d: +SQL_TAGS_voidAssignTagsToTagGroup:fromTagGroup:", (int)fromIndex, (int)toIndex);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLTags];
+        [UniversalFunctions SQL_TAGS_voidAssignTagsToTagGroup: toIndex fromTagGroup: fromIndex];
         
     }
     

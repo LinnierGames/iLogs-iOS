@@ -68,6 +68,31 @@ typedef NS_ENUM(int, CDSelectedMap) {
     
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    switch ([tableView tag]) {
+        case 1: //Map
+            return nil; break;
+        case 2: //Stories
+            return nil; break;
+        case 3: { //Tags
+            UIView *view = [[UIView alloc] initWithFrame: CGRectMake( 0, 0, CGRectCurrentDevice().size.width, 38)];
+            UILabel *labelHeader = [[UILabel alloc] initWithFrame: view.frame];
+            [labelHeader setText: [[[[arrayTagGroups objectAtIndex: section] lastObject] objectForKey: @"group"] objectTagGroup_title]];
+            [view addSubview: labelHeader];
+            
+            UILongPressGesture *longPressGes = [[UILongPressGesture alloc] initWithTarget: self action: @selector(pressedHeaderLong:)];
+            [longPressGes setTag: section];
+            [view addGestureRecognizer: longPressGes];
+            
+            return view; break;
+            
+        } default:
+            return nil; break;
+            
+    }
+    
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch ([tableView tag]) {
         case 1: //Map
@@ -438,6 +463,28 @@ typedef NS_ENUM(int, CDSelectedMap) {
                     
                 }
                 
+            } else if ([alertView tag] == 4) { //Modifying a Tag Group
+                if (buttonIndex == 1) {
+                    if ([alertView textFieldAtIndex: 0].text.length > 0) {
+                        [array replaceObjectAtIndex: TAGGROUPS_title  withObject: [alertView textFieldAtIndex: 0].text];
+                        [[UniversalVariables globalVariables] TAGGROUPS_updateForTagGroup: array];
+                        [self reloadTable];
+                        
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Modifying a Tag" message: @"you cannot have a tag with no title value" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
+                        [alert show];
+                        
+                    }
+                    
+                }
+                
+            } else if ([alertView tag] == -4) { //Deleting Tag Group Confirmation
+                if (buttonIndex == 1) { //Delete
+                    [[UniversalVariables globalVariables] TAGGROUPS_deleteForTagGroup: array];
+                    [self reloadTable];
+                    
+                }
+                
             }
             break;
             
@@ -479,6 +526,24 @@ typedef NS_ENUM(int, CDSelectedMap) {
                     [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
                     [[alert textFieldAtIndex: 0] setAutocorrectionType: UITextAutocorrectionTypeYes];
                     [[alert textFieldAtIndex: 0] setPlaceholder: @"title"];
+                    [alert show];
+                    
+                }
+                
+            } else if ([actionSheet tag] == 2) { //Long tap > Modify Tag Group
+                if (buttonIndex == 0) { //Rename
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Modify Tag Group" message: @"enter the title" delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"Save", nil];
+                    [alert setTag: 4];
+                    [alert setAlertViewStyle: UIAlertViewStylePlainTextInput];
+                    [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
+                    [[alert textFieldAtIndex: 0] setAutocorrectionType: UITextAutocorrectionTypeYes];
+                    [[alert textFieldAtIndex: 0] setPlaceholder: @"title"];
+                    [[alert textFieldAtIndex: 0] setText: [array objectTagGroup_title]];
+                    [alert show];
+                    
+                } else if (buttonIndex == 1) { //Delete
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Modify Tag Group" message: [NSString stringWithFormat: @"are you sure you want to delete the tag group, %@? All tags in this group will be assigned to \"Ungroupped Tags\"", [array objectTagGroup_title]] delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"Delete", nil];
+                    [alert setTag: -4];
                     [alert show];
                     
                 }
@@ -626,6 +691,39 @@ typedef NS_ENUM(int, CDSelectedMap) {
             
         }
             
+    }
+    
+}
+
+- (void)pressedHeaderLong:(id)sender {
+    if ([sender state] == UIGestureRecognizerStateBegan) {
+        switch (currentView) {
+            case CTMapView: {
+                break;
+                
+            } case CTStoriesView: {
+                break;
+                
+            } case CTTags: {
+                if ([sender tag] != 0) {
+                    array = [[[arrayTagGroups objectAtIndex: [sender tag]] lastObject] objectForKey: @"group"];
+                    selectedIndexPath = [NSIndexPath indexPathForRow: 0 inSection: [sender tag]];
+                    UIActionSheet *actionHeader = [[UIActionSheet alloc] initWithTitle: nil delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: @"Rename Tag Group", @"Delete Tag Group", nil];
+                    [actionHeader setDestructiveButtonIndex: 1];
+                    [actionHeader setTag: 2];
+                    [actionHeader showInView: self.view];
+                    
+                } else {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Modifying Tag Groups" message: @"sorry, you cannont modify this tag group" delegate: nil cancelButtonTitle: @"Dismiss" otherButtonTitles: nil];
+                    [alert show];
+                    
+                }
+                break;
+                
+            }
+                
+        }
+        
     }
     
 }
