@@ -262,7 +262,15 @@ typedef NS_ENUM(int, CDSelectedMap) {
             
         } case CTTags: {
             [self.navigationItem setPrompt: @"Tags"];
-            [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target: self action: @selector( pressedNavRight:)] animated: YES];
+            
+            UIView *buttonItemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 30)];
+            UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pressedNavRight:)];
+            [buttonItemView addGestureRecognizer:tapGes];
+            UILongPressGestureRecognizer *longPressGes = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressedNavRightLong:)];
+            [buttonItemView addGestureRecognizer:longPressGes];
+            UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:buttonItemView];
+            self.navigationItem.rightBarButtonItem = barItem;
+            
             [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemEdit target: self action: @selector( pressedNavLeft:)] animated: YES];
             break;
             
@@ -409,6 +417,20 @@ typedef NS_ENUM(int, CDSelectedMap) {
                     
                 }
                 
+            } else if ([alertView tag] == 3) { //Long tap > Add
+                if (buttonIndex == 1) {
+                    if ([alertView textFieldAtIndex: 0].text.length > 0) {
+                        [[UniversalVariables globalVariables] TAGGROUPS_writeNewForTagGroup: [NSArray arrayNEWTagGroupWithTitle: [alertView textFieldAtIndex: 0].text]];
+                        [self reloadTable];
+                        
+                    } else {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Tag Group" message: @"you cannot have a tag group with no title value" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
+                        [alert show];
+                        
+                    }
+                    
+                }
+                
             }
             break;
             
@@ -440,6 +462,21 @@ typedef NS_ENUM(int, CDSelectedMap) {
             break;
             
         } case CTTags: {
+            if ([actionSheet tag] == 1) { //Long tap > Add
+                if (buttonIndex == 1) //Add Tag
+                    [self pressedNavRight: [self.navigationItem rightBarButtonItem]];
+                else if (buttonIndex == 0) { //Add Tag Group
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Tag Group" message: @"enter the title" delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"Add", nil];
+                    [alert setTag: 3];
+                    [alert setAlertViewStyle: UIAlertViewStylePlainTextInput];
+                    [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
+                    [[alert textFieldAtIndex: 0] setAutocorrectionType: UITextAutocorrectionTypeYes];
+                    [[alert textFieldAtIndex: 0] setPlaceholder: @"title"];
+                    [alert show];
+                    
+                }
+                
+            }
             break;
             
         }
@@ -543,6 +580,27 @@ typedef NS_ENUM(int, CDSelectedMap) {
         }
             
     }
+    
+}
+
+- (void)pressedNavRightLong:(id)sender {
+    if ([sender state] == UIGestureRecognizerStateBegan)
+        switch (currentView) {
+            case CTMapView: {
+                break;
+                
+            } case CTStoriesView: {
+                break;
+                
+            } case CTTags: {
+                UIActionSheet *actionAdd = [[UIActionSheet alloc] initWithTitle: nil delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: @"Add Tag Group", @"Add Tag", nil];
+                [actionAdd setTag: 1];
+                [actionAdd showInView: self.view];
+                break;
+                
+            }
+                
+        }
     
 }
 
