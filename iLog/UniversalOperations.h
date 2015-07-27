@@ -89,6 +89,7 @@ typedef enum {
     CTSQLOutilnes,
     CTSQLStories,
     CTSQLStoryEntriesRelationship,
+    CTSQLTagGroups,
     CTSQLTags,
     CTSQLTagEntriesRelationship
     
