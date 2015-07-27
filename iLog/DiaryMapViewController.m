@@ -327,6 +327,14 @@ typedef NS_ENUM(int, CDSelectedMap) {
             break;
             
         } case 3: { //Tags
+            if (sourceIndexPath.section != destinationIndexPath.section) { //Assigning Tag Group ID by moving
+                NSArray *arrayDestinationGroup = [[[arrayTagGroups objectAtIndex: destinationIndexPath.section] lastObject] objectForKey: @"group"];
+                NSArray *arrayTag = [[arrayTagGroups objectAtIndex: sourceIndexPath.section] objectAtIndex: sourceIndexPath.row];
+                [[arrayTag optionsDictionary] setObject: [[arrayDestinationGroup optionsDictionary] objectForKey: @"id"] forKey: @"groupID"];
+                [[UniversalVariables globalVariables] TAGS_updateForTag: arrayTag];
+                [self reloadTable];
+                
+            }
             break;
             
         } default:
