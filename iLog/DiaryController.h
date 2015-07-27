@@ -725,6 +725,66 @@ static inline NSMutableArray * SQLStatementRowIntoStoryEntry( sqlite3_stmt *stat
 
 @end
 
+#pragma mark - Tag Groups
+
+#pragma mark NSArray category (ARRAY_TAGGROUPS_)
+
+static const NSUInteger TAGGROUPS_ = 0;
+
+@interface NSArray (ARRAY_TAGGROUPS_)
+
++ (id)arrayNEWTagGroup;
+
+@end
+
+#pragma mark UniversalVariables category (TAGGROUPS_)
+
+@interface UniversalVariables (TAGGROUPS_)
+
+- (void)TAGGROUPS_writeNewForTagGroup:(NSArray *)arrayTagGroup;
+- (void)TAGGROUPS_updateForTagGroup:(NSArray *)arrayTagGroup;
+- (void)TAGGROUPS_deleteForTagGroup:(NSArray *)arrayTagGroup;
+
+- (NSMutableDictionary *)TAGGROUPS_returnOptionsForTagGroup:(NSArray *)arrayTagGroup;
+
+@end
+
+#pragma mark UniversalFunctions category (SQL_TAGGROUPS_)
+
+static const int SQL_TAGGROUPS_id = 0;
+
+/**
+ * From the parameter list, an array is produced in TagGroup format
+ * @param [in] statement incoming value from previous call SQLStatementStep(..)
+ * @return NSArray: TagGroup format
+ */
+static inline NSMutableArray * SQLStatementRowIntoTagGroupEntry( sqlite3_stmt *statement) {
+    NSMutableArray *array;
+    
+    return array;
+    
+};
+
+@interface UniversalFunctions (SQL_TAGGROUPS_)
+
+/**
+ * Inserts a row to the table TagGroups
+ * @param [in] arrayEntry: TagGroup
+ */
++ (void)SQL_TAGGROUPS_voidInsertRowWithArray:(const NSArray *)arrayTagGroup;
+/**
+ * Updates an existing row to the table TagGroups
+ * @param [in] arrayEntry: TagGroup
+ */
++ (void)SQL_TAGGROUPS_voidUpdateRowWithArray:(const NSArray *)arrayTagGroup;
+/**
+ * Deletes a row to the table TagGroups
+ * @param [in] arrayEntry: TagGroup
+ */
++ (void)SQL_TAGGROUPS_voidDeleteRowWithArray:(const NSArray *)arrayTagGroup;
+
+@end
+
 #pragma mark - Tags
 
 #pragma mark NSArray category (ARRAY_TAGS_)
