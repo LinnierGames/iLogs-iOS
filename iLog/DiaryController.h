@@ -729,11 +729,17 @@ static inline NSMutableArray * SQLStatementRowIntoStoryEntry( sqlite3_stmt *stat
 
 #pragma mark NSArray category (ARRAY_TAGGROUPS_)
 
-static const NSUInteger TAGGROUPS_ = 0;
+static const NSUInteger TAGGROUPS_title = 0;
+static const NSUInteger TAGGROUPS_dateCreated = 1;
 
 @interface NSArray (ARRAY_TAGGROUPS_)
 
 + (id)arrayNEWTagGroup;
++ (id)arrayNEWTagGroupWithTitle:(NSString *)stringTitleValue;
++ (id)arrayNEWTagGroupWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue;
++ (id)arrayNEWTagGroupWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue options:(NSMutableDictionary *)dicIndex;
+- (NSString *)objectTagGroup_title;
+- (NSDate *)objectTagGroup_dateCreated;
 
 @end
 
@@ -752,6 +758,8 @@ static const NSUInteger TAGGROUPS_ = 0;
 #pragma mark UniversalFunctions category (SQL_TAGGROUPS_)
 
 static const int SQL_TAGGROUPS_id = 0;
+static const int SQL_TAGGROUPS_title = 1;
+static const int SQL_TAGGROUPS_dateCreated = 2;
 
 /**
  * From the parameter list, an array is produced in TagGroup format
@@ -759,7 +767,16 @@ static const int SQL_TAGGROUPS_id = 0;
  * @return NSArray: TagGroup format
  */
 static inline NSMutableArray * SQLStatementRowIntoTagGroupEntry( sqlite3_stmt *statement) {
-    NSMutableArray *array;
+    NSString *stringTitle = [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_TAGGROUPS_title)];
+    
+    static ISO8601DateFormatter *dateFormatter = nil;
+    if (!dateFormatter)
+        dateFormatter = [[ISO8601DateFormatter alloc] init];
+    [dateFormatter setIncludeTime: YES];
+    
+    NSDate *dateCreated = [dateFormatter dateFromString: [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_TAGGROUPS_dateCreated)]];
+    
+    NSMutableArray *array = [NSMutableArray arrayNEWTagGroupWithTitle: stringTitle dateCreated: dateCreated options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_TAGGROUPS_id)], @"id", nil]];
     
     return array;
     
