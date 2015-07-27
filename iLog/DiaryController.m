@@ -766,6 +766,93 @@ alpha:1.0]
 
 @end
 
+#pragma mark - Tag Groups
+
+#pragma mark NSArray category (ARRAY_TAGGROUPS_)
+
+@implementation NSArray (ARRAY_TAGGROUPS_)
+
++ (id)arrayNEWTagGroup {
+    
+}
+
++ (id)arrayNEWTagGroupWithTitle:(NSString *)stringTitleValue {
+    
+}
+
++ (id)arrayNEWTagGroupWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue {
+    
+}
+
++ (id)arrayNEWTagGroupWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue options:(NSMutableDictionary *)dicIndex {
+    
+}
+
+- (NSString *)objectTagGroup_title {
+    
+}
+
+- (NSDate *)objectTagGroup_dateCreated {
+    
+}
+
+
+@end
+
+#pragma mark UniversalVariables category (TAGGROUPS_)
+
+@implementation UniversalVariables (TAGGROUPS_)
+
+- (void)TAGGROUPS_writeNewForTagGroup:(NSArray *)arrayTagGroup {
+    
+}
+
+- (void)TAGGROUPS_updateForTagGroup:(NSArray *)arrayTagGroup {
+    
+}
+
+- (void)TAGGROUPS_deleteForTagGroup:(NSArray *)arrayTagGroup {
+    
+}
+
+- (NSMutableDictionary *)TAGGROUPS_returnOptionsForTagGroup:(NSArray *)arrayTagGroup {
+    
+}
+
+
+@end
+
+#pragma mark UniversalFunctions category (SQL_TAGGROUPS_)
+
+@implementation UniversalFunctions (SQL_TAGGROUPS_)
+
+/**
+ * Inserts a row to the table TagGroups
+ * @param [in] arrayEntry: TagGroup
+ */
++ (void)SQL_TAGGROUPS_voidInsertRowWithArray:(const NSArray *)arrayTagGroup {
+    
+}
+
+/**
+ * Updates an existing row to the table TagGroups
+ * @param [in] arrayEntry: TagGroup
+ */
++ (void)SQL_TAGGROUPS_voidUpdateRowWithArray:(const NSArray *)arrayTagGroup {
+    
+}
+
+/**
+ * Deletes a row to the table TagGroups
+ * @param [in] arrayEntry: TagGroup
+ */
++ (void)SQL_TAGGROUPS_voidDeleteRowWithArray:(const NSArray *)arrayTagGroup {
+    
+}
+
+
+@end
+
 #pragma mark - Tags
 
 #pragma mark NSArray category (ARRAY_TAGS_)
