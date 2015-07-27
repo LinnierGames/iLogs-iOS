@@ -802,6 +802,20 @@ static inline NSMutableArray * SQLStatementRowIntoTagGroupEntry( sqlite3_stmt *s
 
 @end
 
+#pragma mark UniversalFunctions category (TAGGRUOPS_)
+
+@interface UniversalFunctions (TAGGRUOPS_)
+
+/**
+ * Grouping tag in a an array with a similary key of the corresponding tag title
+ * @warning Each array of Tags is then sorted in ascending aplabetical order
+ * @return NSarray : values -> Tag Format
+ */
++ (NSArray *)TAGGROUPS_returnGroupedTags;
++ (NSArray *)TAGGROUPS_returnGroupedTagsWithTagGroups:(const NSArray *)arrayTagGruops;
+
+@end
+
 #pragma mark - Tags
 
 #pragma mark NSArray category (ARRAY_TAGS_)
@@ -835,8 +849,9 @@ static const NSUInteger TAGS_dateCreated = 1;
 #pragma mark UniversalFunctions category (SQL_TAGS_)
 
 static const int SQL_TAGS_id = 0;
-static const int SQL_TAGS_title = 1;
-static const int SQL_TAGS_dateCreated = 2;
+static const int SQL_TAGS_groupID = 1;
+static const int SQL_TAGS_title = 2;
+static const int SQL_TAGS_dateCreated = 3;
 
 /**
  * From the parameter list, an array is produced in Tag format
@@ -853,7 +868,7 @@ static inline NSMutableArray * SQLStatementRowIntoTagEntry( sqlite3_stmt *statem
     
     NSDate *dateCreated = [dateFormatter dateFromString: [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_TAGS_dateCreated)]];
     
-    NSMutableArray *array = [NSMutableArray arrayNEWTagWithTitle: stringTitle dateCreated: dateCreated options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_TAGS_id)], @"id", nil]];
+    NSMutableArray *array = [NSMutableArray arrayNEWTagWithTitle: stringTitle dateCreated: dateCreated options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_TAGS_id)], @"id", [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_TAGS_groupID)], @"groupID", nil]];
     
     return array;
     

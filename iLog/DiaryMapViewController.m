@@ -27,7 +27,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
     NSIndexPath *selectedIndexPath;
     
     NSMutableArray *arrayStories;
-    NSMutableArray *arrayTags;
+    NSMutableArray *arrayTagGroups;
     
     NSMutableArray *array;
     
@@ -60,7 +60,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 2: //Stories
             return [arrayStories count]; break;
         case 3: //Tags
-            return [arrayTags count]; break;
+            return [arrayTagGroups count]; break;
         default:
             return 0; break;
             
@@ -75,7 +75,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 2: //Stories
             return [[[[arrayStories objectAtIndex: section] lastObject] objectForKey: @"diary"] objectDiary_title]; break;
         case 3: //Tags
-            return [[[arrayTags objectAtIndex: section] lastObject] objectForKey: @"letter"]; break;
+            return [[[[arrayTagGroups objectAtIndex: section] lastObject] objectForKey: @"group"] objectTagGroup_title]; break;
         default:
             return nil; break;
             
@@ -106,7 +106,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         case 2: //Stories
             return [[arrayStories objectAtIndex: section] count] -1; break;
         case 3: //Tags
-            return [[arrayTags objectAtIndex: section] count] -1; break;
+            return [[arrayTagGroups objectAtIndex: section] count] -1; /*removing the group hash*/ break;
         default:
             return 0; break;
             
@@ -201,7 +201,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             if (!cell)
                 cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
             //Customize Cell
-            NSArray *arrayTag = [[arrayTags objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
+            NSArray *arrayTag = [[arrayTagGroups objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
             
             [cell.textLabel setText: [arrayTag objectTag_title]];
             
@@ -238,7 +238,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             [tableStories reloadData];
             break;
         case CTTags:
-            arrayTags = [NSMutableArray arrayWithArray: [UniversalFunctions TAGS_returnGroupedTags]];
+            arrayTagGroups = [NSMutableArray arrayWithArray: [UniversalFunctions TAGGROUPS_returnGroupedTags]];
             [tableTags reloadData];
             break;
             
@@ -307,7 +307,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             [alert setAlertViewStyle: UIAlertViewStylePlainTextInput];
             [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
             [[alert textFieldAtIndex: 0] setAutocorrectionType: UITextAutocorrectionTypeYes];
-            array = [[arrayTags objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
+            array = [[arrayTagGroups objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
             [[alert textFieldAtIndex: 0] setText: [array objectTag_title]];
             [alert show];
             break;
@@ -327,7 +327,6 @@ typedef NS_ENUM(int, CDSelectedMap) {
             break;
             
         } case 3: { //Tags
-            [tableTags reloadData];
             break;
             
         } default:
@@ -352,7 +351,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             
         } case 3: {
             if (editingStyle == UITableViewCellEditingStyleDelete) {
-                [[UniversalVariables globalVariables] TAGS_deleteForTag: [[arrayTags objectAtIndex: indexPath.section] objectAtIndex: indexPath.row]];
+                [[UniversalVariables globalVariables] TAGS_deleteForTag: [[arrayTagGroups objectAtIndex: indexPath.section] objectAtIndex: indexPath.row]];
                 [self reloadTable];
                 
             }
@@ -629,7 +628,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     arrayStories = [NSMutableArray new];
-    arrayTags = [NSMutableArray new];
+    arrayTagGroups = [NSMutableArray new];
     
     array = [NSMutableArray new];
     
@@ -641,6 +640,8 @@ typedef NS_ENUM(int, CDSelectedMap) {
     [viewMap.layer setShadowOpacity: 1];
     [viewMap.layer setShadowRadius: 12];
     [viewMap.layer setShadowColor: [[UIColor blackColor] CGColor]];
+    
+    [UniversalFunctions TAGGROUPS_returnGroupedTags];
     
 }
 

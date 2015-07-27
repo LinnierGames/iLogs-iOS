@@ -21,6 +21,13 @@
     
 }
 
++ (NSString *)dataFilePathWithFileName:(NSString *)stringFileName extension:(NSString *)stringExtension {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains( NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *dictionaryDocuments = [paths objectAtIndex: 0];
+    return [dictionaryDocuments stringByAppendingPathComponent: [NSString stringWithFormat: @"%@.%@", stringFileName, stringExtension]];
+    
+}
+
 - (id)init {
     if (!(self = [super init])) return nil;
     return self;

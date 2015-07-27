@@ -900,6 +900,75 @@ alpha:1.0]
     
 }
 
+@end
+
+#pragma mark UniversalFunctions category (TAGGRUOPS_)
+
+@implementation UniversalFunctions (TAGGRUOPS_)
+
++ (NSArray *)TAGGROUPS_returnGroupedTags {
+    return [self TAGGROUPS_returnGroupedTagsWithTagGroups: [UniversalFunctions SQL_returnContentsOfTable: CTSQLTagGroups]];
+    
+}
+
+/*
+ * arrayGroup
+ ** arrayTag
+ *...
+ ** dictionary -> NSArray : tagGroup
+ */
+
++ (NSArray *)TAGGROUPS_returnGroupedTagsWithTagGroups:(const NSArray *)arrayTagGruops {
+    NSMutableArray *arrayGroups = [NSMutableArray array];
+    NSArray *arrayTags = [UniversalFunctions SQL_returnContentsOfTable: CTSQLTags];
+    for (NSArray *arrayGroup in arrayTagGruops)
+        [arrayGroups addObject: [NSMutableArray arrayWithObjects: @{@"group" : arrayGroup}, nil]];
+    [arrayGroups insertObject: [NSMutableArray arrayWithObjects: @{@"group" : [NSArray arrayNEWTagGroupWithTitle: @"Ungrouped Tags" dateCreated: [NSDate date] options: [NSMutableDictionary dictionaryWithObjectsAndKeys: @0, @"id", nil]]}, nil] atIndex: 0];
+    
+    for (NSArray *arrayTag in arrayTags) {
+        for (int groupIndex = 0; groupIndex < [arrayGroups count]; groupIndex += 1) {
+            if ([[[arrayTag optionsDictionary] objectForKey: @"groupID"] isEqualToNumber: [[[[[arrayGroups objectAtIndex: groupIndex] lastObject] objectForKey: @"group"] optionsDictionary] objectForKey: @"id"]]) {
+                [[arrayGroups objectAtIndex: groupIndex] insertObject: arrayTag atIndex: 0];
+                break;
+                
+            }
+            
+        }
+        
+    }
+    
+    //Sort Tags within each Group
+    for (NSMutableArray *arrayGroup in arrayGroups) {
+        [arrayGroup sortUsingComparator: ^NSComparisonResult(id a, id b) {
+            
+            if ([a isKindOfClass: [NSArray class]] && [b isKindOfClass: [NSArray class]]) {
+                NSString *stringA = [[a objectTag_title] lowercaseString];
+                NSString *stringB = [[b objectTag_title] lowercaseString];
+                
+                return [stringA compare: stringB];
+                
+            } else
+                return NSOrderedSame;
+            
+        }];
+        
+    }
+    
+    //Sort Grouped Tags by the First Letter of Group Title
+    [arrayGroups sortUsingComparator: ^NSComparisonResult(id a, id b) {
+        NSString *stringA = [[[[a lastObject] objectForKey: @"group"] objectTagGroup_title] lowercaseString];
+        NSString *stringB = [[[[b lastObject] objectForKey: @"group"] objectTagGroup_title] lowercaseString];
+        
+        if ([stringA isEqualToString: @"ungrouped tags"] || [stringB isEqualToString: @"ungrouped tags"])
+            return NSOrderedSame;
+        else
+            return [stringA compare: stringB];
+        
+    }];
+    
+    return arrayGroups;
+    
+}
 
 @end
 
@@ -920,7 +989,7 @@ alpha:1.0]
 }
 
 + (id)arrayNEWTagWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue {
-    return [NSMutableArray arrayNEWTagWithTitle: stringTitleValue dateCreated: dateCreatedValue options: [NSMutableDictionary dictionary]];
+    return [NSMutableArray arrayNEWTagWithTitle: stringTitleValue dateCreated: dateCreatedValue options: [NSMutableDictionary dictionaryWithObjectsAndKeys: @0, @"groupID", nil]];
     
 }
 
@@ -973,7 +1042,7 @@ alpha:1.0]
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Tags (title, dateCreated) values (\"%@\", \"%@\");", [[arrayTag objectTag_title] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayTag objectTag_dateCreated]]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Tags (title, dateCreated, groupID) values (\"%@\", \"%@\", %d);", [[arrayTag objectTag_title] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayTag objectTag_dateCreated]], [[[arrayTag optionsDictionary] objectForKey: @"groupID"] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
@@ -998,7 +1067,7 @@ alpha:1.0]
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Tags SET title = \"%@\", dateCreated = \"%@\" where id = %d;", [[arrayTag objectTag_title] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayTag objectTag_dateCreated]], [[[arrayTag optionsDictionary] objectForKey: @"id"] intValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Tags SET title = \"%@\", dateCreated = \"%@\", groupID = %d where id = %d;", [[arrayTag objectTag_title] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayTag objectTag_dateCreated]], [[[arrayTag optionsDictionary] objectForKey: @"groupID"] intValue], [[[arrayTag optionsDictionary] objectForKey: @"id"] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);

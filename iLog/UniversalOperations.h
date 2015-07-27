@@ -29,6 +29,8 @@ static NSString * const kStatusBarTappedNotification = @"statusBarTappedNotifica
 
 + (UniversalVariables *)globalVariables;
 
++ (NSString *)dataFilePathWithFileName:(NSString *)stringFileName extension:(NSString *)stringExtension;
+
 - (void)setViewController:(UIViewController *)viewControllerValue asCurrentView:(UIViewController *)currentViewValue;
 
 @end
