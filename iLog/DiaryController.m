@@ -773,26 +773,32 @@ alpha:1.0]
 @implementation NSArray (ARRAY_TAGGROUPS_)
 
 + (id)arrayNEWTagGroup {
+    return [NSMutableArray arrayNEWTagWithTitle: @"Untitled"];
     
 }
 
 + (id)arrayNEWTagGroupWithTitle:(NSString *)stringTitleValue {
+    return [NSMutableArray arrayNEWTagWithTitle: stringTitleValue dateCreated: [NSDate date]];
     
 }
 
 + (id)arrayNEWTagGroupWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue {
+    return [NSMutableArray arrayNEWTagWithTitle: stringTitleValue dateCreated: dateCreatedValue options: [NSMutableDictionary dictionary]];
     
 }
 
 + (id)arrayNEWTagGroupWithTitle:(NSString *)stringTitleValue dateCreated:(NSDate *)dateCreatedValue options:(NSMutableDictionary *)dicIndex {
+    return [NSMutableArray arrayWithObjects: stringTitleValue, dateCreatedValue, dicIndex, nil];
     
 }
 
 - (NSString *)objectTagGroup_title {
+    return [self objectAtIndex: TAGGROUPS_title];
     
 }
 
 - (NSDate *)objectTagGroup_dateCreated {
+    return [self objectAtIndex: TAGGROUPS_dateCreated];
     
 }
 
@@ -804,21 +810,19 @@ alpha:1.0]
 @implementation UniversalVariables (TAGGROUPS_)
 
 - (void)TAGGROUPS_writeNewForTagGroup:(NSArray *)arrayTagGroup {
+    [UniversalFunctions SQL_TAGGROUPS_voidInsertRowWithArray: arrayTagGroup];
     
 }
 
 - (void)TAGGROUPS_updateForTagGroup:(NSArray *)arrayTagGroup {
+    [UniversalFunctions SQL_TAGGROUPS_voidUpdateRowWithArray: arrayTagGroup];
     
 }
 
 - (void)TAGGROUPS_deleteForTagGroup:(NSArray *)arrayTagGroup {
+    [UniversalFunctions SQL_TAGGROUPS_voidDeleteRowWithArray: arrayTagGroup];
     
 }
-
-- (NSMutableDictionary *)TAGGROUPS_returnOptionsForTagGroup:(NSArray *)arrayTagGroup {
-    
-}
-
 
 @end
 
@@ -826,27 +830,73 @@ alpha:1.0]
 
 @implementation UniversalFunctions (SQL_TAGGROUPS_)
 
-/**
- * Inserts a row to the table TagGroups
- * @param [in] arrayEntry: TagGroup
- */
 + (void)SQL_TAGGROUPS_voidInsertRowWithArray:(const NSArray *)arrayTagGroup {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTagGroups]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO TagGroups (title, dateCreated) values (\"%@\", \"%@\");", [[arrayTagGroup objectTagGroup_title] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayTagGroup objectTagGroup_dateCreated]]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_TAGGROUPS_voidInsertRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_TAGGROUPS_voidInsertRowWithArray:", arrayTagGroup);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLTagGroups];
+        [UniversalFunctions SQL_TAGGROUPS_voidInsertRowWithArray: arrayTagGroup];
+        
+    }
     
 }
 
-/**
- * Updates an existing row to the table TagGroups
- * @param [in] arrayEntry: TagGroup
- */
 + (void)SQL_TAGGROUPS_voidUpdateRowWithArray:(const NSArray *)arrayTagGroup {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTagGroups]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE TagGroups SET title = \"%@\", dateCreated = \"%@\" where id = %d;", [[arrayTagGroup objectTagGroup_title] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayTagGroup objectTagGroup_dateCreated]], [[[arrayTagGroup optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_TAGGROUPS_voidUpdateRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_TAGGROUPS_voidUpdateRowWithArray:", arrayTagGroup);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLTagGroups];
+        [UniversalFunctions SQL_TAGGROUPS_voidUpdateRowWithArray: arrayTagGroup];
+        
+    }
     
 }
 
-/**
- * Deletes a row to the table TagGroups
- * @param [in] arrayEntry: TagGroup
- */
 + (void)SQL_TAGGROUPS_voidDeleteRowWithArray:(const NSArray *)arrayTagGroup {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTagGroups]) {
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM TagGroups where id = %d;", [[[arrayTagGroup optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_TAGGROUPS_voidDeleteRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_TAGGROUPS_voidDeleteRowWithArray:", arrayTagGroup);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLTagGroups];
+        [UniversalFunctions SQL_TAGGROUPS_voidDeleteRowWithArray: arrayTagGroup];
+        
+    }
     
 }
 
