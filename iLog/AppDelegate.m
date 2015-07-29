@@ -8,7 +8,12 @@
 
 #import "AppDelegate.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () {
+    NSTimer *longTapDismissTimer;
+    NSTimeInterval longTapTimer;
+    CGPoint touch;
+    
+}
 
 @end
 
@@ -42,18 +47,49 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
-    CGPoint location = [[[event allTouches] anyObject] locationInView:[self window]];
+    CGPoint location = [[[event allTouches] anyObject] locationInView: [self window]];
     CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
     if (CGRectContainsPoint(statusBarFrame, location) && [[[UniversalVariables globalVariables] viewController] isEqual: [[UniversalVariables globalVariables] currentView]]) {
-        [self statusBarTouchedAction];
+        if ([longTapDismissTimer isValid])
+            [longTapDismissTimer invalidate];
+        longTapTimer = 0;
+        touch = location;
+        longTapDismissTimer = [NSTimer scheduledTimerWithTimeInterval: 0.1 target: self selector: @selector( beganTap) userInfo: nil repeats: YES];
+        
     }
+    
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    touch = [[[event allTouches] anyObject] locationInView: [self window]];
+    
+}
+
+- (void)beganTap {
+    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+    if (CGRectContainsPoint(statusBarFrame, touch) && [[[UniversalVariables globalVariables] viewController] isEqual: [[UniversalVariables globalVariables] currentView]])
+        longTapTimer += 0.1;
+    if (longTapTimer >= 0.75) {
+        [self statusBarTouchedAction];
+        [self touchesEnded: nil withEvent: nil];
+        
+    }
+    
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    longTapTimer = 0;
+    [longTapDismissTimer invalidate];
+    
 }
 
 - (void)statusBarTouchedAction {
     [[NSNotificationCenter defaultCenter] postNotificationName:kStatusBarTappedNotification
-                                                        object:nil];
+                                                            object:nil];
+    
 }
 
 @end
