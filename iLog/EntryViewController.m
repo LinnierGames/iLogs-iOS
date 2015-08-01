@@ -306,6 +306,12 @@
 
 #pragma mark Void's > Pre-Defined Functions (TEXT FIELD)
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    UITableViewModuleViewController *moduleTags = [[UITableViewModuleViewController alloc] initWithModule: CTTableViewTags];
+    [self presentViewController: moduleTags animated: YES completion: ^{ }];
+    
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([textField isEqual: cellSubject.textfield]) {
         [arrayM replaceObjectAtIndex: ENTRIES_subject withObject: textField.text];
