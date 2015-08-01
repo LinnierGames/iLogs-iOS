@@ -8,7 +8,7 @@
 
 #import "UITableViewModuleViewController.h"
 
-@interface UITableViewModuleViewController () < UITableViewDataSource, UITableViewDelegate> {
+@interface UITableViewModuleViewController () < UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate> {
     IBOutlet UITableView *table;
     
 }
@@ -71,7 +71,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     switch (module) {
         case CTTableViewTags:
-            return [arrayM count]; break;
+            return [arrayM count] +1; /*Search Bar on Top*/ break;
         default:
             return 0; break;
             
@@ -82,7 +82,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (module) {
         case CTTableViewTags:
-            return [[[[arrayM objectAtIndex: section] lastObject] objectForKey: @"group"] objectTagGroup_title]; break;
+            return [[[[arrayM objectAtIndex: section -1] lastObject] objectForKey: @"group"] objectTagGroup_title]; break;
         default:
             return @""; break;
             
@@ -103,7 +103,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (module) {
         case CTTableViewTags:
-            return [[arrayM objectAtIndex: section] count] -1; /*removing the group hash*/ break;
+            return [[arrayM objectAtIndex: section -1] count] -1; /*removing the group hash*/ break;
         default:
             return 0; break;
             
@@ -119,15 +119,27 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (module) {
         case CTTableViewTags: {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-            if (!cell)
-                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
-            //Customize Cell
-            NSArray *arrayTag = [[arrayM objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
+            if (indexPath.section == 0) {
+                UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Searchbar"];
+                if (!cell)
+                    cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellSearchBar];
+                //Customize Cell
+                [cell.searchBar setDelegate: self];
+                
+                return cell;
             
-            [cell.textLabel setText: [arrayTag objectTag_title]];
-            
-            return cell; break;
+            } else {
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                if (!cell)
+                    cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+                //Customize Cell
+                NSArray *arrayTag = [[arrayM objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
+                
+                [cell.textLabel setText: [arrayTag objectTag_title]];
+                
+                return cell;
+                
+            } break;
             
         }
         default: {
@@ -139,6 +151,44 @@
             return cell; break;
             
         }
+            
+    }
+    
+}
+
+#pragma mark Void's > Pre-Defined Functions (SEARCH BAR)
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    switch (module) {
+        default:
+            break;
+            
+    }
+    
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    switch (module) {
+        default:
+            break;
+            
+    }
+    
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    switch (module) {
+        default:
+            break;
+            
+    }
+    
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    switch (module) {
+        default:
+            break;
             
     }
     
