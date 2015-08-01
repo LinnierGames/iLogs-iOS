@@ -10,7 +10,7 @@
 
 @interface UITableViewModuleViewController () < UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate> {
     IBOutlet UITableView *table;
-    NSMutableArray *array;
+        NSMutableArray *arrayTable;
     
 }
 
@@ -35,7 +35,7 @@
 - (id)initWithContent:(id)value {
     self = [super initWithNibName: @"UITableViewModuleViewController" bundle: [NSBundle mainBundle]];
     if (self) {
-        array = [NSMutableArray new];
+        arrayTable = [NSMutableArray new];
         
     }
     
@@ -52,21 +52,8 @@
     self = [self initWithContent: nil];
     if (self) {
         arrayM = [[NSMutableArray alloc] initWithArray: arrayValue];
+        arrayTable = [[NSMutableArray alloc] initWithArray: [UniversalFunctions TAGGROUPS_returnCopyOfTagsWithTagGroups: arrayM]];
         module = moduleValue;
-        switch (module) {
-            case CTTableViewTags: {
-                for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) {
-                    for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: groupIndex] count] -1; tagIndex += 1) {
-                        [[[[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex] optionsDictionary] setValue: [NSNumber numberWithBool: NO] forKey: @"isHidden"];
-                        
-                    }
-                    
-                }
-                break;
-                
-            } default:
-                break;
-        }
         
     }
     
@@ -130,14 +117,8 @@
         case CTTableViewTags: {
             if (section == 0)
                 return 1;
-            else {
-                NSInteger count = 0;
-                for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: section -1] count] -1; tagIndex += 1)
-                    if (![[[[[arrayM objectAtIndex: section -1] objectAtIndex: tagIndex] optionsDictionary] objectForKey: @"isHidden"] boolValue])
-                            count += 1;
-                return count;
-                
-            }
+            else
+                return [[arrayTable objectAtIndex: section -1] count];
             break;
             
         }
@@ -170,7 +151,7 @@
                 if (!cell)
                     cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
                 //Customize Cell
-                NSArray *arrayTag = [[arrayM objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
+                NSArray *arrayTag = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
                 
                 [cell.textLabel setText: [arrayTag objectTag_title]];
                 
@@ -213,29 +194,21 @@
     switch (module) {
         case CTTableViewTags: {
             if (searchBar.text.length != 0) {
+                [arrayTable removeAllObjects];
                 for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) {
+                    [arrayTable addObject: [NSMutableArray array]];
                     for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: groupIndex] count] -1; tagIndex += 1) {
                         NSArray *arrayTag = [[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex];
                         NSRange rangeString = [[arrayTag objectTag_title] rangeOfString: searchText options: NSCaseInsensitiveSearch];
                         if (rangeString.location != NSNotFound)
-                            [[arrayTag optionsDictionary] setValue: [NSNumber numberWithBool: NO] forKey: @"isHidden"];
-                        else
-                            [[arrayTag optionsDictionary] setValue: [NSNumber numberWithBool: YES] forKey: @"isHidden"];
+                            [[arrayTable objectAtIndex: groupIndex] addObject: arrayTag];
                         
                     }
                     
                 }
                 
-            } else {
-                for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) {
-                    for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: groupIndex] count] -1; tagIndex += 1) {
-                        [[[[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex] optionsDictionary] setValue: [NSNumber numberWithBool: NO] forKey: @"isHidden"];
-                        
-                    }
-                    
-                }
-                
-            }
+            } else
+                arrayTable = [NSMutableArray arrayWithArray: [UniversalFunctions TAGGROUPS_returnCopyOfTagsWithTagGroups: arrayM]];
             [table reloadData];
             break;
             

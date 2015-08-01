@@ -971,6 +971,23 @@ alpha:1.0]
     
 }
 
++ (NSArray *)TAGGROUPS_returnCopyOfTagsWithTagGroups:(const NSArray *)arrayTagGroups {
+    NSMutableArray *array = [NSMutableArray array];
+    for (int groupIndex = 0; groupIndex < [arrayTagGroups count]; groupIndex += 1) {
+        [array addObject: [NSMutableArray array]];
+        for (int objectIndex = 0; objectIndex < [[arrayTagGroups objectAtIndex: groupIndex] count]; objectIndex += 1) {
+            id object = [[arrayTagGroups objectAtIndex: groupIndex] objectAtIndex: objectIndex];
+            if ([object isKindOfClass: [NSArray class]])
+                [[array objectAtIndex: groupIndex] addObject: object];
+            
+        }
+        
+    }
+    
+    return array;
+    
+}
+
 @end
 
 #pragma mark - Tags

@@ -814,6 +814,13 @@ static inline NSMutableArray * SQLStatementRowIntoTagGroupEntry( sqlite3_stmt *s
 + (NSArray *)TAGGROUPS_returnGroupedTags;
 + (NSArray *)TAGGROUPS_returnGroupedTagsWithTagGroups:(const NSArray *)arrayTagGruops;
 
+/**
+ * Used only to copy the formatted array created by +TAGGROUPS_returnGroupedTagsWithTagGroups: This only "copies" the tags, 
+ * no information about the tagGroup
+ * @return NSArray : tag format
+ */
++ (NSArray *)TAGGROUPS_returnCopyOfTagsWithTagGroups:(const NSArray *)arrayTagGroups;
+
 @end
 
 #pragma mark - Tags
