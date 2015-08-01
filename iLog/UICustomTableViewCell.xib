@@ -180,6 +180,28 @@
             </connections>
             <point key="canvasLocation" x="596" y="87"/>
         </tableViewCell>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Searchbar" id="Icb-fM-cci" customClass="UICustomTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Icb-fM-cci" id="yku-9Z-KTS">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="oZ0-8U-JDh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </searchBar>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="oZ0-8U-JDh" firstAttribute="leading" secondItem="yku-9Z-KTS" secondAttribute="leading" id="0TJ-ZA-6Ka"/>
+                    <constraint firstItem="oZ0-8U-JDh" firstAttribute="top" secondItem="yku-9Z-KTS" secondAttribute="top" id="4yg-KC-8Xg"/>
+                    <constraint firstAttribute="trailing" secondItem="oZ0-8U-JDh" secondAttribute="trailing" id="SY5-qg-yDS"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="searchBar" destination="oZ0-8U-JDh" id="yiq-5X-mlE"/>
+            </connections>
+            <point key="canvasLocation" x="532" y="593"/>
+        </tableViewCell>
     </objects>
     <resources>
         <image name="misc_bookmark-disabled" width="104" height="25"/>
