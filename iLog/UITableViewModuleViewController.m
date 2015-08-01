@@ -8,7 +8,10 @@
 
 #import "UITableViewModuleViewController.h"
 
-@interface UITableViewModuleViewController () < UITableViewDataSource, UITableViewDelegate>
+@interface UITableViewModuleViewController () < UITableViewDataSource, UITableViewDelegate> {
+    IBOutlet UITableView *table;
+    
+}
 
 @end
 
