@@ -7,20 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E12640591B38709300E423E7 /* UIContentPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E12640581B38709300E423E7 /* UIContentPicker.m */; };
+		E126405B1B3870A000E423E7 /* UIContentPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = E126405A1B3870A000E423E7 /* UIContentPicker.xib */; };
+		E14036CA1B313194005D2608 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */; };
+		E14036CB1B3131A4005D2608 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E17EECB21B312C5E007C1E91 /* libz.dylib */; };
+		E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC381B2E1AD4007C1E91 /* Main.storyboard */; };
+		E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC3D1B2E1AD4007C1E91 /* LaunchScreen.xib */; };
+		E146E49C1B347037006DC1EC /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E49A1B347037006DC1EC /* EntryViewController.m */; };
+		E146E49D1B347037006DC1EC /* EntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E146E49B1B347037006DC1EC /* EntryViewController.xib */; };
+		E146E4A21B347A45006DC1EC /* UICustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4A01B347A45006DC1EC /* UICustomTableViewCell.m */; };
+		E146E4A31B347A45006DC1EC /* UICustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E146E4A11B347A45006DC1EC /* UICustomTableViewCell.xib */; };
+		E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */; };
 		E17EEC311B2E1AD4007C1E91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC301B2E1AD4007C1E91 /* main.m */; };
 		E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */; };
 		E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC361B2E1AD4007C1E91 /* ViewController.m */; };
-		E17EEC3A1B2E1AD4007C1E91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC381B2E1AD4007C1E91 /* Main.storyboard */; };
-		E17EEC3C1B2E1AD4007C1E91 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC3B1B2E1AD4007C1E91 /* Images.xcassets */; };
-		E17EEC3F1B2E1AD4007C1E91 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC3D1B2E1AD4007C1E91 /* LaunchScreen.xib */; };
 		E17EEC4B1B2E1AD4007C1E91 /* iLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC4A1B2E1AD4007C1E91 /* iLogTests.m */; };
 		E17EEC581B2E1C58007C1E91 /* DiaryTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC561B2E1C58007C1E91 /* DiaryTabBarViewController.xib */; };
 		E17EEC921B2F47C4007C1E91 /* DiaryTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC911B2F47C4007C1E91 /* DiaryTabBarViewController.m */; };
 		E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC941B2F9442007C1E91 /* UniversalOperations.m */; };
 		E17EEC991B2F9D77007C1E91 /* DiaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC981B2F9D77007C1E91 /* DiaryViewController.m */; };
-		E17EEC9D1B2F9DA1007C1E91 /* DIaryMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC9C1B2F9DA1007C1E91 /* DIaryMapViewController.m */; };
+		E17EEC9D1B2F9DA1007C1E91 /* DiaryMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC9C1B2F9DA1007C1E91 /* DiaryMapViewController.m */; };
 		E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA11B2F9FA2007C1E91 /* SettingsViewController.m */; };
 		E17EECA51B2FA04F007C1E91 /* DiaryController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA41B2FA04F007C1E91 /* DiaryController.m */; };
+		E17EECAB1B311F15007C1E91 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA91B311F15007C1E91 /* ISO8601DateFormatter.m */; };
+		E17EECAC1B311F15007C1E91 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = E17EECAA1B311F15007C1E91 /* README.md */; };
+		E1EF7AEE1B3BC95A00C9C995 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */; };
+		E1EF7AF21B3C5BBA00C9C995 /* UITableViewModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EF7AF01B3C5BBA00C9C995 /* UITableViewModuleViewController.m */; };
+		E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AF11B3C5BBA00C9C995 /* UITableViewModuleViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +47,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E12640571B38709300E423E7 /* UIContentPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIContentPicker.h; sourceTree = "<group>"; };
+		E12640581B38709300E423E7 /* UIContentPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIContentPicker.m; sourceTree = "<group>"; };
+		E126405A1B3870A000E423E7 /* UIContentPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UIContentPicker.xib; sourceTree = "<group>"; };
+		E146E4991B347037006DC1EC /* EntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryViewController.h; sourceTree = "<group>"; };
+		E146E49A1B347037006DC1EC /* EntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryViewController.m; sourceTree = "<group>"; };
+		E146E49B1B347037006DC1EC /* EntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryViewController.xib; sourceTree = "<group>"; };
+		E146E49F1B347A45006DC1EC /* UICustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustomTableViewCell.h; sourceTree = "<group>"; };
+		E146E4A01B347A45006DC1EC /* UICustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICustomTableViewCell.m; sourceTree = "<group>"; };
+		E146E4A11B347A45006DC1EC /* UICustomTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UICustomTableViewCell.xib; sourceTree = "<group>"; };
+		E146E4A61B347A5C006DC1EC /* UICustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustom.h; sourceTree = "<group>"; };
+		E146E4A91B348B79006DC1EC /* CategoriesClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesClasses.h; sourceTree = "<group>"; };
+		E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesClasses.m; sourceTree = "<group>"; };
 		E17EEC2B1B2E1AD4007C1E91 /* iLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17EEC2F1B2E1AD4007C1E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E17EEC301B2E1AD4007C1E91 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -42,7 +67,6 @@
 		E17EEC351B2E1AD4007C1E91 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		E17EEC361B2E1AD4007C1E91 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E17EEC391B2E1AD4007C1E91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E17EEC3B1B2E1AD4007C1E91 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E17EEC3E1B2E1AD4007C1E91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		E17EEC441B2E1AD4007C1E91 /* iLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17EEC491B2E1AD4007C1E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -55,12 +79,21 @@
 		E17EEC961B2F9C51007C1E91 /* iLog.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iLog.pch; sourceTree = "<group>"; };
 		E17EEC971B2F9D77007C1E91 /* DiaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryViewController.h; sourceTree = "<group>"; };
 		E17EEC981B2F9D77007C1E91 /* DiaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryViewController.m; sourceTree = "<group>"; };
-		E17EEC9B1B2F9DA1007C1E91 /* DIaryMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DIaryMapViewController.h; sourceTree = "<group>"; };
-		E17EEC9C1B2F9DA1007C1E91 /* DIaryMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DIaryMapViewController.m; sourceTree = "<group>"; };
+		E17EEC9B1B2F9DA1007C1E91 /* DiaryMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryMapViewController.h; sourceTree = "<group>"; };
+		E17EEC9C1B2F9DA1007C1E91 /* DiaryMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryMapViewController.m; sourceTree = "<group>"; };
 		E17EECA01B2F9FA2007C1E91 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		E17EECA11B2F9FA2007C1E91 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		E17EECA31B2FA04F007C1E91 /* DiaryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryController.h; sourceTree = "<group>"; };
 		E17EECA41B2FA04F007C1E91 /* DiaryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryController.m; sourceTree = "<group>"; };
+		E17EECA81B311F15007C1E91 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		E17EECA91B311F15007C1E91 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		E17EECAA1B311F15007C1E91 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		E17EECB21B312C5E007C1E91 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E1EF7AEF1B3C5BBA00C9C995 /* UITableViewModuleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewModuleViewController.h; sourceTree = "<group>"; };
+		E1EF7AF01B3C5BBA00C9C995 /* UITableViewModuleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewModuleViewController.m; sourceTree = "<group>"; };
+		E1EF7AF11B3C5BBA00C9C995 /* UITableViewModuleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UITableViewModuleViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +101,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E14036CB1B3131A4005D2608 /* libz.dylib in Frameworks */,
+				E14036CA1B313194005D2608 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +116,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E146E49E1B34703D006DC1EC /* Editors */ = {
+			isa = PBXGroup;
+			children = (
+				E146E4991B347037006DC1EC /* EntryViewController.h */,
+				E146E49A1B347037006DC1EC /* EntryViewController.m */,
+				E146E49B1B347037006DC1EC /* EntryViewController.xib */,
+				E1EF7AEF1B3C5BBA00C9C995 /* UITableViewModuleViewController.h */,
+				E1EF7AF01B3C5BBA00C9C995 /* UITableViewModuleViewController.m */,
+				E1EF7AF11B3C5BBA00C9C995 /* UITableViewModuleViewController.xib */,
+				E146E4B81B35C0A2006DC1EC /* RES */,
+			);
+			name = Editors;
+			sourceTree = "<group>";
+		};
+		E146E4A41B347A48006DC1EC /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				E146E49E1B34703D006DC1EC /* Editors */,
+				E146E49F1B347A45006DC1EC /* UICustomTableViewCell.h */,
+				E146E4A01B347A45006DC1EC /* UICustomTableViewCell.m */,
+				E146E4A11B347A45006DC1EC /* UICustomTableViewCell.xib */,
+				E12640571B38709300E423E7 /* UIContentPicker.h */,
+				E12640581B38709300E423E7 /* UIContentPicker.m */,
+				E126405A1B3870A000E423E7 /* UIContentPicker.xib */,
+			);
+			name = headers;
+			sourceTree = "<group>";
+		};
+		E146E4A51B347A4E006DC1EC /* UICustom */ = {
+			isa = PBXGroup;
+			children = (
+				E146E4A61B347A5C006DC1EC /* UICustom.h */,
+				E146E4A41B347A48006DC1EC /* headers */,
+			);
+			name = UICustom;
+			sourceTree = "<group>";
+		};
+		E146E4B81B35C0A2006DC1EC /* RES */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = RES;
+			sourceTree = "<group>";
+		};
 		E17EEC221B2E1AD4007C1E91 = {
 			isa = PBXGroup;
 			children = (
@@ -106,13 +185,16 @@
 				E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */,
 				E17EEC931B2F9442007C1E91 /* UniversalOperations.h */,
 				E17EEC941B2F9442007C1E91 /* UniversalOperations.m */,
+				E146E4A91B348B79006DC1EC /* CategoriesClasses.h */,
+				E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */,
 				E17EEC351B2E1AD4007C1E91 /* ViewController.h */,
 				E17EEC361B2E1AD4007C1E91 /* ViewController.m */,
 				E17EEC591B2E1C5B007C1E91 /* Apps */,
+				E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */,
 				E17EEC381B2E1AD4007C1E91 /* Main.storyboard */,
-				E17EEC3B1B2E1AD4007C1E91 /* Images.xcassets */,
 				E17EEC3D1B2E1AD4007C1E91 /* LaunchScreen.xib */,
 				E17EEC2E1B2E1AD4007C1E91 /* Supporting Files */,
+				E146E4A51B347A4E006DC1EC /* UICustom */,
 			);
 			path = iLog;
 			sourceTree = "<group>";
@@ -120,6 +202,9 @@
 		E17EEC2E1B2E1AD4007C1E91 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E17EECB21B312C5E007C1E91 /* libz.dylib */,
+				E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */,
+				E17EECAD1B311F18007C1E91 /* Developer Tools */,
 				E17EEC2F1B2E1AD4007C1E91 /* Info.plist */,
 				E17EEC301B2E1AD4007C1E91 /* main.m */,
 				E17EEC961B2F9C51007C1E91 /* iLog.pch */,
@@ -179,8 +264,8 @@
 		E17EEC9E1B2F9DBA007C1E91 /* Diary Map */ = {
 			isa = PBXGroup;
 			children = (
-				E17EEC9B1B2F9DA1007C1E91 /* DIaryMapViewController.h */,
-				E17EEC9C1B2F9DA1007C1E91 /* DIaryMapViewController.m */,
+				E17EEC9B1B2F9DA1007C1E91 /* DiaryMapViewController.h */,
+				E17EEC9C1B2F9DA1007C1E91 /* DiaryMapViewController.m */,
 			);
 			name = "Diary Map";
 			sourceTree = "<group>";
@@ -192,6 +277,16 @@
 				E17EECA11B2F9FA2007C1E91 /* SettingsViewController.m */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		E17EECAD1B311F18007C1E91 /* Developer Tools */ = {
+			isa = PBXGroup;
+			children = (
+				E17EECA81B311F15007C1E91 /* ISO8601DateFormatter.h */,
+				E17EECA91B311F15007C1E91 /* ISO8601DateFormatter.m */,
+				E17EECAA1B311F15007C1E91 /* README.md */,
+			);
+			name = "Developer Tools";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,6 +338,7 @@
 				TargetAttributes = {
 					E17EEC2A1B2E1AD4007C1E91 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 8U3L6K9JA6;
 					};
 					E17EEC431B2E1AD4007C1E91 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -274,10 +370,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E146E4A31B347A45006DC1EC /* UICustomTableViewCell.xib in Resources */,
 				E17EEC581B2E1C58007C1E91 /* DiaryTabBarViewController.xib in Resources */,
-				E17EEC3A1B2E1AD4007C1E91 /* Main.storyboard in Resources */,
-				E17EEC3F1B2E1AD4007C1E91 /* LaunchScreen.xib in Resources */,
-				E17EEC3C1B2E1AD4007C1E91 /* Images.xcassets in Resources */,
+				E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */,
+				E1EF7AEE1B3BC95A00C9C995 /* Images.xcassets in Resources */,
+				E146E49D1B347037006DC1EC /* EntryViewController.xib in Resources */,
+				E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */,
+				E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */,
+				E126405B1B3870A000E423E7 /* UIContentPicker.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,15 +395,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E12640591B38709300E423E7 /* UIContentPicker.m in Sources */,
 				E17EEC921B2F47C4007C1E91 /* DiaryTabBarViewController.m in Sources */,
+				E146E4A21B347A45006DC1EC /* UICustomTableViewCell.m in Sources */,
+				E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */,
+				E146E49C1B347037006DC1EC /* EntryViewController.m in Sources */,
 				E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */,
+				E1EF7AF21B3C5BBA00C9C995 /* UITableViewModuleViewController.m in Sources */,
 				E17EEC991B2F9D77007C1E91 /* DiaryViewController.m in Sources */,
 				E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */,
-				E17EEC9D1B2F9DA1007C1E91 /* DIaryMapViewController.m in Sources */,
+				E17EEC9D1B2F9DA1007C1E91 /* DiaryMapViewController.m in Sources */,
 				E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */,
 				E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */,
 				E17EECA51B2FA04F007C1E91 /* DiaryController.m in Sources */,
 				E17EEC311B2E1AD4007C1E91 /* main.m in Sources */,
+				E17EECAC1B311F15007C1E91 /* README.md in Sources */,
+				E17EECAB1B311F15007C1E91 /* ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +489,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -419,6 +527,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -429,10 +538,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = iLog/iLog.pch;
 				INFOPLIST_FILE = iLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -440,10 +552,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = iLog/iLog.pch;
 				INFOPLIST_FILE = iLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LINK_WITH_STANDARD_LIBRARIES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -500,6 +615,7 @@
 				E17EEC501B2E1AD4007C1E91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E17EEC511B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLogTests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +624,7 @@
 				E17EEC531B2E1AD4007C1E91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

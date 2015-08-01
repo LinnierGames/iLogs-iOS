@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "DiaryController.h"
 
-@interface DIaryMapViewController : UIViewController
+@interface DiaryMapViewController : UIViewController
+
+- (IBAction)panScreenEdge:(UISwipeGestureRecognizer *)sender;
 
 @end
