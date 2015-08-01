@@ -35,6 +35,11 @@
     
 }
 
+- (id)initWithModule:(CDTableViewModule)moduleValue {
+    return [self initWithModule: moduleValue withContent: moduleValue == CTTableViewModule ? [NSArray array] : moduleValue == CTTableViewDiaries ? [NSArray array] : moduleValue == CTTableViewTags ? [UniversalFunctions TAGGROUPS_returnGroupedTags] : [NSArray array]];
+    
+}
+
 - (id)initWithModule:(CDTableViewModule)moduleValue withContent:(NSArray *)arrayValue {
     self = [self initWithContent: nil];
     if (self) {
@@ -64,8 +69,8 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (module) {
-        case CTTableViewDiaries:
-            return @"Diaries"; break;
+        case CTTableViewTags:
+            return [[[[arrayM objectAtIndex: section] lastObject] objectForKey: @"group"] objectTagGroup_title]; break;
         default:
             return @""; break;
             
@@ -75,8 +80,6 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     switch (module) {
-        case CTTableViewDiaries:
-            return nil; break;
         default:
             return nil; break;
             
@@ -86,7 +89,13 @@
 
 //Rows
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [arrayM count];
+    switch (module) {
+        case CTTableViewTags:
+            return [[arrayM objectAtIndex: section] count] -1; /*removing the group hash*/ break;
+        default:
+            return 0; break;
+            
+    }
     
 }
 
@@ -96,12 +105,30 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-    if (!cell)
-        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
-    //Customize Cell
-    
-    return cell;
+    switch (module) {
+        case CTTableViewTags: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+            if (!cell)
+                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+            //Customize Cell
+            NSArray *arrayTag = [[arrayM objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
+            
+            [cell.textLabel setText: [arrayTag objectTag_title]];
+            
+            return cell; break;
+            
+        }
+        default: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+            if (!cell)
+                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+            //Customize Cell
+            
+            return cell; break;
+            
+        }
+            
+    }
     
 }
 
