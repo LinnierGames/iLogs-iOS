@@ -10,6 +10,7 @@
 
 @interface UITableViewModuleViewController () < UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate> {
     IBOutlet UITableView *table;
+    NSMutableArray *array;
     
 }
 
@@ -33,6 +34,10 @@
 
 - (id)initWithContent:(id)value {
     self = [super initWithNibName: @"UITableViewModuleViewController" bundle: [NSBundle mainBundle]];
+    if (self) {
+        array = [NSMutableArray new];
+        
+    }
     
     return self;
     
@@ -48,6 +53,20 @@
     if (self) {
         arrayM = [[NSMutableArray alloc] initWithArray: arrayValue];
         module = moduleValue;
+        switch (module) {
+            case CTTableViewTags: {
+                for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) {
+                    for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: groupIndex] count] -1; tagIndex += 1) {
+                        [[[[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex] optionsDictionary] setValue: [NSNumber numberWithBool: NO] forKey: @"isHidden"];
+                        
+                    }
+                    
+                }
+                break;
+                
+            } default:
+                break;
+        }
         
     }
     
@@ -81,8 +100,14 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (module) {
-        case CTTableViewTags:
-            return [[[[arrayM objectAtIndex: section -1] lastObject] objectForKey: @"group"] objectTagGroup_title]; break;
+        case CTTableViewTags: {
+            if (section == 0)
+                return @"";
+            else
+                return [[[[arrayM objectAtIndex: section -1] lastObject] objectForKey: @"group"] objectTagGroup_title];
+            break;
+            
+        }
         default:
             return @""; break;
             
@@ -102,8 +127,20 @@
 //Rows
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (module) {
-        case CTTableViewTags:
-            return [[arrayM objectAtIndex: section -1] count] -1; /*removing the group hash*/ break;
+        case CTTableViewTags: {
+            if (section == 0)
+                return 1;
+            else {
+                NSInteger count = 0;
+                for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: section -1] count] -1; tagIndex += 1)
+                    if (![[[[[arrayM objectAtIndex: section -1] objectAtIndex: tagIndex] optionsDictionary] objectForKey: @"isHidden"] boolValue])
+                            count += 1;
+                return count;
+                
+            }
+            break;
+            
+        }
         default:
             return 0; break;
             
@@ -160,6 +197,11 @@
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     switch (module) {
+        case CTTableViewTags: {
+            [searchBar setShowsCancelButton: YES animated: YES];
+            break;
+            
+        }
         default:
             break;
             
@@ -169,6 +211,35 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     switch (module) {
+        case CTTableViewTags: {
+            if (searchBar.text.length != 0) {
+                for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) {
+                    for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: groupIndex] count] -1; tagIndex += 1) {
+                        NSArray *arrayTag = [[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex];
+                        NSRange rangeString = [[arrayTag objectTag_title] rangeOfString: searchText options: NSCaseInsensitiveSearch];
+                        if (rangeString.location != NSNotFound)
+                            [[arrayTag optionsDictionary] setValue: [NSNumber numberWithBool: NO] forKey: @"isHidden"];
+                        else
+                            [[arrayTag optionsDictionary] setValue: [NSNumber numberWithBool: YES] forKey: @"isHidden"];
+                        
+                    }
+                    
+                }
+                
+            } else {
+                for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) {
+                    for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: groupIndex] count] -1; tagIndex += 1) {
+                        [[[[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex] optionsDictionary] setValue: [NSNumber numberWithBool: NO] forKey: @"isHidden"];
+                        
+                    }
+                    
+                }
+                
+            }
+            [table reloadData];
+            break;
+            
+        }
         default:
             break;
             
@@ -187,6 +258,12 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     switch (module) {
+        case CTTableViewTags: {
+            [searchBar setShowsCancelButton: NO animated: YES];
+            [searchBar resignFirstResponder];
+            break;
+            
+        }
         default:
             break;
             
