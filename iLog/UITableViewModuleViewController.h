@@ -23,6 +23,8 @@ typedef NS_ENUM(NSUInteger, CDTableViewModule) {
 - (id)initWithContent:(id)value;
 - (id)initWithModule:(CDTableViewModule)moduleValue;
 - (id)initWithModule:(CDTableViewModule)moduleValue withContent:(NSArray *)arrayValue;
++ (UINavigationController *)allocWithModule:(CDTableViewModule)moduleValue;
++ (UINavigationController *)allocWithModule:(CDTableViewModule)moduleValue withContent:(NSArray *)arrayContent;
 
 @end
 

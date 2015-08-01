@@ -55,14 +55,23 @@
     
 }
 
++ (UINavigationController *)allocWithModule:(CDTableViewModule)moduleValue {
+    return [[UINavigationController alloc] initWithRootViewController: [[UITableViewModuleViewController alloc] initWithModule: moduleValue]];
+    
+}
+
++ (UINavigationController *)allocWithModule:(CDTableViewModule)moduleValue withContent:(NSArray *)arrayContent {
+    return [[UINavigationController alloc] initWithRootViewController: [[UITableViewModuleViewController alloc] initWithModule: moduleValue withContent: arrayContent]];
+    
+}
+
 #pragma mark Return Functions > Pre-Defined Functions (TABLE VIEW)
 
 //Sections
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     switch (module) {
-        case CTTableViewDiaries:
-            return 1; break;
-            
+        case CTTableViewTags:
+            return [arrayM count]; break;
         default:
             return 0; break;
             
