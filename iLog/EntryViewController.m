@@ -307,8 +307,8 @@
 #pragma mark Void's > Pre-Defined Functions (TEXT FIELD)
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    UITableViewModuleViewController *moduleTags = [[UITableViewModuleViewController alloc] initWithModule: CTTableViewTags];
-    [self presentViewController: moduleTags animated: YES completion: ^{ }];
+    UINavigationController *navTags = [UITableViewModuleViewController allocWithModule: CTTableViewTags];
+    [self presentViewController: navTags animated: YES completion: ^{ }];
     
 }
 
