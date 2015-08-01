@@ -85,7 +85,7 @@
                                             </label>
                                             <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="sHf-cn-pGw">
                                                 <rect key="frame" x="0.0" y="94" width="574" height="458"/>
-                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="pnk-ZD-CbD" id="dA7-XX-G5q"/>
                                                     <outlet property="delegate" destination="pnk-ZD-CbD" id="M1f-Vo-Hjw"/>
@@ -118,7 +118,7 @@
                                             </label>
                                             <tableView clipsSubviews="YES" tag="3" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="7k2-W4-7UN">
                                                 <rect key="frame" x="26" y="94" width="574" height="458"/>
-                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="pnk-ZD-CbD" id="zk2-90-gp4"/>
                                                     <outlet property="delegate" destination="pnk-ZD-CbD" id="jEV-aS-yny"/>
