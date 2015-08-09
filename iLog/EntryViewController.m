@@ -14,6 +14,8 @@
         NSMutableArray *arrayM;
         UICustomTableViewCell *cellSubject;
         UICustomTableViewCell *cellBody;
+        UICustomTableViewCell *cellStories;
+        UICustomTableViewCell *cellTags;
     NSMutableArray *array;
     
 }
@@ -198,12 +200,14 @@
                     [cell.textfield setTag: 2];
                     [cell.textfield setBorderStyle: UITextBorderStyleNone];
                     [cell.textfield setPlaceholder: @"Stories"];
+                    cellStories = cell;
                     break;
                     
                 } case 2: {
                     [cell.textfield setTag: 3];
                     [cell.textfield setBorderStyle: UITextBorderStyleNone];
                     [cell.textfield setPlaceholder: @"Tags"];
+                    cellTags = cell;
                     break;
                     
                 } default: break;
@@ -307,8 +311,11 @@
 #pragma mark Void's > Pre-Defined Functions (TEXT FIELD)
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    UINavigationController *navTags = [UITableViewModuleViewController allocWithModule: CTTableViewTags];
-    [self presentViewController: navTags animated: YES completion: ^{ }];
+    if ([cellTags.textfield isEqual: textField]) {
+        UINavigationController *navTags = [UITableViewModuleViewController allocWithModule: CTTableViewTags withContent: @{@"tags":[[arrayM optionsDictionary] objectForKey: @"tags"], @"groupedTags":[UniversalFunctions TAGGROUPS_returnGroupedTags]}];
+        [self presentViewController: navTags animated: YES completion: ^{ }];
+        
+    }
     
 }
 
