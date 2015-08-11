@@ -63,7 +63,7 @@
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesBegan:touches withEvent:event];
+    [super touchesBegan: touches withEvent: event];
     touch = [[[event allTouches] anyObject] locationInView: [self window]];
     
 }
