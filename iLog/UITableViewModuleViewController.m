@@ -338,7 +338,6 @@
 
 - (void)pressRightNav:(id)sender {
     [UniversalFunctions TAGGROUPS_voidRemoveDuplicateChangesForDictionary: dicChanges];
-    [dicChanges writeToFile: [UniversalVariables dataFilePathWithFileName: @"temp" extension: @"plist"] atomically: YES];
     if ([delegate respondsToSelector: @selector( tableViewModule:didFinishWithChanges:)])
          [delegate tableViewModule: self didFinishWithChanges: dicChanges];
     //Dismiss

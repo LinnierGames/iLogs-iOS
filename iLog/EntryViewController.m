@@ -7,9 +7,10 @@
 //
 
 #import "EntryViewController.h"
+#import "UITableViewModuleViewController.h"
 #import "DiaryController.h"
 
-@interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, UIContentPickerDelegate, UIActionSheetDelegate> {
+@interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, UIContentPickerDelegate, UIActionSheetDelegate, UITableViewModuleViewController> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayM;
         UICustomTableViewCell *cellSubject;
@@ -399,6 +400,33 @@
     [arrayM replaceObjectAtIndex: ENTRIES_weatherCondition withObject: [NSNumber numberWithInt: selectedWeatherCondition]];
     [arrayM replaceObjectAtIndex: ENTRIES_temperature withObject: [NSNumber numberWithInt: selectedTemperature]];
     [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
+    
+}
+
+#pragma mark Void's > Pre-Defined Functions (TABLE VIEW MODULE)
+
+- (void)tableViewModule:(UITableViewModuleViewController *)tableViewModule didFinishWithChanges:(NSDictionary *)dictionary {
+    switch (tableViewModule.module) {
+        case CTTableViewTags: {
+            //Add Records to TagEntriesRelationship Table
+            for (NSArray *arrayChange in [dictionary objectForKey: @"insert"]) {
+                NSNumber *numberTagID = [arrayChange firstObject];
+                
+                
+            }
+            //Remove Recoreds from TagEntriesRelationship Table
+            for (NSArray *arrayChange in [dictionary objectForKey: @"delete"]) {
+                NSNumber *numberTagID = [arrayChange firstObject];
+                
+                
+            }
+            break;
+            
+        }
+            
+        default:
+            break;
+    }
     
 }
 
