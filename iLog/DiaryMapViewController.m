@@ -127,7 +127,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch ([tableView tag]) {
         case 1: //Map
-            return 10; break;
+            return 1; break;
         case 2: //Stories
             return [[arrayStories objectAtIndex: section] count] -1; break;
         case 3: //Tags
@@ -206,6 +206,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             if (!cell)
                 cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
             //Customize Cell
+            [cell.textLabel setText: @"Export All Entries csv"];
             
             return cell; break;
             
@@ -321,6 +322,36 @@ typedef NS_ENUM(int, CDSelectedMap) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (currentView) {
         case CTMapView: {
+            if (indexPath.section == 0) {
+                if (indexPath.row == 0) {
+                    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0];
+                    NSString *filePath = [docPath stringByAppendingPathComponent:@"temp.csv"];
+                    
+                    NSString *stringContents = @"";
+                    
+                    NSArray *arrayEntries = [UniversalFunctions SQL_returnContentsOfTable: CTSQLEntries];
+                    
+                    for (NSArray *arrayEntry in arrayEntries) {
+                        stringContents = [stringContents stringByAppendingString: [NSString stringWithFormat: @"\"%@\"\r\"%@\"\r\"Date: %@\"\r", [arrayEntry objectEntry_subject], [arrayEntry objectEntry_body], [[arrayEntry objectEntry_date] stringValue: CTCharacterDate]]];
+                        
+                    }
+                    
+                    NSError *error;
+                    
+                    [stringContents writeToFile:filePath
+                               atomically:YES
+                                 encoding:NSUTF8StringEncoding
+                                    error:&error];
+                    
+                    // check for the error
+                    
+                    NSURL *url = [NSURL fileURLWithPath:filePath];
+                    
+                    UIActivityViewController *action = [[UIActivityViewController alloc] initWithActivityItems: @[@"Here lies an export of my diaries", url] applicationActivities:  nil];
+                    [self presentViewController: action animated: YES completion: ^{ }];
+                    
+                }
+            }
             break;
             
         } case CTStoriesView: {
