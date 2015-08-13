@@ -90,6 +90,7 @@
 		E17EECAA1B311F15007C1E91 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		E17EECB21B312C5E007C1E91 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E1A05C261B7BC87F00734CCE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = iLog/README.md; sourceTree = "<group>"; };
 		E1E22BDA1B75A01C00662606 /* Change Log - Releases.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Releases.rtf"; sourceTree = "<group>"; };
 		E1E22BDB1B75A07C00662606 /* Change Log - Builds.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Builds.rtf"; sourceTree = "<group>"; };
 		E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -165,6 +166,7 @@
 		E17EEC221B2E1AD4007C1E91 = {
 			isa = PBXGroup;
 			children = (
+				E1A05C261B7BC87F00734CCE /* README.md */,
 				E17EEC2D1B2E1AD4007C1E91 /* iLog */,
 				E17EEC471B2E1AD4007C1E91 /* iLogTests */,
 				E17EEC2C1B2E1AD4007C1E91 /* Products */,
