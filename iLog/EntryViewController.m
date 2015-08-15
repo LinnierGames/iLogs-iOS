@@ -411,12 +411,17 @@
             //Add Records to TagEntriesRelationship Table
             for (NSArray *arrayChange in [dictionary objectForKey: @"insert"]) {
                 NSNumber *numberTagID = [arrayChange firstObject];
-                
+                NSArray *arrayRelationship = [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberTagID entryID: [[arrayM optionsDictionary] objectForKey: @"id"]];
+                [[UniversalVariables globalVariables] TAGENTRIES_writeNewForTagEntryRelationship: arrayRelationship];
+                [[[arrayM optionsDictionary] objectForKey: @"tags"] addObject: arrayRelationship];
                 
             }
             //Remove Recoreds from TagEntriesRelationship Table
             for (NSArray *arrayChange in [dictionary objectForKey: @"delete"]) {
                 NSNumber *numberTagID = [arrayChange firstObject];
+                NSArray *arrayRelationship = [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberTagID entryID: [[arrayM optionsDictionary] objectForKey: @"id"]];
+                [[UniversalVariables globalVariables] TAGENTRIES_deleteForTagEntryRelationship: arrayRelationship];
+                [[[arrayM optionsDictionary] objectForKey: @"tags"] removeObjectIdenticalTo: arrayRelationship];
                 
                 
             }
