@@ -58,6 +58,10 @@
         arrayM = [[NSMutableArray alloc] initWithArray: arrayEntry];
         array = [NSMutableArray new];
         
+        if (value == CTCreate) {
+            option = CTRead;
+            
+        }
         option = value;
         delegate = delegateValue;
         
