@@ -206,7 +206,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
             if (!cell)
                 cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
             //Customize Cell
-            [cell.textLabel setText: @"Export All Entries csv"];
+            [cell.textLabel setText: @"Export Today's Entries, .csv"];
             
             return cell; break;
             
