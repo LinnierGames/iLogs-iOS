@@ -176,7 +176,7 @@ NSString *SQLDatabase = @"database";
 + (BOOL)SQL_returnStatusOfTable:(CDSQLTables)table {
     switch (table) {
         case CTSQLDiaries: case CTSQLEntries: case CTSQLOutilnes: case CTSQLStories: case CTSQLStoryEntriesRelationship: case CTSQLTagGroups: case CTSQLTags: case CTSQLTagEntriesRelationship: {
-            BOOL status = [self SQL_returnStatusOfDatabase];
+            NSAssert( [self SQL_returnStatusOfDatabase], @"Failed to open SQL");
             SQL3Statement *statement; const char *err;
             NSString *stringFocusTableTitle = @"";
             switch (table) {
@@ -210,7 +210,6 @@ NSString *SQLDatabase = @"database";
                 }
                 
             } else {
-                status = NO;
                 sqlite3_close( [[UniversalVariables globalVariables] database]);
                 NSAssert( 0, [NSString stringWithUTF8String: err]);
                 

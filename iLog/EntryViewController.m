@@ -429,12 +429,14 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear: animated];
     if (option == CTCreate)
         [cellSubject.textfield becomeFirstResponder];
     
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear: animated];
     
 }
 

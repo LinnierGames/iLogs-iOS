@@ -752,6 +752,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear: animated];
     [[UniversalVariables globalVariables] setViewController: self asCurrentView: self];
     [self reloadData];
     
