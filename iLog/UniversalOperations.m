@@ -189,11 +189,17 @@ NSString *SQLDatabase = @"database";
                 case CTSQLStories:
                     stringFocusTableTitle = @"Stories";
                     break;
+                case CTSQLStoryEntriesRelationship:
+                    stringFocusTableTitle = @"StoryEntriesRelationship";
+                    break;
                 case CTSQLTagGroups:
                     stringFocusTableTitle = @"TagGroups";
                     break;
                 case CTSQLTags:
                     stringFocusTableTitle = @"Tags";
+                    break;
+                case CTSQLTagEntriesRelationship:
+                    stringFocusTableTitle = @"TagEntriesRelationship";
                     break;
                 case CTSQLOutilnes:
                     stringFocusTableTitle = @"Outlines";
@@ -300,6 +306,21 @@ NSString *SQLDatabase = @"database";
                 if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Tags ORDER BY id DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array =  SQLStatementRowIntoTagEntry( statement);
+                        [arrayContents addObject: array];
+                        
+                    }
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
+                break;
+                
+            } case CTSQLTagEntriesRelationship: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM TagEntriesRelationship ORDER BY id DESC;", &statement, &err)) {
+                    while (SQLStatementStep( statement)) {
+                        NSMutableArray *array =  SQLStatementRowIntoTagEntryRelationshipEntry( statement);
                         [arrayContents addObject: array];
                         
                     }

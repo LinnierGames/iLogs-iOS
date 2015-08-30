@@ -59,7 +59,7 @@
 		E146E4A61B347A5C006DC1EC /* UICustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustom.h; sourceTree = "<group>"; };
 		E146E4A91B348B79006DC1EC /* CategoriesClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesClasses.h; sourceTree = "<group>"; };
 		E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesClasses.m; sourceTree = "<group>"; };
-		E17EEC2B1B2E1AD4007C1E91 /* iLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E17EEC2B1B2E1AD4007C1E91 /* iLogs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLogs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17EEC2F1B2E1AD4007C1E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E17EEC301B2E1AD4007C1E91 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E17EEC321B2E1AD4007C1E91 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -90,6 +90,9 @@
 		E17EECAA1B311F15007C1E91 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		E17EECB21B312C5E007C1E91 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E1A05C261B7BC87F00734CCE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = iLog/README.md; sourceTree = "<group>"; };
+		E1E22BDA1B75A01C00662606 /* Change Log - Releases.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Releases.rtf"; sourceTree = "<group>"; };
+		E1E22BDB1B75A07C00662606 /* Change Log - Builds.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Builds.rtf"; sourceTree = "<group>"; };
 		E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E1EF7AEF1B3C5BBA00C9C995 /* UITableViewModuleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewModuleViewController.h; sourceTree = "<group>"; };
 		E1EF7AF01B3C5BBA00C9C995 /* UITableViewModuleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewModuleViewController.m; sourceTree = "<group>"; };
@@ -163,6 +166,7 @@
 		E17EEC221B2E1AD4007C1E91 = {
 			isa = PBXGroup;
 			children = (
+				E1A05C261B7BC87F00734CCE /* README.md */,
 				E17EEC2D1B2E1AD4007C1E91 /* iLog */,
 				E17EEC471B2E1AD4007C1E91 /* iLogTests */,
 				E17EEC2C1B2E1AD4007C1E91 /* Products */,
@@ -172,7 +176,7 @@
 		E17EEC2C1B2E1AD4007C1E91 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E17EEC2B1B2E1AD4007C1E91 /* iLog.app */,
+				E17EEC2B1B2E1AD4007C1E91 /* iLogs.app */,
 				E17EEC441B2E1AD4007C1E91 /* iLogTests.xctest */,
 			);
 			name = Products;
@@ -206,6 +210,8 @@
 				E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */,
 				E17EECAD1B311F18007C1E91 /* Developer Tools */,
 				E17EEC2F1B2E1AD4007C1E91 /* Info.plist */,
+				E1E22BDA1B75A01C00662606 /* Change Log - Releases.rtf */,
+				E1E22BDB1B75A07C00662606 /* Change Log - Builds.rtf */,
 				E17EEC301B2E1AD4007C1E91 /* main.m */,
 				E17EEC961B2F9C51007C1E91 /* iLog.pch */,
 			);
@@ -292,9 +298,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E17EEC2A1B2E1AD4007C1E91 /* iLog */ = {
+		E17EEC2A1B2E1AD4007C1E91 /* iLogs */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E17EEC4E1B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLog" */;
+			buildConfigurationList = E17EEC4E1B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLogs" */;
 			buildPhases = (
 				E17EEC271B2E1AD4007C1E91 /* Sources */,
 				E17EEC281B2E1AD4007C1E91 /* Frameworks */,
@@ -304,9 +310,9 @@
 			);
 			dependencies = (
 			);
-			name = iLog;
+			name = iLogs;
 			productName = iLog;
-			productReference = E17EEC2B1B2E1AD4007C1E91 /* iLog.app */;
+			productReference = E17EEC2B1B2E1AD4007C1E91 /* iLogs.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E17EEC431B2E1AD4007C1E91 /* iLogTests */ = {
@@ -359,7 +365,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E17EEC2A1B2E1AD4007C1E91 /* iLog */,
+				E17EEC2A1B2E1AD4007C1E91 /* iLogs */,
 				E17EEC431B2E1AD4007C1E91 /* iLogTests */,
 			);
 		};
@@ -427,7 +433,7 @@
 /* Begin PBXTargetDependency section */
 		E17EEC461B2E1AD4007C1E91 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E17EEC2A1B2E1AD4007C1E91 /* iLog */;
+			target = E17EEC2A1B2E1AD4007C1E91 /* iLogs */;
 			targetProxy = E17EEC451B2E1AD4007C1E91 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -488,7 +494,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -526,7 +532,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -537,7 +543,7 @@
 		E17EEC4F1B2E1AD4007C1E91 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Icon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = iLog/iLog.pch;
 				INFOPLIST_FILE = iLog/Info.plist;
@@ -551,7 +557,7 @@
 		E17EEC501B2E1AD4007C1E91 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Icon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = iLog/iLog.pch;
 				INFOPLIST_FILE = iLog/Info.plist;
@@ -608,7 +614,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E17EEC4E1B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLog" */ = {
+		E17EEC4E1B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLogs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E17EEC4F1B2E1AD4007C1E91 /* Debug */,
