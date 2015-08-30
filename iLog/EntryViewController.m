@@ -54,11 +54,16 @@
 - (id)initWithCRUD:(CRUD)value entry:(NSArray *)arrayEntry delegate:(id< EntryViewConrollerDelegate>)delegateValue {
     self = [super initWithNibName: @"EntryViewController" bundle: [NSBundle mainBundle]];
     
+    [UniversalFunctions SQL_ENTRIES_voidCreateTransactionRecord];
+    
     if (self) {
         arrayM = [[NSMutableArray alloc] initWithArray: arrayEntry];
         array = [NSMutableArray new];
         
         if (value == CTCreate) {
+            [[UniversalVariables globalVariables] ENTRIES_writeNewForEntry: arrayM];
+            arrayM = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnRecordWithMaxIDOfTable: CTSQLEntries]];
+            
             option = CTRead;
             
         }
@@ -443,6 +448,9 @@
 
 - (void)pressNavLeft:(id)sender {
     [self dismissFirstResponder];
+    
+    [UniversalFunctions SQL_ENTRIES_voidRollbackTransaction];
+    
     [self dismissViewControllerAnimated: YES completion: ^{ }];
     
 }
@@ -461,6 +469,9 @@
         }
             
     }
+    
+    [UniversalFunctions SQL_ENTRIES_voidCommitTransaction];
+    
     [self dismissViewControllerAnimated: YES completion: ^{ }];
     if ([delegate respondsToSelector: @selector( entryViewController:didFinishWithEntry:)])
         [delegate entryViewController: self didFinishWithEntry: arrayM];
