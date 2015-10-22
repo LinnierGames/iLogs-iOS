@@ -57,7 +57,6 @@
     if (self) {
         arrayM = [[NSMutableArray alloc] initWithArray: arrayEntry];
         array = [NSMutableArray new];
-        
         option = value;
         delegate = delegateValue;
         

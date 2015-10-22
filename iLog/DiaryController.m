@@ -413,45 +413,6 @@
     
 }
 
-+ (void)SQL_ENTRIES_voidCreateTransactionRecord {
-    NSString *sqlStatement = [NSString stringWithFormat: @"BEGIN TRANSACTION;"];
-    char *err;
-    if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
-        sqlite3_close( [[UniversalVariables globalVariables] database]);
-        NSLog( @"***Failed to exe row: +SQL_ENTRIES_voidCreateTransactionRecord:");
-        NSAssert( 0, [NSString stringWithUTF8String: err]);
-        
-    } else
-        NSLog( @"exe: +SQL_ENTRIES_voidCreateTransactionRecord:");
-    
-}
-
-+ (void)SQL_ENTRIES_voidCommitTransaction {
-    NSString *sqlStatement = [NSString stringWithFormat: @"COMMIT;"];
-    char *err;
-    if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
-        sqlite3_close( [[UniversalVariables globalVariables] database]);
-        NSLog( @"***Failed to exe row: +SQL_ENTRIES_voidCommitTransaction:");
-        NSAssert( 0, [NSString stringWithUTF8String: err]);
-        
-    } else
-        NSLog( @"exe: +SQL_ENTRIES_voidCommitTransaction:");
-    
-}
-
-+ (void)SQL_ENTRIES_voidRollbackTransaction {
-    NSString *sqlStatement = [NSString stringWithFormat: @"ROLLBACK;"];
-    char *err;
-    if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
-        sqlite3_close( [[UniversalVariables globalVariables] database]);
-        NSLog( @"***Failed to exe row: +SQL_ENTRIES_voidRollbackTransaction:");
-        NSAssert( 0, [NSString stringWithUTF8String: err]);
-        
-    } else
-        NSLog( @"exe: +SQL_ENTRIES_voidRollbackTransaction:");
-    
-}
-
 @end
 
 #pragma mark NSDate category (COLOR_)

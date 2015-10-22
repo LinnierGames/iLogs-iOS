@@ -240,10 +240,10 @@
             }* Unessary due to arrays pointing to the same address */
             [tableView reloadRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationNone];
             if (perviousState) { //Highlighted -> Unghighlighted
-                [[dicChanges objectForKey: @"delete"] addObject: [NSArray arrayWithObjects: [[[[arrayTable objectAtIndex: indexPath.section] objectAtIndex: indexPath.row] optionsDictionary] objectForKey: @"id"], nil]];
+                [[dicChanges objectForKey: @"delete"] addObject: [NSArray arrayWithObjects: [[[[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row] optionsDictionary] objectForKey: @"id"], nil]];
                 
             } else {
-                [[dicChanges objectForKey: @"insert"] addObject: [NSArray arrayWithObjects: [[[[arrayTable objectAtIndex: indexPath.section] objectAtIndex: indexPath.row] optionsDictionary] objectForKey: @"id"], nil]];
+                [[dicChanges objectForKey: @"insert"] addObject: [NSArray arrayWithObjects: [[[[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row] optionsDictionary] objectForKey: @"id"], nil]];
                 
             }
             
