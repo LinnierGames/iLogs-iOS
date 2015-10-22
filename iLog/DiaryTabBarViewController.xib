@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -13,6 +13,7 @@
             <tabBar key="tabBar" contentMode="scaleToFill" id="Ma5-wZ-zqO">
                 <rect key="frame" x="0.0" y="551" width="600" height="49"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                <animations/>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </tabBar>
             <viewControllers>
@@ -21,6 +22,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="BCl-FW-Qv1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </navigationBar>
                     <viewControllers>
                         <viewController title="Today's Diary" id="Rg9-6o-sGp" customClass="DiaryViewController">
@@ -34,6 +36,7 @@
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Wbc-Ni-4FE">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="dataSource" destination="Rg9-6o-sGp" id="gXD-J6-c0L"/>
@@ -41,6 +44,7 @@
                                         </connections>
                                     </tableView>
                                 </subviews>
+                                <animations/>
                                 <constraints>
                                     <constraint firstItem="Wbc-Ni-4FE" firstAttribute="leading" secondItem="esZ-2S-ipK" secondAttribute="leading" id="2Hk-du-qCT"/>
                                     <constraint firstAttribute="trailing" secondItem="Wbc-Ni-4FE" secondAttribute="trailing" id="8FN-Td-fcb"/>
@@ -61,6 +65,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="uWP-xw-KiJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </navigationBar>
                     <viewControllers>
                         <viewController title="Diary Map" id="pnk-ZD-CbD" customClass="DiaryMapViewController">
@@ -77,6 +82,7 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stories" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5KG-Wb-1eE" userLabel="Header">
                                                 <rect key="frame" x="0.0" y="16" width="600" height="35"/>
+                                                <animations/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="Qmp-PR-wuP"/>
                                                 </constraints>
@@ -86,6 +92,7 @@
                                             </label>
                                             <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="sHf-cn-pGw">
                                                 <rect key="frame" x="0.0" y="94" width="574" height="458"/>
+                                                <animations/>
                                                 <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="pnk-ZD-CbD" id="dA7-XX-G5q"/>
@@ -93,6 +100,7 @@
                                                 </connections>
                                             </tableView>
                                         </subviews>
+                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -110,6 +118,7 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uda-p4-H2y" userLabel="Header">
                                                 <rect key="frame" x="0.0" y="8" width="600" height="35"/>
+                                                <animations/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="UwV-0F-MnV"/>
                                                 </constraints>
@@ -119,6 +128,7 @@
                                             </label>
                                             <tableView clipsSubviews="YES" tag="3" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="7k2-W4-7UN">
                                                 <rect key="frame" x="26" y="94" width="574" height="458"/>
+                                                <animations/>
                                                 <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="pnk-ZD-CbD" id="zk2-90-gp4"/>
@@ -126,6 +136,7 @@
                                                 </connections>
                                             </tableView>
                                         </subviews>
+                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -143,6 +154,7 @@
                                         <subviews>
                                             <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="EMS-Aq-XdA">
                                                 <rect key="frame" x="0.0" y="94" width="600" height="458"/>
+                                                <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="pnk-ZD-CbD" id="GHr-EB-azg"/>
@@ -151,9 +163,11 @@
                                             </tableView>
                                             <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8GC-bn-sCJ">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                                <animations/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             </imageView>
                                         </subviews>
+                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -168,6 +182,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="phT-od-2w7" firstAttribute="trailing" secondItem="Ufw-GV-USG" secondAttribute="trailing" id="2at-hy-dSf"/>
@@ -207,6 +222,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zSa-en-Vwq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </navigationBar>
                     <viewControllers>
                         <viewController title="Settings" id="dnU-zJ-xeD" customClass="SettingsViewController">
@@ -220,9 +236,11 @@
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2yY-du-7nt">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                        <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableView>
                                 </subviews>
+                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="2yY-du-7nt" secondAttribute="bottom" id="2U5-cx-Cwn"/>
                                     <constraint firstItem="2yY-du-7nt" firstAttribute="leading" secondItem="xNW-pX-HOm" secondAttribute="leading" id="Fjo-ec-hBD"/>
