@@ -57,7 +57,7 @@
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "Icon-29-1.png",
+      "filename" : "Icon-30.png",
       "scale" : "1x"
     },
     {
@@ -115,9 +115,16 @@
       "scale" : "2x"
     },
     {
+      "size" : "60x60",
       "idiom" : "car",
-      "size" : "120x120",
-      "scale" : "1x"
+      "filename" : "Icon-60@2x-1.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "60x60",
+      "idiom" : "car",
+      "filename" : "Icon-60@3x-1.png",
+      "scale" : "3x"
     },
     {
       "size" : "24x24",
@@ -136,18 +143,21 @@
     {
       "size" : "29x29",
       "idiom" : "watch",
+      "filename" : "Icon-29@2x-2.png",
       "role" : "companionSettings",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "watch",
+      "filename" : "Icon-29@3x-1.png",
       "role" : "companionSettings",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "watch",
+      "filename" : "Icon-40@2x-2.png",
       "scale" : "2x",
       "role" : "appLauncher",
       "subtype" : "38mm"
@@ -172,6 +182,11 @@
       "scale" : "2x",
       "role" : "quickLook",
       "subtype" : "42mm"
+    },
+    {
+      "idiom" : "car",
+      "size" : "120x120",
+      "scale" : "1x"
     }
   ],
   "info" : {
