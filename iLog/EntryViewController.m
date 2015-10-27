@@ -7,13 +7,16 @@
 //
 
 #import "EntryViewController.h"
+#import "UITableViewModuleViewController.h"
 #import "DiaryController.h"
 
-@interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, UIContentPickerDelegate, UIActionSheetDelegate> {
+@interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, UIContentPickerDelegate, UIActionSheetDelegate, UITableViewModuleViewController> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayM;
         UICustomTableViewCell *cellSubject;
         UICustomTableViewCell *cellBody;
+        UICustomTableViewCell *cellStories;
+        UICustomTableViewCell *cellTags;
     NSMutableArray *array;
     
 }
@@ -54,7 +57,6 @@
     if (self) {
         arrayM = [[NSMutableArray alloc] initWithArray: arrayEntry];
         array = [NSMutableArray new];
-        
         option = value;
         delegate = delegateValue;
         
@@ -198,12 +200,14 @@
                     [cell.textfield setTag: 2];
                     [cell.textfield setBorderStyle: UITextBorderStyleNone];
                     [cell.textfield setPlaceholder: @"Stories"];
+                    cellStories = cell;
                     break;
                     
                 } case 2: {
                     [cell.textfield setTag: 3];
                     [cell.textfield setBorderStyle: UITextBorderStyleNone];
                     [cell.textfield setPlaceholder: @"Tags"];
+                    cellTags = cell;
                     break;
                     
                 } default: break;
@@ -306,6 +310,15 @@
 
 #pragma mark Void's > Pre-Defined Functions (TEXT FIELD)
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if ([cellTags.textfield isEqual: textField]) {
+        UINavigationController *navTags = [UITableViewModuleViewController allocWithModule: CTTableViewTags withContent: @{@"tags":[[arrayM optionsDictionary] objectForKey: @"tags"], @"groupedTags":[UniversalFunctions TAGGROUPS_returnGroupedTags]}];
+        [self presentViewController: navTags animated: YES completion: ^{ }];
+        
+    }
+    
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([textField isEqual: cellSubject.textfield]) {
         [arrayM replaceObjectAtIndex: ENTRIES_subject withObject: textField.text];
@@ -389,10 +402,43 @@
     
 }
 
+#pragma mark Void's > Pre-Defined Functions (TABLE VIEW MODULE)
+
+- (void)tableViewModule:(UITableViewModuleViewController *)tableViewModule didFinishWithChanges:(NSDictionary *)dictionary {
+    switch (tableViewModule.module) {
+        case CTTableViewTags: {
+            //Add Records to TagEntriesRelationship Table
+            for (NSArray *arrayChange in [dictionary objectForKey: @"insert"]) {
+                NSNumber *numberTagID = [arrayChange firstObject];
+                NSArray *arrayRelationship = [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberTagID entryID: [[arrayM optionsDictionary] objectForKey: @"id"]];
+                [[UniversalVariables globalVariables] TAGENTRIES_writeNewForTagEntryRelationship: arrayRelationship];
+                [[[arrayM optionsDictionary] objectForKey: @"tags"] addObject: arrayRelationship];
+                
+            }
+            //Remove Recoreds from TagEntriesRelationship Table
+            for (NSArray *arrayChange in [dictionary objectForKey: @"delete"]) {
+                NSNumber *numberTagID = [arrayChange firstObject];
+                NSArray *arrayRelationship = [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberTagID entryID: [[arrayM optionsDictionary] objectForKey: @"id"]];
+                [[UniversalVariables globalVariables] TAGENTRIES_deleteForTagEntryRelationship: arrayRelationship];
+                [[[arrayM optionsDictionary] objectForKey: @"tags"] removeObjectIdenticalTo: arrayRelationship];
+                
+                
+            }
+            break;
+            
+        }
+            
+        default:
+            break;
+    }
+    
+}
+
 #pragma mark - IBActions
 
 - (void)pressNavLeft:(id)sender {
     [self dismissFirstResponder];
+    
     [self dismissViewControllerAnimated: YES completion: ^{ }];
     
 }
@@ -411,6 +457,7 @@
         }
             
     }
+    
     [self dismissViewControllerAnimated: YES completion: ^{ }];
     if ([delegate respondsToSelector: @selector( entryViewController:didFinishWithEntry:)])
         [delegate entryViewController: self didFinishWithEntry: arrayM];

@@ -12,6 +12,7 @@ typedef NS_ENUM(NSUInteger, CDUICustomTableViewCells) {
     CTUICustomTableViewCellTextField = 0,
     CTUICustomTableViewCellTextView = 1,
     CTUICustomTableViewCellTitleTextView = 2,
+    CTUICustomTableViewCellSearchBar = 4,
     /*app-Diary*/
     CTUICustomTableViewCellDiaryEntryAttributes = 3
     
@@ -33,6 +34,7 @@ typedef NS_ENUM(NSUInteger, CDUICustomTableViewCells) {
 @property ( nonatomic, retain) IBOutlet UIImageView *imageview3;
 @property ( nonatomic, retain) IBOutlet UITextField *textfield;
 @property ( nonatomic, retain) IBOutlet UITextView *textview;
+@property ( nonatomic, retain) IBOutlet UISearchBar *searchBar;
 
 @property ( assign) id< UICustomTableViewCellDelegate>  delegate;
 

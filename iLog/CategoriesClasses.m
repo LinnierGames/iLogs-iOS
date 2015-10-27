@@ -12,7 +12,7 @@
 
 - (void)presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag {
     [[UniversalVariables globalVariables] setCurrentView: viewControllerToPresent];
-    [self presentViewController: viewControllerToPresent animated: flag completion: ^{}];
+    [self presentViewController: viewControllerToPresent animated: flag completion: ^{ }];
     
 }
 

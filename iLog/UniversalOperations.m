@@ -189,11 +189,17 @@ NSString *SQLDatabase = @"database";
                 case CTSQLStories:
                     stringFocusTableTitle = @"Stories";
                     break;
+                case CTSQLStoryEntriesRelationship:
+                    stringFocusTableTitle = @"StoryEntriesRelationship";
+                    break;
                 case CTSQLTagGroups:
                     stringFocusTableTitle = @"TagGroups";
                     break;
                 case CTSQLTags:
                     stringFocusTableTitle = @"Tags";
+                    break;
+                case CTSQLTagEntriesRelationship:
+                    stringFocusTableTitle = @"TagEntriesRelationship";
                     break;
                 case CTSQLOutilnes:
                     stringFocusTableTitle = @"Outlines";
@@ -311,6 +317,21 @@ NSString *SQLDatabase = @"database";
                 }
                 break;
                 
+            } case CTSQLTagEntriesRelationship: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM TagEntriesRelationship ORDER BY id DESC;", &statement, &err)) {
+                    while (SQLStatementStep( statement)) {
+                        NSMutableArray *array =  SQLStatementRowIntoTagEntryRelationshipEntry( statement);
+                        [arrayContents addObject: array];
+                        
+                    }
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
+                break;
+                
             } case CTSQLOutilnes: {
                 if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM Outlines ORDER BY id DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
@@ -340,6 +361,50 @@ NSString *SQLDatabase = @"database";
         return [UniversalFunctions SQL_returnContentsOfTable: table];
         
     }
+    
+}
+
++ (NSArray *)SQL_returnRecordWithMaxIDOfTable:(CDSQLTables)table {
+    int intIDValue = 0;
+    NSMutableArray *array = [NSMutableArray array];
+    if ([UniversalFunctions SQL_returnStatusOfTable: table]) {
+        sqlite3_stmt *statement;
+        const char *err;
+        switch (table) {
+            case CTSQLEntries: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT MAX(id) FROM Entries;", &statement, &err)) {
+                    while (SQLStatementStep( statement))
+                        intIDValue = sqlite3_column_int( statement, 0);
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Entries where id = %d;", intIDValue], &statement, &err)) {
+                    while (SQLStatementStep( statement)) {
+                        array = SQLStatementRowIntoEntryEntry( statement);
+                        [array updateOptionsDictionary: [[UniversalVariables globalVariables] ENTRIES_returnEntryOptionsForEntry: array]];
+                        
+                    }
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
+                
+                break;
+                
+            }
+                
+            default:
+                break;
+        }
+        
+    }
+    
+    return array;
     
 }
 

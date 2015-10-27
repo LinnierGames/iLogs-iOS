@@ -814,6 +814,13 @@ static inline NSMutableArray * SQLStatementRowIntoTagGroupEntry( sqlite3_stmt *s
 + (NSArray *)TAGGROUPS_returnGroupedTags;
 + (NSArray *)TAGGROUPS_returnGroupedTagsWithTagGroups:(const NSArray *)arrayTagGruops;
 
+/**
+ * Used only to copy the formatted array created by +TAGGROUPS_returnGroupedTagsWithTagGroups: This only "copies" the tags, 
+ * no information about the tagGroup
+ * @return NSArray : tag format
+ */
++ (NSArray *)TAGGROUPS_returnCopyOfTagsWithTagGroups:(const NSArray *)arrayTagGroups;
+
 @end
 
 #pragma mark - Tags
@@ -919,6 +926,82 @@ static inline NSMutableArray * SQLStatementRowIntoTagEntry( sqlite3_stmt *statem
  */
 + (NSArray *)TAGS_returnGroupedTags;
 + (NSArray *)TAGS_returnGroupedTagsWithTags:(const NSArray *)arrayTags;
+
+@end
+
+#pragma mark - TagEntriesRelationship
+
+#pragma mark NSArray category (ARRAY_TAGENTRIES_)
+
+static const NSUInteger TAGENTRIES_tagID = 0;
+static const NSUInteger TAGENTRIES_entryID = 1;
+
+@interface NSArray (ARRAY_TAGENTRIES_)
+
++ (id)arrayNEWTagEntriesRelationship;
++ (id)arrayNEWTagEntriesRelationshipWithTagID:(NSNumber *)tagID entryID:(NSNumber *)entryID;
++ (id)arrayNEWTagEntriesRelationshipWithTagID:(NSNumber *)tagID entryID:(NSNumber *)entryID options:(NSMutableDictionary *)dicIndex;
+- (NSNumber *)objectTagEntry_tagID;
+- (NSNumber *)objectTagEntry_entryID;
+
+@end
+
+#pragma mark UniversalVariables category (TAGENTRIES_)
+
+@interface UniversalVariables (TAGENTRIES_)
+
+- (void)TAGENTRIES_writeNewForTagEntryRelationship:(NSArray *)arrayRelationship;
+- (void)TAGENTRIES_updateForTagEntryRelationship:(NSArray *)arrayRelationship;
+- (void)TAGENTRIES_deleteForTagEntryRelationship:(NSArray *)arrayRelationship;
+
+- (NSMutableDictionary *)TAGENTRIES_returnOptionsForTagEntryRelationship:(NSArray *)arrayRelationship;
+
+@end
+
+#pragma mark UniversalFunctions category (SQL_TAGENTRIES_)
+
+static const int SQL_TAGENTRIES_id = 0;
+static const int SQL_TAGENTRIES_tagid = 1;
+static const int SQL_TAGENTRIES_entryid = 2;
+
+/**
+ * From the parameter list, an array is produced in TagEntryRelationship format
+ * @param [in] statement incoming value from previous call SQLStatementStep(..)
+ * @return NSArray: TagEntryRelationship format
+ */
+static inline NSMutableArray * SQLStatementRowIntoTagEntryRelationshipEntry( sqlite3_stmt *statement) {
+    NSNumber *numberTagID = [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_TAGENTRIES_tagid)];
+    NSNumber *numberEntryID = [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_TAGENTRIES_entryid)];
+    
+    NSMutableArray *array = [NSMutableArray arrayNEWTagEntriesRelationshipWithTagID: numberTagID entryID: numberEntryID options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_TAGENTRIES_id)], @"id", nil]];
+    
+    return array;
+    
+};
+
+@interface UniversalFunctions (SQL_TAGENTRIES_)
+
+/**
+ * Inserts a row to the table TagEntriesRelationship
+ * @param [in] arrayEntry: TagEntryRelationship
+ */
++ (void)SQL_TAGENTRIES_voidInsertRowWithArray:(const NSArray *)arrayRelationship;
+/**
+ * Updates an existing row to the table TagEntriesRelationship
+ * @param [in] arrayEntry: TagEntryRelationship
+ */
++ (void)SQL_TAGENTRIES_voidUpdateRowWithArray:(const NSArray *)arrayRelationship;
+/**
+ * Deletes a row to the table TagEntriesRelationship
+ * @param [in] arrayEntry: TagEntryRelationship
+ */
++ (void)SQL_TAGENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayRelationship;
+
+@end
+
+#pragma mark UniversalFunctions category (TAGENTRIES_)
+
+@interface UniversalFunctions (TAGENTRIES_)
 
 @end
 

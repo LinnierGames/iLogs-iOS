@@ -21,7 +21,6 @@
 		E17EEC311B2E1AD4007C1E91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC301B2E1AD4007C1E91 /* main.m */; };
 		E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */; };
 		E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC361B2E1AD4007C1E91 /* ViewController.m */; };
-		E17EEC4B1B2E1AD4007C1E91 /* iLogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC4A1B2E1AD4007C1E91 /* iLogTests.m */; };
 		E17EEC581B2E1C58007C1E91 /* DiaryTabBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC561B2E1C58007C1E91 /* DiaryTabBarViewController.xib */; };
 		E17EEC921B2F47C4007C1E91 /* DiaryTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC911B2F47C4007C1E91 /* DiaryTabBarViewController.m */; };
 		E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC941B2F9442007C1E91 /* UniversalOperations.m */; };
@@ -36,16 +35,6 @@
 		E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AF11B3C5BBA00C9C995 /* UITableViewModuleViewController.xib */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		E17EEC451B2E1AD4007C1E91 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E17EEC231B2E1AD4007C1E91 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E17EEC2A1B2E1AD4007C1E91;
-			remoteInfo = iLog;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		E12640571B38709300E423E7 /* UIContentPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIContentPicker.h; sourceTree = "<group>"; };
 		E12640581B38709300E423E7 /* UIContentPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIContentPicker.m; sourceTree = "<group>"; };
@@ -59,7 +48,7 @@
 		E146E4A61B347A5C006DC1EC /* UICustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustom.h; sourceTree = "<group>"; };
 		E146E4A91B348B79006DC1EC /* CategoriesClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesClasses.h; sourceTree = "<group>"; };
 		E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesClasses.m; sourceTree = "<group>"; };
-		E17EEC2B1B2E1AD4007C1E91 /* iLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E17EEC2B1B2E1AD4007C1E91 /* iLogs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLogs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17EEC2F1B2E1AD4007C1E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E17EEC301B2E1AD4007C1E91 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E17EEC321B2E1AD4007C1E91 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -68,7 +57,6 @@
 		E17EEC361B2E1AD4007C1E91 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E17EEC391B2E1AD4007C1E91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E17EEC3E1B2E1AD4007C1E91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		E17EEC441B2E1AD4007C1E91 /* iLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17EEC491B2E1AD4007C1E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E17EEC4A1B2E1AD4007C1E91 /* iLogTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iLogTests.m; sourceTree = "<group>"; };
 		E17EEC561B2E1C58007C1E91 /* DiaryTabBarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiaryTabBarViewController.xib; sourceTree = "<group>"; };
@@ -90,6 +78,9 @@
 		E17EECAA1B311F15007C1E91 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		E17EECB21B312C5E007C1E91 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E1A05C261B7BC87F00734CCE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = iLog/README.md; sourceTree = "<group>"; };
+		E1E22BDA1B75A01C00662606 /* Change Log - Releases.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Releases.rtf"; sourceTree = "<group>"; };
+		E1E22BDB1B75A07C00662606 /* Change Log - Builds.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Builds.rtf"; sourceTree = "<group>"; };
 		E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E1EF7AEF1B3C5BBA00C9C995 /* UITableViewModuleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewModuleViewController.h; sourceTree = "<group>"; };
 		E1EF7AF01B3C5BBA00C9C995 /* UITableViewModuleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewModuleViewController.m; sourceTree = "<group>"; };
@@ -103,13 +94,6 @@
 			files = (
 				E14036CB1B3131A4005D2608 /* libz.dylib in Frameworks */,
 				E14036CA1B313194005D2608 /* libsqlite3.dylib in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E17EEC411B2E1AD4007C1E91 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +147,7 @@
 		E17EEC221B2E1AD4007C1E91 = {
 			isa = PBXGroup;
 			children = (
+				E1A05C261B7BC87F00734CCE /* README.md */,
 				E17EEC2D1B2E1AD4007C1E91 /* iLog */,
 				E17EEC471B2E1AD4007C1E91 /* iLogTests */,
 				E17EEC2C1B2E1AD4007C1E91 /* Products */,
@@ -172,8 +157,7 @@
 		E17EEC2C1B2E1AD4007C1E91 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E17EEC2B1B2E1AD4007C1E91 /* iLog.app */,
-				E17EEC441B2E1AD4007C1E91 /* iLogTests.xctest */,
+				E17EEC2B1B2E1AD4007C1E91 /* iLogs.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -206,6 +190,8 @@
 				E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */,
 				E17EECAD1B311F18007C1E91 /* Developer Tools */,
 				E17EEC2F1B2E1AD4007C1E91 /* Info.plist */,
+				E1E22BDA1B75A01C00662606 /* Change Log - Releases.rtf */,
+				E1E22BDB1B75A07C00662606 /* Change Log - Builds.rtf */,
 				E17EEC301B2E1AD4007C1E91 /* main.m */,
 				E17EEC961B2F9C51007C1E91 /* iLog.pch */,
 			);
@@ -292,9 +278,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E17EEC2A1B2E1AD4007C1E91 /* iLog */ = {
+		E17EEC2A1B2E1AD4007C1E91 /* iLogs */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E17EEC4E1B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLog" */;
+			buildConfigurationList = E17EEC4E1B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLogs" */;
 			buildPhases = (
 				E17EEC271B2E1AD4007C1E91 /* Sources */,
 				E17EEC281B2E1AD4007C1E91 /* Frameworks */,
@@ -304,28 +290,10 @@
 			);
 			dependencies = (
 			);
-			name = iLog;
+			name = iLogs;
 			productName = iLog;
-			productReference = E17EEC2B1B2E1AD4007C1E91 /* iLog.app */;
+			productReference = E17EEC2B1B2E1AD4007C1E91 /* iLogs.app */;
 			productType = "com.apple.product-type.application";
-		};
-		E17EEC431B2E1AD4007C1E91 /* iLogTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E17EEC511B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLogTests" */;
-			buildPhases = (
-				E17EEC401B2E1AD4007C1E91 /* Sources */,
-				E17EEC411B2E1AD4007C1E91 /* Frameworks */,
-				E17EEC421B2E1AD4007C1E91 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E17EEC461B2E1AD4007C1E91 /* PBXTargetDependency */,
-			);
-			name = iLogTests;
-			productName = iLogTests;
-			productReference = E17EEC441B2E1AD4007C1E91 /* iLogTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -339,10 +307,6 @@
 					E17EEC2A1B2E1AD4007C1E91 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = 8U3L6K9JA6;
-					};
-					E17EEC431B2E1AD4007C1E91 = {
-						CreatedOnToolsVersion = 6.3.2;
-						TestTargetID = E17EEC2A1B2E1AD4007C1E91;
 					};
 				};
 			};
@@ -359,8 +323,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E17EEC2A1B2E1AD4007C1E91 /* iLog */,
-				E17EEC431B2E1AD4007C1E91 /* iLogTests */,
+				E17EEC2A1B2E1AD4007C1E91 /* iLogs */,
 			);
 		};
 /* End PBXProject section */
@@ -378,13 +341,6 @@
 				E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */,
 				E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */,
 				E126405B1B3870A000E423E7 /* UIContentPicker.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E17EEC421B2E1AD4007C1E91 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,23 +370,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E17EEC401B2E1AD4007C1E91 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E17EEC4B1B2E1AD4007C1E91 /* iLogTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E17EEC461B2E1AD4007C1E91 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E17EEC2A1B2E1AD4007C1E91 /* iLog */;
-			targetProxy = E17EEC451B2E1AD4007C1E91 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E17EEC381B2E1AD4007C1E91 /* Main.storyboard */ = {
@@ -488,7 +428,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -526,7 +466,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -537,7 +477,7 @@
 		E17EEC4F1B2E1AD4007C1E91 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Icon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = iLog/iLog.pch;
 				INFOPLIST_FILE = iLog/Info.plist;
@@ -551,7 +491,7 @@
 		E17EEC501B2E1AD4007C1E91 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Icon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PREFIX_HEADER = iLog/iLog.pch;
 				INFOPLIST_FILE = iLog/Info.plist;
@@ -559,40 +499,6 @@
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		E17EEC521B2E1AD4007C1E91 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = iLogTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iLog.app/iLog";
-			};
-			name = Debug;
-		};
-		E17EEC531B2E1AD4007C1E91 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = iLogTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iLog.app/iLog";
 			};
 			name = Release;
 		};
@@ -608,20 +514,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E17EEC4E1B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLog" */ = {
+		E17EEC4E1B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLogs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E17EEC4F1B2E1AD4007C1E91 /* Debug */,
 				E17EEC501B2E1AD4007C1E91 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E17EEC511B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLogTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E17EEC521B2E1AD4007C1E91 /* Debug */,
-				E17EEC531B2E1AD4007C1E91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

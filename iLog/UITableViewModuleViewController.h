@@ -15,14 +15,19 @@ typedef NS_ENUM(NSUInteger, CDTableViewModule) {
     
 };
 
+@protocol UITableViewModuleViewController;
+
 @interface UITableViewModuleViewController : UIViewController
 
 @property ( nonatomic, retain) NSMutableArray *arrayM;
 @property ( assign, readonly) CDTableViewModule module;
 
-- (id)initWithContent:(id)value;
+@property ( assign) id<UITableViewModuleViewController > delegate;
+
 - (id)initWithModule:(CDTableViewModule)moduleValue;
-- (id)initWithModule:(CDTableViewModule)moduleValue withContent:(NSArray *)arrayValue;
+- (id)initWithModule:(CDTableViewModule)moduleValue withContent:(id)content;
++ (UINavigationController *)allocWithModule:(CDTableViewModule)moduleValue;
++ (UINavigationController *)allocWithModule:(CDTableViewModule)moduleValue withContent:(id)content;
 
 @end
 

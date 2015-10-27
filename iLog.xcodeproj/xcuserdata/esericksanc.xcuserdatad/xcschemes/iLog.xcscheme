@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E17EEC2A1B2E1AD4007C1E91"
-               BuildableName = "iLog.app"
-               BlueprintName = "iLog"
+               BuildableName = "iLogs.app"
+               BlueprintName = "iLogs"
                ReferencedContainer = "container:iLog.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -57,8 +57,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E17EEC2A1B2E1AD4007C1E91"
-            BuildableName = "iLog.app"
-            BlueprintName = "iLog"
+            BuildableName = "iLogs.app"
+            BlueprintName = "iLogs"
             ReferencedContainer = "container:iLog.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -77,8 +77,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E17EEC2A1B2E1AD4007C1E91"
-            BuildableName = "iLog.app"
-            BlueprintName = "iLog"
+            BuildableName = "iLogs.app"
+            BlueprintName = "iLogs"
             ReferencedContainer = "container:iLog.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -96,8 +96,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E17EEC2A1B2E1AD4007C1E91"
-            BuildableName = "iLog.app"
-            BlueprintName = "iLog"
+            BuildableName = "iLogs.app"
+            BlueprintName = "iLogs"
             ReferencedContainer = "container:iLog.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
