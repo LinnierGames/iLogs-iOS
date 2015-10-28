@@ -927,6 +927,13 @@ static inline NSMutableArray * SQLStatementRowIntoTagEntry( sqlite3_stmt *statem
 + (NSArray *)TAGS_returnGroupedTags;
 + (NSArray *)TAGS_returnGroupedTagsWithTags:(const NSArray *)arrayTags;
 
+/**
+ * This will remove changes made like add one, but then remove the same object. this change "cancels" each other out
+ * therefore it's not needed
+ * @param [in,out] dictionary : in the format created for TAAGROUPS
+ */
++ (void)TAGS_voidRemoveDuplicateChangesForDictionary:(NSMutableDictionary *)dictionary;
+
 @end
 
 #pragma mark - TagEntriesRelationship

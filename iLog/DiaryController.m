@@ -1213,6 +1213,28 @@ alpha:1.0]
     
 }
 
++ (void)TAGS_voidRemoveDuplicateChangesForDictionary:(NSMutableDictionary *)dictionary {
+    NSUInteger index = 0;
+    while (index < [[dictionary objectForKey: @"insert"] count]) {
+        BOOL isFound = false;
+        NSUInteger subindex = 0;
+        while (subindex < [[dictionary objectForKey: @"delete"] count]) {
+            if ([[[dictionary objectForKey: @"insert"] objectAtIndex: index] isEqualToArray: [[dictionary objectForKey: @"delete"] objectAtIndex: subindex]]) {
+                [[dictionary objectForKey: @"insert"] removeObjectAtIndex: index];
+                [[dictionary objectForKey: @"delete"] removeObjectAtIndex: subindex];
+                isFound = true;
+                break;
+                
+            }
+            
+        }
+        if (!isFound)
+            index += 1;
+        
+    }
+    
+}
+
 @end
 
 #pragma mark - TagEntriesRelationship

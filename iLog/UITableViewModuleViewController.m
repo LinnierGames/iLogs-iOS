@@ -27,13 +27,6 @@
  */
 + (void)TAGGROUPS_voidUnhighlightTagsForFormattedTagGroups:(NSArray *)arrayTagGroups;
 
-/**
- * This will remove changes made like add one, but then remove the same object. this change "cancels" each other out
- * therefore it's not needed
- * @param [in,out] dictionary : in the format created for TAAGROUPS
- */
-+ (void)TAGGROUPS_voidRemoveDuplicateChangesForDictionary:(NSMutableDictionary *)dictionary;
-
 @end
 
 @implementation UITableViewModuleViewController
@@ -337,7 +330,7 @@
 }
 
 - (void)pressRightNav:(id)sender {
-    [UniversalFunctions TAGGROUPS_voidRemoveDuplicateChangesForDictionary: dicChanges];
+    [UniversalFunctions TAGS_voidRemoveDuplicateChangesForDictionary: dicChanges];
     if ([delegate respondsToSelector: @selector( tableViewModule:didFinishWithChanges:)])
          [delegate tableViewModule: self didFinishWithChanges: dicChanges];
     //Dismiss
@@ -365,28 +358,6 @@
                  [[[arrayTagGroups objectAtIndex: groupIndex] objectAtIndex: tagIndex] addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool: NO], @"highlighted", nil]];
             
         }
-        
-    }
-    
-}
-
-+ (void)TAGGROUPS_voidRemoveDuplicateChangesForDictionary:(NSMutableDictionary *)dictionary {
-    NSUInteger index = 0;
-    while (index < [[dictionary objectForKey: @"insert"] count]) {
-        BOOL isFound = false;
-        NSUInteger subindex = 0;
-        while (subindex < [[dictionary objectForKey: @"delete"] count]) {
-            if ([[[dictionary objectForKey: @"insert"] objectAtIndex: index] isEqualToArray: [[dictionary objectForKey: @"delete"] objectAtIndex: subindex]]) {
-                [[dictionary objectForKey: @"insert"] removeObjectAtIndex: index];
-                [[dictionary objectForKey: @"delete"] removeObjectAtIndex: subindex];
-                isFound = true;
-                break;
-                
-            }
-            
-        }
-        if (!isFound)
-            index += 1;
         
     }
     
