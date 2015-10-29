@@ -243,7 +243,7 @@
 }
 
 + (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue isBookmarked:(BOOL)boolBookmarkedValue {
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue emotion: emotionValue weatherCondition: weatherValue temperature: temperatureValue isBookmarked: boolBookmarkedValue options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [[UniversalVariables globalVariables] DIARIES_returnFirstDiary], @"diary", [NSArray array], @"tags", nil]];
+    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue emotion: emotionValue weatherCondition: weatherValue temperature: temperatureValue isBookmarked: boolBookmarkedValue options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [[UniversalVariables globalVariables] DIARIES_returnFirstDiary], @"diary", [NSMutableArray array], @"tags", nil]];
     
 }
 
@@ -331,7 +331,7 @@
         NSAssert( 0, [NSString stringWithUTF8String: err]);
         
     }
-    [dictionary setObject: [NSArray array] forKey: @"tags"];
+    [dictionary setObject: [NSMutableArray array] forKey: @"tags"];
     
     return dictionary;
     
@@ -1219,7 +1219,7 @@ alpha:1.0]
         BOOL isFound = false;
         NSUInteger subindex = 0;
         while (subindex < [[dictionary objectForKey: @"delete"] count]) {
-            if ([[[dictionary objectForKey: @"insert"] objectAtIndex: index] isEqualToArray: [[dictionary objectForKey: @"delete"] objectAtIndex: subindex]]) {
+            if ([[[dictionary objectForKey: @"insert"] objectAtIndex: index] isEqualToNumber: [[dictionary objectForKey: @"delete"] objectAtIndex: subindex]]) {
                 [[dictionary objectForKey: @"insert"] removeObjectAtIndex: index];
                 [[dictionary objectForKey: @"delete"] removeObjectAtIndex: subindex];
                 isFound = true;

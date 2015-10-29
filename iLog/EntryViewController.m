@@ -312,7 +312,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if ([cellTags.textfield isEqual: textField]) {
-        UINavigationController *navTags = [UITableViewModuleViewController allocWithModule: CTTableViewTags withContent: @{@"tags":[[arrayM optionsDictionary] objectForKey: @"tags"], @"groupedTags":[UniversalFunctions TAGGROUPS_returnGroupedTags]}];
+        UINavigationController *navTags = [UITableViewModuleViewController allocWithModule: CTTableViewTags withContent: @{@"tags": [[arrayM optionsDictionary] objectForKey: @"tags"], @"groupedTags": [UniversalFunctions TAGGROUPS_returnGroupedTags]}];
         [(UITableViewModuleViewController *)navTags.topViewController setDelegate: self];
         [self presentViewController: navTags animated: YES completion: ^{ }];
         
@@ -412,28 +412,39 @@
                 [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"tagChanges"];
             
             //Add Objects of id values Added to the :tagsInsert List
-            for (NSArray *arrayChange in [dictionary objectForKey: @"insert"]) {
-                NSNumber *numberTagID = [arrayChange firstObject];
-                if (![[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] containsObject: numberTagID])
+            for (NSNumber *numberTagID in [dictionary objectForKey: @"insert"]) {
+                if (![[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] containsObject: numberTagID]) {
                     [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] addObject: numberTagID];
+                    NSArray *arrayNewTag = [[UniversalFunctions SQL_returnContentOfTable: CTSQLTags withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberTagID intValue]]] firstObject];
+                    [[[arrayM optionsDictionary] objectForKey: @"tags"] addObject: arrayNewTag];
+                    
+                }
                 
             }
             
             //Add Objects of id values Added to the :tagsDelete List
-            for (NSArray *arrayChange in [dictionary objectForKey: @"delete"]) {
-                NSNumber *numberTagID = [arrayChange firstObject];
-                if (![[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] containsObject: numberTagID])
+            for (NSNumber *numberTagID in [dictionary objectForKey: @"delete"]) {
+                if (![[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] containsObject: numberTagID]) {
                     [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] addObject: numberTagID];
+                    for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"tags"] count]; index += 1) {
+                        if ([[[[[[arrayM optionsDictionary] objectForKey: @"tags"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberTagID]) {
+                            [[[arrayM optionsDictionary] objectForKey: @"tags"] removeObjectAtIndex: index];
+                            break;
+                            
+                        }
+                        
+                    }
+                    
+                }
                 
             }
             [UniversalFunctions TAGS_voidRemoveDuplicateChangesForDictionary: [[arrayM optionsDictionary] objectForKey: @"tagChanges"]];
-            
             break;
             
         } default:
             break;
     }
-    arrayM;
+    [[arrayM optionsDictionary] writeToFile: [UniversalVariables dataFilePathWithFileName: @"templist" extension: @"plist"] atomically: YES];
     
 }
 
