@@ -388,7 +388,7 @@ NSString *SQLDatabase = @"database";
             } case CTSQLOutilnes: {
                 if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Outines %@;", suffix], &statement, &err)) {
                     while (SQLStatementStep( statement)) {
-                        NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+                        NSMutableArray *array = SQLStatementRowIntoOutlineEntry( statement);
                         [arrayContents addObject: array];
                         
                     }
@@ -403,7 +403,7 @@ NSString *SQLDatabase = @"database";
             } case CTSQLStories: {
                 if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Stories %@;", suffix], &statement, &err)) {
                     while (SQLStatementStep( statement)) {
-                        NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+                        NSMutableArray *array = SQLStatementRowIntoStoryEntry( statement);
                         [arrayContents addObject: array];
                         
                     }
@@ -418,7 +418,7 @@ NSString *SQLDatabase = @"database";
             } case CTSQLEntries: {
                 if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Entries %@;", suffix], &statement, &err)) {
                     while (SQLStatementStep( statement)) {
-                        NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+                        NSMutableArray *array = SQLStatementRowIntoEntryEntry( statement);
                         [arrayContents addObject: array];
                         
                     }
@@ -433,7 +433,7 @@ NSString *SQLDatabase = @"database";
             } case CTSQLTagGroups: {
                 if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM TagGroups %@;", suffix], &statement, &err)) {
                     while (SQLStatementStep( statement)) {
-                        NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+                        NSMutableArray *array = SQLStatementRowIntoTagGroupEntry( statement);
                         [arrayContents addObject: array];
                         
                     }
@@ -448,7 +448,7 @@ NSString *SQLDatabase = @"database";
             } case CTSQLTags: {
                 if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Tags %@;", suffix], &statement, &err)) {
                     while (SQLStatementStep( statement)) {
-                        NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+                        NSMutableArray *array = SQLStatementRowIntoTagEntry( statement);
                         [arrayContents addObject: array];
                         
                     }
