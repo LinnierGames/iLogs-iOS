@@ -22,6 +22,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [UniversalFunctions SQL_voidCreateDatabaseSchema];
+    
     return YES;
 }
 
