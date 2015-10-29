@@ -300,11 +300,14 @@
 
 - (void)ENTRIES_writeNewForEntry:(NSArray *)arrayEntry {
     [UniversalFunctions SQL_ENTRIES_voidInsertRowWithArray: arrayEntry];
+    [[arrayEntry optionsDictionary] setObject: [[[UniversalFunctions SQL_returnRecordWithMaxIDOfTable: CTSQLEntries] optionsDictionary] objectForKey: @"id"] forKey: @"id"];
+    [UniversalFunctions SQL_ENTRIES_voidApplyChangesWithArray: arrayEntry];
     
 }
 
 - (void)ENTRIES_updateForEntry:(NSArray *)arrayEntry {
     [UniversalFunctions SQL_ENTRIES_voidUpdateRowForArray: arrayEntry];
+    [UniversalFunctions SQL_ENTRIES_voidApplyChangesWithArray: arrayEntry];
     
 }
 
@@ -408,6 +411,18 @@
     } else {
         [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
         [UniversalFunctions SQL_ENTRIES_voidDeleteRowWithArray: arrayEntry];
+        
+    }
+    
+}
+
++ (void)SQL_ENTRIES_voidApplyChangesWithArray:(const NSArray *)arrayEntry {
+    for (NSNumber *numberInt in [[[arrayEntry optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"]) {
+        [UniversalFunctions SQL_TAGENTRIES_voidInsertRowWithArray: [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberInt entryID: [[arrayEntry optionsDictionary] objectForKey: @"id"]]];
+        
+    }
+    for (NSNumber *numberInt in [[[arrayEntry optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"]) {
+        [UniversalFunctions SQL_TAGENTRIES_voidDeleteRowWithArray: [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberInt entryID: [[arrayEntry optionsDictionary] objectForKey: @"id"]]];
         
     }
     

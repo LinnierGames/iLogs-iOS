@@ -444,7 +444,6 @@
         } default:
             break;
     }
-    [[arrayM optionsDictionary] writeToFile: [UniversalVariables dataFilePathWithFileName: @"templist" extension: @"plist"] atomically: YES];
     
 }
 

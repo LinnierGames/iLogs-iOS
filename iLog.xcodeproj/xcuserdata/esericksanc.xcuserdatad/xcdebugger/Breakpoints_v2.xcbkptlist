@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iLog/UITableViewModuleViewController.m"
-            timestampString = "467784629.023737"
+            filePath = "iLog/DiaryController.m"
+            timestampString = "467787196.27011"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
-            landmarkName = "-pressRightNav:"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
+            landmarkName = "+SQL_ENTRIES_voidApplyChangesWithArray:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iLog/EntryViewController.m"
-            timestampString = "467784846.92683"
+            filePath = "iLog/DiaryController.m"
+            timestampString = "467787200.285423"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "441"
-            endingLineNumber = "441"
-            landmarkName = "-tableViewModule:didFinishWithChanges:"
+            startingLineNumber = "302"
+            endingLineNumber = "302"
+            landmarkName = "-ENTRIES_writeNewForEntry:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

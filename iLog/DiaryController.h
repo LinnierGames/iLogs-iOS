@@ -597,6 +597,8 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
  */
 + (void)SQL_ENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayEntry;
 
++ (void)SQL_ENTRIES_voidApplyChangesWithArray:(const NSArray *)arrayEntry;
+
 @end
 
 #pragma mark NSDate category (COLOR_)
