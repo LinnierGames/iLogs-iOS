@@ -1254,7 +1254,8 @@ alpha:1.0]
                 isFound = true;
                 break;
                 
-            }
+            } else
+                subindex += 1;
             
         }
         if (!isFound)
