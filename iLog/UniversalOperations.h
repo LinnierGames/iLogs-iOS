@@ -90,15 +90,16 @@ typedef enum {
     CTSQLEntries,
     CTSQLOutilnes,
     CTSQLStories,
-    CTSQLStoryEntriesRelationship,
+    CTSQLStoryEntryRelationships,
     CTSQLTagGroups,
     CTSQLTags,
-    CTSQLTagEntriesRelationship
+    CTSQLTagEntryRelationships
     
 } CDSQLTables;
 
 @interface UniversalFunctions (SQL_)
 
++ (void)SQL_voidCreateDatabaseSchema;
 /**
  * Creates the blank table if table does not exists
  */

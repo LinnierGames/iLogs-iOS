@@ -312,7 +312,8 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if ([cellTags.textfield isEqual: textField]) {
-        UINavigationController *navTags = [UITableViewModuleViewController allocWithModule: CTTableViewTags withContent: @{@"tags":[[arrayM optionsDictionary] objectForKey: @"tags"], @"groupedTags":[UniversalFunctions TAGGROUPS_returnGroupedTags]}];
+        UINavigationController *navTags = [UITableViewModuleViewController allocWithModule: CTTableViewTags withContent: @{@"tags": [[arrayM optionsDictionary] objectForKey: @"tags"], @"groupedTags": [UniversalFunctions TAGGROUPS_returnGroupedTags]}];
+        [(UITableViewModuleViewController *)navTags.topViewController setDelegate: self];
         [self presentViewController: navTags animated: YES completion: ^{ }];
         
     }
@@ -407,28 +408,40 @@
 - (void)tableViewModule:(UITableViewModuleViewController *)tableViewModule didFinishWithChanges:(NSDictionary *)dictionary {
     switch (tableViewModule.module) {
         case CTTableViewTags: {
-            //Add Records to TagEntriesRelationship Table
-            for (NSArray *arrayChange in [dictionary objectForKey: @"insert"]) {
-                NSNumber *numberTagID = [arrayChange firstObject];
-                NSArray *arrayRelationship = [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberTagID entryID: [[arrayM optionsDictionary] objectForKey: @"id"]];
-                [[UniversalVariables globalVariables] TAGENTRIES_writeNewForTagEntryRelationship: arrayRelationship];
-                [[[arrayM optionsDictionary] objectForKey: @"tags"] addObject: arrayRelationship];
+            if (![[arrayM optionsDictionary] objectForKey: @"tagChanges"])
+                [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"tagChanges"];
+            
+            //Add Objects of id values Added to the :tagsInsert List
+            for (NSNumber *numberTagID in [dictionary objectForKey: @"insert"]) {
+                if (![[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] containsObject: numberTagID]) {
+                    [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] addObject: numberTagID];
+                    NSArray *arrayNewTag = [[UniversalFunctions SQL_returnContentOfTable: CTSQLTags withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberTagID intValue]]] firstObject];
+                    [[[arrayM optionsDictionary] objectForKey: @"tags"] addObject: arrayNewTag];
+                    
+                }
                 
             }
-            //Remove Recoreds from TagEntriesRelationship Table
-            for (NSArray *arrayChange in [dictionary objectForKey: @"delete"]) {
-                NSNumber *numberTagID = [arrayChange firstObject];
-                NSArray *arrayRelationship = [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberTagID entryID: [[arrayM optionsDictionary] objectForKey: @"id"]];
-                [[UniversalVariables globalVariables] TAGENTRIES_deleteForTagEntryRelationship: arrayRelationship];
-                [[[arrayM optionsDictionary] objectForKey: @"tags"] removeObjectIdenticalTo: arrayRelationship];
-                
+            
+            //Add Objects of id values Added to the :tagsDelete List
+            for (NSNumber *numberTagID in [dictionary objectForKey: @"delete"]) {
+                if (![[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] containsObject: numberTagID]) {
+                    [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] addObject: numberTagID];
+                    for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"tags"] count]; index += 1) {
+                        if ([[[[[[arrayM optionsDictionary] objectForKey: @"tags"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberTagID]) {
+                            [[[arrayM optionsDictionary] objectForKey: @"tags"] removeObjectAtIndex: index];
+                            break;
+                            
+                        }
+                        
+                    }
+                    
+                }
                 
             }
+            [UniversalFunctions TAGS_voidRemoveDuplicateChangesForDictionary: [[arrayM optionsDictionary] objectForKey: @"tagChanges"]];
             break;
             
-        }
-            
-        default:
+        } default:
             break;
     }
     

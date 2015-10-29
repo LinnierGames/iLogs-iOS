@@ -73,6 +73,15 @@ NSString *SQLDatabase = @"database";
 
 @implementation UniversalFunctions (SQL_)
 
++ (void)SQL_voidCreateDatabaseSchema {
+    CDSQLTables table = CTSQLDiaries;
+    while (table <= CTSQLTagEntryRelationships) {
+        [UniversalFunctions SQL_voidCreateTable: table++];
+        
+    }
+    
+}
+
 + (void)SQL_voidCreateTable:(CDSQLTables)table {
     [self SQL_returnStatusOfDatabase];
     char *err;
@@ -90,8 +99,8 @@ NSString *SQLDatabase = @"database";
         case CTSQLStories:
             sqlQuery = @"CREATE TABLE IF NOT EXISTS Stories (id INTEGER PRIMARY KEY UNIQUE, diaryID INTEGER, title TEXT, dateCreated TEXT, description TEXT, colorTrait INTEGER, isProtected INTEGER, passcode TEXT, maskTitle TEXT, authenticationRequired INTEGER, FOREIGN KEY (diaryID) REFERENCES Diaries(id) ON DELETE CASCADE);";
             break;
-        case CTSQLStoryEntriesRelationship:
-            sqlQuery = @"CREATE TABLE StoryEntriesRelationship (id INTEGER PRIMARY KEY UNIQUE, storyID INTEGER, entryID INTEGER, FOREIGN KEY (storyID) REFERENCES Stories(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
+        case CTSQLStoryEntryRelationships:
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS StoryEntryRelationships (id INTEGER PRIMARY KEY UNIQUE, storyID INTEGER, entryID INTEGER, FOREIGN KEY (storyID) REFERENCES Stories(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
             break;
         case CTSQLTagGroups:
             sqlQuery = @"CREATE TABLE IF NOT EXISTS TagGroups (id INTEGER PRIMARY KEY UNIQUE, title TEXT, dateCreated TEXT);";
@@ -99,8 +108,8 @@ NSString *SQLDatabase = @"database";
         case CTSQLTags:
             sqlQuery = @"CREATE TABLE IF NOT EXISTS Tags (id INTEGER PRIMARY KEY UNIQUE, groupID INTEGER, title TEXT, dateCreated TEXT, FOREIGN KEY (groupID) REFERENCES TagGroups(id) ON DELETE CASCADE);";
             break;
-        case CTSQLTagEntriesRelationship:
-            sqlQuery = @"CREATE TABLE IF NOT EXISTS TagEntriesRelationship (id INTEGER PRIMARY KEY UNIQUE, tagID INTEGER, entryID INTEGER, FOREIGN KEY (tagID) REFERENCES Tags(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
+        case CTSQLTagEntryRelationships:
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS TagEntryRelationships (id INTEGER PRIMARY KEY UNIQUE, tagID INTEGER, entryID INTEGER, FOREIGN KEY (tagID) REFERENCES Tags(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
             break;
             
     }
@@ -136,7 +145,7 @@ NSString *SQLDatabase = @"database";
                 break;
                 
             default:
-                NSAssert(table != CTSQLStoryEntriesRelationship || table != CTSQLTagEntriesRelationship, @"Cannont clear a relationship table");
+                NSAssert(table != CTSQLStoryEntryRelationships || table != CTSQLTagEntryRelationships, @"Cannont clear a relationship table");
                 break;
         }
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlQuery, &err)) {
@@ -175,7 +184,7 @@ NSString *SQLDatabase = @"database";
 
 + (BOOL)SQL_returnStatusOfTable:(CDSQLTables)table {
     switch (table) {
-        case CTSQLDiaries: case CTSQLEntries: case CTSQLOutilnes: case CTSQLStories: case CTSQLStoryEntriesRelationship: case CTSQLTagGroups: case CTSQLTags: case CTSQLTagEntriesRelationship: {
+        case CTSQLDiaries: case CTSQLEntries: case CTSQLOutilnes: case CTSQLStories: case CTSQLStoryEntryRelationships: case CTSQLTagGroups: case CTSQLTags: case CTSQLTagEntryRelationships: {
             NSAssert( [self SQL_returnStatusOfDatabase], @"Failed to open SQL");
             SQL3Statement *statement; const char *err;
             NSString *stringFocusTableTitle = @"";
@@ -189,8 +198,8 @@ NSString *SQLDatabase = @"database";
                 case CTSQLStories:
                     stringFocusTableTitle = @"Stories";
                     break;
-                case CTSQLStoryEntriesRelationship:
-                    stringFocusTableTitle = @"StoryEntriesRelationship";
+                case CTSQLStoryEntryRelationships:
+                    stringFocusTableTitle = @"StoryEntryRelationships";
                     break;
                 case CTSQLTagGroups:
                     stringFocusTableTitle = @"TagGroups";
@@ -198,8 +207,8 @@ NSString *SQLDatabase = @"database";
                 case CTSQLTags:
                     stringFocusTableTitle = @"Tags";
                     break;
-                case CTSQLTagEntriesRelationship:
-                    stringFocusTableTitle = @"TagEntriesRelationship";
+                case CTSQLTagEntryRelationships:
+                    stringFocusTableTitle = @"TagEntryRelationships";
                     break;
                 case CTSQLOutilnes:
                     stringFocusTableTitle = @"Outlines";
@@ -317,8 +326,8 @@ NSString *SQLDatabase = @"database";
                 }
                 break;
                 
-            } case CTSQLTagEntriesRelationship: {
-                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM TagEntriesRelationship ORDER BY id DESC;", &statement, &err)) {
+            } case CTSQLTagEntryRelationships: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM TagEntryRelationships ORDER BY id DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array =  SQLStatementRowIntoTagEntryRelationshipEntry( statement);
                         [arrayContents addObject: array];
