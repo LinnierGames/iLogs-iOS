@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iLog/DiaryController.m"
-            timestampString = "467787196.27011"
+            timestampString = "467788117.620786"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "419"
-            endingLineNumber = "419"
+            startingLineNumber = "439"
+            endingLineNumber = "439"
             landmarkName = "+SQL_ENTRIES_voidApplyChangesWithArray:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iLog/DiaryController.m"
-            timestampString = "467787200.285423"
+            timestampString = "467788120.769961"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "302"
-            endingLineNumber = "302"
-            landmarkName = "-ENTRIES_writeNewForEntry:"
+            startingLineNumber = "433"
+            endingLineNumber = "433"
+            landmarkName = "+SQL_ENTRIES_voidApplyChangesWithArray:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
