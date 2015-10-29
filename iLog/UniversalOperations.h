@@ -126,6 +126,8 @@ typedef enum {
  */
 + (NSArray *)SQL_returnContentsOfTable:(CDSQLTables)table;
 
++ (NSArray *)SQL_returnContentOfTable:(CDSQLTables)table withSuffix:(NSString *)suffix;
+
 + (NSArray *)SQL_returnRecordWithMaxIDOfTable:(CDSQLTables)table;
 
 @end

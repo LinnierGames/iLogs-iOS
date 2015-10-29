@@ -364,6 +364,117 @@ NSString *SQLDatabase = @"database";
     
 }
 
++ (NSArray *)SQL_returnContentOfTable:(CDSQLTables)table withSuffix:(NSString *)suffix {
+    if ([UniversalFunctions SQL_returnStatusOfTable: table]) {
+        NSLog( @"Table OK: +SQL_returnContentOfTable:withSuffix:");
+        sqlite3_stmt *statement; const char *err;
+        NSMutableArray *arrayContents = [NSMutableArray array];
+        switch (table) {
+            case CTSQLDiaries: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Diaries %@;", suffix], &statement, &err)) {
+                    while (SQLStatementStep( statement)) {
+                        NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+                        [arrayContents addObject: array];
+                        
+                    }
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
+                break;
+                
+            } case CTSQLOutilnes: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Outines %@;", suffix], &statement, &err)) {
+                    while (SQLStatementStep( statement)) {
+                        NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+                        [arrayContents addObject: array];
+                        
+                    }
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
+                break;
+                
+            } case CTSQLStories: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Stories %@;", suffix], &statement, &err)) {
+                    while (SQLStatementStep( statement)) {
+                        NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+                        [arrayContents addObject: array];
+                        
+                    }
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
+                break;
+                
+            } case CTSQLEntries: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Entries %@;", suffix], &statement, &err)) {
+                    while (SQLStatementStep( statement)) {
+                        NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+                        [arrayContents addObject: array];
+                        
+                    }
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
+                break;
+                
+            } case CTSQLTagGroups: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM TagGroups %@;", suffix], &statement, &err)) {
+                    while (SQLStatementStep( statement)) {
+                        NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+                        [arrayContents addObject: array];
+                        
+                    }
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
+                break;
+                
+            } case CTSQLTags: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Tags %@;", suffix], &statement, &err)) {
+                    while (SQLStatementStep( statement)) {
+                        NSMutableArray *array = SQLStatementRowIntoDiaryEntry( statement);
+                        [arrayContents addObject: array];
+                        
+                    }
+                    
+                } else {
+                    sqlite3_close( [[UniversalVariables globalVariables] database]);
+                    NSAssert( 0, [NSString stringWithUTF8String: err]);
+                    
+                }
+                break;
+                
+            } default:
+                break;
+                
+        }
+        
+        return [NSArray arrayWithArray: arrayContents];
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: table];
+        return [UniversalFunctions SQL_returnContentOfTable: table withSuffix: suffix];
+        
+    }
+    
+}
+
 + (NSArray *)SQL_returnRecordWithMaxIDOfTable:(CDSQLTables)table {
     int intIDValue = 0;
     NSMutableArray *array = [NSMutableArray array];
