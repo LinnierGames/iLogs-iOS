@@ -348,6 +348,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
                     NSURL *url = [NSURL fileURLWithPath:filePath];
                     
                     UIActivityViewController *action = [[UIActivityViewController alloc] initWithActivityItems: @[@"Here lies an export of my diaries", url] applicationActivities:  nil];
+                    [action.popoverPresentationController setSourceView: [tableView cellForRowAtIndexPath: indexPath]];
                     [self presentViewController: action animated: YES completion: ^{ }];
                     
                 }
