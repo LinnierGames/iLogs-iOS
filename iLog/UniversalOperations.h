@@ -90,15 +90,16 @@ typedef enum {
     CTSQLEntries,
     CTSQLOutilnes,
     CTSQLStories,
-    CTSQLStoryEntriesRelationship,
+    CTSQLStoryEntryRelationships,
     CTSQLTagGroups,
     CTSQLTags,
-    CTSQLTagEntriesRelationship
+    CTSQLTagEntryRelationships
     
 } CDSQLTables;
 
 @interface UniversalFunctions (SQL_)
 
++ (void)SQL_voidCreateDatabaseSchema;
 /**
  * Creates the blank table if table does not exists
  */
@@ -125,6 +126,8 @@ typedef enum {
  * @return NSArray
  */
 + (NSArray *)SQL_returnContentsOfTable:(CDSQLTables)table;
+
++ (NSArray *)SQL_returnContentOfTable:(CDSQLTables)table withSuffix:(NSString *)suffix;
 
 + (NSArray *)SQL_returnRecordWithMaxIDOfTable:(CDSQLTables)table;
 
