@@ -219,9 +219,9 @@
     switch (module) {
         case CTTableViewTags: {
             const NSArray *arrayTag = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
-            BOOL perviousState = [[[arrayTag optionsDictionary] objectForKey: @"highlighted"] boolValue];
+            BOOL previousState = [[[arrayTag optionsDictionary] objectForKey: @"highlighted"] boolValue];
             //NSNumber *idIndex = [[arrayTag optionsDictionary] objectForKey: @"id"];
-            [[arrayTag optionsDictionary] setValue: [NSNumber numberWithBool: !perviousState] forKey: @"highlighted"];
+            [[arrayTag optionsDictionary] setValue: [NSNumber numberWithBool: !previousState] forKey: @"highlighted"];
         /*  for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) { //Apply Changes to arrayM by searching for the matching idIndex from arrayTable
                 for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: groupIndex] count] -1; tagIndex += 1) {
                     if ([[[[[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex] optionsDictionary] objectForKey: @"id"] isEqualToNumber: idIndex])
@@ -231,8 +231,14 @@
                 }
                 
             }* Unessary due to arrays pointing to the same address */
-            [tableView reloadRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationNone];
-            if (perviousState) { //Highlighted -> Unghighlighted
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath: indexPath];
+            if (!previousState)
+                [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
+            else
+                [cell setAccessoryType: UITableViewCellAccessoryNone];
+            [tableView selectRowAtIndexPath: 0 animated: YES scrollPosition: UITableViewScrollPositionNone];
+            
+            if (previousState) { //Highlighted -> Unghighlighted
                 [[dicChanges objectForKey: @"delete"] addObject: [[[[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row] optionsDictionary] objectForKey: @"id"]];
                 
             } else {
