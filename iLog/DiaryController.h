@@ -147,7 +147,9 @@ typedef NS_ENUM(int, CDEntryEmotions) {
     CTEntryEmotionAngry = 31,
     CTEntryEmotionRecovering = 32,
     CTEntryEmotionRelaxed = 33,
-    CTEntryEmotionExcited = 34
+    CTEntryEmotionExcited = 34,
+    CTEntryEmotionHungry = 35,
+    CTEntryEmotionNervous = 36
     
 };
 
@@ -221,6 +223,10 @@ static inline UIImage* NSImageByEmotion(CDEntryEmotions emotion) {
             return [UIImage imageNamed: @"misc_emotionRelaxed"]; break;
         case CTEntryEmotionExcited:
             return [UIImage imageNamed: @"misc_emotionExcited"]; break;
+        case CTEntryEmotionHungry:
+            return [UIImage imageNamed: @"misc_emotionHungry"]; break;
+        case CTEntryEmotionNervous:
+            return [UIImage imageNamed: @"misc_emotionNervous"]; break;
         default:
             return NSImageByEmotion( CTEntryEmotionNoone); break;
             
@@ -298,6 +304,10 @@ static inline NSString* NSTitleByEmotion(CDEntryEmotions emotion) {
             return @"Relaxed"; break;
         case CTEntryEmotionExcited:
             return @"Excited"; break;
+        case CTEntryEmotionHungry:
+            return @"Hungry"; break;
+        case CTEntryEmotionNervous:
+            return @"Nervous"; break;
         default:
             return NSTitleByEmotion( CTEntryEmotionNoone); break;
             
@@ -325,8 +335,10 @@ static inline NSArray* NSEmotionArray() {
             @(CTEntryEmotionNeutral),
             @(CTEntryEmotionMeh),
             @(CTEntryEmotionTired),
+            @(CTEntryEmotionHungry),
             @(CTEntryEmotionExhausted),
             @(CTEntryEmotionLazy),
+            @(CTEntryEmotionNervous),
             @(CTEntryEmotionWorried),
             @(CTEntryEmotionShocked),
             @(CTEntryEmotionDisappointed),
