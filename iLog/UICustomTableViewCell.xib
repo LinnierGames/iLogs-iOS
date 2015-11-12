@@ -118,7 +118,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bDm-Il-4Oz" userLabel="Emotion">
-                        <rect key="frame" x="17" y="9" width="87" height="26"/>
+                        <rect key="frame" x="17" y="9" width="117.5" height="26"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="26" id="DAk-MW-8z3"/>
@@ -133,11 +133,11 @@
                         </connections>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="misc_weather-disabled" translatesAutoresizingMaskIntoConstraints="NO" id="qmB-2l-1MX">
-                        <rect key="frame" x="81" y="-1" width="36" height="36"/>
+                        <rect key="frame" x="111.5" y="-1" width="36" height="36"/>
                         <animations/>
                     </imageView>
                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I87-KK-1L5" userLabel="Weather Condition">
-                        <rect key="frame" x="117" y="9" width="87" height="26"/>
+                        <rect key="frame" x="147.5" y="9" width="117.5" height="26"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="26" id="mek-bb-ohL"/>
@@ -152,14 +152,15 @@
                         </connections>
                     </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="misc_weather-disabled" translatesAutoresizingMaskIntoConstraints="NO" id="LW3-jh-vfc">
-                        <rect key="frame" x="180" y="-1" width="36" height="36"/>
+                        <rect key="frame" x="241" y="-1" width="36" height="36"/>
                         <animations/>
                     </imageView>
                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K7s-kg-mie" userLabel="Temperature">
-                        <rect key="frame" x="216" y="9" width="87" height="26"/>
+                        <rect key="frame" x="277" y="9" width="26" height="26"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="26" id="dlt-Na-fU9"/>
+                            <constraint firstAttribute="width" constant="26" id="eRW-ew-RjK"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <state key="normal" backgroundImage="misc_bookmark-disabled">
@@ -179,7 +180,6 @@
                     <constraint firstItem="K7s-kg-mie" firstAttribute="leading" secondItem="I87-KK-1L5" secondAttribute="trailing" constant="12" id="KBJ-mP-7oj"/>
                     <constraint firstItem="K7s-kg-mie" firstAttribute="top" secondItem="uHq-tz-gVV" secondAttribute="topMargin" constant="1" id="N6K-50-hsD"/>
                     <constraint firstItem="qmB-2l-1MX" firstAttribute="leading" secondItem="bDm-Il-4Oz" secondAttribute="trailing" constant="-23" id="RWB-VJ-De1"/>
-                    <constraint firstItem="K7s-kg-mie" firstAttribute="width" secondItem="I87-KK-1L5" secondAttribute="width" id="amd-pt-dyR"/>
                     <constraint firstAttribute="trailingMargin" secondItem="K7s-kg-mie" secondAttribute="trailing" constant="9" id="bAd-hU-DCx"/>
                     <constraint firstItem="I87-KK-1L5" firstAttribute="top" secondItem="uHq-tz-gVV" secondAttribute="topMargin" constant="1" id="gfA-fj-Jhh"/>
                     <constraint firstItem="I87-KK-1L5" firstAttribute="leading" secondItem="bDm-Il-4Oz" secondAttribute="trailing" constant="13" id="gjX-d8-3NM"/>
@@ -223,6 +223,94 @@
                 <outlet property="searchBar" destination="oZ0-8U-JDh" id="yiq-5X-mlE"/>
             </connections>
             <point key="canvasLocation" x="532" y="593"/>
+        </tableViewCell>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Diary - Entry - Attributes" rowHeight="37" id="rZY-Bz-d7m" userLabel="Diary Entry Attributes" customClass="UICustomTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rZY-Bz-d7m" id="ob4-S4-ZTz">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="39.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLk-3X-feb" userLabel="Emotion">
+                        <rect key="frame" x="17" y="9" width="87" height="26"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="26" id="qut-8J-UIz"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <state key="normal" backgroundImage="misc_button-disabled">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="pressButton:" destination="rZY-Bz-d7m" eventType="touchUpInside" id="avn-vx-Vgg"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="misc_weather-disabled" translatesAutoresizingMaskIntoConstraints="NO" id="xf1-lU-kPo">
+                        <rect key="frame" x="81" y="-1" width="36" height="36"/>
+                        <animations/>
+                    </imageView>
+                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ff-Up-wuW" userLabel="Weather Condition">
+                        <rect key="frame" x="117" y="9" width="87" height="26"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="26" id="VKT-n1-50S"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <state key="normal" backgroundImage="misc_button-disabled">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="pressButton:" destination="rZY-Bz-d7m" eventType="touchUpInside" id="7pb-5u-UFa"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="misc_weather-disabled" translatesAutoresizingMaskIntoConstraints="NO" id="BSe-09-mps">
+                        <rect key="frame" x="180" y="-1" width="36" height="36"/>
+                        <animations/>
+                    </imageView>
+                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vpQ-eD-3cs" userLabel="Temperature">
+                        <rect key="frame" x="216" y="9" width="87" height="26"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="26" id="yll-BG-Slw"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <state key="normal" backgroundImage="misc_bookmark-disabled">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="pressButton:" destination="rZY-Bz-d7m" eventType="touchUpInside" id="RXd-i8-Nnl"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstItem="3ff-Up-wuW" firstAttribute="top" secondItem="ob4-S4-ZTz" secondAttribute="topMargin" constant="1" id="43w-Cr-nkh"/>
+                    <constraint firstItem="xf1-lU-kPo" firstAttribute="top" secondItem="ob4-S4-ZTz" secondAttribute="topMargin" constant="-9" id="C1J-Sj-XDC"/>
+                    <constraint firstItem="3ff-Up-wuW" firstAttribute="leading" secondItem="tLk-3X-feb" secondAttribute="trailing" constant="13" id="FAB-Pa-0qX"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="vpQ-eD-3cs" secondAttribute="trailing" constant="9" id="PI0-Ob-Idu"/>
+                    <constraint firstItem="xf1-lU-kPo" firstAttribute="leading" secondItem="tLk-3X-feb" secondAttribute="trailing" constant="-23" id="RLT-Uf-jZP"/>
+                    <constraint firstItem="BSe-09-mps" firstAttribute="leading" secondItem="3ff-Up-wuW" secondAttribute="trailing" constant="-24" id="Ysi-UN-vZK"/>
+                    <constraint firstItem="vpQ-eD-3cs" firstAttribute="leading" secondItem="3ff-Up-wuW" secondAttribute="trailing" constant="12" id="ccc-eg-idB"/>
+                    <constraint firstItem="tLk-3X-feb" firstAttribute="leading" secondItem="ob4-S4-ZTz" secondAttribute="leadingMargin" constant="9" id="evE-Ox-JnK"/>
+                    <constraint firstItem="tLk-3X-feb" firstAttribute="top" secondItem="ob4-S4-ZTz" secondAttribute="topMargin" constant="1" id="kqg-6o-ywY"/>
+                    <constraint firstItem="vpQ-eD-3cs" firstAttribute="top" secondItem="ob4-S4-ZTz" secondAttribute="topMargin" constant="1" id="nSj-ec-cLl"/>
+                    <constraint firstItem="3ff-Up-wuW" firstAttribute="width" secondItem="tLk-3X-feb" secondAttribute="width" id="r1H-56-rkc"/>
+                    <constraint firstItem="BSe-09-mps" firstAttribute="top" secondItem="ob4-S4-ZTz" secondAttribute="topMargin" constant="-9" id="zbw-Nn-5U9"/>
+                    <constraint firstItem="vpQ-eD-3cs" firstAttribute="width" secondItem="3ff-Up-wuW" secondAttribute="width" id="zxN-kN-fbb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="button1" destination="tLk-3X-feb" id="Qy1-e5-com"/>
+                <outlet property="button2" destination="3ff-Up-wuW" id="9ix-rx-zf6"/>
+                <outlet property="button3" destination="vpQ-eD-3cs" id="jpT-4f-cEm"/>
+                <outlet property="imageview1" destination="xf1-lU-kPo" id="gxJ-lo-0M6"/>
+                <outlet property="imageview2" destination="BSe-09-mps" id="cjm-UJ-eNb"/>
+            </connections>
+            <point key="canvasLocation" x="676" y="151"/>
         </tableViewCell>
     </objects>
     <resources>
