@@ -364,7 +364,8 @@ typedef NS_ENUM(int, CDEntryWeatherCondition) {
     CTEntryWeatherConditionFoggy = 4,
     CTEntryWeatherConditionMisty = 5,
     CTEntryWeatherConditionRainy = 6,
-    CTEntryWeatherConditionSnowy = 7
+    CTEntryWeatherConditionSnowy = 7,
+    CTEntryWeatherConditionClear = 8
     
 };
 
@@ -386,6 +387,8 @@ static inline UIImage* NSImageByWeatherCondition(CDEntryWeatherCondition weather
             return [UIImage imageNamed: @"misc_weatherRainy"]; break;
         case CTEntryWeatherConditionSnowy:
             return [UIImage imageNamed: @"misc_weatherSnowy"]; break;
+        case CTEntryWeatherConditionClear:
+            return [UIImage imageNamed: @"misc_weatherClear"]; break;
         default:
             return NSImageByWeatherCondition( CTEntryWeatherConditionNoone); break;
             
@@ -411,6 +414,8 @@ static inline NSString* NSTitleByWeatherCondition(CDEntryWeatherCondition weathe
             return @"Rainy"; break;
         case CTEntryWeatherConditionSnowy:
             return @"Snowy"; break;
+        case CTEntryWeatherConditionClear:
+            return @"Clear"; break;
         default:
             return NSTitleByWeatherCondition( CTEntryWeatherConditionNoone); break;
             
@@ -422,6 +427,7 @@ static inline NSArray* NSWeatherConditionArray() {
     return [NSArray arrayWithObjects:
             @(CTEntryWeatherConditionNoone),
             @(CTEntryWeatherConditionSunny),
+            @(CTEntryWeatherConditionClear),
             @(CTEntryWeatherConditionCloudy),
             @(CTEntryWeatherConditionWindy),
             @(CTEntryWeatherConditionFoggy),
