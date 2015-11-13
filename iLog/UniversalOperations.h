@@ -41,7 +41,6 @@ static NSString * const kStatusBarTappedNotification = @"statusBarTappedNotifica
 
 typedef sqlite3 SQL3Database;
 typedef sqlite3_stmt SQL3Statement;
-typedef double SQL3Double;
 
 /**
  * Used instead of sqlite3_exec(..);

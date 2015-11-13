@@ -395,12 +395,3 @@
 @synthesize tag;
 
 @end
-
-@implementation NSNumber (SQL_)
-
-- (SQL3Double)sql3doubleValue {
-    return [self doubleValue];
-    
-}
-
-@end

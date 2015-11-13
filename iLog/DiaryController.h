@@ -531,18 +531,18 @@ static const NSUInteger ENTRIES_isBookmarked = 10;
 
 + (id)arrayNEWEntry;
 + (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue body:(NSString *)stringBodyValue;
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(SQL3Double)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(SQL3Double)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue;
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(SQL3Double)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(SQL3Double)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue options:(NSMutableDictionary *)dicIndex;
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(int)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(int)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue;
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(int)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(int)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue options:(NSMutableDictionary *)dicIndex;
 - (NSString *)objectEntry_subject;
 - (NSDate *)objectEntry_date;
 - (NSDate *)objectEntry_dateCreated;
 - (NSString *)objectEntry_body;
 - (NSDate *)objectEntry_startDate;
 - (CDEntryEmotions)objectEntry_emotion;
-- (SQL3Double)objectEntry_emotionScale;
+- (int)objectEntry_emotionScale;
 - (CDEntryWeatherCondition)objectEntry_weatherCondition;
 - (CDEntryTemerature)objectEntry_temperature;
-- (SQL3Double)objectEntry_temperatureValue;
+- (int)objectEntry_temperatureValue;
 - (BOOL)objectEntry_isBookmarked;
 
 @end
@@ -596,10 +596,10 @@ static inline NSMutableArray * SQLStatementRowIntoEntryEntry( sqlite3_stmt *stat
     NSDate *dateStart = [dateFormatter dateFromString: [NSString stringWithUTF8String: (char *) sqlite3_column_text( statement, SQL_ENTRIES_startDate)]];
     
     CDEntryEmotions emotion = sqlite3_column_int( statement, SQL_ENTRIES_emotion);
-    SQL3Double emotionScale = sqlite3_column_double( statement, SQL_ENTRIES_emotionSacle);
+    int emotionScale = sqlite3_column_int( statement, SQL_ENTRIES_emotionSacle);
     CDEntryWeatherCondition weatherCondition = sqlite3_column_int( statement, SQL_ENTRIES_weatherCondition);
     CDEntryTemerature temperature = sqlite3_column_int( statement, SQL_ENTRIES_temperature);
-    SQL3Double temperatureValue = sqlite3_column_double( statement, SQL_ENTRIES_temperatureValue);
+    int temperatureValue = sqlite3_column_int( statement, SQL_ENTRIES_temperatureValue);
     BOOL isBookmarked = sqlite3_column_int( statement, SQL_ENTRIES_isBookmarked);
     
     NSMutableArray *array = [NSMutableArray arrayNEWEntryWithSubject: stringSubject date: date dateCreated: dateCreated body: stringBody startDate: dateStart emotion: emotion emotionScale: emotionScale weatherCondition: weatherCondition temperature: temperature temperatureValue: temperatureValue isBookmarked: isBookmarked options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_id)], @"id", [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_ENTRIES_diaryID)], @"diaryID", nil]];
