@@ -91,7 +91,7 @@ NSString *SQLDatabase = @"database";
             sqlQuery = @"CREATE TABLE IF NOT EXISTS Diaries (id INTEGER PRIMARY KEY UNIQUE, title TEXT, dateCreated TEXT, colorTrait INTEGER, isProtected INTEGER, passcode TEXT, maskTitle TEXT);";
             break;
         case CTSQLEntries:
-            sqlQuery = @"CREATE TABLE IF NOT EXISTS Entries (id INTEGER PRIMARY KEY UNIQUE, diaryID INTEGER, subject TEXT, date TEXT, dateCreated TEXT, body TEXT, emotion INTEGER, weatherCondition INTEGER, temperature INTEGER, isBookmarked BOOLEAN, FOREIGN KEY (diaryID) REFERENCES Diaries(id) ON DELETE CASCADE);";
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS Entries (id INTEGER PRIMARY KEY UNIQUE, diaryID INTEGER, subject TEXT, date TEXT, dateCreated TEXT, body TEXT, startDate TEXT, emotion INTEGER, emotionScale DOUBLE, weatherCondition INTEGER, temperature INTEGER, temperatureValue DOUBLE, isBookmarked BOOLEAN, FOREIGN KEY (diaryID) REFERENCES Diaries(id) ON DELETE CASCADE);";
             break;
         case CTSQLOutilnes:
             sqlQuery = @"CREATE TABLE IF NOT EXISTS Outlines (id INTEGER PRIMARY KEY UNIQUE, entryID INTEGER, body TEXT, dateCreated TEXT, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";

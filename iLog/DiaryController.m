@@ -242,12 +242,12 @@
     
 }
 
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(SQL3Double)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(SQL3Double)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue {
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(int)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(int)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue {
     return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue startDate: dateStartValue emotion: emotionValue emotionScale: emotionScaleValue weatherCondition: weatherValue temperature: temperatureValue temperatureValue: temperatureValueValue isBookmarked: boolBookmarkedValue options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [[UniversalVariables globalVariables] DIARIES_returnFirstDiary], @"diary", [NSMutableArray array], @"tags", nil]];
     
 }
 
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(SQL3Double)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(SQL3Double)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue options:(NSMutableDictionary *)dicIndex {
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(int)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(int)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue options:(NSMutableDictionary *)dicIndex {
     return [NSMutableArray arrayWithObjects: stringSubjectValue, dateValue, dateCreatedValue, stringBodyValue, [NSNumber numberWithInt: emotionValue], [NSNumber numberWithInt: weatherValue], [NSNumber numberWithInt: temperatureValue], [NSNumber numberWithBool: boolBookmarkedValue], dicIndex, nil];
     
 }
@@ -282,8 +282,8 @@
     
 }
 
-- (SQL3Double)objectEntry_emotionScale {
-    return [[self objectAtIndex: ENTRIES_emotionScale] sql3doubleValue];
+- (int)objectEntry_emotionScale {
+    return [[self objectAtIndex: ENTRIES_emotionScale] intValue];
     
 }
 
@@ -297,8 +297,8 @@
     
 }
 
-- (SQL3Double)objectEntry_temperatureValue {
-    return [[self objectAtIndex: ENTRIES_temperatureValue] sql3doubleValue];
+- (int)objectEntry_temperatureValue {
+    return [[self objectAtIndex: ENTRIES_temperatureValue] intValue];
     
 }
 
@@ -382,7 +382,7 @@
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES]; [dateFormatter setTimeZoneSeparator: 0];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, date, dateCreated, body, emotion, weatherCondition, temperature, isBookmarked, diaryID) values (\"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d);", [[arrayEntry objectEntry_subject] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] stringByReformatingForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, date, dateCreated, body, startDate, emotion, emotionScale, weatherCondition, temperature, temperatureValue, isBookmarked, diaryID) values (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %d);", [[arrayEntry objectEntry_subject] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_startDate]], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_emotionScale], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_temperatureValue], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
@@ -407,7 +407,7 @@
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entries SET subject = \"%@\", date = \"%@\", dateCreated = \"%@\", body = \"%@\", emotion = %d, weatherCondition = %d, temperature = %d, isBookmarked = %d, diaryID = %d where id = %d;", [[arrayEntry objectEntry_subject] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] stringByReformatingForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue], [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entries SET subject = \"%@\", date = \"%@\", dateCreated = \"%@\", body = \"%@\", startDate = \"%@\", emotion = %d, emotionScale = %d, weatherCondition = %d, temperature = %d, temperatureValue = %d, isBookmarked = %d, diaryID = %d where id = %d;", [[arrayEntry objectEntry_subject] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_startDate]], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_emotionScale], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_temperatureValue], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue], [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
