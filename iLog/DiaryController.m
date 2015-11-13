@@ -238,16 +238,16 @@
 }
 
 + (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue body:(NSString *)stringBodyValue {
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: [NSDate date] dateCreated: [NSDate date] body: stringBodyValue emotion: CTEntryEmotionNoone weatherCondition: CTEntryWeatherConditionNoone temperature: CTEntryTemperatureNoone isBookmarked: NO];
+    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: [NSDate date] dateCreated: [NSDate date] body: stringBodyValue startDate: [NSDate dateWithTimeIntervalSince1970: 0] emotion: CTEntryEmotionNoone emotionScale: 0 weatherCondition: CTEntryWeatherConditionNoone temperature: CTEntryTemperatureNoone temperatureValue: 72 isBookmarked: NO];
     
 }
 
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue isBookmarked:(BOOL)boolBookmarkedValue {
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue emotion: emotionValue weatherCondition: weatherValue temperature: temperatureValue isBookmarked: boolBookmarkedValue options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [[UniversalVariables globalVariables] DIARIES_returnFirstDiary], @"diary", [NSMutableArray array], @"tags", nil]];
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(SQL3Double)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(SQL3Double)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue {
+    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue startDate: dateStartValue emotion: emotionValue emotionScale: emotionScaleValue weatherCondition: weatherValue temperature: temperatureValue temperatureValue: temperatureValueValue isBookmarked: boolBookmarkedValue options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [[UniversalVariables globalVariables] DIARIES_returnFirstDiary], @"diary", [NSMutableArray array], @"tags", nil]];
     
 }
 
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue isBookmarked:(BOOL)boolBookmarkedValue options:(NSMutableDictionary *)dicIndex {
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(SQL3Double)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(SQL3Double)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue options:(NSMutableDictionary *)dicIndex {
     return [NSMutableArray arrayWithObjects: stringSubjectValue, dateValue, dateCreatedValue, stringBodyValue, [NSNumber numberWithInt: emotionValue], [NSNumber numberWithInt: weatherValue], [NSNumber numberWithInt: temperatureValue], [NSNumber numberWithBool: boolBookmarkedValue], dicIndex, nil];
     
 }
@@ -272,13 +272,18 @@
     
 }
 
-- (BOOL)objectEntry_isBookmarked {
-    return [[self objectAtIndex: ENTRIES_isBookmarked] boolValue];
+- (NSDate *)objectEntry_startDate {
+    return [self objectAtIndex: ENTRIES_startDate];
     
 }
 
 - (CDEntryEmotions)objectEntry_emotion {
     return [[self objectAtIndex: ENTRIES_emotion] intValue];
+    
+}
+
+- (SQL3Double)objectEntry_emotionScale {
+    return [[self objectAtIndex: ENTRIES_emotionScale] sql3doubleValue];
     
 }
 
@@ -289,6 +294,16 @@
 
 - (CDEntryTemerature)objectEntry_temperature {
     return [[self objectAtIndex: ENTRIES_temperature] intValue];
+    
+}
+
+- (SQL3Double)objectEntry_temperatureValue {
+    return [[self objectAtIndex: ENTRIES_temperatureValue] sql3doubleValue];
+    
+}
+
+- (BOOL)objectEntry_isBookmarked {
+    return [[self objectAtIndex: ENTRIES_isBookmarked] boolValue];
     
 }
 

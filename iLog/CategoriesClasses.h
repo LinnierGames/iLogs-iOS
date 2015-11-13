@@ -556,3 +556,9 @@ typedef enum {
 @property (nonatomic) NSUInteger tag;
 
 @end
+
+@interface NSNumber (SQL_)
+
+- (SQL3Double)sql3doubleValue;
+
+@end
