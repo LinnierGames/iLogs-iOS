@@ -177,9 +177,9 @@
                         
                     }
                     if ([arrayM objectEntry_isBookmarked])
-                        [cell.button3 setBackgroundImage: [UIImage imageNamed: @"misc_bookmark-enabled"] forState: UIControlStateNormal];
+                        [cell.button4 setBackgroundImage: [UIImage imageNamed: @"misc_bookmark-enabled"] forState: UIControlStateNormal];
                     else
-                        [cell.button3 setBackgroundImage: [UIImage imageNamed: @"misc_bookmark-disabled"] forState: UIControlStateNormal];
+                        [cell.button4 setBackgroundImage: [UIImage imageNamed: @"misc_bookmark-disabled"] forState: UIControlStateNormal];
                     [cell setDelegate: self];
                     
                     return cell; break;
@@ -377,7 +377,10 @@
             [pickerWeatherCondition showAnimated: YES];
             break;
             
-        } case 3: { //Bookmark
+        } case 3: { //Highlight
+            break;
+            
+        } case 4: { //Bookmark
             [arrayM replaceObjectAtIndex: ENTRIES_isBookmarked withObject: [NSNumber numberWithBool: [arrayM objectEntry_isBookmarked] ? NO : YES]];
             [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
             break;
