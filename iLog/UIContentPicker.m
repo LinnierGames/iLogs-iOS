@@ -67,8 +67,8 @@ static NSUInteger DIARY_ENTRY_temperature = 1;
     array = [[NSArray alloc] initWithObjects: NSWeatherConditionArray(), NSTemperatureArray(), nil];
     NSInteger weatherCondition, temperature;
     [self statusOfEntryWeatherCondition: weatherConditionValue temperature: temperatureValue withWeatherCondition: &weatherCondition withTemperature: &temperature];
-    [picker selectRow: weatherConditionValue inComponent: DIARY_ENTRY_weatherCondition animated: NO];
-    [picker selectRow: temperatureValue inComponent: DIARY_ENTRY_temperature animated: NO];
+    [picker selectRow: weatherCondition inComponent: DIARY_ENTRY_weatherCondition animated: NO];
+    [picker selectRow: temperature inComponent: DIARY_ENTRY_temperature animated: NO];
     [self pickerView: picker didSelectRow: [picker selectedRowInComponent: 0] inComponent: 0];
     
     return self;
