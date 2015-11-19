@@ -28,6 +28,7 @@ typedef NS_ENUM(NSUInteger, CDUICustomTableViewCells) {
 @property ( nonatomic, retain) IBOutlet UIButton *button1;
 @property ( nonatomic, retain) IBOutlet UIButton *button2;
 @property ( nonatomic, retain) IBOutlet UIButton *button3;
+@property ( nonatomic, retain) IBOutlet UIButton *button4;
 @property ( nonatomic, retain) IBOutlet UIImageView *imageview;
 @property ( nonatomic, retain) IBOutlet UIImageView *imageview1;
 @property ( nonatomic, retain) IBOutlet UIImageView *imageview2;
