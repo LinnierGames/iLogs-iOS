@@ -311,7 +311,12 @@
 #pragma mark Void's > Pre-Defined Functions (TEXT FIELD)
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if ([cellTags.textfield isEqual: textField]) {
+    if ([cellStories.textfield isEqual: textField]) {
+        UINavigationController *navStories = [UITableViewModuleViewController allocWithModule: CTTableViewStories withContent: @{@"stories": [[arrayM optionsDictionary] objectForKey: @"stories"], @"groupedStories": [UniversalFunctions STORIES_returnGroupedStories]}];
+        [(UITableViewModuleViewController *)navStories.topViewController setDelegate: self];
+        [self presentViewController: navStories animated: YES completion: ^{ }];
+        
+    } else if ([cellTags.textfield isEqual: textField]) {
         UINavigationController *navTags = [UITableViewModuleViewController allocWithModule: CTTableViewTags withContent: @{@"tags": [[arrayM optionsDictionary] objectForKey: @"tags"], @"groupedTags": [UniversalFunctions TAGGROUPS_returnGroupedTags]}];
         [(UITableViewModuleViewController *)navTags.topViewController setDelegate: self];
         [self presentViewController: navTags animated: YES completion: ^{ }];

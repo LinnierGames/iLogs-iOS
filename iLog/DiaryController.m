@@ -243,7 +243,7 @@
 }
 
 + (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(int)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(int)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue {
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue startDate: dateStartValue emotion: emotionValue emotionScale: emotionScaleValue weatherCondition: weatherValue temperature: temperatureValue temperatureValue: temperatureValueValue isBookmarked: boolBookmarkedValue options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [[UniversalVariables globalVariables] DIARIES_returnFirstDiary], @"diary", [NSMutableArray array], @"tags", nil]];
+    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue startDate: dateStartValue emotion: emotionValue emotionScale: emotionScaleValue weatherCondition: weatherValue temperature: temperatureValue temperatureValue: temperatureValueValue isBookmarked: boolBookmarkedValue options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [[UniversalVariables globalVariables] DIARIES_returnFirstDiary], @"diary", [NSMutableArray array], @"tags", [NSMutableArray array], @"stories", nil]];
     
 }
 
@@ -364,6 +364,22 @@
     }
     
     [dictionary setObject: arrayTags forKey: @"tags"];
+    
+    NSMutableArray *arrayStories = [NSMutableArray array];
+    if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Stories where id IN (SELECT storyID from StoryEntryRelationships where entryID = %d);", [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]], &statement, &err)) {
+        while (SQLStatementStep( statement)) {
+//            [arrayStories addObject: SQLStatementRowIntoTagEntryRelationshipEntry(statement)];
+            #warning Incomplete Method: SQLStatementRowIntoTagEntryRelationshipEntry
+            
+        }
+        
+    } else {
+        sqlite3_close( [[UniversalVariables globalVariables] database]);
+        NSAssert( 0, [NSString stringWithUTF8String: err]);
+        
+    }
+    
+    [dictionary setObject: arrayStories forKey: @"stories"];
     
     return dictionary;
     
