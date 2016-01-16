@@ -756,6 +756,82 @@ static inline NSMutableArray * SQLStatementRowIntoStoryEntry( sqlite3_stmt *stat
 
 @end
 
+#pragma mark - StoriesEntriesRelationship
+
+#pragma mark NSArray category (ARRAY_STORYENTRIES_)
+
+static const NSUInteger STORYENTRIES_tagID = 0;
+static const NSUInteger STORYENTRIES_entryID = 1;
+
+@interface NSArray (ARRAY_STORYENTRIES_)
+
++ (id)arrayNEWStoryEntriesRelationship;
++ (id)arrayNEWStoryEntriesRelationshipWithStoryID:(NSNumber *)storyID entryID:(NSNumber *)entryID;
++ (id)arrayNEWStoryEntriesRelationshipWithStoryID:(NSNumber *)storyID entryID:(NSNumber *)entryID options:(NSMutableDictionary *)dicIndex;
+- (NSNumber *)objectStoryEntry_storyID;
+- (NSNumber *)objectStoryEntry_entryID;
+
+@end
+
+#pragma mark UniversalVariables category (STORYENTRIES_)
+
+@interface UniversalVariables (STORYENTRIES_)
+
+- (void)STORYENTRIES_writeNewForStoryEntryRelationship:(NSArray *)arrayRelationship;
+- (void)STORYENTRIES_updateForStoryEntryRelationship:(NSArray *)arrayRelationship;
+- (void)STORYENTRIES_deleteForStoryEntryRelationship:(NSArray *)arrayRelationship;
+
+- (NSMutableDictionary *)STORYENTRIES_returnOptionsForTagEntryRelationship:(NSArray *)arrayRelationship;
+
+@end
+
+#pragma mark UniversalFunctions category (SQL_TAGENTRIES_)
+
+static const int SQL_STORYENTRIES_id = 0;
+static const int SQL_STORYENTRIES_storyid = 1;
+static const int SQL_STORYENTRIES_entryid = 2;
+
+/**
+ * From the parameter list, an array is produced in StoryEntryRelationship format
+ * @param [in] statement incoming value from previous call SQLStatementStep(..)
+ * @return NSArray: StoryEntryRelationship format
+ */
+static inline NSMutableArray * SQLStatementRowIntoStoryEntryRelationshipEntry( sqlite3_stmt *statement) {
+    NSNumber *numberStoryID = [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_STORYENTRIES_storyid)];
+    NSNumber *numberEntryID = [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_STORYENTRIES_entryid)];
+    
+    NSMutableArray *array = [NSMutableArray arrayNEWStoryEntriesRelationshipWithStoryID: numberStoryID entryID: numberEntryID options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt: sqlite3_column_int( statement, SQL_STORYENTRIES_id)], @"id", nil]];
+    
+    return array;
+    
+};
+
+@interface UniversalFunctions (SQL_STORYENTRIES_)
+
+/**
+ * Inserts a row to the table StoryEntriesRelationship
+ * @param [in] arrayEntry: StoryEntryRelationship
+ */
++ (void)SQL_STORYENTRIES_voidInsertRowWithArray:(const NSArray *)arrayRelationship;
+/**
+ * Updates an existing row to the table StoryEntriesRelationship
+ * @param [in] arrayEntry: StoryEntryRelationship
+ */
++ (void)SQL_STORYENTRIES_voidUpdateRowWithArray:(const NSArray *)arrayRelationship;
+/**
+ * Deletes a row to the table StoryEntriesRelationship
+ * @param [in] arrayEntry: StoryEntryRelationship
+ */
++ (void)SQL_STORYENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayRelationship;
+
+@end
+
+#pragma mark UniversalFunctions category (STORYENTRIES_)
+
+@interface UniversalFunctions (STORYENTRIES_)
+
+@end
+
 #pragma mark - Tag Groups
 
 #pragma mark NSArray category (ARRAY_TAGGROUPS_)
