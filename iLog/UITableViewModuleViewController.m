@@ -220,25 +220,24 @@
         case CTTableViewTags: {
             const NSArray *arrayTag = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
             BOOL perviousState = [[[arrayTag optionsDictionary] objectForKey: @"highlighted"] boolValue];
-            //NSNumber *idIndex = [[arrayTag optionsDictionary] objectForKey: @"id"];
             [[arrayTag optionsDictionary] setValue: [NSNumber numberWithBool: !perviousState] forKey: @"highlighted"];
-        /*  for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) { //Apply Changes to arrayM by searching for the matching idIndex from arrayTable
-                for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: groupIndex] count] -1; tagIndex += 1) {
-                    if ([[[[[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex] optionsDictionary] objectForKey: @"id"] isEqualToNumber: idIndex])
-                        [[[[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex] optionsDictionary] setValue: [[arrayTag optionsDictionary] objectForKey: @"highlighted"] forKey: @"highlighted"];
-
-                    
-                }
-                
-            }* Unessary due to arrays pointing to the same address */
-            [tableView reloadRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationNone];
+            
             if (perviousState) { //Highlighted -> Unghighlighted
-                [[dicChanges objectForKey: @"delete"] addObject: [[[[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row] optionsDictionary] objectForKey: @"id"]];
+                NSNumber *numberId = [[arrayTag optionsDictionary] objectForKey: @"id"];
+                if ([[dicChanges objectForKey: @"insert"] containsObject: numberId])
+                    [[dicChanges objectForKey: @"insert"] removeObjectIdenticalTo: numberId];
+                else
+                    [[dicChanges objectForKey: @"delete"] addObject: numberId];
                 
             } else {
-                [[dicChanges objectForKey: @"insert"] addObject: [[[[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row] optionsDictionary] objectForKey: @"id"]];
+                NSNumber *numberId = [[arrayTag optionsDictionary] objectForKey: @"id"];
+                if ([[dicChanges objectForKey: @"delete"] containsObject: numberId])
+                    [[dicChanges objectForKey: @"delete"] removeObjectIdenticalTo: numberId];
+                else
+                    [[dicChanges objectForKey: @"insert"] addObject: numberId];
                 
             }
+            [tableView reloadRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationNone];
             
             break;
             
