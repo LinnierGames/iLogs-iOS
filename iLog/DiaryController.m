@@ -1409,7 +1409,7 @@ alpha:1.0]
     
 }
 
-+ (void)TAGS_voidRemoveDuplicateChangesForDictionary:(NSMutableDictionary *)dictionary {
++ (void)_voidRemoveDuplicateChangesForDictionary:(NSMutableDictionary *)dictionary {
     NSUInteger index = 0;
     while (index < [[dictionary objectForKey: @"insert"] count]) {
         BOOL isFound = false;

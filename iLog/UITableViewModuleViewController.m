@@ -385,7 +385,7 @@
 }
 
 - (void)pressRightNav:(id)sender {
-    [UniversalFunctions TAGS_voidRemoveDuplicateChangesForDictionary: dicChanges];
+    [UniversalFunctions _voidRemoveDuplicateChangesForDictionary: dicChanges];
     if ([delegate respondsToSelector: @selector( tableViewModule:didFinishWithChanges:)])
          [delegate tableViewModule: self didFinishWithChanges: dicChanges];
     //Dismiss

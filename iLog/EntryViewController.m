@@ -446,7 +446,34 @@
                 }
                 
             }
-            [UniversalFunctions TAGS_voidRemoveDuplicateChangesForDictionary: [[arrayM optionsDictionary] objectForKey: @"tagChanges"]];
+            [UniversalFunctions _voidRemoveDuplicateChangesForDictionary: [[arrayM optionsDictionary] objectForKey: @"tagChanges"]];
+            break;
+            
+        } case CTTableViewStories: {
+            if (![[arrayM optionsDictionary] objectForKey: @"storyChanges"])
+                [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"storyChanges"];
+            
+            //Add Objects of id values Added to the :storyInsert List
+            for (NSNumber *numberStoryID in [dictionary objectForKey: @"insert"]) {
+                if (![[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] containsObject: numberStoryID]) {
+                    [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] addObject: numberStoryID];
+                    NSArray *arrayNewStory = [[UniversalFunctions SQL_returnContentOfTable: CTSQLStories withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberStoryID intValue]]] firstObject];
+                    [[[arrayM optionsDictionary] objectForKey: @"stories"] addObject: arrayNewStory];
+                    
+                }
+                
+            }
+            
+            //Add Objects of id values Added to the :storyDelete List
+            for (NSNumber *numberStoryID in [dictionary objectForKey: @"delete"]) {
+                if (![[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] containsObject: numberStoryID]) {
+                    [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] addObject: numberStoryID];
+                    [[[arrayM optionsDictionary] objectForKey: @"stories"] removeObjectIdenticalTo: numberStoryID];
+                    
+                }
+                
+            }
+            [UniversalFunctions _voidRemoveDuplicateChangesForDictionary: [[arrayM optionsDictionary] objectForKey: @"storiesChanges"]];
             break;
             
         } default:
