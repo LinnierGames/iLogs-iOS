@@ -14,6 +14,8 @@
         UICustomTableViewCell *cellSearch;
     NSMutableDictionary *dicChanges;
     
+    NSArray *arrayEntry;
+    
 }
 
 @end
@@ -25,7 +27,7 @@
  * Used to display selected tags in a table view
  * @param [in, out] arrayTagGroups : +TAGGROUPS_retrunGroupedTagsWithTagGroups:
  */
-+ (void)TAGGROUPS_voidUnhighlightTagsForFormattedTagGroups:(NSArray *)arrayTagGroups;
++ (void)_voidUnhighlightTagsForFormattedTagGroups:(NSArray *)arrayTagGroups;
 
 @end
 
@@ -56,7 +58,7 @@
         switch (moduleValue) {
             case CTTableViewTags: {
                 arrayM = [[NSMutableArray alloc] initWithArray: [content objectForKey: @"groupedTags"]];
-                [UniversalFunctions TAGGROUPS_voidUnhighlightTagsForFormattedTagGroups: arrayM];
+                [UniversalFunctions _voidUnhighlightTagsForFormattedTagGroups: arrayM];
                 for (NSArray *arrayTag in [content objectForKey: @"tags"]) { //Highlight tags from arrayM from conent:groupedTags
                     for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) {
                         for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: groupIndex] count] -1; tagIndex += 1) {
@@ -77,6 +79,24 @@
                 break;
                 
             } case CTTableViewStories: {
+                arrayM = [[NSMutableArray alloc] initWithArray: [content objectForKey: @"groupedStories"]];
+                [UniversalFunctions _voidUnhighlightTagsForFormattedTagGroups: arrayM];
+                for (NSArray *arrayStory in [content objectForKey: @"stories"]) { //Highlight stories from arrayM from conent:groupedStories
+                    for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) {
+                        for (int storyIndex = 0; storyIndex < [[arrayM objectAtIndex: groupIndex] count] -1; storyIndex += 1) {
+                            if ([[[[[arrayM objectAtIndex: groupIndex] objectAtIndex: storyIndex] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[arrayStory optionsDictionary] objectForKey: @"id"]])
+                                [[[[arrayM objectAtIndex: groupIndex] objectAtIndex: storyIndex] optionsDictionary] setValue: [NSNumber numberWithBool: YES] forKey: @"highlighted"];
+                            
+                            
+                        }
+                        
+                    }
+                    
+                }
+                arrayTable = [[NSMutableArray alloc] initWithArray: [UniversalFunctions TAGGROUPS_returnCopyOfTagsWithTagGroups: arrayM]];
+                module = moduleValue;
+                
+                arrayEntry = [content objectForKey: @"entry"];
                 
                 [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target: self action: @selector( pressLeftNav:)]];
                 [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self action: @selector( pressRightNav:)]];
@@ -111,6 +131,8 @@
     switch (module) {
         case CTTableViewTags:
             return [arrayM count] +1; /*Search Bar on Top*/ break;
+        case CTTableViewStories:
+            return [arrayM count] +1; /*Search Bar on Top*/ break;
         default:
             return 0; break;
             
@@ -125,6 +147,13 @@
                 return @"";
             else
                 return [[[[arrayM objectAtIndex: section -1] lastObject] objectForKey: @"group"] objectTagGroup_title];
+            break;
+            
+        } case CTTableViewStories: {
+            if (section == 0)
+                return @"";
+            else
+                return [[[[arrayM objectAtIndex: section -1] lastObject] objectForKey: @"diary"] objectDiary_title];
             break;
             
         }
@@ -148,6 +177,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (module) {
         case CTTableViewTags: {
+            if (section == 0)
+                return 1;
+            else
+                return [[arrayTable objectAtIndex: section -1] count];
+            break;
+            
+        } case CTTableViewStories: {
             if (section == 0)
                 return 1;
             else
@@ -178,7 +214,7 @@
                 [cell.searchBar setDelegate: self];
                 
                 cellSearch = cell; return cell;
-            
+                
             } else { //Tag
                 UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
                 if (!cell)
@@ -191,6 +227,38 @@
                     [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
                 else
                     [cell setAccessoryType: UITableViewCellAccessoryNone];
+                
+                return cell;
+                
+            } break;
+            
+        } case CTTableViewStories: {
+            if (indexPath.section == 0) { //Search Bar
+                UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Searchbar"];
+                if (!cell)
+                    cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellSearchBar];
+                //Customize Cell
+                [cell.searchBar setDelegate: self];
+                
+                cellSearch = cell; return cell;
+                
+            } else { //Story
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                if (!cell)
+                    cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+                //Customize Cell
+                NSArray *arrayStory = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
+                
+                [cell.textLabel setText: [arrayStory objectStory_title]];
+                if ([[[arrayStory optionsDictionary] objectForKey: @"highlighted"] boolValue])
+                    [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
+                else
+                    [cell setAccessoryType: UITableViewCellAccessoryNone];
+                
+                if ([[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[[[[arrayM objectAtIndex: indexPath.section -1] lastObject] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"]])
+                    [cell.textLabel setTextColor: [UIColor blackColor]];
+                else
+                    [cell.textLabel setTextColor: [UIColor lightGrayColor]];
                 
                 return cell;
                 
@@ -361,7 +429,7 @@
 
 @implementation UniversalFunctions (TableViewModule_)
 
-+ (void)TAGGROUPS_voidUnhighlightTagsForFormattedTagGroups:(NSArray *)arrayTagGroups {
++ (void)_voidUnhighlightTagsForFormattedTagGroups:(NSArray *)arrayTagGroups {
     for (int groupIndex = 0; groupIndex < [arrayTagGroups count]; groupIndex += 1) {
         for (int tagIndex = 0; tagIndex < [[arrayTagGroups objectAtIndex: groupIndex] count] -1 /*group hash*/; tagIndex += 1) {
             if ([[[[arrayTagGroups objectAtIndex: groupIndex] objectAtIndex: tagIndex] lastObject] isKindOfClass: [NSMutableDictionary class]])

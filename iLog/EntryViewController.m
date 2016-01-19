@@ -312,7 +312,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if ([cellStories.textfield isEqual: textField]) {
-        UINavigationController *navStories = [UITableViewModuleViewController allocWithModule: CTTableViewStories withContent: @{@"stories": [[arrayM optionsDictionary] objectForKey: @"stories"], @"groupedStories": [UniversalFunctions STORIES_returnGroupedStories]}];
+        UINavigationController *navStories = [UITableViewModuleViewController allocWithModule: CTTableViewStories withContent: @{@"stories": [[arrayM optionsDictionary] objectForKey: @"stories"], @"groupedStories": [UniversalFunctions STORIES_returnGroupedStories], @"entry": arrayM}];
         [(UITableViewModuleViewController *)navStories.topViewController setDelegate: self];
         [self presentViewController: navStories animated: YES completion: ^{ }];
         
