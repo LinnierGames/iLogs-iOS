@@ -20,6 +20,9 @@ typedef NS_ENUM(NSUInteger, CDTableViewModule) {
 
 @interface UITableViewModuleViewController : UIViewController
 
+/*
+ * Entry Array
+ */
 @property ( nonatomic, retain) NSMutableArray *arrayM;
 @property ( assign, readonly) CDTableViewModule module;
 

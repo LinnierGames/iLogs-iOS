@@ -204,76 +204,58 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (module) {
-        case CTTableViewTags: {
-            if (indexPath.section == 0) { //Search Bar
-                UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Searchbar"];
-                if (!cell)
-                    cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellSearchBar];
-                //Customize Cell
-                [cell.searchBar setDelegate: self];
+    if (indexPath.section == 0) { //Search Bar
+        UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Searchbar"];
+        if (!cell)
+            cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellSearchBar];
+        //Customize Cell
+        [cell.searchBar setDelegate: self];
+        
+        cellSearch = cell; return cell;
+        
+    } else { //Record
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+        if (!cell)
+            cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+        //Customize Cell
+        
+        NSArray *arrayRecord = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
+        if ([[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue])
+            [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
+        else
+            [cell setAccessoryType: UITableViewCellAccessoryNone];
+        
+        switch (module) {
+            case CTTableViewTags: {
+                [cell.textLabel setText: [arrayRecord objectTag_title]];
                 
-                cellSearch = cell; return cell;
+                break;
                 
-            } else { //Tag
-                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-                if (!cell)
-                    cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
-                //Customize Cell
-                NSArray *arrayTag = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
-                
-                [cell.textLabel setText: [arrayTag objectTag_title]];
-                if ([[[arrayTag optionsDictionary] objectForKey: @"highlighted"] boolValue])
+            } case CTTableViewStories: {
+                [cell.textLabel setText: [arrayRecord objectStory_title]];
+                if ([[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue])
                     [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
                 else
                     [cell setAccessoryType: UITableViewCellAccessoryNone];
                 
-                return cell;
-                
-            } break;
-            
-        } case CTTableViewStories: {
-            if (indexPath.section == 0) { //Search Bar
-                UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Searchbar"];
-                if (!cell)
-                    cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellSearchBar];
-                //Customize Cell
-                [cell.searchBar setDelegate: self];
-                
-                cellSearch = cell; return cell;
-                
-            } else { //Story
-                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-                if (!cell)
-                    cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
-                //Customize Cell
-                NSArray *arrayStory = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
-                
-                [cell.textLabel setText: [arrayStory objectStory_title]];
-                if ([[[arrayStory optionsDictionary] objectForKey: @"highlighted"] boolValue])
-                    [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
-                else
-                    [cell setAccessoryType: UITableViewCellAccessoryNone];
-                
-                if ([[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[[[[arrayM objectAtIndex: indexPath.section -1] lastObject] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"]])
+                if ([[[[[[arrayM objectAtIndex: indexPath.section -1] lastObject] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"]]) {
                     [cell.textLabel setTextColor: [UIColor blackColor]];
-                else
+                    [cell setUserInteractionEnabled: YES];
+                    
+                } else {
                     [cell.textLabel setTextColor: [UIColor lightGrayColor]];
+                    [cell setUserInteractionEnabled: NO];
+                    
+                }
                 
-                return cell;
+                break;
                 
-            } break;
-            
-        } default: {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-            if (!cell)
-                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
-            //Customize Cell
-            
-            return cell; break;
-            
+            } default:
+                break;
         }
-            
+        
+        return cell;
+        
     }
     
 }
@@ -291,27 +273,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (module) {
-        case CTTableViewTags: {
-            const NSArray *arrayTag = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
-            BOOL perviousState = [[[arrayTag optionsDictionary] objectForKey: @"highlighted"] boolValue];
-            [[arrayTag optionsDictionary] setValue: [NSNumber numberWithBool: !perviousState] forKey: @"highlighted"];
+        case CTTableViewTags: case CTTableViewStories: {
+            const NSArray *arrayRecord = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
+            BOOL perviousState = [[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue];
+            [[arrayRecord optionsDictionary] setValue: [NSNumber numberWithBool: !perviousState] forKey: @"highlighted"];
             
             if (perviousState) { //Highlighted -> Unghighlighted
-                NSNumber *numberId = [[arrayTag optionsDictionary] objectForKey: @"id"];
+                NSNumber *numberId = [[arrayRecord optionsDictionary] objectForKey: @"id"];
                 if ([[dicChanges objectForKey: @"insert"] containsObject: numberId])
                     [[dicChanges objectForKey: @"insert"] removeObjectIdenticalTo: numberId];
                 else
                     [[dicChanges objectForKey: @"delete"] addObject: numberId];
                 
             } else {
-                NSNumber *numberId = [[arrayTag optionsDictionary] objectForKey: @"id"];
+                NSNumber *numberId = [[arrayRecord optionsDictionary] objectForKey: @"id"];
                 if ([[dicChanges objectForKey: @"delete"] containsObject: numberId])
                     [[dicChanges objectForKey: @"delete"] removeObjectIdenticalTo: numberId];
                 else
                     [[dicChanges objectForKey: @"insert"] addObject: numberId];
                 
             }
-            [tableView reloadRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationNone];
+            [tableView reloadRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationFade];
             
             break;
             
