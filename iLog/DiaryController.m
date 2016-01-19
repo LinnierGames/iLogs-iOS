@@ -470,6 +470,14 @@
         [UniversalFunctions SQL_TAGENTRIES_voidDeleteRowWithArray: [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberInt entryID: [[arrayEntry optionsDictionary] objectForKey: @"id"]]];
         
     }
+    for (NSNumber *numberInt in [[[arrayEntry optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"]) {
+        [UniversalFunctions SQL_STORYENTRIES_voidInsertRowWithArray: [NSArray arrayNEWStoryEntriesRelationshipWithStoryID: numberInt entryID: [[arrayEntry optionsDictionary] objectForKey: @"id"]]];
+        
+    }
+    for (NSNumber *numberInt in [[[arrayEntry optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"]) {
+        [UniversalFunctions SQL_STORYENTRIES_voidDeleteRowWithArray: [NSArray arrayNEWStoryEntriesRelationshipWithStoryID: numberInt entryID: [[arrayEntry optionsDictionary] objectForKey: @"id"]]];
+        
+    }
     
 }
 
