@@ -353,7 +353,7 @@
     NSMutableArray *arrayTags = [NSMutableArray array];
     if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Tags where id IN (SELECT tagID from TagEntryRelationships where entryID = %d);", [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]], &statement, &err)) {
         while (SQLStatementStep( statement)) {
-            [arrayTags addObject: SQLStatementRowIntoTagEntryRelationshipEntry(statement)];
+            [arrayTags addObject: SQLStatementRowIntoTagEntry(statement)];
             
         }
         
@@ -368,8 +368,7 @@
     NSMutableArray *arrayStories = [NSMutableArray array];
     if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Stories where id IN (SELECT storyID from StoryEntryRelationships where entryID = %d);", [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]], &statement, &err)) {
         while (SQLStatementStep( statement)) {
-//            [arrayStories addObject: SQLStatementRowIntoTagEntryRelationshipEntry(statement)];
-            #warning Incomplete Method: SQLStatementRowIntoTagEntryRelationshipEntry
+            [arrayStories addObject: SQLStatementRowIntoStoryEntry(statement)];
             
         }
         
