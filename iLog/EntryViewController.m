@@ -56,6 +56,12 @@
     
     if (self) {
         arrayM = [[NSMutableArray alloc] initWithArray: arrayEntry];
+        
+        if (![[arrayM optionsDictionary] objectForKey: @"tagChanges"])
+            [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"tagChanges"];
+        if (![[arrayM optionsDictionary] objectForKey: @"storyChanges"])
+            [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"storyChanges"];
+        
         array = [NSMutableArray new];
         option = value;
         delegate = delegateValue;
@@ -311,7 +317,12 @@
 #pragma mark Void's > Pre-Defined Functions (TEXT FIELD)
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if ([cellTags.textfield isEqual: textField]) {
+    if ([cellStories.textfield isEqual: textField]) {
+        UINavigationController *navStories = [UITableViewModuleViewController allocWithModule: CTTableViewStories withContent: @{@"stories": [[arrayM optionsDictionary] objectForKey: @"stories"], @"groupedStories": [UniversalFunctions STORIES_returnGroupedStories], @"entry": arrayM}];
+        [(UITableViewModuleViewController *)navStories.topViewController setDelegate: self];
+        [self presentViewController: navStories animated: YES completion: ^{ }];
+        
+    } else if ([cellTags.textfield isEqual: textField]) {
         UINavigationController *navTags = [UITableViewModuleViewController allocWithModule: CTTableViewTags withContent: @{@"tags": [[arrayM optionsDictionary] objectForKey: @"tags"], @"groupedTags": [UniversalFunctions TAGGROUPS_returnGroupedTags]}];
         [(UITableViewModuleViewController *)navTags.topViewController setDelegate: self];
         [self presentViewController: navTags animated: YES completion: ^{ }];
@@ -350,6 +361,22 @@
         case 1: { //Select Diary
             if (buttonIndex != 0) {
                 [[arrayM optionsDictionary] setValue: [array objectAtIndex: buttonIndex -1] forKey: @"diary"];
+                while ([[[arrayM optionsDictionary] objectForKey: @"stories"] count] > 0) {
+                    NSNumber *numberStoryID = [[[[[arrayM optionsDictionary] objectForKey: @"stories"] firstObject] optionsDictionary] objectForKey: @"id"];
+                    if (![[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] containsObject: numberStoryID]) {
+                        [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] addObject: numberStoryID];
+                        for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"stories"] count]; index += 1) {
+                            if ([[[[[[arrayM optionsDictionary] objectForKey: @"stories"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberStoryID]) {
+                                [[[arrayM optionsDictionary] objectForKey: @"stories"] removeObjectAtIndex: index];
+                                break;
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                }
                 [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
                 
             }
@@ -411,8 +438,6 @@
 - (void)tableViewModule:(UITableViewModuleViewController *)tableViewModule didFinishWithChanges:(NSDictionary *)dictionary {
     switch (tableViewModule.module) {
         case CTTableViewTags: {
-            if (![[arrayM optionsDictionary] objectForKey: @"tagChanges"])
-                [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"tagChanges"];
             
             //Add Objects of id values Added to the :tagsInsert List
             for (NSNumber *numberTagID in [dictionary objectForKey: @"insert"]) {
@@ -429,7 +454,7 @@
             for (NSNumber *numberTagID in [dictionary objectForKey: @"delete"]) {
                 if (![[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] containsObject: numberTagID]) {
                     [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] addObject: numberTagID];
-                    for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"tags"] count]; index += 1) {
+                    for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"stories"] count]; index += 1) {
                         if ([[[[[[arrayM optionsDictionary] objectForKey: @"tags"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberTagID]) {
                             [[[arrayM optionsDictionary] objectForKey: @"tags"] removeObjectAtIndex: index];
                             break;
@@ -441,7 +466,39 @@
                 }
                 
             }
-            [UniversalFunctions TAGS_voidRemoveDuplicateChangesForDictionary: [[arrayM optionsDictionary] objectForKey: @"tagChanges"]];
+            [UniversalFunctions _voidRemoveDuplicateChangesForDictionary: [[arrayM optionsDictionary] objectForKey: @"tagChanges"]];
+            break;
+            
+        } case CTTableViewStories: {
+            
+            //Add Objects of id values Added to the :storyInsert List
+            for (NSNumber *numberStoryID in [dictionary objectForKey: @"insert"]) {
+                if (![[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] containsObject: numberStoryID]) {
+                    [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] addObject: numberStoryID];
+                    NSArray *arrayNewStory = [[UniversalFunctions SQL_returnContentOfTable: CTSQLStories withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberStoryID intValue]]] firstObject];
+                    [[[arrayM optionsDictionary] objectForKey: @"stories"] addObject: arrayNewStory];
+                    
+                }
+                
+            }
+            
+            //Add Objects of id values Added to the :storyDelete List
+            for (NSNumber *numberStoryID in [dictionary objectForKey: @"delete"]) {
+                if (![[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] containsObject: numberStoryID]) {
+                    [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] addObject: numberStoryID];
+                    for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"stories"] count]; index += 1) {
+                        if ([[[[[[arrayM optionsDictionary] objectForKey: @"stories"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberStoryID]) {
+                            [[[arrayM optionsDictionary] objectForKey: @"stories"] removeObjectAtIndex: index];
+                            break;
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+            [UniversalFunctions _voidRemoveDuplicateChangesForDictionary: [[arrayM optionsDictionary] objectForKey: @"storiesChanges"]];
             break;
             
         } default:
