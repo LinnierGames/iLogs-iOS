@@ -49,7 +49,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     viewDiary = [[[NSBundle mainBundle] loadNibNamed: @"DiaryTabBarViewController" owner: self options: NULL] objectAtIndex: 0];
-    [labelBundle setText: [NSString stringWithFormat: @"%@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"]]];
+    [labelBundle setText: [NSString stringWithFormat: @"%@ (%@) : %@", [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey: @"CFBundleVersion"], kBuildSerial]];
     
 }
 

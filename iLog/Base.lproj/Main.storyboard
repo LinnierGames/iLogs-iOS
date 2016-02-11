@@ -27,10 +27,10 @@
                                     <action selector="pressDiary:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="61J-Hb-iwe"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHL-Bo-ZIa">
-                                <rect key="frame" x="16" y="559" width="137" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHL-Bo-ZIa">
+                                <rect key="frame" x="16" y="559" width="564" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="137" id="Yw7-iM-CO2"/>
+                                    <constraint firstAttribute="width" constant="564" id="Yw7-iM-CO2"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,7 +43,7 @@
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="yHL-Bo-ZIa" secondAttribute="bottom" constant="20" id="81v-F0-cpK"/>
                             <constraint firstItem="x21-gL-5cx" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="bGk-A2-l5b"/>
                             <constraint firstItem="x21-gL-5cx" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="e1C-Pn-I7N"/>
-                            <constraint firstItem="yHL-Bo-ZIa" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="iEs-IS-Sdf"/>
+                            <constraint firstItem="yHL-Bo-ZIa" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-4" id="iEs-IS-Sdf"/>
                         </constraints>
                     </view>
                     <connections>
@@ -52,6 +52,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="401" y="200"/>
         </scene>
     </scenes>
 </document>
