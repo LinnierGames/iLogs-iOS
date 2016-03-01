@@ -59,7 +59,7 @@
             case CTTableViewTags: {
                 arrayM = [[NSMutableArray alloc] initWithArray: [content objectForKey: @"groupedTags"]];
                 [UniversalFunctions _voidUnhighlightTagsForFormattedTagGroups: arrayM];
-                for (NSArray *arrayTag in [content objectForKey: @"tags"]) { //Highlight tags from arrayM from conent:groupedTags
+                for (NSArray *arrayTag in [content objectForKey: @"tags"]) { //Highlight tags, content:tags, from the formatted arrayM
                     for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) {
                         for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: groupIndex] count] -1; tagIndex += 1) {
                             if ([[[[[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[arrayTag optionsDictionary] objectForKey: @"id"]])
@@ -278,14 +278,14 @@
             BOOL perviousState = [[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue];
             [[arrayRecord optionsDictionary] setValue: [NSNumber numberWithBool: !perviousState] forKey: @"highlighted"];
             
-            if (perviousState) { //Highlighted -> Unghighlighted
+            if (perviousState) { //Highlighted -> Unhighlighted
                 NSNumber *numberId = [[arrayRecord optionsDictionary] objectForKey: @"id"];
                 if ([[dicChanges objectForKey: @"insert"] containsObject: numberId])
                     [[dicChanges objectForKey: @"insert"] removeObjectIdenticalTo: numberId];
                 else
                     [[dicChanges objectForKey: @"delete"] addObject: numberId];
                 
-            } else {
+            } else { //Unhighlighted -> Highlighted
                 NSNumber *numberId = [[arrayRecord optionsDictionary] objectForKey: @"id"];
                 if ([[dicChanges objectForKey: @"delete"] containsObject: numberId])
                     [[dicChanges objectForKey: @"delete"] removeObjectIdenticalTo: numberId];
