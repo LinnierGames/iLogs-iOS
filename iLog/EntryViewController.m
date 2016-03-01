@@ -439,34 +439,43 @@
     switch (tableViewModule.module) {
         case CTTableViewTags: {
             
-            //Add Objects of id values Added to the :tagsInsert List
+            //Add non duplicate object of id value to :tagChanges:insert
             for (NSNumber *numberTagID in [dictionary objectForKey: @"insert"]) {
-                if (![[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] containsObject: numberTagID]) {
+                if ([[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] containsObject: numberTagID]) { //Adding a tag that is being removed
+                    [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] removeObjectIdenticalTo: numberTagID];
+                    
+                } else { //Add the tag to be added
                     [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] addObject: numberTagID];
-                    NSArray *arrayNewTag = [[UniversalFunctions SQL_returnContentOfTable: CTSQLTags withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberTagID intValue]]] firstObject];
-                    [[[arrayM optionsDictionary] objectForKey: @"tags"] addObject: arrayNewTag];
                     
                 }
                 
+                //Add the tag to the :tags hash
+                NSArray *arrayNewTag = [[UniversalFunctions SQL_returnContentOfTable: CTSQLTags withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberTagID intValue]]] firstObject];
+                [[[arrayM optionsDictionary] objectForKey: @"tags"] addObject: arrayNewTag];
+                
             }
             
-            //Add Objects of id values Added to the :tagsDelete List
+            //Add non duplicate object of id value to :tagChanges:delete
             for (NSNumber *numberTagID in [dictionary objectForKey: @"delete"]) {
-                if (![[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] containsObject: numberTagID]) {
+                if ([[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] containsObject: numberTagID]) { //Removing a tag that is being added
+                    [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] removeObjectIdenticalTo: numberTagID];
+                
+                } else {
                     [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] addObject: numberTagID];
-                    for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"stories"] count]; index += 1) {
-                        if ([[[[[[arrayM optionsDictionary] objectForKey: @"tags"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberTagID]) {
-                            [[[arrayM optionsDictionary] objectForKey: @"tags"] removeObjectAtIndex: index];
-                            break;
-                            
-                        }
+                    
+                }
+                
+                //Remove the tag to the :tags hash
+                for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"tags"] count]; index += 1) {
+                    if ([[[[[[arrayM optionsDictionary] objectForKey: @"tags"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberTagID]) {
+                        [[[arrayM optionsDictionary] objectForKey: @"tags"] removeObjectAtIndex: index];
+                        break;
                         
                     }
                     
                 }
                 
             }
-            [UniversalFunctions _voidRemoveDuplicateChangesForDictionary: [[arrayM optionsDictionary] objectForKey: @"tagChanges"]];
             break;
             
         } case CTTableViewStories: {
