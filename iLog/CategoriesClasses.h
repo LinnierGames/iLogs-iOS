@@ -518,7 +518,7 @@ static inline NSArray* NSColorArrayByTheme() {
 - (NSString *)presentationString;
 
 /**
- * Allowing Qoutation marks inside a string to be saved in a SQL column with the string format sourrounded by @"\"%@\""
+ * Allowing Qoutation marks inside a string to be saved in a SQL column with the string format sourrounded by @"\"%@\"", or double qoutes
  * @return NSString *
  */
 - (NSString *)stringByReformatingForSQLQuries;
