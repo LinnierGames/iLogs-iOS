@@ -507,7 +507,6 @@
                 }
                 
             }
-            [UniversalFunctions _voidRemoveDuplicateChangesForDictionary: [[arrayM optionsDictionary] objectForKey: @"storiesChanges"]];
             break;
             
         } default:

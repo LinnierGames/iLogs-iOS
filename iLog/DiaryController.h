@@ -1039,7 +1039,7 @@ static inline NSMutableArray * SQLStatementRowIntoTagEntry( sqlite3_stmt *statem
  * therefore it's not needed
  * @param [in,out] dictionary : in the format created for TAAGROUPS
  */
-+ (void)_voidRemoveDuplicateChangesForDictionary:(NSMutableDictionary *)dictionary;
++ (void)_voidRemoveDuplicateChangesForDictionary:(NSMutableDictionary *)dictionary NS_DEPRECATED_IOS( 1_0, 1_0);
 
 @end
 
