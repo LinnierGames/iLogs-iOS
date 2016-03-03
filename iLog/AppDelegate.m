@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import "LoggingAssertionHandler.h"
+
 @interface AppDelegate () {
     NSTimer *longTapDismissTimer;
     NSTimeInterval longTapTimer;
@@ -23,6 +25,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [UniversalFunctions SQL_voidCreateDatabaseSchema];
+    [[[NSThread currentThread] threadDictionary] setValue: [[LoggingAssertionHandler alloc] init] forKey: NSAssertionHandlerKey];
     
     return YES;
 }

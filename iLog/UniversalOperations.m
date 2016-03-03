@@ -8,6 +8,8 @@
 
 #import "UniversalOperations.h"
 
+#import "LoggingAssertionHandler.h"
+
 @implementation UniversalVariables
 @synthesize database, viewController = view, currentView;
 
@@ -566,6 +568,58 @@ NSString *SQLDatabase = @"database";
 
 @end
 
+@implementation NSAssertion : NSObject;
+
++ (instancetype)assertionWithSelector:(SEL)selectorValue object:(id)objectValue file:(NSString *)filenameValue lineNumber:(NSInteger)lineValue description:(NSString *)format, ... {
+    NSAssertion *new = [NSAssertion new];
+    
+    new.selector = selectorValue;
+    new.object = objectValue;
+    new.filename = filenameValue;
+    new.line = lineValue;
+    new.descriptionType = format;
+    
+    return new;
+    
+}
+
+@end
+
+@implementation UniversalVariables (UniversalOperations_)
+
++ (NSString *)dataFilePathCrashReports {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains( NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *dictionaryDocuments = [paths objectAtIndex: 0];
+    return [dictionaryDocuments stringByAppendingPathComponent: @"reports.plist"];
+    
+}
+
+@end
+
 @implementation UniversalOperations
+
++ (void)reportNewCrashReport:(NSException *)exception {
+    [UniversalOperations reportNewCrashReport: exception withAssertion: nil];
+    
+}
+
++ (void)reportNewCrashReport:(NSException * _Nonnull )exception withAssertion:(NSAssertion * _Nullable )assertion {
+    NSMutableArray *arrayReports = [NSMutableArray array];
+    if ([[NSFileManager defaultManager] fileExistsAtPath: [UniversalVariables dataFilePathCrashReports]])
+        arrayReports = [NSMutableArray arrayWithContentsOfFile: [UniversalVariables dataFilePathCrashReports]];
+    
+    NSMutableDictionary *dicNewReport = [NSMutableDictionary dictionaryWithObjectsAndKeys: exception.reason, @"reason", nil];
+    if (assertion != nil) {
+        [dicNewReport setObject: NSStringFromSelector(assertion.selector) forKey: @"selector"];
+        [dicNewReport setObject: [NSString stringWithFormat: @"%@", assertion.object] forKey: @"object"];
+        [dicNewReport setObject: assertion.filename forKey: @"file"];
+        [dicNewReport setObject: [NSNumber numberWithInteger: assertion.line] forKey: @"line"];
+        [dicNewReport setObject: assertion.descriptionType forKey: @"description"];
+        
+    }
+    [arrayReports insertObject: dicNewReport atIndex: 0];
+    [arrayReports writeToFile: [UniversalVariables dataFilePathCrashReports] atomically: YES];
+    
+}
 
 @end
