@@ -133,6 +133,21 @@ typedef enum {
 
 @end
 
+@interface NSAssertion : NSObject
+
+@property SEL selector;
+@property ( assign) id object;
+@property ( nonatomic, retain) NSString *filename;
+@property NSInteger line;
+@property ( nonatomic, retain) NSString *descriptionType;
+
++ (instancetype)assertionWithSelector:(SEL)selectorValue object:(id)objectValue file:(NSString *)filenameValue lineNumber:(NSInteger)lineValue description:(NSString *)format, ...;
+
+@end
+
 @interface UniversalOperations : NSObject
+
++ (void)reportNewCrashReport:(NSException * _Nonnull )exception;
++ (void)reportNewCrashReport:(NSException * _Nonnull )exception withAssertion:(NSAssertion * _Nullable )assertion;
 
 @end
