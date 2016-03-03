@@ -144,6 +144,19 @@
 			name = RES;
 			sourceTree = "<group>";
 		};
+		E153A1831C87D53E00078299 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E17EEC321B2E1AD4007C1E91 /* AppDelegate.h */,
+				E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */,
+				E17EEC931B2F9442007C1E91 /* UniversalOperations.h */,
+				E17EEC941B2F9442007C1E91 /* UniversalOperations.m */,
+				E146E4A91B348B79006DC1EC /* CategoriesClasses.h */,
+				E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		E17EEC221B2E1AD4007C1E91 = {
 			isa = PBXGroup;
 			children = (
@@ -164,12 +177,7 @@
 		E17EEC2D1B2E1AD4007C1E91 /* iLog */ = {
 			isa = PBXGroup;
 			children = (
-				E17EEC321B2E1AD4007C1E91 /* AppDelegate.h */,
-				E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */,
-				E17EEC931B2F9442007C1E91 /* UniversalOperations.h */,
-				E17EEC941B2F9442007C1E91 /* UniversalOperations.m */,
-				E146E4A91B348B79006DC1EC /* CategoriesClasses.h */,
-				E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */,
+				E153A1831C87D53E00078299 /* Controllers */,
 				E17EEC351B2E1AD4007C1E91 /* ViewController.h */,
 				E17EEC361B2E1AD4007C1E91 /* ViewController.m */,
 				E17EEC591B2E1C5B007C1E91 /* Apps */,
