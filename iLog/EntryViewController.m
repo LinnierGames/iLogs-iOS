@@ -273,7 +273,7 @@
     
 }
 
-#pragma mark Void's > Pre-Defined Functions (TABLE VIEW) 
+#pragma mark Void's > Pre-Defined Functions (TABLE VIEW)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
@@ -436,82 +436,63 @@
 #pragma mark Void's > Pre-Defined Functions (TABLE VIEW MODULE)
 
 - (void)tableViewModule:(UITableViewModuleViewController *)tableViewModule didFinishWithChanges:(NSDictionary *)dictionary {
+    NSString *stringChangesHash = @"", *stringPluralHash = @"";
+    CDSQLTables databaseTable;
+    
     switch (tableViewModule.module) {
-        case CTTableViewTags: {
+        case CTTableViewStories: {
+            stringChangesHash = @"storyChanges";
+            stringPluralHash = @"stories";
+            databaseTable = CTSQLStories;
             
-            //Add non duplicate object of id value to :tagChanges:insert
-            for (NSNumber *numberTagID in [dictionary objectForKey: @"insert"]) {
-                if ([[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] containsObject: numberTagID]) { //Adding a tag that is being removed
-                    [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] removeObjectIdenticalTo: numberTagID];
-                    
-                } else { //Add the tag to be added
-                    [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] addObject: numberTagID];
-                    
-                }
-                
-                //Add the tag to the :tags hash
-                NSArray *arrayNewTag = [[UniversalFunctions SQL_returnContentOfTable: CTSQLTags withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberTagID intValue]]] firstObject];
-                [[[arrayM optionsDictionary] objectForKey: @"tags"] addObject: arrayNewTag];
-                
-            }
-            
-            //Add non duplicate object of id value to :tagChanges:delete
-            for (NSNumber *numberTagID in [dictionary objectForKey: @"delete"]) {
-                if ([[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] containsObject: numberTagID]) { //Removing a tag that is being added
-                    [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] removeObjectIdenticalTo: numberTagID];
-                
-                } else {
-                    [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] addObject: numberTagID];
-                    
-                }
-                
-                //Remove the tag to the :tags hash
-                for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"tags"] count]; index += 1) {
-                    if ([[[[[[arrayM optionsDictionary] objectForKey: @"tags"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberTagID]) {
-                        [[[arrayM optionsDictionary] objectForKey: @"tags"] removeObjectAtIndex: index];
-                        break;
-                        
-                    }
-                    
-                }
-                
-            }
             break;
+        } case CTTableViewTags: {
+            stringChangesHash = @"tagChanges";
+            stringPluralHash = @"tags";
+            databaseTable = CTSQLTags;
             
-        } case CTTableViewStories: {
-            
-            //Add Objects of id values Added to the :storyInsert List
-            for (NSNumber *numberStoryID in [dictionary objectForKey: @"insert"]) {
-                if (![[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] containsObject: numberStoryID]) {
-                    [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] addObject: numberStoryID];
-                    NSArray *arrayNewStory = [[UniversalFunctions SQL_returnContentOfTable: CTSQLStories withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberStoryID intValue]]] firstObject];
-                    [[[arrayM optionsDictionary] objectForKey: @"stories"] addObject: arrayNewStory];
-                    
-                }
-                
-            }
-            
-            //Add Objects of id values Added to the :storyDelete List
-            for (NSNumber *numberStoryID in [dictionary objectForKey: @"delete"]) {
-                if (![[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] containsObject: numberStoryID]) {
-                    [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] addObject: numberStoryID];
-                    for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"stories"] count]; index += 1) {
-                        if ([[[[[[arrayM optionsDictionary] objectForKey: @"stories"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberStoryID]) {
-                            [[[arrayM optionsDictionary] objectForKey: @"stories"] removeObjectAtIndex: index];
-                            break;
-                            
-                        }
-                        
-                    }
-                    
-                }
-                
-            }
-            [UniversalFunctions _voidRemoveDuplicateChangesForDictionary: [[arrayM optionsDictionary] objectForKey: @"storiesChanges"]];
             break;
             
         } default:
             break;
+    }
+    
+    //Add non duplicate object of id value to :_Changes:insert
+    for (NSNumber *numberID in [dictionary objectForKey: @"insert"]) {
+        if ([[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"delete"] containsObject: numberID]) { //Adding ID that is being removed
+            [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"delete"] removeObjectIdenticalTo: numberID];
+            
+        } else { //Add the ID to be added
+            [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"insert"] addObject: numberID];
+            
+        }
+        
+        //Add the tag to the :_ hash
+        NSArray *arrayNewTag = [[UniversalFunctions SQL_returnContentOfTable: CTSQLTags withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberID intValue]]] firstObject];
+        [[[arrayM optionsDictionary] objectForKey: stringPluralHash] addObject: arrayNewTag];
+        
+    }
+    
+    //Add non duplicate object of id value to :_Changes:delete
+    for (NSNumber *numberID in [dictionary objectForKey: @"delete"]) {
+        if ([[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"insert"] containsObject: numberID]) { //Removing ID that is being added
+            [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"insert"] removeObjectIdenticalTo: numberID];
+            
+        } else { //Add the ID to be removed
+            [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"delete"] addObject: numberID];
+            
+        }
+        
+        //Remove the ID to the :_ hash
+        for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: stringPluralHash] count]; index += 1) {
+            if ([[[[[[arrayM optionsDictionary] objectForKey: stringPluralHash] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberID]) {
+                [[[arrayM optionsDictionary] objectForKey: stringPluralHash] removeObjectAtIndex: index];
+                break;
+                
+            }
+            
+        }
+        
     }
     
 }
