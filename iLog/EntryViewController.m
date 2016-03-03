@@ -460,7 +460,7 @@
                 if ([[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] containsObject: numberTagID]) { //Removing a tag that is being added
                     [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"] removeObjectIdenticalTo: numberTagID];
                 
-                } else {
+                } else { //Add the tag to be removed
                     [[[[arrayM optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"] addObject: numberTagID];
                     
                 }
@@ -480,27 +480,37 @@
             
         } case CTTableViewStories: {
             
-            //Add Objects of id values Added to the :storyInsert List
+            //Add non duplicate object of id value to :storyChanges:insert
             for (NSNumber *numberStoryID in [dictionary objectForKey: @"insert"]) {
-                if (![[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] containsObject: numberStoryID]) {
+                if ([[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] containsObject: numberStoryID]) { //Adding a story that is being removed
+                    [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] removeObjectIdenticalTo: numberStoryID];
+                    
+                } else { //Add the story to be added
                     [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] addObject: numberStoryID];
-                    NSArray *arrayNewStory = [[UniversalFunctions SQL_returnContentOfTable: CTSQLStories withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberStoryID intValue]]] firstObject];
-                    [[[arrayM optionsDictionary] objectForKey: @"stories"] addObject: arrayNewStory];
                     
                 }
                 
+                //Add the tag to the :stories hash
+                NSArray *arrayNewStory = [[UniversalFunctions SQL_returnContentOfTable: CTSQLStories withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberStoryID intValue]]] firstObject];
+                [[[arrayM optionsDictionary] objectForKey: @"stories"] addObject: arrayNewStory];
+                
             }
             
-            //Add Objects of id values Added to the :storyDelete List
+            //Add non duplicate object of id value to :storyChanges:delete
             for (NSNumber *numberStoryID in [dictionary objectForKey: @"delete"]) {
-                if (![[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] containsObject: numberStoryID]) {
+                if ([[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] containsObject: numberStoryID]) { //Removing a story that is being added
+                    [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] removeObjectIdenticalTo: numberStoryID];
+                    
+                } else { //Add the story to be removed
                     [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] addObject: numberStoryID];
-                    for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"stories"] count]; index += 1) {
-                        if ([[[[[[arrayM optionsDictionary] objectForKey: @"stories"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberStoryID]) {
-                            [[[arrayM optionsDictionary] objectForKey: @"stories"] removeObjectAtIndex: index];
-                            break;
-                            
-                        }
+                    
+                }
+                
+                //Remove the tag to the :stories hash
+                for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"stories"] count]; index += 1) {
+                    if ([[[[[[arrayM optionsDictionary] objectForKey: @"stories"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberStoryID]) {
+                        [[[arrayM optionsDictionary] objectForKey: @"stories"] removeObjectAtIndex: index];
+                        break;
                         
                     }
                     
