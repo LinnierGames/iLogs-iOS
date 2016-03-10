@@ -615,6 +615,7 @@ NSString *SQLDatabase = @"database";
         [dicNewReport setObject: assertion.filename forKey: @"file"];
         [dicNewReport setObject: [NSNumber numberWithInteger: assertion.line] forKey: @"line"];
         [dicNewReport setObject: assertion.descriptionType forKey: @"description"];
+        [dicNewReport setObject: [NSDate date] forKey: @"date"];
         
     }
     [arrayReports insertObject: dicNewReport atIndex: 0];
