@@ -329,9 +329,9 @@
 - (NSString *)stringValue:(CDDateLayout)layout {
     static NSCalendar *calendar = nil;
     if (!calendar)
-        calendar = [[NSCalendar alloc] initWithCalendarIdentifier: NSGregorianCalendar];
-    NSDateComponents *components = [calendar components: NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate: self];
-    NSString *stringDay = [NSString stringWithFormat: @"%d", [components day]]; NSString *stringMonth = @""; NSString *stringMonthShort = @""; NSString *stringYear = [NSString stringWithFormat: @"%d", [components year]];
+        calendar = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [calendar components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate: self];
+    NSString *stringDay = [NSString stringWithFormat: @"%ld", (long)[components day]]; NSString *stringMonth = @""; NSString *stringMonthShort = @""; NSString *stringYear = [NSString stringWithFormat: @"%ld", (long)[components year]];
     if ([components month] == 1) { stringMonth = @"January"; stringMonthShort = @"Jan"; }
     else if ([components month] == 2) { stringMonth = @"February"; stringMonthShort = @"Feb"; }
     else if ([components month] == 3) { stringMonth = @"March"; stringMonthShort = @"Mar"; }
@@ -347,7 +347,7 @@
     if (layout == CTCharacterDate)
         return [NSString stringWithFormat: @"%@ %@, %@", stringMonth, stringDay, stringYear];
     else if (layout == CTNumericDate)
-        return [NSString stringWithFormat: @"%d/%d/%d", [components month], [components day], [components year]];
+        return [NSString stringWithFormat: @"%ld/%ld/%ld", (long)[components month], (long)[components day], (long)[components year]];
     else if (layout == CTCharacterDateMonth)
         return [NSString stringWithFormat: @"%@, %@", stringMonth, stringYear];
     else if (layout == CTCharacterDateMonthDay)
@@ -360,30 +360,30 @@
         return [NSString stringWithFormat: @"%@", todayString];
         
     } else if (layout == CTYear)
-        return [NSString stringWithFormat: @"%d", [components year]];
+        return [NSString stringWithFormat: @"%ld", (long)[components year]];
     else if (layout == CTMonth)
         return stringMonthShort;
     else if (layout == CTDay)
-        return [NSString stringWithFormat: @"%d", [components day]];
+        return [NSString stringWithFormat: @"%ld", (long)[components day]];
     else if (layout == CTHour)
-        return [NSString stringWithFormat: @"%d", [components hour]];
+        return [NSString stringWithFormat: @"%ld", (long)[components hour]];
     else if (layout == CTMinute)
-        return [NSString stringWithFormat: @"%d", [components minute]];
+        return [NSString stringWithFormat: @"%ld", (long)[components minute]];
     else if (layout == CTSecond)
-        return [NSString stringWithFormat: @"%d", [components second]];
+        return [NSString stringWithFormat: @"%ld", (long)[components second]];
     else if (layout == CTDaysOfWeekNumbered) {
         NSString *formatString = [NSDateFormatter dateFormatFromTemplate:@"E" options:0 locale:[NSLocale currentLocale]];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat: formatString];
         NSString *todayString = [dateFormatter stringFromDate: self];
-        return [NSString stringWithFormat: @"%@, %d", todayString, [components day]];
+        return [NSString stringWithFormat: @"%@, %ld", todayString, (long)[components day]];
         
     } else if (layout == CTCharacterDateTime) {
         return [NSString stringWithFormat: @"%@, %d %2.0d:%2.0d", [self stringValue: CTCharacterDateMonthDay], (int)[components year], [components hour] > 12 ? (int)[components hour] -12 : (int)[components hour], (int)[components minute]];
     
     } else {
-        NSString *stringYearClipped = [[NSString stringWithFormat: @"%d", [components year]] stringByReplacingOccurrencesOfString: [[NSString stringWithFormat: @"%d", [components year]] stringByPaddingToLength: 2 withString: @"" startingAtIndex: 0] withString: @""];
-        return [NSString stringWithFormat: @"%d/%d/%@", [components month], [components day], stringYearClipped];
+        NSString *stringYearClipped = [[NSString stringWithFormat: @"%ld", (long)[components year]] stringByReplacingOccurrencesOfString: [[NSString stringWithFormat: @"%ld", (long)[components year]] stringByPaddingToLength: 2 withString: @"" startingAtIndex: 0] withString: @""];
+        return [NSString stringWithFormat: @"%ld/%ld/%@", (long)[components month], (long)[components day], stringYearClipped];
         
     }
     

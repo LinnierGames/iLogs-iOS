@@ -238,17 +238,17 @@
 }
 
 + (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue body:(NSString *)stringBodyValue {
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: [NSDate date] dateCreated: [NSDate date] body: stringBodyValue emotion: CTEntryEmotionNoone weatherCondition: CTEntryWeatherConditionNoone temperature: CTEntryTemperatureNoone isBookmarked: NO];
+    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: [NSDate date] dateCreated: [NSDate date] body: stringBodyValue startDate: [NSDate dateWithTimeIntervalSince1970: 0] emotion: CTEntryEmotionNoone emotionScale: 0 weatherCondition: CTEntryWeatherConditionNoone temperature: CTEntryTemperatureNoone temperatureValue: 72 isBookmarked: NO];
     
 }
 
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue isBookmarked:(BOOL)boolBookmarkedValue {
-    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue emotion: emotionValue weatherCondition: weatherValue temperature: temperatureValue isBookmarked: boolBookmarkedValue options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [[UniversalVariables globalVariables] DIARIES_returnFirstDiary], @"diary", [NSArray array], @"tags", nil]];
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(int)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(int)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue {
+    return [NSMutableArray arrayNEWEntryWithSubject: stringSubjectValue date: dateValue dateCreated: dateCreatedValue body: stringBodyValue startDate: dateStartValue emotion: emotionValue emotionScale: emotionScaleValue weatherCondition: weatherValue temperature: temperatureValue temperatureValue: temperatureValueValue isBookmarked: boolBookmarkedValue options: [NSMutableDictionary dictionaryWithObjectsAndKeys: [[UniversalVariables globalVariables] DIARIES_returnFirstDiary], @"diary", [NSMutableArray array], @"tags", [NSMutableArray array], @"stories", nil]];
     
 }
 
-+ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue emotion:(CDEntryEmotions)emotionValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue isBookmarked:(BOOL)boolBookmarkedValue options:(NSMutableDictionary *)dicIndex {
-    return [NSMutableArray arrayWithObjects: stringSubjectValue, dateValue, dateCreatedValue, stringBodyValue, [NSNumber numberWithInt: emotionValue], [NSNumber numberWithInt: weatherValue], [NSNumber numberWithInt: temperatureValue], [NSNumber numberWithBool: boolBookmarkedValue], dicIndex, nil];
++ (id)arrayNEWEntryWithSubject:(NSString *)stringSubjectValue date:(NSDate *)dateValue dateCreated:(NSDate *)dateCreatedValue body:(NSString *)stringBodyValue startDate:(NSDate *)dateStartValue emotion:(CDEntryEmotions)emotionValue emotionScale:(int)emotionScaleValue weatherCondition:(CDEntryWeatherCondition)weatherValue temperature:(CDEntryTemerature)temperatureValue temperatureValue:(int)temperatureValueValue isBookmarked:(BOOL)boolBookmarkedValue options:(NSMutableDictionary *)dicIndex {
+    return [NSMutableArray arrayWithObjects: stringSubjectValue, dateValue, dateCreatedValue, stringBodyValue, dateStartValue, [NSNumber numberWithInt: emotionValue], [NSNumber numberWithInt: emotionScaleValue], [NSNumber numberWithInt: weatherValue], [NSNumber numberWithInt: temperatureValue], [NSNumber numberWithInt: temperatureValueValue], [NSNumber numberWithBool: boolBookmarkedValue], dicIndex, nil];
     
 }
 
@@ -272,13 +272,18 @@
     
 }
 
-- (BOOL)objectEntry_isBookmarked {
-    return [[self objectAtIndex: ENTRIES_isBookmarked] boolValue];
+- (NSDate *)objectEntry_startDate {
+    return [self objectAtIndex: ENTRIES_startDate];
     
 }
 
 - (CDEntryEmotions)objectEntry_emotion {
     return [[self objectAtIndex: ENTRIES_emotion] intValue];
+    
+}
+
+- (int)objectEntry_emotionScale {
+    return [[self objectAtIndex: ENTRIES_emotionScale] intValue];
     
 }
 
@@ -292,6 +297,16 @@
     
 }
 
+- (int)objectEntry_temperatureValue {
+    return [[self objectAtIndex: ENTRIES_temperatureValue] intValue];
+    
+}
+
+- (BOOL)objectEntry_isBookmarked {
+    return [[self objectAtIndex: ENTRIES_isBookmarked] boolValue];
+    
+}
+
 @end
 
 #pragma mark UniversalVariables category (ENTRIES_)
@@ -300,11 +315,14 @@
 
 - (void)ENTRIES_writeNewForEntry:(NSArray *)arrayEntry {
     [UniversalFunctions SQL_ENTRIES_voidInsertRowWithArray: arrayEntry];
+    [[arrayEntry optionsDictionary] setObject: [[[UniversalFunctions SQL_returnRecordWithMaxIDOfTable: CTSQLEntries] optionsDictionary] objectForKey: @"id"] forKey: @"id"];
+    [UniversalFunctions SQL_ENTRIES_voidApplyChangesWithArray: arrayEntry];
     
 }
 
 - (void)ENTRIES_updateForEntry:(NSArray *)arrayEntry {
     [UniversalFunctions SQL_ENTRIES_voidUpdateRowForArray: arrayEntry];
+    [UniversalFunctions SQL_ENTRIES_voidApplyChangesWithArray: arrayEntry];
     
 }
 
@@ -331,7 +349,36 @@
         NSAssert( 0, [NSString stringWithUTF8String: err]);
         
     }
-    [dictionary setObject: [NSArray array] forKey: @"tags"];
+    
+    NSMutableArray *arrayTags = [NSMutableArray array];
+    if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Tags where id IN (SELECT tagID from TagEntryRelationships where entryID = %d);", [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]], &statement, &err)) {
+        while (SQLStatementStep( statement)) {
+            [arrayTags addObject: SQLStatementRowIntoTagEntry(statement)];
+            
+        }
+        
+    } else {
+        sqlite3_close( [[UniversalVariables globalVariables] database]);
+        NSAssert( 0, [NSString stringWithUTF8String: err]);
+        
+    }
+    
+    [dictionary setObject: arrayTags forKey: @"tags"];
+    
+    NSMutableArray *arrayStories = [NSMutableArray array];
+    if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], [NSString stringWithFormat: @"SELECT * FROM Stories where id IN (SELECT storyID from StoryEntryRelationships where entryID = %d);", [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]], &statement, &err)) {
+        while (SQLStatementStep( statement)) {
+            [arrayStories addObject: SQLStatementRowIntoStoryEntry(statement)];
+            
+        }
+        
+    } else {
+        sqlite3_close( [[UniversalVariables globalVariables] database]);
+        NSAssert( 0, [NSString stringWithUTF8String: err]);
+        
+    }
+    
+    [dictionary setObject: arrayStories forKey: @"stories"];
     
     return dictionary;
     
@@ -350,7 +397,7 @@
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES]; [dateFormatter setTimeZoneSeparator: 0];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, date, dateCreated, body, emotion, weatherCondition, temperature, isBookmarked, diaryID) values (\"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d);", [[arrayEntry objectEntry_subject] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] stringByReformatingForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO Entries (subject, date, dateCreated, body, startDate, emotion, emotionScale, weatherCondition, temperature, temperatureValue, isBookmarked, diaryID) values (\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", %d, %d, %d, %d, %d, %d, %d);", [[arrayEntry objectEntry_subject] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_startDate]], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_emotionScale], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_temperatureValue], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
@@ -375,7 +422,7 @@
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entries SET subject = \"%@\", date = \"%@\", dateCreated = \"%@\", body = \"%@\", emotion = %d, weatherCondition = %d, temperature = %d, isBookmarked = %d, diaryID = %d where id = %d;", [[arrayEntry objectEntry_subject] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] stringByReformatingForSQLQuries], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue], [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE Entries SET subject = \"%@\", date = \"%@\", dateCreated = \"%@\", body = \"%@\", startDate = \"%@\", emotion = %d, emotionScale = %d, weatherCondition = %d, temperature = %d, temperatureValue = %d, isBookmarked = %d, diaryID = %d where id = %d;", [[arrayEntry objectEntry_subject] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_date]], [dateFormatter stringFromDate: [arrayEntry objectEntry_dateCreated]], [[arrayEntry objectEntry_body] stringByReformatingForSQLQuries], [dateFormatter stringFromDate: [arrayEntry objectEntry_startDate]], [arrayEntry objectEntry_emotion], [arrayEntry objectEntry_emotionScale], [arrayEntry objectEntry_weatherCondition], [arrayEntry objectEntry_temperature], [arrayEntry objectEntry_temperatureValue], [arrayEntry objectEntry_isBookmarked], [[[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] intValue], [[[arrayEntry optionsDictionary] objectForKey: @"id"] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
@@ -408,6 +455,26 @@
     } else {
         [UniversalFunctions SQL_voidCreateTable: CTSQLEntries];
         [UniversalFunctions SQL_ENTRIES_voidDeleteRowWithArray: arrayEntry];
+        
+    }
+    
+}
+
++ (void)SQL_ENTRIES_voidApplyChangesWithArray:(const NSArray *)arrayEntry {
+    for (NSNumber *numberInt in [[[arrayEntry optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"insert"]) {
+        [UniversalFunctions SQL_TAGENTRIES_voidInsertRowWithArray: [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberInt entryID: [[arrayEntry optionsDictionary] objectForKey: @"id"]]];
+        
+    }
+    for (NSNumber *numberInt in [[[arrayEntry optionsDictionary] objectForKey: @"tagChanges"] objectForKey: @"delete"]) {
+        [UniversalFunctions SQL_TAGENTRIES_voidDeleteRowWithArray: [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberInt entryID: [[arrayEntry optionsDictionary] objectForKey: @"id"]]];
+        
+    }
+    for (NSNumber *numberInt in [[[arrayEntry optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"]) {
+        [UniversalFunctions SQL_STORYENTRIES_voidInsertRowWithArray: [NSArray arrayNEWStoryEntriesRelationshipWithStoryID: numberInt entryID: [[arrayEntry optionsDictionary] objectForKey: @"id"]]];
+        
+    }
+    for (NSNumber *numberInt in [[[arrayEntry optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"]) {
+        [UniversalFunctions SQL_STORYENTRIES_voidDeleteRowWithArray: [NSArray arrayNEWStoryEntriesRelationshipWithStoryID: numberInt entryID: [[arrayEntry optionsDictionary] objectForKey: @"id"]]];
         
     }
     
@@ -764,6 +831,142 @@ alpha:1.0]
     return arrayGroupedStories;
     
 }
+
+@end
+
+#pragma mark - StoryEntriesRelationship
+
+#pragma mark NSArray category (ARRAY_STORYENTRIES_)
+
+@implementation NSArray (ARRAY_STORYENTRIES_)
+
++ (id)arrayNEWStoryEntriesRelationship {
+    return [NSMutableArray arrayNEWStoryEntriesRelationshipWithStoryID: @0 entryID: @0];
+    
+}
+
++ (id)arrayNEWStoryEntriesRelationshipWithStoryID:(NSNumber *)storyID entryID:(NSNumber *)entryID {
+    return [NSMutableArray arrayNEWStoryEntriesRelationshipWithStoryID: storyID entryID: entryID options: [NSMutableDictionary dictionary]];
+    
+}
+
++ (id)arrayNEWStoryEntriesRelationshipWithStoryID:(NSNumber *)storyID entryID:(NSNumber *)entryID options:(NSMutableDictionary *)dicIndex {
+    return [NSMutableArray arrayWithObjects: storyID, entryID, dicIndex, nil];
+    
+}
+
+- (NSNumber *)objectStoryEntry_storyID {
+    return [self objectAtIndex: TAGENTRIES_tagID];
+    
+}
+
+- (NSNumber *)objectStoryEntry_entryID {
+    return [self objectAtIndex: TAGENTRIES_entryID];
+    
+}
+
+@end
+
+#pragma mark UniversalVariables category (STORYENTRIES_)
+
+@implementation UniversalVariables (STORYENTRIES_)
+
+- (void)STORYENTRIES_writeNewForStoryEntryRelationship:(NSArray *)arrayRelationship {
+    [UniversalFunctions SQL_STORYENTRIES_voidInsertRowWithArray: arrayRelationship];
+    
+}
+
+- (void)STORYENTRIES_updateForStoryEntryRelationship:(NSArray *)arrayRelationship {
+    [UniversalFunctions SQL_STORYENTRIES_voidUpdateRowWithArray: arrayRelationship];
+    
+}
+
+- (void)STORYENTRIES_deleteForStoryEntryRelationship:(NSArray *)arrayRelationship {
+    [UniversalFunctions SQL_STORYENTRIES_voidDeleteRowWithArray: arrayRelationship];
+    
+}
+
+@end
+
+#pragma mark UniversalFunctions category (SQL_STORYENTRIES_)
+
+@implementation UniversalFunctions (SQL_STORYENTRIES_)
+
++ (void)SQL_STORYENTRIES_voidInsertRowWithArray:(const NSArray *)arrayRelationship {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLStoryEntryRelationships]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO StoryEntryRelationships (storyID, entryID) values (%d, %d);", [[arrayRelationship objectStoryEntry_storyID] intValue], [[arrayRelationship objectStoryEntry_entryID] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_STORYENTRIES_voidInsertRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_STORYENTRIES_voidInsertRowWithArray:", arrayRelationship);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLStoryEntryRelationships];
+        [UniversalFunctions SQL_STORYENTRIES_voidInsertRowWithArray: arrayRelationship];
+        
+    }
+    
+}
+
++ (void)SQL_STORYENTRIES_voidUpdateRowWithArray:(const NSArray *)arrayRelationship {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLStoryEntryRelationships]) {
+        static ISO8601DateFormatter *dateFormatter = nil;
+        if (!dateFormatter)
+            dateFormatter = [[ISO8601DateFormatter alloc] init];
+        [dateFormatter setIncludeTime: YES];
+        
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE StoryEntryRelationships SET storyID = %d, entryID = %d where id = %d;", [[arrayRelationship objectStoryEntry_storyID] intValue], [[arrayRelationship objectStoryEntry_entryID] intValue], [[[arrayRelationship optionsDictionary] objectForKey: @"id"] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_STORYENTRIES_voidUpdateRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_STORYENTRIES_voidUpdateRowWithArray:", arrayRelationship);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLStoryEntryRelationships];
+        [UniversalFunctions SQL_STORYENTRIES_voidUpdateRowWithArray: arrayRelationship];
+        
+    }
+    
+}
+
++ (void)SQL_STORYENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayRelationship {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLStoryEntryRelationships]) {
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM StoryEntryRelationships where storyID = %d AND entryID = %d;", [[arrayRelationship objectStoryEntry_storyID] intValue], [[arrayRelationship objectStoryEntry_entryID] intValue]];
+        char *err;
+        if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
+            sqlite3_close( [[UniversalVariables globalVariables] database]);
+            NSLog( @"***Failed to Add to Table: +SQL_STORYENTRIES_voidDeleteRowWithArray:");
+            NSAssert( 0, [NSString stringWithUTF8String: err]);
+            
+        } else
+            NSLog( @"Added to Table: %@: +SQL_STORYENTRIES_voidDeleteRowWithArray:", arrayRelationship);
+        
+    } else {
+        [UniversalFunctions SQL_voidCreateTable: CTSQLStoryEntryRelationships];
+        [UniversalFunctions SQL_STORYENTRIES_voidDeleteRowWithArray: arrayRelationship];
+        
+    }
+    
+}
+
+@end
+
+#pragma mark UniversalFunctions category (STORYENTRIES_)
+
+@implementation UniversalFunctions (STORYENTRIES_)
 
 @end
 
@@ -1274,13 +1477,13 @@ alpha:1.0]
 @implementation UniversalFunctions (SQL_TAGENTRIES_)
 
 + (void)SQL_TAGENTRIES_voidInsertRowWithArray:(const NSArray *)arrayRelationship {
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTagEntriesRelationship]) {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTagEntryRelationships]) {
         static ISO8601DateFormatter *dateFormatter = nil;
         if (!dateFormatter)
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO TagEntriesRelationship (tagID, entryID) values (%d, %d);", [[arrayRelationship objectTagEntry_tagID] intValue], [[arrayRelationship objectTagEntry_entryID] intValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"INSERT INTO TagEntryRelationships (tagID, entryID) values (%d, %d);", [[arrayRelationship objectTagEntry_tagID] intValue], [[arrayRelationship objectTagEntry_entryID] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
@@ -1291,7 +1494,7 @@ alpha:1.0]
             NSLog( @"Added to Table: %@: +SQL_TAGENTRIES_voidInsertRowWithArray:", arrayRelationship);
         
     } else {
-        [UniversalFunctions SQL_voidCreateTable: CTSQLTagEntriesRelationship];
+        [UniversalFunctions SQL_voidCreateTable: CTSQLTagEntryRelationships];
         [UniversalFunctions SQL_TAGENTRIES_voidInsertRowWithArray: arrayRelationship];
         
     }
@@ -1299,13 +1502,13 @@ alpha:1.0]
 }
 
 + (void)SQL_TAGENTRIES_voidUpdateRowWithArray:(const NSArray *)arrayRelationship {
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTagEntriesRelationship]) {
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTagEntryRelationships]) {
         static ISO8601DateFormatter *dateFormatter = nil;
         if (!dateFormatter)
             dateFormatter = [[ISO8601DateFormatter alloc] init];
         [dateFormatter setIncludeTime: YES];
         
-        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE TagEntriesRelationship SET tagID = %d, entryID = %d where id = %d;", [[arrayRelationship objectTagEntry_tagID] intValue], [[arrayRelationship objectTagEntry_entryID] intValue], [[[arrayRelationship optionsDictionary] objectForKey: @"id"] intValue]];
+        NSString *sqlStatement = [NSString stringWithFormat: @"UPDATE TagEntryRelationships SET tagID = %d, entryID = %d where id = %d;", [[arrayRelationship objectTagEntry_tagID] intValue], [[arrayRelationship objectTagEntry_entryID] intValue], [[[arrayRelationship optionsDictionary] objectForKey: @"id"] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
@@ -1316,7 +1519,7 @@ alpha:1.0]
             NSLog( @"Added to Table: %@: +SQL_TAGENTRIES_voidUpdateRowWithArray:", arrayRelationship);
         
     } else {
-        [UniversalFunctions SQL_voidCreateTable: CTSQLTagEntriesRelationship];
+        [UniversalFunctions SQL_voidCreateTable: CTSQLTagEntryRelationships];
         [UniversalFunctions SQL_TAGENTRIES_voidUpdateRowWithArray: arrayRelationship];
         
     }
@@ -1324,8 +1527,8 @@ alpha:1.0]
 }
 
 + (void)SQL_TAGENTRIES_voidDeleteRowWithArray:(const NSArray *)arrayRelationship {
-    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTagEntriesRelationship]) {
-        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM TagEntriesRelationship where id = %d;", [[[arrayRelationship optionsDictionary] objectForKey: @"id"] intValue]];
+    if ([UniversalFunctions SQL_returnStatusOfTable: CTSQLTagEntryRelationships]) {
+        NSString *sqlStatement = [NSString stringWithFormat: @"DELETE FROM TagEntryRelationships where tagID = %d AND entryID = %d;", [[arrayRelationship objectTagEntry_tagID] intValue], [[arrayRelationship objectTagEntry_entryID] intValue]];
         char *err;
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlStatement, &err)) {
             sqlite3_close( [[UniversalVariables globalVariables] database]);
@@ -1336,7 +1539,7 @@ alpha:1.0]
             NSLog( @"Added to Table: %@: +SQL_TAGENTRIES_voidDeleteRowWithArray:", arrayRelationship);
         
     } else {
-        [UniversalFunctions SQL_voidCreateTable: CTSQLTagEntriesRelationship];
+        [UniversalFunctions SQL_voidCreateTable: CTSQLTagEntryRelationships];
         [UniversalFunctions SQL_TAGENTRIES_voidDeleteRowWithArray: arrayRelationship];
         
     }

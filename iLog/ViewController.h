@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+static const NSString *kBuildSerial = @"QWERTY123456";
+
 @interface ViewController : UIViewController
 
 - (IBAction)pressDiary:(id)sender;

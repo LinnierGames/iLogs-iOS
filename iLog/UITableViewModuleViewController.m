@@ -14,6 +14,8 @@
         UICustomTableViewCell *cellSearch;
     NSMutableDictionary *dicChanges;
     
+    NSArray *arrayEntry;
+    
 }
 
 @end
@@ -25,14 +27,7 @@
  * Used to display selected tags in a table view
  * @param [in, out] arrayTagGroups : +TAGGROUPS_retrunGroupedTagsWithTagGroups:
  */
-+ (void)TAGGROUPS_voidUnhighlightTagsForFormattedTagGroups:(NSArray *)arrayTagGroups;
-
-/**
- * This will remove changes made like add one, but then remove the same object. this change "cancels" each other out
- * therefore it's not needed
- * @param [in,out] dictionary : in the format created for TAAGROUPS
- */
-+ (void)TAGGROUPS_voidRemoveDuplicateChangesForDictionary:(NSMutableDictionary *)dictionary;
++ (void)_voidUnhighlightTagsForFormattedTagGroups:(NSArray *)arrayTagGroups;
 
 @end
 
@@ -63,8 +58,8 @@
         switch (moduleValue) {
             case CTTableViewTags: {
                 arrayM = [[NSMutableArray alloc] initWithArray: [content objectForKey: @"groupedTags"]];
-                [UniversalFunctions TAGGROUPS_voidUnhighlightTagsForFormattedTagGroups: arrayM];
-                for (NSArray *arrayTag in [content objectForKey: @"tags"]) { //Highlight tags from arrayM from conent:groupedTags
+                [UniversalFunctions _voidUnhighlightTagsForFormattedTagGroups: arrayM];
+                for (NSArray *arrayTag in [content objectForKey: @"tags"]) { //Highlight tags, content:tags, from the formatted arrayM
                     for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) {
                         for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: groupIndex] count] -1; tagIndex += 1) {
                             if ([[[[[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[arrayTag optionsDictionary] objectForKey: @"id"]])
@@ -78,6 +73,30 @@
                 }
                 arrayTable = [[NSMutableArray alloc] initWithArray: [UniversalFunctions TAGGROUPS_returnCopyOfTagsWithTagGroups: arrayM]];
                 module = moduleValue;
+                
+                [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target: self action: @selector( pressLeftNav:)]];
+                [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self action: @selector( pressRightNav:)]];
+                break;
+                
+            } case CTTableViewStories: {
+                arrayM = [[NSMutableArray alloc] initWithArray: [content objectForKey: @"groupedStories"]];
+                [UniversalFunctions _voidUnhighlightTagsForFormattedTagGroups: arrayM];
+                for (NSArray *arrayStory in [content objectForKey: @"stories"]) { //Highlight stories from arrayM from conent:groupedStories
+                    for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) {
+                        for (int storyIndex = 0; storyIndex < [[arrayM objectAtIndex: groupIndex] count] -1; storyIndex += 1) {
+                            if ([[[[[arrayM objectAtIndex: groupIndex] objectAtIndex: storyIndex] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[arrayStory optionsDictionary] objectForKey: @"id"]])
+                                [[[[arrayM objectAtIndex: groupIndex] objectAtIndex: storyIndex] optionsDictionary] setValue: [NSNumber numberWithBool: YES] forKey: @"highlighted"];
+                            
+                            
+                        }
+                        
+                    }
+                    
+                }
+                arrayTable = [[NSMutableArray alloc] initWithArray: [UniversalFunctions TAGGROUPS_returnCopyOfTagsWithTagGroups: arrayM]];
+                module = moduleValue;
+                
+                arrayEntry = [content objectForKey: @"entry"];
                 
                 [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target: self action: @selector( pressLeftNav:)]];
                 [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self action: @selector( pressRightNav:)]];
@@ -112,6 +131,8 @@
     switch (module) {
         case CTTableViewTags:
             return [arrayM count] +1; /*Search Bar on Top*/ break;
+        case CTTableViewStories:
+            return [arrayM count] +1; /*Search Bar on Top*/ break;
         default:
             return 0; break;
             
@@ -126,6 +147,13 @@
                 return @"";
             else
                 return [[[[arrayM objectAtIndex: section -1] lastObject] objectForKey: @"group"] objectTagGroup_title];
+            break;
+            
+        } case CTTableViewStories: {
+            if (section == 0)
+                return @"";
+            else
+                return [[[[arrayM objectAtIndex: section -1] lastObject] objectForKey: @"diary"] objectDiary_title];
             break;
             
         }
@@ -155,6 +183,13 @@
                 return [[arrayTable objectAtIndex: section -1] count];
             break;
             
+        } case CTTableViewStories: {
+            if (section == 0)
+                return 1;
+            else
+                return [[arrayTable objectAtIndex: section -1] count];
+            break;
+            
         }
         default:
             return 0; break;
@@ -169,44 +204,58 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    switch (module) {
-        case CTTableViewTags: {
-            if (indexPath.section == 0) { //Search Bar
-                UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Searchbar"];
-                if (!cell)
-                    cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellSearchBar];
-                //Customize Cell
-                [cell.searchBar setDelegate: self];
+    if (indexPath.section == 0) { //Search Bar
+        UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Searchbar"];
+        if (!cell)
+            cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellSearchBar];
+        //Customize Cell
+        [cell.searchBar setDelegate: self];
+        
+        cellSearch = cell; return cell;
+        
+    } else { //Record
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+        if (!cell)
+            cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+        //Customize Cell
+        
+        NSArray *arrayRecord = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
+        if ([[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue])
+            [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
+        else
+            [cell setAccessoryType: UITableViewCellAccessoryNone];
+        
+        switch (module) {
+            case CTTableViewTags: {
+                [cell.textLabel setText: [arrayRecord objectTag_title]];
                 
-                cellSearch = cell; return cell;
-            
-            } else { //Tag
-                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-                if (!cell)
-                    cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
-                //Customize Cell
-                NSArray *arrayTag = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
+                break;
                 
-                [cell.textLabel setText: [arrayTag objectTag_title]];
-                if ([[[arrayTag optionsDictionary] objectForKey: @"highlighted"] boolValue])
+            } case CTTableViewStories: {
+                [cell.textLabel setText: [arrayRecord objectStory_title]];
+                if ([[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue])
                     [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
                 else
                     [cell setAccessoryType: UITableViewCellAccessoryNone];
                 
-                return cell;
+                if ([[[[[[arrayM objectAtIndex: indexPath.section -1] lastObject] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"]]) {
+                    [cell.textLabel setTextColor: [UIColor blackColor]];
+                    [cell setUserInteractionEnabled: YES];
+                    
+                } else {
+                    [cell.textLabel setTextColor: [UIColor lightGrayColor]];
+                    [cell setUserInteractionEnabled: NO];
+                    
+                }
                 
-            } break;
-            
-        } default: {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-            if (!cell)
-                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
-            //Customize Cell
-            
-            return cell; break;
-            
+                break;
+                
+            } default:
+                break;
         }
-            
+        
+        return cell;
+        
     }
     
 }
@@ -224,28 +273,27 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (module) {
-        case CTTableViewTags: {
-            const NSArray *arrayTag = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
-            BOOL perviousState = [[[arrayTag optionsDictionary] objectForKey: @"highlighted"] boolValue];
-            //NSNumber *idIndex = [[arrayTag optionsDictionary] objectForKey: @"id"];
-            [[arrayTag optionsDictionary] setValue: [NSNumber numberWithBool: !perviousState] forKey: @"highlighted"];
-        /*  for (int groupIndex = 0; groupIndex < [arrayM count]; groupIndex += 1) { //Apply Changes to arrayM by searching for the matching idIndex from arrayTable
-                for (int tagIndex = 0; tagIndex < [[arrayM objectAtIndex: groupIndex] count] -1; tagIndex += 1) {
-                    if ([[[[[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex] optionsDictionary] objectForKey: @"id"] isEqualToNumber: idIndex])
-                        [[[[arrayM objectAtIndex: groupIndex] objectAtIndex: tagIndex] optionsDictionary] setValue: [[arrayTag optionsDictionary] objectForKey: @"highlighted"] forKey: @"highlighted"];
-
-                    
-                }
+        case CTTableViewTags: case CTTableViewStories: {
+            const NSArray *arrayRecord = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
+            BOOL perviousState = [[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue];
+            [[arrayRecord optionsDictionary] setValue: [NSNumber numberWithBool: !perviousState] forKey: @"highlighted"];
+            
+            if (perviousState) { //Highlighted -> Unhighlighted
+                NSNumber *numberId = [[arrayRecord optionsDictionary] objectForKey: @"id"];
+                if ([[dicChanges objectForKey: @"insert"] containsObject: numberId])
+                    [[dicChanges objectForKey: @"insert"] removeObjectIdenticalTo: numberId];
+                else
+                    [[dicChanges objectForKey: @"delete"] addObject: numberId];
                 
-            }* Unessary due to arrays pointing to the same address */
-            [tableView reloadRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationNone];
-            if (perviousState) { //Highlighted -> Unghighlighted
-                [[dicChanges objectForKey: @"delete"] addObject: [NSArray arrayWithObjects: [[[[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row] optionsDictionary] objectForKey: @"id"], nil]];
-                
-            } else {
-                [[dicChanges objectForKey: @"insert"] addObject: [NSArray arrayWithObjects: [[[[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row] optionsDictionary] objectForKey: @"id"], nil]];
+            } else { //Unhighlighted -> Highlighted
+                NSNumber *numberId = [[arrayRecord optionsDictionary] objectForKey: @"id"];
+                if ([[dicChanges objectForKey: @"delete"] containsObject: numberId])
+                    [[dicChanges objectForKey: @"delete"] removeObjectIdenticalTo: numberId];
+                else
+                    [[dicChanges objectForKey: @"insert"] addObject: numberId];
                 
             }
+            [tableView reloadRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationFade];
             
             break;
             
@@ -337,7 +385,6 @@
 }
 
 - (void)pressRightNav:(id)sender {
-    [UniversalFunctions TAGGROUPS_voidRemoveDuplicateChangesForDictionary: dicChanges];
     if ([delegate respondsToSelector: @selector( tableViewModule:didFinishWithChanges:)])
          [delegate tableViewModule: self didFinishWithChanges: dicChanges];
     //Dismiss
@@ -356,7 +403,7 @@
 
 @implementation UniversalFunctions (TableViewModule_)
 
-+ (void)TAGGROUPS_voidUnhighlightTagsForFormattedTagGroups:(NSArray *)arrayTagGroups {
++ (void)_voidUnhighlightTagsForFormattedTagGroups:(NSArray *)arrayTagGroups {
     for (int groupIndex = 0; groupIndex < [arrayTagGroups count]; groupIndex += 1) {
         for (int tagIndex = 0; tagIndex < [[arrayTagGroups objectAtIndex: groupIndex] count] -1 /*group hash*/; tagIndex += 1) {
             if ([[[[arrayTagGroups objectAtIndex: groupIndex] objectAtIndex: tagIndex] lastObject] isKindOfClass: [NSMutableDictionary class]])
@@ -365,28 +412,6 @@
                  [[[arrayTagGroups objectAtIndex: groupIndex] objectAtIndex: tagIndex] addObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool: NO], @"highlighted", nil]];
             
         }
-        
-    }
-    
-}
-
-+ (void)TAGGROUPS_voidRemoveDuplicateChangesForDictionary:(NSMutableDictionary *)dictionary {
-    NSUInteger index = 0;
-    while (index < [[dictionary objectForKey: @"insert"] count]) {
-        BOOL isFound = false;
-        NSUInteger subindex = 0;
-        while (subindex < [[dictionary objectForKey: @"delete"] count]) {
-            if ([[[dictionary objectForKey: @"insert"] objectAtIndex: index] isEqualToArray: [[dictionary objectForKey: @"delete"] objectAtIndex: subindex]]) {
-                [[dictionary objectForKey: @"insert"] removeObjectAtIndex: index];
-                [[dictionary objectForKey: @"delete"] removeObjectAtIndex: subindex];
-                isFound = true;
-                break;
-                
-            }
-            
-        }
-        if (!isFound)
-            index += 1;
         
     }
     

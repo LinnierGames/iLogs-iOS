@@ -8,6 +8,8 @@
 
 #import "UniversalOperations.h"
 
+#import "LoggingAssertionHandler.h"
+
 @implementation UniversalVariables
 @synthesize database, viewController = view, currentView;
 
@@ -73,6 +75,15 @@ NSString *SQLDatabase = @"database";
 
 @implementation UniversalFunctions (SQL_)
 
++ (void)SQL_voidCreateDatabaseSchema {
+    CDSQLTables table = CTSQLDiaries;
+    while (table <= CTSQLTagEntryRelationships) {
+        [UniversalFunctions SQL_voidCreateTable: table++];
+        
+    }
+    
+}
+
 + (void)SQL_voidCreateTable:(CDSQLTables)table {
     [self SQL_returnStatusOfDatabase];
     char *err;
@@ -82,7 +93,7 @@ NSString *SQLDatabase = @"database";
             sqlQuery = @"CREATE TABLE IF NOT EXISTS Diaries (id INTEGER PRIMARY KEY UNIQUE, title TEXT, dateCreated TEXT, colorTrait INTEGER, isProtected INTEGER, passcode TEXT, maskTitle TEXT);";
             break;
         case CTSQLEntries:
-            sqlQuery = @"CREATE TABLE IF NOT EXISTS Entries (id INTEGER PRIMARY KEY UNIQUE, diaryID INTEGER, subject TEXT, date TEXT, dateCreated TEXT, body TEXT, emotion INTEGER, weatherCondition INTEGER, temperature INTEGER, isBookmarked BOOLEAN, FOREIGN KEY (diaryID) REFERENCES Diaries(id) ON DELETE CASCADE);";
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS Entries (id INTEGER PRIMARY KEY UNIQUE, diaryID INTEGER, subject TEXT, date TEXT, dateCreated TEXT, body TEXT, startDate TEXT, emotion INTEGER, emotionScale INTEGER, weatherCondition INTEGER, temperature INTEGER, temperatureValue INTEGER, isBookmarked BOOLEAN, FOREIGN KEY (diaryID) REFERENCES Diaries(id) ON DELETE CASCADE);";
             break;
         case CTSQLOutilnes:
             sqlQuery = @"CREATE TABLE IF NOT EXISTS Outlines (id INTEGER PRIMARY KEY UNIQUE, entryID INTEGER, body TEXT, dateCreated TEXT, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
@@ -90,8 +101,8 @@ NSString *SQLDatabase = @"database";
         case CTSQLStories:
             sqlQuery = @"CREATE TABLE IF NOT EXISTS Stories (id INTEGER PRIMARY KEY UNIQUE, diaryID INTEGER, title TEXT, dateCreated TEXT, description TEXT, colorTrait INTEGER, isProtected INTEGER, passcode TEXT, maskTitle TEXT, authenticationRequired INTEGER, FOREIGN KEY (diaryID) REFERENCES Diaries(id) ON DELETE CASCADE);";
             break;
-        case CTSQLStoryEntriesRelationship:
-            sqlQuery = @"CREATE TABLE StoryEntriesRelationship (id INTEGER PRIMARY KEY UNIQUE, storyID INTEGER, entryID INTEGER, FOREIGN KEY (storyID) REFERENCES Stories(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
+        case CTSQLStoryEntryRelationships:
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS StoryEntryRelationships (id INTEGER PRIMARY KEY UNIQUE, storyID INTEGER, entryID INTEGER, FOREIGN KEY (storyID) REFERENCES Stories(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
             break;
         case CTSQLTagGroups:
             sqlQuery = @"CREATE TABLE IF NOT EXISTS TagGroups (id INTEGER PRIMARY KEY UNIQUE, title TEXT, dateCreated TEXT);";
@@ -99,8 +110,8 @@ NSString *SQLDatabase = @"database";
         case CTSQLTags:
             sqlQuery = @"CREATE TABLE IF NOT EXISTS Tags (id INTEGER PRIMARY KEY UNIQUE, groupID INTEGER, title TEXT, dateCreated TEXT, FOREIGN KEY (groupID) REFERENCES TagGroups(id) ON DELETE CASCADE);";
             break;
-        case CTSQLTagEntriesRelationship:
-            sqlQuery = @"CREATE TABLE IF NOT EXISTS TagEntriesRelationship (id INTEGER PRIMARY KEY UNIQUE, tagID INTEGER, entryID INTEGER, FOREIGN KEY (tagID) REFERENCES Tags(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
+        case CTSQLTagEntryRelationships:
+            sqlQuery = @"CREATE TABLE IF NOT EXISTS TagEntryRelationships (id INTEGER PRIMARY KEY UNIQUE, tagID INTEGER, entryID INTEGER, FOREIGN KEY (tagID) REFERENCES Tags(id) ON DELETE CASCADE, FOREIGN KEY (entryID) REFERENCES Entries(id) ON DELETE CASCADE);";
             break;
             
     }
@@ -136,7 +147,7 @@ NSString *SQLDatabase = @"database";
                 break;
                 
             default:
-                NSAssert(table != CTSQLStoryEntriesRelationship || table != CTSQLTagEntriesRelationship, @"Cannont clear a relationship table");
+                NSAssert(table != CTSQLStoryEntryRelationships || table != CTSQLTagEntryRelationships, @"Cannont clear a relationship table");
                 break;
         }
         if (!SQLQueryMake( [[UniversalVariables globalVariables] database], sqlQuery, &err)) {
@@ -175,7 +186,7 @@ NSString *SQLDatabase = @"database";
 
 + (BOOL)SQL_returnStatusOfTable:(CDSQLTables)table {
     switch (table) {
-        case CTSQLDiaries: case CTSQLEntries: case CTSQLOutilnes: case CTSQLStories: case CTSQLStoryEntriesRelationship: case CTSQLTagGroups: case CTSQLTags: case CTSQLTagEntriesRelationship: {
+        case CTSQLDiaries: case CTSQLEntries: case CTSQLOutilnes: case CTSQLStories: case CTSQLStoryEntryRelationships: case CTSQLTagGroups: case CTSQLTags: case CTSQLTagEntryRelationships: {
             NSAssert( [self SQL_returnStatusOfDatabase], @"Failed to open SQL");
             SQL3Statement *statement; const char *err;
             NSString *stringFocusTableTitle = @"";
@@ -189,8 +200,8 @@ NSString *SQLDatabase = @"database";
                 case CTSQLStories:
                     stringFocusTableTitle = @"Stories";
                     break;
-                case CTSQLStoryEntriesRelationship:
-                    stringFocusTableTitle = @"StoryEntriesRelationship";
+                case CTSQLStoryEntryRelationships:
+                    stringFocusTableTitle = @"StoryEntryRelationships";
                     break;
                 case CTSQLTagGroups:
                     stringFocusTableTitle = @"TagGroups";
@@ -198,8 +209,8 @@ NSString *SQLDatabase = @"database";
                 case CTSQLTags:
                     stringFocusTableTitle = @"Tags";
                     break;
-                case CTSQLTagEntriesRelationship:
-                    stringFocusTableTitle = @"TagEntriesRelationship";
+                case CTSQLTagEntryRelationships:
+                    stringFocusTableTitle = @"TagEntryRelationships";
                     break;
                 case CTSQLOutilnes:
                     stringFocusTableTitle = @"Outlines";
@@ -317,8 +328,8 @@ NSString *SQLDatabase = @"database";
                 }
                 break;
                 
-            } case CTSQLTagEntriesRelationship: {
-                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM TagEntriesRelationship ORDER BY id DESC;", &statement, &err)) {
+            } case CTSQLTagEntryRelationships: {
+                if (SQLQueryPrepare( [[UniversalVariables globalVariables] database], @"SELECT * FROM TagEntryRelationships ORDER BY id DESC;", &statement, &err)) {
                     while (SQLStatementStep( statement)) {
                         NSMutableArray *array =  SQLStatementRowIntoTagEntryRelationshipEntry( statement);
                         [arrayContents addObject: array];
@@ -557,6 +568,59 @@ NSString *SQLDatabase = @"database";
 
 @end
 
+@implementation NSAssertion : NSObject;
+
++ (instancetype)assertionWithSelector:(SEL)selectorValue object:(id)objectValue file:(NSString *)filenameValue lineNumber:(NSInteger)lineValue description:(NSString *)format, ... {
+    NSAssertion *new = [NSAssertion new];
+    
+    new.selector = selectorValue;
+    new.object = objectValue;
+    new.filename = filenameValue;
+    new.line = lineValue;
+    new.descriptionType = format;
+    
+    return new;
+    
+}
+
+@end
+
+@implementation UniversalVariables (UniversalOperations_)
+
++ (NSString *)dataFilePathCrashReports {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains( NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *dictionaryDocuments = [paths objectAtIndex: 0];
+    return [dictionaryDocuments stringByAppendingPathComponent: @"reports.plist"];
+    
+}
+
+@end
+
 @implementation UniversalOperations
+
++ (void)reportNewCrashReport:(NSException *)exception {
+    [UniversalOperations reportNewCrashReport: exception withAssertion: nil];
+    
+}
+
++ (void)reportNewCrashReport:(NSException * _Nonnull )exception withAssertion:(NSAssertion * _Nullable )assertion {
+    NSMutableArray *arrayReports = [NSMutableArray array];
+    if ([[NSFileManager defaultManager] fileExistsAtPath: [UniversalVariables dataFilePathCrashReports]])
+        arrayReports = [NSMutableArray arrayWithContentsOfFile: [UniversalVariables dataFilePathCrashReports]];
+    
+    NSMutableDictionary *dicNewReport = [NSMutableDictionary dictionaryWithObjectsAndKeys: exception.reason, @"reason", nil];
+    if (assertion != nil) {
+        [dicNewReport setObject: NSStringFromSelector(assertion.selector) forKey: @"selector"];
+        [dicNewReport setObject: [NSString stringWithFormat: @"%@", assertion.object] forKey: @"object"];
+        [dicNewReport setObject: assertion.filename forKey: @"file"];
+        [dicNewReport setObject: [NSNumber numberWithInteger: assertion.line] forKey: @"line"];
+        [dicNewReport setObject: assertion.descriptionType forKey: @"description"];
+        [dicNewReport setObject: [NSDate date] forKey: @"date"];
+        
+    }
+    [arrayReports insertObject: dicNewReport atIndex: 0];
+    [arrayReports writeToFile: [UniversalVariables dataFilePathCrashReports] atomically: YES];
+    
+}
 
 @end

@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		E12640591B38709300E423E7 /* UIContentPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E12640581B38709300E423E7 /* UIContentPicker.m */; };
 		E126405B1B3870A000E423E7 /* UIContentPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = E126405A1B3870A000E423E7 /* UIContentPicker.xib */; };
-		E14036CA1B313194005D2608 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */; };
-		E14036CB1B3131A4005D2608 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E17EECB21B312C5E007C1E91 /* libz.dylib */; };
 		E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC381B2E1AD4007C1E91 /* Main.storyboard */; };
 		E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC3D1B2E1AD4007C1E91 /* LaunchScreen.xib */; };
 		E146E49C1B347037006DC1EC /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E49A1B347037006DC1EC /* EntryViewController.m */; };
@@ -29,7 +27,9 @@
 		E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA11B2F9FA2007C1E91 /* SettingsViewController.m */; };
 		E17EECA51B2FA04F007C1E91 /* DiaryController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA41B2FA04F007C1E91 /* DiaryController.m */; };
 		E17EECAB1B311F15007C1E91 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA91B311F15007C1E91 /* ISO8601DateFormatter.m */; };
-		E17EECAC1B311F15007C1E91 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = E17EECAA1B311F15007C1E91 /* README.md */; };
+		E1AAC1691C878DE9008BBB10 /* LoggingAssertionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AAC1681C878DE9008BBB10 /* LoggingAssertionHandler.m */; };
+		E1DCA16D1BE7F0D20037F84E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DCA16C1BE7F0D20037F84E /* libz.tbd */; };
+		E1DCA16F1BE7F0D90037F84E /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DCA16E1BE7F0D90037F84E /* libsqlite3.tbd */; };
 		E1EF7AEE1B3BC95A00C9C995 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */; };
 		E1EF7AF21B3C5BBA00C9C995 /* UITableViewModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EF7AF01B3C5BBA00C9C995 /* UITableViewModuleViewController.m */; };
 		E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AF11B3C5BBA00C9C995 /* UITableViewModuleViewController.xib */; };
@@ -75,10 +75,10 @@
 		E17EECA41B2FA04F007C1E91 /* DiaryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryController.m; sourceTree = "<group>"; };
 		E17EECA81B311F15007C1E91 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		E17EECA91B311F15007C1E91 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
-		E17EECAA1B311F15007C1E91 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		E17EECB21B312C5E007C1E91 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		E1A05C261B7BC87F00734CCE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = iLog/README.md; sourceTree = "<group>"; };
+		E1AAC1671C878DE9008BBB10 /* LoggingAssertionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingAssertionHandler.h; sourceTree = "<group>"; };
+		E1AAC1681C878DE9008BBB10 /* LoggingAssertionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoggingAssertionHandler.m; sourceTree = "<group>"; };
+		E1DCA16C1BE7F0D20037F84E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		E1DCA16E1BE7F0D90037F84E /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		E1E22BDA1B75A01C00662606 /* Change Log - Releases.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Releases.rtf"; sourceTree = "<group>"; };
 		E1E22BDB1B75A07C00662606 /* Change Log - Builds.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Builds.rtf"; sourceTree = "<group>"; };
 		E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -92,8 +92,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E14036CB1B3131A4005D2608 /* libz.dylib in Frameworks */,
-				E14036CA1B313194005D2608 /* libsqlite3.dylib in Frameworks */,
+				E1DCA16F1BE7F0D90037F84E /* libsqlite3.tbd in Frameworks */,
+				E1DCA16D1BE7F0D20037F84E /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,10 +144,22 @@
 			name = RES;
 			sourceTree = "<group>";
 		};
+		E153A1831C87D53E00078299 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E17EEC321B2E1AD4007C1E91 /* AppDelegate.h */,
+				E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */,
+				E17EEC931B2F9442007C1E91 /* UniversalOperations.h */,
+				E17EEC941B2F9442007C1E91 /* UniversalOperations.m */,
+				E146E4A91B348B79006DC1EC /* CategoriesClasses.h */,
+				E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		E17EEC221B2E1AD4007C1E91 = {
 			isa = PBXGroup;
 			children = (
-				E1A05C261B7BC87F00734CCE /* README.md */,
 				E17EEC2D1B2E1AD4007C1E91 /* iLog */,
 				E17EEC471B2E1AD4007C1E91 /* iLogTests */,
 				E17EEC2C1B2E1AD4007C1E91 /* Products */,
@@ -165,12 +177,7 @@
 		E17EEC2D1B2E1AD4007C1E91 /* iLog */ = {
 			isa = PBXGroup;
 			children = (
-				E17EEC321B2E1AD4007C1E91 /* AppDelegate.h */,
-				E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */,
-				E17EEC931B2F9442007C1E91 /* UniversalOperations.h */,
-				E17EEC941B2F9442007C1E91 /* UniversalOperations.m */,
-				E146E4A91B348B79006DC1EC /* CategoriesClasses.h */,
-				E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */,
+				E153A1831C87D53E00078299 /* Controllers */,
 				E17EEC351B2E1AD4007C1E91 /* ViewController.h */,
 				E17EEC361B2E1AD4007C1E91 /* ViewController.m */,
 				E17EEC591B2E1C5B007C1E91 /* Apps */,
@@ -186,8 +193,8 @@
 		E17EEC2E1B2E1AD4007C1E91 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E17EECB21B312C5E007C1E91 /* libz.dylib */,
-				E17EECAE1B312C33007C1E91 /* libsqlite3.dylib */,
+				E1DCA16E1BE7F0D90037F84E /* libsqlite3.tbd */,
+				E1DCA16C1BE7F0D20037F84E /* libz.tbd */,
 				E17EECAD1B311F18007C1E91 /* Developer Tools */,
 				E17EEC2F1B2E1AD4007C1E91 /* Info.plist */,
 				E1E22BDA1B75A01C00662606 /* Change Log - Releases.rtf */,
@@ -270,7 +277,8 @@
 			children = (
 				E17EECA81B311F15007C1E91 /* ISO8601DateFormatter.h */,
 				E17EECA91B311F15007C1E91 /* ISO8601DateFormatter.m */,
-				E17EECAA1B311F15007C1E91 /* README.md */,
+				E1AAC1671C878DE9008BBB10 /* LoggingAssertionHandler.h */,
+				E1AAC1681C878DE9008BBB10 /* LoggingAssertionHandler.m */,
 			);
 			name = "Developer Tools";
 			sourceTree = "<group>";
@@ -352,6 +360,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E12640591B38709300E423E7 /* UIContentPicker.m in Sources */,
+				E1AAC1691C878DE9008BBB10 /* LoggingAssertionHandler.m in Sources */,
 				E17EEC921B2F47C4007C1E91 /* DiaryTabBarViewController.m in Sources */,
 				E146E4A21B347A45006DC1EC /* UICustomTableViewCell.m in Sources */,
 				E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */,
@@ -365,7 +374,6 @@
 				E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */,
 				E17EECA51B2FA04F007C1E91 /* DiaryController.m in Sources */,
 				E17EEC311B2E1AD4007C1E91 /* main.m in Sources */,
-				E17EECAC1B311F15007C1E91 /* README.md in Sources */,
 				E17EECAB1B311F15007C1E91 /* ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

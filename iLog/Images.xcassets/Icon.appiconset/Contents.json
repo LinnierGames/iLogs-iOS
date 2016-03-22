@@ -115,6 +115,12 @@
       "scale" : "2x"
     },
     {
+      "size" : "83.5x83.5",
+      "idiom" : "ipad",
+      "filename" : "Icon-export-83.5@2x.png",
+      "scale" : "2x"
+    },
+    {
       "size" : "60x60",
       "idiom" : "car",
       "filename" : "Icon-60@2x-1.png",
@@ -182,11 +188,6 @@
       "scale" : "2x",
       "role" : "quickLook",
       "subtype" : "42mm"
-    },
-    {
-      "idiom" : "car",
-      "size" : "120x120",
-      "scale" : "1x"
     }
   ],
   "info" : {

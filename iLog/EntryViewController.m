@@ -56,6 +56,12 @@
     
     if (self) {
         arrayM = [[NSMutableArray alloc] initWithArray: arrayEntry];
+        
+        if (![[arrayM optionsDictionary] objectForKey: @"tagChanges"])
+            [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"tagChanges"];
+        if (![[arrayM optionsDictionary] objectForKey: @"storyChanges"])
+            [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"storyChanges"];
+        
         array = [NSMutableArray new];
         option = value;
         delegate = delegateValue;
@@ -177,9 +183,9 @@
                         
                     }
                     if ([arrayM objectEntry_isBookmarked])
-                        [cell.button3 setBackgroundImage: [UIImage imageNamed: @"misc_bookmark-enabled"] forState: UIControlStateNormal];
+                        [cell.button4 setBackgroundImage: [UIImage imageNamed: @"misc_bookmark-enabled"] forState: UIControlStateNormal];
                     else
-                        [cell.button3 setBackgroundImage: [UIImage imageNamed: @"misc_bookmark-disabled"] forState: UIControlStateNormal];
+                        [cell.button4 setBackgroundImage: [UIImage imageNamed: @"misc_bookmark-disabled"] forState: UIControlStateNormal];
                     [cell setDelegate: self];
                     
                     return cell; break;
@@ -267,7 +273,7 @@
     
 }
 
-#pragma mark Void's > Pre-Defined Functions (TABLE VIEW) 
+#pragma mark Void's > Pre-Defined Functions (TABLE VIEW)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
@@ -311,8 +317,14 @@
 #pragma mark Void's > Pre-Defined Functions (TEXT FIELD)
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if ([cellTags.textfield isEqual: textField]) {
-        UINavigationController *navTags = [UITableViewModuleViewController allocWithModule: CTTableViewTags withContent: @{@"tags":[[arrayM optionsDictionary] objectForKey: @"tags"], @"groupedTags":[UniversalFunctions TAGGROUPS_returnGroupedTags]}];
+    if ([cellStories.textfield isEqual: textField]) {
+        UINavigationController *navStories = [UITableViewModuleViewController allocWithModule: CTTableViewStories withContent: @{@"stories": [[arrayM optionsDictionary] objectForKey: @"stories"], @"groupedStories": [UniversalFunctions STORIES_returnGroupedStories], @"entry": arrayM}];
+        [(UITableViewModuleViewController *)navStories.topViewController setDelegate: self];
+        [self presentViewController: navStories animated: YES completion: ^{ }];
+        
+    } else if ([cellTags.textfield isEqual: textField]) {
+        UINavigationController *navTags = [UITableViewModuleViewController allocWithModule: CTTableViewTags withContent: @{@"tags": [[arrayM optionsDictionary] objectForKey: @"tags"], @"groupedTags": [UniversalFunctions TAGGROUPS_returnGroupedTags]}];
+        [(UITableViewModuleViewController *)navTags.topViewController setDelegate: self];
         [self presentViewController: navTags animated: YES completion: ^{ }];
         
     }
@@ -349,6 +361,22 @@
         case 1: { //Select Diary
             if (buttonIndex != 0) {
                 [[arrayM optionsDictionary] setValue: [array objectAtIndex: buttonIndex -1] forKey: @"diary"];
+                while ([[[arrayM optionsDictionary] objectForKey: @"stories"] count] > 0) {
+                    NSNumber *numberStoryID = [[[[[arrayM optionsDictionary] objectForKey: @"stories"] firstObject] optionsDictionary] objectForKey: @"id"];
+                    if (![[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] containsObject: numberStoryID]) {
+                        [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] addObject: numberStoryID];
+                        for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"stories"] count]; index += 1) {
+                            if ([[[[[[arrayM optionsDictionary] objectForKey: @"stories"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberStoryID]) {
+                                [[[arrayM optionsDictionary] objectForKey: @"stories"] removeObjectAtIndex: index];
+                                break;
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                }
                 [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
                 
             }
@@ -376,7 +404,10 @@
             [pickerWeatherCondition showAnimated: YES];
             break;
             
-        } case 3: { //Bookmark
+        } case 3: { //Highlight
+            break;
+            
+        } case 4: { //Bookmark
             [arrayM replaceObjectAtIndex: ENTRIES_isBookmarked withObject: [NSNumber numberWithBool: [arrayM objectEntry_isBookmarked] ? NO : YES]];
             [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
             break;
@@ -405,31 +436,63 @@
 #pragma mark Void's > Pre-Defined Functions (TABLE VIEW MODULE)
 
 - (void)tableViewModule:(UITableViewModuleViewController *)tableViewModule didFinishWithChanges:(NSDictionary *)dictionary {
+    NSString *stringChangesHash = @"", *stringPluralHash = @"";
+    CDSQLTables databaseTable;
+    
     switch (tableViewModule.module) {
-        case CTTableViewTags: {
-            //Add Records to TagEntriesRelationship Table
-            for (NSArray *arrayChange in [dictionary objectForKey: @"insert"]) {
-                NSNumber *numberTagID = [arrayChange firstObject];
-                NSArray *arrayRelationship = [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberTagID entryID: [[arrayM optionsDictionary] objectForKey: @"id"]];
-                [[UniversalVariables globalVariables] TAGENTRIES_writeNewForTagEntryRelationship: arrayRelationship];
-                [[[arrayM optionsDictionary] objectForKey: @"tags"] addObject: arrayRelationship];
-                
-            }
-            //Remove Recoreds from TagEntriesRelationship Table
-            for (NSArray *arrayChange in [dictionary objectForKey: @"delete"]) {
-                NSNumber *numberTagID = [arrayChange firstObject];
-                NSArray *arrayRelationship = [NSArray arrayNEWTagEntriesRelationshipWithTagID: numberTagID entryID: [[arrayM optionsDictionary] objectForKey: @"id"]];
-                [[UniversalVariables globalVariables] TAGENTRIES_deleteForTagEntryRelationship: arrayRelationship];
-                [[[arrayM optionsDictionary] objectForKey: @"tags"] removeObjectIdenticalTo: arrayRelationship];
-                
-                
-            }
+        case CTTableViewStories: {
+            stringChangesHash = @"storyChanges";
+            stringPluralHash = @"stories";
+            databaseTable = CTSQLStories;
+            
             break;
+        } case CTTableViewTags: {
+            stringChangesHash = @"tagChanges";
+            stringPluralHash = @"tags";
+            databaseTable = CTSQLTags;
+            
+            break;
+            
+        } default:
+            break;
+    }
+    
+    //Add non duplicate object of id value to :_Changes:insert
+    for (NSNumber *numberID in [dictionary objectForKey: @"insert"]) {
+        if ([[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"delete"] containsObject: numberID]) { //Adding ID that is being removed
+            [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"delete"] removeObjectIdenticalTo: numberID];
+            
+        } else { //Add the ID to be added
+            [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"insert"] addObject: numberID];
             
         }
+        
+        //Add the tag to the :_ hash
+        NSArray *arrayNewTag = [[UniversalFunctions SQL_returnContentOfTable: CTSQLTags withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberID intValue]]] firstObject];
+        [[[arrayM optionsDictionary] objectForKey: stringPluralHash] addObject: arrayNewTag];
+        
+    }
+    
+    //Add non duplicate object of id value to :_Changes:delete
+    for (NSNumber *numberID in [dictionary objectForKey: @"delete"]) {
+        if ([[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"insert"] containsObject: numberID]) { //Removing ID that is being added
+            [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"insert"] removeObjectIdenticalTo: numberID];
             
-        default:
-            break;
+        } else { //Add the ID to be removed
+            [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"delete"] addObject: numberID];
+            
+        }
+        
+        //Remove the ID to the :_ hash
+        for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: stringPluralHash] count]; index += 1) {
+            if ([[[[[[arrayM optionsDictionary] objectForKey: stringPluralHash] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberID]) {
+                [[[arrayM optionsDictionary] objectForKey: stringPluralHash] removeObjectAtIndex: index];
+                break;
+                
+            }
+            
+        }
+        
     }
     
 }
