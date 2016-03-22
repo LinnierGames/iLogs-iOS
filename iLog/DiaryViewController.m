@@ -8,7 +8,7 @@
 
 #import "DiaryViewController.h"
 
-@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, EntryViewConrollerDelegate> {
+@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, DetailedEntryViewControllerDelegate, EntryViewConrollerDelegate> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayTable;
         NSMutableArray *arrayDiaries;
@@ -161,10 +161,7 @@
 #pragma mark Void's > Pre-Defined Functions (TABLE VIEW)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject] message: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body] delegate: self cancelButtonTitle: @"Dismiss" otherButtonTitles: @"Edit", nil];
-    [alert setTag: 2];
-    indexpath = indexPath;
-    [alert show];
+    [self.navigationController pushViewController: [[DetailedEntryViewController alloc] initWithEntry: [arrayTable objectAtIndex: indexPath.row] delegate: self] animated: YES];
     
 }
 

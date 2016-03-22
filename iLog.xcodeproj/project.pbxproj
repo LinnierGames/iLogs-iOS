@@ -28,6 +28,8 @@
 		E17EECA51B2FA04F007C1E91 /* DiaryController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA41B2FA04F007C1E91 /* DiaryController.m */; };
 		E17EECAB1B311F15007C1E91 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA91B311F15007C1E91 /* ISO8601DateFormatter.m */; };
 		E1AAC1691C878DE9008BBB10 /* LoggingAssertionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AAC1681C878DE9008BBB10 /* LoggingAssertionHandler.m */; };
+		E1B0184A1CA0F72F0068B701 /* DetailedEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B018491CA0F72F0068B701 /* DetailedEntryViewController.m */; };
+		E1B0184C1CA0F7E10068B701 /* DetailedEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1B0184B1CA0F7E10068B701 /* DetailedEntryViewController.xib */; };
 		E1DCA16D1BE7F0D20037F84E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DCA16C1BE7F0D20037F84E /* libz.tbd */; };
 		E1DCA16F1BE7F0D90037F84E /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DCA16E1BE7F0D90037F84E /* libsqlite3.tbd */; };
 		E1EF7AEE1B3BC95A00C9C995 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */; };
@@ -77,6 +79,9 @@
 		E17EECA91B311F15007C1E91 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		E1AAC1671C878DE9008BBB10 /* LoggingAssertionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingAssertionHandler.h; sourceTree = "<group>"; };
 		E1AAC1681C878DE9008BBB10 /* LoggingAssertionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoggingAssertionHandler.m; sourceTree = "<group>"; };
+		E1B018481CA0F72F0068B701 /* DetailedEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailedEntryViewController.h; sourceTree = "<group>"; };
+		E1B018491CA0F72F0068B701 /* DetailedEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailedEntryViewController.m; sourceTree = "<group>"; };
+		E1B0184B1CA0F7E10068B701 /* DetailedEntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailedEntryViewController.xib; sourceTree = "<group>"; };
 		E1DCA16C1BE7F0D20037F84E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		E1DCA16E1BE7F0D90037F84E /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		E1E22BDA1B75A01C00662606 /* Change Log - Releases.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Releases.rtf"; sourceTree = "<group>"; };
@@ -103,6 +108,9 @@
 		E146E49E1B34703D006DC1EC /* Editors */ = {
 			isa = PBXGroup;
 			children = (
+				E1B018481CA0F72F0068B701 /* DetailedEntryViewController.h */,
+				E1B018491CA0F72F0068B701 /* DetailedEntryViewController.m */,
+				E1B0184B1CA0F7E10068B701 /* DetailedEntryViewController.xib */,
 				E146E4991B347037006DC1EC /* EntryViewController.h */,
 				E146E49A1B347037006DC1EC /* EntryViewController.m */,
 				E146E49B1B347037006DC1EC /* EntryViewController.xib */,
@@ -342,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E146E4A31B347A45006DC1EC /* UICustomTableViewCell.xib in Resources */,
+				E1B0184C1CA0F7E10068B701 /* DetailedEntryViewController.xib in Resources */,
 				E17EEC581B2E1C58007C1E91 /* DiaryTabBarViewController.xib in Resources */,
 				E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */,
 				E1EF7AEE1B3BC95A00C9C995 /* Images.xcassets in Resources */,
@@ -367,6 +376,7 @@
 				E146E49C1B347037006DC1EC /* EntryViewController.m in Sources */,
 				E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */,
 				E1EF7AF21B3C5BBA00C9C995 /* UITableViewModuleViewController.m in Sources */,
+				E1B0184A1CA0F72F0068B701 /* DetailedEntryViewController.m in Sources */,
 				E17EEC991B2F9D77007C1E91 /* DiaryViewController.m in Sources */,
 				E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */,
 				E17EEC9D1B2F9DA1007C1E91 /* DiaryMapViewController.m in Sources */,

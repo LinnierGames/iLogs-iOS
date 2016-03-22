@@ -15,6 +15,7 @@ typedef NS_ENUM(NSUInteger, CRUD) {
     
 };
 
+#import "DetailedEntryViewController.h"
 #import "EntryViewController.h"
 #import "UITableViewModuleViewController.h"
 
