@@ -64,7 +64,7 @@
 		E17EEC911B2F47C4007C1E91 /* DiaryTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryTabBarViewController.m; sourceTree = "<group>"; };
 		E17EEC931B2F9442007C1E91 /* UniversalOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalOperations.h; sourceTree = "<group>"; };
 		E17EEC941B2F9442007C1E91 /* UniversalOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniversalOperations.m; sourceTree = "<group>"; };
-		E17EEC961B2F9C51007C1E91 /* iLog.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iLog.pch; sourceTree = "<group>"; };
+		E17EEC961B2F9C51007C1E91 /* iLogs.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iLogs.pch; sourceTree = "<group>"; };
 		E17EEC971B2F9D77007C1E91 /* DiaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryViewController.h; sourceTree = "<group>"; };
 		E17EEC981B2F9D77007C1E91 /* DiaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryViewController.m; sourceTree = "<group>"; };
 		E17EEC9B1B2F9DA1007C1E91 /* DiaryMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiaryMapViewController.h; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 		E17EEC221B2E1AD4007C1E91 = {
 			isa = PBXGroup;
 			children = (
-				E17EEC2D1B2E1AD4007C1E91 /* iLog */,
+				E17EEC2D1B2E1AD4007C1E91 /* iLogs */,
 				E17EEC471B2E1AD4007C1E91 /* iLogTests */,
 				E17EEC2C1B2E1AD4007C1E91 /* Products */,
 			);
@@ -174,7 +174,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E17EEC2D1B2E1AD4007C1E91 /* iLog */ = {
+		E17EEC2D1B2E1AD4007C1E91 /* iLogs */ = {
 			isa = PBXGroup;
 			children = (
 				E153A1831C87D53E00078299 /* Controllers */,
@@ -187,6 +187,7 @@
 				E17EEC2E1B2E1AD4007C1E91 /* Supporting Files */,
 				E146E4A51B347A4E006DC1EC /* UICustom */,
 			);
+			name = iLogs;
 			path = iLog;
 			sourceTree = "<group>";
 		};
@@ -200,7 +201,7 @@
 				E1E22BDA1B75A01C00662606 /* Change Log - Releases.rtf */,
 				E1E22BDB1B75A07C00662606 /* Change Log - Builds.rtf */,
 				E17EEC301B2E1AD4007C1E91 /* main.m */,
-				E17EEC961B2F9C51007C1E91 /* iLog.pch */,
+				E17EEC961B2F9C51007C1E91 /* iLogs.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -318,7 +319,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E17EEC261B2E1AD4007C1E91 /* Build configuration list for PBXProject "iLog" */;
+			buildConfigurationList = E17EEC261B2E1AD4007C1E91 /* Build configuration list for PBXProject "iLogs" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -487,7 +488,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Icon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				GCC_PREFIX_HEADER = iLog/iLog.pch;
+				GCC_PREFIX_HEADER = iLog/iLogs.pch;
 				INFOPLIST_FILE = iLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
@@ -501,7 +502,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Icon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				GCC_PREFIX_HEADER = iLog/iLog.pch;
+				GCC_PREFIX_HEADER = iLog/iLogs.pch;
 				INFOPLIST_FILE = iLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
@@ -513,7 +514,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E17EEC261B2E1AD4007C1E91 /* Build configuration list for PBXProject "iLog" */ = {
+		E17EEC261B2E1AD4007C1E91 /* Build configuration list for PBXProject "iLogs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E17EEC4C1B2E1AD4007C1E91 /* Debug */,
