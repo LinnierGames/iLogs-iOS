@@ -27,7 +27,6 @@
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aeP-nF-iy8">
                     <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                     <items>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="cEy-SW-eLk"/>
                         <barButtonItem image="misc_toolbarDate" id="hoY-WA-kIb"/>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="AWv-KW-869"/>
                         <barButtonItem image="misc_toolbarStartTime" id="s3m-4C-82J"/>
@@ -35,7 +34,6 @@
                         <barButtonItem image="misc_toolbarMedia" id="d9r-wO-hl6"/>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="B7z-oI-UEU"/>
                         <barButtonItem image="misc_toolbarVoiceMemo" id="y8o-Ll-VAQ"/>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="ClA-9r-XwG"/>
                     </items>
                 </toolbar>
             </subviews>

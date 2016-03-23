@@ -14,8 +14,39 @@
         <view contentMode="scaleToFill" id="XYd-bE-Cxk">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ri-qn-b9A">
+                    <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                    <items>
+                        <barButtonItem image="misc_toolbarDate" id="9hD-6j-YkB"/>
+                        <barButtonItem width="12" style="plain" systemItem="fixedSpace" id="seS-4N-Xic"/>
+                        <barButtonItem image="misc_toolbarStartTime" id="s4c-Ua-epb"/>
+                        <barButtonItem width="12" style="plain" systemItem="fixedSpace" id="SPZ-uj-Z17"/>
+                        <barButtonItem image="misc_toolbarMedia" id="gjw-dm-gZG"/>
+                        <barButtonItem width="12" style="plain" systemItem="fixedSpace" id="gk7-Ri-LIn"/>
+                        <barButtonItem image="misc_toolbarVoiceMemo" id="hOJ-FZ-C5v"/>
+                        <barButtonItem width="12" style="plain" systemItem="fixedSpace" id="oCo-Ip-oQA"/>
+                        <barButtonItem image="misc_toolbarAdditions" id="CO5-C7-L7b"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Jqg-3A-qH3"/>
+                        <barButtonItem image="misc_toolbarAddTo" id="T6s-S8-Uld"/>
+                    </items>
+                </toolbar>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="3Ri-qn-b9A" secondAttribute="trailing" id="SoI-zO-yhv"/>
+                <constraint firstAttribute="bottom" secondItem="3Ri-qn-b9A" secondAttribute="bottom" id="TEK-50-lxS"/>
+                <constraint firstItem="3Ri-qn-b9A" firstAttribute="leading" secondItem="XYd-bE-Cxk" secondAttribute="leading" id="jsW-Y4-huB"/>
+            </constraints>
             <point key="canvasLocation" x="653" y="394"/>
         </view>
     </objects>
+    <resources>
+        <image name="misc_toolbarAddTo" width="25" height="25"/>
+        <image name="misc_toolbarAdditions" width="25" height="25"/>
+        <image name="misc_toolbarDate" width="25" height="25"/>
+        <image name="misc_toolbarMedia" width="25" height="25"/>
+        <image name="misc_toolbarStartTime" width="25" height="25"/>
+        <image name="misc_toolbarVoiceMemo" width="25" height="25"/>
+    </resources>
 </document>

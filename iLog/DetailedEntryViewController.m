@@ -61,6 +61,9 @@
 
 #pragma mark - View Lifecycle
 
-
+- (void)viewDidLoad {
+    [self setTitle: [arrayM objectEntry_subject]];
+    
+}
 
 @end
