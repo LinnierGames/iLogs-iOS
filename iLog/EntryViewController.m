@@ -57,9 +57,9 @@
     if (self) {
         arrayM = [[NSMutableArray alloc] initWithArray: arrayEntry];
         
-        if (![[arrayM optionsDictionary] objectForKey: @"tagChanges"])
+        if ([[arrayM optionsDictionary] objectForKey: @"tagChanges"] == nil)
             [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"tagChanges"];
-        if (![[arrayM optionsDictionary] objectForKey: @"storyChanges"])
+        if ([[arrayM optionsDictionary] objectForKey: @"storyChanges"] == nil)
             [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"storyChanges"];
         
         array = [NSMutableArray new];
@@ -443,7 +443,11 @@
             break;
             
         } default:
+            stringChangesHash = @"tagChanges";
+            stringPluralHash = @"tags";
+            databaseTable = CTSQLTags;
             break;
+            
     }
     
     //Add non duplicate object of id value to :_Changes:insert
@@ -457,8 +461,8 @@
         }
         
         //Add the tag to the :_ hash
-        NSArray *arrayNewTag = [[UniversalFunctions SQL_returnContentOfTable: CTSQLTags withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberID intValue]]] firstObject];
-        [[[arrayM optionsDictionary] objectForKey: stringPluralHash] addObject: arrayNewTag];
+        NSArray *arrayNew_ = [[UniversalFunctions SQL_returnContentOfTable: databaseTable withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberID intValue]]] firstObject];
+        [[[arrayM optionsDictionary] objectForKey: stringPluralHash] addObject: arrayNew_];
         
     }
     
@@ -472,7 +476,7 @@
             
         }
         
-        //Remove the ID to the :_ hash
+        //Remove the ID from the :_ hash
         for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: stringPluralHash] count]; index += 1) {
             if ([[[[[[arrayM optionsDictionary] objectForKey: stringPluralHash] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberID]) {
                 [[[arrayM optionsDictionary] objectForKey: stringPluralHash] removeObjectAtIndex: index];
