@@ -279,14 +279,37 @@
     switch (indexPath.section) {
         case 0: {
             switch (indexPath.row) {
-                case 1: {
-                    UIActionSheet *actionDiaries = [[UIActionSheet alloc] initWithTitle: @"select a diary" delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: nil];
-                    [actionDiaries setTag: 1];
+                case 1: { //Select Diary
+                    UIAlertController *alertDiaries = [UIAlertController alertControllerWithTitle: nil message: @"select a diary" preferredStyle: UIAlertControllerStyleActionSheet];
                     array = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
-                    for (NSArray *arrayDiary in array)
-                        [actionDiaries addButtonWithTitle: [arrayDiary objectDiary_title]];
+                    for ( int buttonIndex = 0; buttonIndex < [array count]; buttonIndex += 1) {
+                        NSArray *arrayDiary = [array objectAtIndex: buttonIndex];
+                        [alertDiaries addAction: [UIAlertAction actionWithTitle: [arrayDiary objectDiary_title] style: UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            
+                            if (![[[arrayM optionsDictionary] objectForKey: @"diary"] isEqualToArray: arrayDiary]) {
+                                [[arrayM optionsDictionary] setValue: [array objectAtIndex: buttonIndex] forKey: @"diary"];
+                                
+                                while ([[[arrayM optionsDictionary] objectForKey: @"stories"] count] > 0) {
+                                    NSNumber *numberStoryID = [[[[[arrayM optionsDictionary] objectForKey: @"stories"] firstObject] optionsDictionary] objectForKey: @"id"];
+                                    if ([[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] containsObject: numberStoryID])
+                                        [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] removeObjectIdenticalTo: numberStoryID];
+                                    else
+                                        [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] addObject: numberStoryID];
+                                    [[[arrayM optionsDictionary] objectForKey: @"stories"] removeObjectAtIndex: 0];
+                                    
+                                }
+                                [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
+                                
+                            }
+                            
+                        }]];
+                        
+                    }
+                    [alertDiaries addAction: [UIAlertAction actionWithTitle: @"Cancel" style: UIAlertActionStyleCancel handler: ^(UIAlertAction * _Nonnull action) { }]];
                     [self dismissFirstResponder];
-                    [actionDiaries showInView: self.view];
+                    [self presentViewController: alertDiaries animated: YES];
+                    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
+                    
                     break;
                     
                 } default:
@@ -350,40 +373,6 @@
     if ([textView isEqual: cellBody.textview]) {
         [arrayM replaceObjectAtIndex: ENTRIES_body withObject: textView.text];
         
-    }
-    
-}
-
-#pragma mark Void's > Pre-Defined Functions (ACTION SHEET)
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch ([actionSheet tag]) {
-        case 1: { //Select Diary
-            if (buttonIndex != 0) {
-                [[arrayM optionsDictionary] setValue: [array objectAtIndex: buttonIndex -1] forKey: @"diary"];
-                while ([[[arrayM optionsDictionary] objectForKey: @"stories"] count] > 0) {
-                    NSNumber *numberStoryID = [[[[[arrayM optionsDictionary] objectForKey: @"stories"] firstObject] optionsDictionary] objectForKey: @"id"];
-                    if (![[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] containsObject: numberStoryID]) {
-                        [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] addObject: numberStoryID];
-                        for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"stories"] count]; index += 1) {
-                            if ([[[[[[arrayM optionsDictionary] objectForKey: @"stories"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberStoryID]) {
-                                [[[arrayM optionsDictionary] objectForKey: @"stories"] removeObjectAtIndex: index];
-                                break;
-                                
-                            }
-                            
-                        }
-                        
-                    }
-                    
-                }
-                [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
-                
-            }
-            break;
-            
-        } default:
-            break;
     }
     
 }
