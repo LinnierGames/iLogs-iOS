@@ -200,6 +200,7 @@
             if (!cell)
                 cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTextField];
             
+            [cell.textfield setInputView: [UIView new]];
             [cell.textfield setDelegate: self];
             switch (indexPath.section) {
                 case 1: {
