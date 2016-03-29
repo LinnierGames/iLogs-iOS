@@ -11,6 +11,8 @@
 #import "EntryViewController.h"
 #import "DiaryController.h"
 
+#import <MMMarkdown/MMMarkdown.h>
+
 @interface DetailedEntryViewController () < EntryViewConrollerDelegate> {
     IBOutlet UIScrollView *scrollMedia;
     IBOutlet UIWebView *webview;
@@ -56,6 +58,13 @@
 
 #pragma mark - Void's
 
+#pragma mark Void's > Pre-Defined Functions (ENTRY VIEW CONTROLLER)
+
+- (void)entryViewController:(EntryViewController *)entry didFinishWithEntry:(const NSArray *)array {
+    arrayM = [NSMutableArray arrayWithArray: (NSArray *)array];
+    
+}
+
 #pragma mark - IBActions
 
 - (void)pressNavRight:(id)sender {
@@ -71,6 +80,13 @@
     [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self.navigationController action: @selector( popViewControllerAnimated:)]];
     
     [webview.scrollView setContentOffset: CGPointMake( 0, 0)];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    NSString *htmlString = [MMMarkdown HTMLStringWithMarkdown: [arrayM objectEntry_body] extensions:MMMarkdownExtensionsGitHubFlavored error:NULL];
+    
+    [webview loadHTMLString: htmlString baseURL: nil];
     
 }
 
