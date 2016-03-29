@@ -75,7 +75,6 @@
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
-    [self setTitle: [arrayM objectEntry_subject]];
     
     [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self.navigationController action: @selector( popViewControllerAnimated:)]];
     
@@ -84,8 +83,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSString *htmlString = [MMMarkdown HTMLStringWithMarkdown: [arrayM objectEntry_body] extensions:MMMarkdownExtensionsGitHubFlavored error:NULL];
+    [self setTitle: [arrayM objectEntry_subject]];
     
+    NSString *htmlString = [MMMarkdown HTMLStringWithMarkdown: [arrayM objectEntry_body] extensions:MMMarkdownExtensionsGitHubFlavored error:NULL];
     [webview loadHTMLString: htmlString baseURL: nil];
     
 }
