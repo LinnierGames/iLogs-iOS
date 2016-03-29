@@ -19,6 +19,8 @@
 		E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */; };
 		E1745F221CAA0BBE00F83AD4 /* MMMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */; };
 		E1745F251CAA0C0400F83AD4 /* MMMarkdown.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E1745F2A1CAA0F5300F83AD4 /* UIMarkdownInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1745F281CAA0F5300F83AD4 /* UIMarkdownInputView.m */; };
+		E1745F2B1CAA0F5300F83AD4 /* UIMarkdownInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1745F291CAA0F5300F83AD4 /* UIMarkdownInputView.xib */; };
 		E17EEC311B2E1AD4007C1E91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC301B2E1AD4007C1E91 /* main.m */; };
 		E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */; };
 		E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC361B2E1AD4007C1E91 /* ViewController.m */; };
@@ -68,6 +70,9 @@
 		E146E4A91B348B79006DC1EC /* CategoriesClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesClasses.h; sourceTree = "<group>"; };
 		E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesClasses.m; sourceTree = "<group>"; };
 		E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMMarkdown.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/workspace-aqlprggvgzcwapffmtwcqmfooskc/Build/Products/Debug-iphoneos/MMMarkdown.framework"; sourceTree = "<group>"; };
+		E1745F271CAA0F5300F83AD4 /* UIMarkdownInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIMarkdownInputView.h; path = "../../../../../TESTS/MAC/XCode/Test72 - MMMarkdown Framework/Test72 - MMMarkdown Framework/UIMarkdownInputView.h"; sourceTree = "<group>"; };
+		E1745F281CAA0F5300F83AD4 /* UIMarkdownInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIMarkdownInputView.m; path = "../../../../../TESTS/MAC/XCode/Test72 - MMMarkdown Framework/Test72 - MMMarkdown Framework/UIMarkdownInputView.m"; sourceTree = "<group>"; };
+		E1745F291CAA0F5300F83AD4 /* UIMarkdownInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UIMarkdownInputView.xib; path = "../../../../../TESTS/MAC/XCode/Test72 - MMMarkdown Framework/Test72 - MMMarkdown Framework/UIMarkdownInputView.xib"; sourceTree = "<group>"; };
 		E17EEC2B1B2E1AD4007C1E91 /* iLogs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLogs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17EEC2F1B2E1AD4007C1E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E17EEC301B2E1AD4007C1E91 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -152,6 +157,9 @@
 				E12640571B38709300E423E7 /* UIContentPicker.h */,
 				E12640581B38709300E423E7 /* UIContentPicker.m */,
 				E126405A1B3870A000E423E7 /* UIContentPicker.xib */,
+				E1745F271CAA0F5300F83AD4 /* UIMarkdownInputView.h */,
+				E1745F281CAA0F5300F83AD4 /* UIMarkdownInputView.m */,
+				E1745F291CAA0F5300F83AD4 /* UIMarkdownInputView.xib */,
 			);
 			name = headers;
 			sourceTree = "<group>";
@@ -378,6 +386,7 @@
 				E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */,
 				E1EF7AEE1B3BC95A00C9C995 /* Images.xcassets in Resources */,
 				E1340DC81CA3B688004D44B4 /* index.html in Resources */,
+				E1745F2B1CAA0F5300F83AD4 /* UIMarkdownInputView.xib in Resources */,
 				E146E49D1B347037006DC1EC /* EntryViewController.xib in Resources */,
 				E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */,
 				E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */,
@@ -400,6 +409,7 @@
 				E146E49C1B347037006DC1EC /* EntryViewController.m in Sources */,
 				E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */,
 				E1EF7AF21B3C5BBA00C9C995 /* UITableViewModuleViewController.m in Sources */,
+				E1745F2A1CAA0F5300F83AD4 /* UIMarkdownInputView.m in Sources */,
 				E1B0184A1CA0F72F0068B701 /* DetailedEntryViewController.m in Sources */,
 				E17EEC991B2F9D77007C1E91 /* DiaryViewController.m in Sources */,
 				E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */,
