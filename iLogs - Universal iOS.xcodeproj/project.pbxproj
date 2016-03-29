@@ -17,6 +17,8 @@
 		E146E4A21B347A45006DC1EC /* UICustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4A01B347A45006DC1EC /* UICustomTableViewCell.m */; };
 		E146E4A31B347A45006DC1EC /* UICustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E146E4A11B347A45006DC1EC /* UICustomTableViewCell.xib */; };
 		E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */; };
+		E1745F221CAA0BBE00F83AD4 /* MMMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */; };
+		E1745F251CAA0C0400F83AD4 /* MMMarkdown.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E17EEC311B2E1AD4007C1E91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC301B2E1AD4007C1E91 /* main.m */; };
 		E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */; };
 		E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC361B2E1AD4007C1E91 /* ViewController.m */; };
@@ -38,6 +40,19 @@
 		E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AF11B3C5BBA00C9C995 /* UITableViewModuleViewController.xib */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E1745F241CAA0BE500F83AD4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E1745F251CAA0C0400F83AD4 /* MMMarkdown.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		E12640571B38709300E423E7 /* UIContentPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIContentPicker.h; sourceTree = "<group>"; };
 		E12640581B38709300E423E7 /* UIContentPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIContentPicker.m; sourceTree = "<group>"; };
@@ -52,6 +67,7 @@
 		E146E4A61B347A5C006DC1EC /* UICustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustom.h; sourceTree = "<group>"; };
 		E146E4A91B348B79006DC1EC /* CategoriesClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesClasses.h; sourceTree = "<group>"; };
 		E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesClasses.m; sourceTree = "<group>"; };
+		E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMMarkdown.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/workspace-aqlprggvgzcwapffmtwcqmfooskc/Build/Products/Debug-iphoneos/MMMarkdown.framework"; sourceTree = "<group>"; };
 		E17EEC2B1B2E1AD4007C1E91 /* iLogs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLogs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17EEC2F1B2E1AD4007C1E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E17EEC301B2E1AD4007C1E91 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -99,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1745F221CAA0BBE00F83AD4 /* MMMarkdown.framework in Frameworks */,
 				E1DCA16F1BE7F0D90037F84E /* libsqlite3.tbd in Frameworks */,
 				E1DCA16D1BE7F0D20037F84E /* libz.tbd in Frameworks */,
 			);
@@ -171,6 +188,7 @@
 		E17EEC221B2E1AD4007C1E91 = {
 			isa = PBXGroup;
 			children = (
+				E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */,
 				E17EEC2D1B2E1AD4007C1E91 /* iLogs */,
 				E17EEC471B2E1AD4007C1E91 /* iLogTests */,
 				E17EEC2C1B2E1AD4007C1E91 /* Products */,
@@ -305,6 +323,7 @@
 				E17EEC271B2E1AD4007C1E91 /* Sources */,
 				E17EEC281B2E1AD4007C1E91 /* Frameworks */,
 				E17EEC291B2E1AD4007C1E91 /* Resources */,
+				E1745F241CAA0BE500F83AD4 /* CopyFiles */,
 			);
 			buildRules = (
 			);
