@@ -67,7 +67,7 @@
 		E146E4A61B347A5C006DC1EC /* UICustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustom.h; sourceTree = "<group>"; };
 		E146E4A91B348B79006DC1EC /* CategoriesClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesClasses.h; sourceTree = "<group>"; };
 		E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesClasses.m; sourceTree = "<group>"; };
-		E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMMarkdown.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/workspace-aqlprggvgzcwapffmtwcqmfooskc/Build/Products/Debug-iphoneos/MMMarkdown.framework"; sourceTree = "<group>"; };
+		E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMMarkdown.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/workspace-aqlprggvgzcwapffmtwcqmfooskc/Build/Products/Debug-iphoneos/MMMarkdown.framework"; sourceTree = "<group>"; };
 		E17EEC2B1B2E1AD4007C1E91 /* iLogs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLogs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17EEC2F1B2E1AD4007C1E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E17EEC301B2E1AD4007C1E91 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -161,6 +161,7 @@
 			children = (
 				E146E4A61B347A5C006DC1EC /* UICustom.h */,
 				E146E4A41B347A48006DC1EC /* headers */,
+				E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */,
 			);
 			name = UICustom;
 			sourceTree = "<group>";
@@ -188,7 +189,6 @@
 		E17EEC221B2E1AD4007C1E91 = {
 			isa = PBXGroup;
 			children = (
-				E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */,
 				E17EEC2D1B2E1AD4007C1E91 /* iLogs */,
 				E17EEC471B2E1AD4007C1E91 /* iLogTests */,
 				E17EEC2C1B2E1AD4007C1E91 /* Products */,
