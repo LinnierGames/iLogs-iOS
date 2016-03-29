@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E12640591B38709300E423E7 /* UIContentPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E12640581B38709300E423E7 /* UIContentPicker.m */; };
 		E126405B1B3870A000E423E7 /* UIContentPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = E126405A1B3870A000E423E7 /* UIContentPicker.xib */; };
+		E1340DC81CA3B688004D44B4 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = E1340DC71CA3B688004D44B4 /* index.html */; };
 		E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC381B2E1AD4007C1E91 /* Main.storyboard */; };
 		E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC3D1B2E1AD4007C1E91 /* LaunchScreen.xib */; };
 		E146E49C1B347037006DC1EC /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E49A1B347037006DC1EC /* EntryViewController.m */; };
@@ -41,6 +42,7 @@
 		E12640571B38709300E423E7 /* UIContentPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIContentPicker.h; sourceTree = "<group>"; };
 		E12640581B38709300E423E7 /* UIContentPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIContentPicker.m; sourceTree = "<group>"; };
 		E126405A1B3870A000E423E7 /* UIContentPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UIContentPicker.xib; sourceTree = "<group>"; };
+		E1340DC71CA3B688004D44B4 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = ../../../../../../../Desktop/index.html; sourceTree = "<group>"; };
 		E146E4991B347037006DC1EC /* EntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryViewController.h; sourceTree = "<group>"; };
 		E146E49A1B347037006DC1EC /* EntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryViewController.m; sourceTree = "<group>"; };
 		E146E49B1B347037006DC1EC /* EntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryViewController.xib; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				E1B018481CA0F72F0068B701 /* DetailedEntryViewController.h */,
 				E1B018491CA0F72F0068B701 /* DetailedEntryViewController.m */,
 				E1B0184B1CA0F7E10068B701 /* DetailedEntryViewController.xib */,
+				E1340DC71CA3B688004D44B4 /* index.html */,
 				E146E4991B347037006DC1EC /* EntryViewController.h */,
 				E146E49A1B347037006DC1EC /* EntryViewController.m */,
 				E146E49B1B347037006DC1EC /* EntryViewController.xib */,
@@ -355,6 +358,7 @@
 				E17EEC581B2E1C58007C1E91 /* DiaryTabBarViewController.xib in Resources */,
 				E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */,
 				E1EF7AEE1B3BC95A00C9C995 /* Images.xcassets in Resources */,
+				E1340DC81CA3B688004D44B4 /* index.html in Resources */,
 				E146E49D1B347037006DC1EC /* EntryViewController.xib in Resources */,
 				E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */,
 				E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */,
@@ -502,6 +506,7 @@
 				INFOPLIST_FILE = iLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.linniergames.iLogs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -516,6 +521,7 @@
 				INFOPLIST_FILE = iLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LINK_WITH_STANDARD_LIBRARIES = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.linniergames.iLogs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
