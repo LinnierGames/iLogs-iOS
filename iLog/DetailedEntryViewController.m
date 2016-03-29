@@ -11,7 +11,11 @@
 #import "EntryViewController.h"
 #import "DiaryController.h"
 
-@interface DetailedEntryViewController () < EntryViewConrollerDelegate>
+@interface DetailedEntryViewController () < EntryViewConrollerDelegate> {
+    IBOutlet UIScrollView *scrollMedia;
+    IBOutlet UIWebView *webview;
+    
+}
 
 @property ( nonatomic, retain) NSMutableArray *arrayM;
 
@@ -63,6 +67,25 @@
 
 - (void)viewDidLoad {
     [self setTitle: [arrayM objectEntry_subject]];
+    
+    [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self.navigationController action: @selector( popViewControllerAnimated:)]];
+    
+    [webview.scrollView setContentOffset: CGPointMake( 0, 0)];
+    
+}
+
+- (void)viewDidLayoutSubviews {
+    if (UIInterfaceOrientationIsLandscape( self.interfaceOrientation)) {
+        [webview setFrame: CGRectZero];
+        CGRect rect = self.view.frame;
+        rect.size.height -= 32;
+        rect.origin.y += 32;
+        [scrollMedia setFrame: rect];
+        
+        [webview setHidden: YES];
+        
+    } else
+        [webview setHidden: NO];
     
 }
 

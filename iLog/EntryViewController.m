@@ -281,7 +281,7 @@
         case 0: {
             switch (indexPath.row) {
                 case 1: { //Select Diary
-                    UIAlertController *alertDiaries = [UIAlertController alertControllerWithTitle: nil message: @"select a diary" preferredStyle: UIAlertControllerStyleActionSheet];
+                    UIAlertController *alertDiaries = [UIAlertController alertControllerWithTitle: @"" message: @"select a diary" preferredStyle: UIAlertControllerStyleActionSheet];
                     array = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
                     for ( int buttonIndex = 0; buttonIndex < [array count]; buttonIndex += 1) {
                         NSArray *arrayDiary = [array objectAtIndex: buttonIndex];
