@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-static const NSString *kBuildSerial = @"QWERTY123456";
+static const NSString *kBuildSerial = @"";
 
 @interface ViewController : UIViewController
 
