@@ -47,24 +47,18 @@
     
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [[[arrayTable objectAtIndex: indexPath.row] objectEntry_body] boundingRectWithSize:CGSizeMake([[UIApplication sharedApplication] keyWindow].frame.size.width, 0)
-                                                                                      options: NSStringDrawingUsesLineFragmentOrigin
-                                                                                   attributes: @{}
-                                                                                      context: nil].size.height +42;
-    
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Title - Textview"];
     if (!cell)
         cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTitleTextView];
     
-    [cell.labelTitle setFont: [UIFont boldSystemFontOfSize: 12]];
     [cell.labelTitle setUserInteractionEnabled: NO];
     [cell.labelTitle setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject]];
-    [cell.textview setUserInteractionEnabled: NO];
-    [cell.textview setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body]];
+    [cell.labelSubtitle setUserInteractionEnabled: NO];
+    [cell.labelSubtitle setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body]];
+    
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraints];
     
     [cell setBackgroundColor: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_date] dayNightColorByTimeOfDay]];
     
@@ -205,6 +199,10 @@
     // Do any additional setup after loading the view.
     [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target: self action: @selector( pressNavLeft:)]];
     [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCompose target: self action: @selector( pressNavRight:)]];
+    
+    [table setRowHeight: UITableViewAutomaticDimension];
+    [table setEstimatedRowHeight: 44.0];
+    
     arrayTable = [NSMutableArray new];
     arrayDiaries = [NSMutableArray new];
     array = [NSMutableArray new];
