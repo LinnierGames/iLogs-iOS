@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '91BAB240669F3C21A996EC59'
-               BlueprintName = 'Pods-iLogs'
+               BlueprintIdentifier = 'D3F57637165366C21BDA0176'
+               BlueprintName = 'AttributedMarkdown'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libPods-iLogs.a'>
+               BuildableName = 'libAttributedMarkdown.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

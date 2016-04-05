@@ -1,10 +1,22 @@
 PODS:
+  - AttributedMarkdown (0.9.2)
   - PureLayout (3.0.1)
 
 DEPENDENCIES:
+  - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`)
   - PureLayout
 
+EXTERNAL SOURCES:
+  AttributedMarkdown:
+    :git: https://github.com/dreamwieber/AttributedMarkdown.git
+
+CHECKOUT OPTIONS:
+  AttributedMarkdown:
+    :commit: 4aef3c80e0ffe6c7011c20c7f703ea56af774861
+    :git: https://github.com/dreamwieber/AttributedMarkdown.git
+
 SPEC CHECKSUMS:
+  AttributedMarkdown: ac5060667280be8cc8ee33a46c73e4ec6b17ca1a
   PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
 
 COCOAPODS: 0.39.0

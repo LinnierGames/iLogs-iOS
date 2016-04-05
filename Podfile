@@ -6,6 +6,7 @@
 target 'iLogs' do
 
   pod 'PureLayout'
+  pod 'AttributedMarkdown', :git => 'https://github.com/dreamwieber/AttributedMarkdown.git'
 
 end
 
