@@ -35,6 +35,7 @@
 		E1AAC1691C878DE9008BBB10 /* LoggingAssertionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AAC1681C878DE9008BBB10 /* LoggingAssertionHandler.m */; };
 		E1B0184A1CA0F72F0068B701 /* DetailedEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B018491CA0F72F0068B701 /* DetailedEntryViewController.m */; };
 		E1B0184C1CA0F7E10068B701 /* DetailedEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1B0184B1CA0F7E10068B701 /* DetailedEntryViewController.xib */; };
+		E1D6CA621CB353E500124FF8 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1D6CA611CB353E500124FF8 /* CoreText.framework */; };
 		E1DCA16D1BE7F0D20037F84E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DCA16C1BE7F0D20037F84E /* libz.tbd */; };
 		E1DCA16F1BE7F0D90037F84E /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DCA16E1BE7F0D90037F84E /* libsqlite3.tbd */; };
 		E1EF7AEE1B3BC95A00C9C995 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */; };
@@ -110,6 +111,7 @@
 		E1B018481CA0F72F0068B701 /* DetailedEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailedEntryViewController.h; sourceTree = "<group>"; };
 		E1B018491CA0F72F0068B701 /* DetailedEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailedEntryViewController.m; sourceTree = "<group>"; };
 		E1B0184B1CA0F7E10068B701 /* DetailedEntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailedEntryViewController.xib; sourceTree = "<group>"; };
+		E1D6CA611CB353E500124FF8 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		E1DCA16C1BE7F0D20037F84E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		E1DCA16E1BE7F0D90037F84E /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		E1E22BDA1B75A01C00662606 /* Change Log - Releases.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Releases.rtf"; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1D6CA621CB353E500124FF8 /* CoreText.framework in Frameworks */,
 				E1745F221CAA0BBE00F83AD4 /* MMMarkdown.framework in Frameworks */,
 				E1DCA16F1BE7F0D90037F84E /* libsqlite3.tbd in Frameworks */,
 				E1DCA16D1BE7F0D20037F84E /* libz.tbd in Frameworks */,
@@ -138,6 +141,7 @@
 		2826F78B5A1F4E68A583EA63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E1D6CA611CB353E500124FF8 /* CoreText.framework */,
 				4C74DDF02B93609AFA6DAD0A /* libPods-iLogs.a */,
 			);
 			name = Frameworks;

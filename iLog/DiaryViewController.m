@@ -8,6 +8,8 @@
 
 #import "DiaryViewController.h"
 
+#import <markdown_peg.h>
+#import <markdown_lib.h>
 #import <MMMarkdown/MMMarkdown.h>
 
 @interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, DetailedEntryViewControllerDelegate, EntryViewConrollerDelegate> {
@@ -59,7 +61,7 @@
     [cell.labelSubtitle setUserInteractionEnabled: NO];
     [cell.labelSubtitle setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body]];
     
-    [cell.webview loadHTMLString: [MMMarkdown HTMLStringWithMarkdown: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body] extensions:MMMarkdownExtensionsGitHubFlavored error:NULL] baseURL: nil];
+    cell.labelSubtitle.attributedText = markdown_to_attr_string(cell.labelSubtitle.text, 0, [[UniversalVariables globalVariables] attributedMarkdown]);
     
     [cell setNeedsUpdateConstraints];
     [cell updateConstraints];
@@ -67,19 +69,6 @@
     [cell setBackgroundColor: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_date] dayNightColorByTimeOfDay]];
     
     return cell;
-    /*
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-    if (!cell)
-        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier: @"cell"];
-    //Customize Cell
-    [cell.textLabel setFont: [UIFont boldSystemFontOfSize: 12]];
-    [cell.textLabel setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject]];
-    [cell.detailTextLabel setNumberOfLines: 25];
-    [cell.detailTextLabel setText: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_body] presentationString]];
-    [cell setBackgroundColor: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_date] dayNightColorByTimeOfDay]];
-    
-    return cell;
-    */
 }
 
 #pragma mark - Void's

@@ -50,7 +50,7 @@ static CGFloat kLabelVerticalInsets = 10.0;
         [self.labelTitle autoPinEdgeToSuperviewEdge: ALEdgeLeading withInset: kLabelHorizontalInsets];
         [self.labelTitle autoPinEdgeToSuperviewEdge: ALEdgeTrailing withInset: kLabelHorizontalInsets];
         
-        [self.labelSubtitle autoPinEdge: ALEdgeTop toEdge: ALEdgeBottom ofView: self.labelTitle withOffset: 0 relation: NSLayoutRelationGreaterThanOrEqual];
+        [self.labelSubtitle autoPinEdge: ALEdgeTop toEdge: ALEdgeBottom ofView: self.labelTitle withOffset: 10 relation: NSLayoutRelationGreaterThanOrEqual];
         
         [self.labelSubtitle autoPinEdgeToSuperviewEdge: ALEdgeLeading withInset: kLabelHorizontalInsets];
         [self.labelSubtitle autoPinEdgeToSuperviewEdge: ALEdgeTrailing withInset: kLabelHorizontalInsets];

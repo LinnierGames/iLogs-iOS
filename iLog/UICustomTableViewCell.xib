@@ -335,7 +335,7 @@
                 <outlet property="labelTitle" destination="1Lu-gJ-jkZ" id="dcS-Vc-SWz"/>
                 <outlet property="webview" destination="Kk5-t1-PSs" id="BgZ-Bc-VQT"/>
             </connections>
-            <point key="canvasLocation" x="293" y="71.5"/>
+            <point key="canvasLocation" x="410" y="498.5"/>
         </tableViewCell>
     </objects>
     <resources>
