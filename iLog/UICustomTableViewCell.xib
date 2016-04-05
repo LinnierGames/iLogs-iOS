@@ -303,6 +303,40 @@
             </connections>
             <point key="canvasLocation" x="676" y="151"/>
         </tableViewCell>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Title - Textview" rowHeight="65" id="CJF-AV-fof" customClass="UICustomTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CJF-AV-fof" id="IZh-mM-K3h">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="64.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="1000" placeholderIntrinsicWidth="290" placeholderIntrinsicHeight="20" text="Title Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Lu-gJ-jkZ">
+                        <rect key="frame" x="15" y="10" width="290" height="20"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <webView contentMode="scaleToFill" placeholderIntrinsicWidth="290" placeholderIntrinsicHeight="14" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kk5-t1-PSs">
+                        <rect key="frame" x="15" y="40" width="290" height="14"/>
+                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                    </webView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Kk5-t1-PSs" firstAttribute="top" secondItem="1Lu-gJ-jkZ" secondAttribute="bottom" constant="10" id="7Yh-tw-9cl"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Kk5-t1-PSs" secondAttribute="trailing" constant="7" id="Chb-5u-Cj4"/>
+                    <constraint firstItem="1Lu-gJ-jkZ" firstAttribute="top" secondItem="IZh-mM-K3h" secondAttribute="top" constant="10" id="E8f-0n-VsD"/>
+                    <constraint firstItem="1Lu-gJ-jkZ" firstAttribute="leading" secondItem="IZh-mM-K3h" secondAttribute="leading" constant="15" id="FHe-bM-dQA"/>
+                    <constraint firstItem="Kk5-t1-PSs" firstAttribute="leading" secondItem="IZh-mM-K3h" secondAttribute="leadingMargin" constant="7" id="GZn-ZJ-Qhx"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Kk5-t1-PSs" secondAttribute="bottom" constant="2.5" id="iaE-tk-ZdG"/>
+                    <constraint firstAttribute="trailing" secondItem="1Lu-gJ-jkZ" secondAttribute="trailing" constant="15" id="k5V-xI-Pc6"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="labelTitle" destination="1Lu-gJ-jkZ" id="dcS-Vc-SWz"/>
+                <outlet property="webview" destination="Kk5-t1-PSs" id="BgZ-Bc-VQT"/>
+            </connections>
+            <point key="canvasLocation" x="293" y="71.5"/>
+        </tableViewCell>
     </objects>
     <resources>
         <image name="misc_bookmark-disabled" width="21" height="18"/>

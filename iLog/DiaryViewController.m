@@ -8,6 +8,8 @@
 
 #import "DiaryViewController.h"
 
+#import <MMMarkdown/MMMarkdown.h>
+
 @interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, DetailedEntryViewControllerDelegate, EntryViewConrollerDelegate> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayTable;
@@ -56,6 +58,8 @@
     [cell.labelTitle setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject]];
     [cell.labelSubtitle setUserInteractionEnabled: NO];
     [cell.labelSubtitle setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body]];
+    
+    [cell.webview loadHTMLString: [MMMarkdown HTMLStringWithMarkdown: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body] extensions:MMMarkdownExtensionsGitHubFlavored error:NULL] baseURL: nil];
     
     [cell setNeedsUpdateConstraints];
     [cell updateConstraints];
