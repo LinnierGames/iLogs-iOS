@@ -17,8 +17,6 @@
 		E146E4A21B347A45006DC1EC /* UICustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4A01B347A45006DC1EC /* UICustomTableViewCell.m */; };
 		E146E4A31B347A45006DC1EC /* UICustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E146E4A11B347A45006DC1EC /* UICustomTableViewCell.xib */; };
 		E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */; };
-		E1745F221CAA0BBE00F83AD4 /* MMMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */; };
-		E1745F251CAA0C0400F83AD4 /* MMMarkdown.framework in MMMarkdown Copy */ = {isa = PBXBuildFile; fileRef = E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E1745F2A1CAA0F5300F83AD4 /* UIMarkdownInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1745F281CAA0F5300F83AD4 /* UIMarkdownInputView.m */; };
 		E1745F2B1CAA0F5300F83AD4 /* UIMarkdownInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1745F291CAA0F5300F83AD4 /* UIMarkdownInputView.xib */; };
 		E17EEC311B2E1AD4007C1E91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC301B2E1AD4007C1E91 /* main.m */; };
@@ -43,20 +41,6 @@
 		E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AF11B3C5BBA00C9C995 /* UITableViewModuleViewController.xib */; };
 		E5E98C90F6A638F83E0B4EC4 /* libPods-iLogs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C74DDF02B93609AFA6DAD0A /* libPods-iLogs.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		E1745F241CAA0BE500F83AD4 /* MMMarkdown Copy */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				E1745F251CAA0C0400F83AD4 /* MMMarkdown.framework in MMMarkdown Copy */,
-			);
-			name = "MMMarkdown Copy";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		30E814ABA697225280E34322 /* Pods-iLogs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iLogs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iLogs/Pods-iLogs.debug.xcconfig"; sourceTree = "<group>"; };
@@ -128,7 +112,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1D6CA621CB353E500124FF8 /* CoreText.framework in Frameworks */,
-				E1745F221CAA0BBE00F83AD4 /* MMMarkdown.framework in Frameworks */,
 				E1DCA16F1BE7F0D90037F84E /* libsqlite3.tbd in Frameworks */,
 				E1DCA16D1BE7F0D20037F84E /* libz.tbd in Frameworks */,
 				E5E98C90F6A638F83E0B4EC4 /* libPods-iLogs.a in Frameworks */,
@@ -361,7 +344,6 @@
 				E17EEC271B2E1AD4007C1E91 /* Sources */,
 				E17EEC281B2E1AD4007C1E91 /* Frameworks */,
 				E17EEC291B2E1AD4007C1E91 /* Resources */,
-				E1745F241CAA0BE500F83AD4 /* MMMarkdown Copy */,
 				6AA22A74FD4FF351AB2D70E7 /* Embed Pods Frameworks */,
 				604AAA75264A41E6FEF64F21 /* Copy Pods Resources */,
 			);

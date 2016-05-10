@@ -11,8 +11,6 @@
 #import "EntryViewController.h"
 #import "DiaryController.h"
 
-#import <MMMarkdown/MMMarkdown.h>
-
 @interface DetailedEntryViewController () < EntryViewConrollerDelegate> {
     IBOutlet UIScrollView *scrollMedia;
     IBOutlet UIWebView *webview;
@@ -84,9 +82,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self setTitle: [arrayM objectEntry_subject]];
-    
-    NSString *htmlString = [MMMarkdown HTMLStringWithMarkdown: [arrayM objectEntry_body] extensions:MMMarkdownExtensionsGitHubFlavored error:NULL];
-    [webview loadHTMLString: htmlString baseURL: nil];
     
 }
 

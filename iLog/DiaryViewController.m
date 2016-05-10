@@ -9,8 +9,7 @@
 #import "DiaryViewController.h"
 
 #import <markdown_peg.h>
-#import <markdown_lib.h>
-#import <MMMarkdown/MMMarkdown.h>
+#import <markdown_lib.h> 
 
 @interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, DetailedEntryViewControllerDelegate, EntryViewConrollerDelegate> {
     IBOutlet UITableView *table;
