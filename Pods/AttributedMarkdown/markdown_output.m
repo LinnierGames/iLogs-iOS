@@ -237,7 +237,7 @@ static void print_attr_element(NSMutableAttributedString *out, element *elt, NSD
         case BULLETLIST:
             //pad(out, 2);
             padded = 0;
-            print_attr_string(out, @"\n",current);
+            //!print_attr_string(out, @"\n",current);
             indentation+=1;
             print_attr_element_list(out, elt->children, attributes, merge(current, attributes[elt->key]));
             //pad(out, 1);
