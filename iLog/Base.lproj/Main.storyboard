@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -36,14 +36,25 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5bh-wS-QLn">
+                                <rect key="frame" x="0.0" y="285" width="600" height="44"/>
+                                <items>
+                                    <navigationItem title="Title" id="skm-gw-S6N">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="nrS-sh-Zyh"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="x21-gL-5cx" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="66" id="4yQ-tV-sbb"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="yHL-Bo-ZIa" secondAttribute="bottom" constant="20" id="81v-F0-cpK"/>
+                            <constraint firstItem="5bh-wS-QLn" firstAttribute="trailing" secondItem="x21-gL-5cx" secondAttribute="trailing" id="Wvw-Rw-gKg"/>
                             <constraint firstItem="x21-gL-5cx" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="bGk-A2-l5b"/>
                             <constraint firstItem="x21-gL-5cx" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="e1C-Pn-I7N"/>
                             <constraint firstItem="yHL-Bo-ZIa" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-4" id="iEs-IS-Sdf"/>
+                            <constraint firstItem="5bh-wS-QLn" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="285" id="ivk-AZ-tjr"/>
+                            <constraint firstItem="5bh-wS-QLn" firstAttribute="leading" secondItem="x21-gL-5cx" secondAttribute="leading" id="p4j-Ok-Igr"/>
                         </constraints>
                     </view>
                     <connections>
