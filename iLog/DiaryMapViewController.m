@@ -15,7 +15,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
     
 };
 
-@interface DiaryMapViewController () < UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate> {
+@interface DiaryMapViewController () < UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIButtonsDelegate> {
     CDSelectedMap currentView;
         IBOutlet UIView *viewStories;
             IBOutlet UITableView *tableStories;
@@ -289,12 +289,8 @@ typedef NS_ENUM(int, CDSelectedMap) {
         } case CTTags: {
             [self.navigationItem setPrompt: @"Tags"];
             
-            UIView *buttonItemView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 44, 30)];
-            UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pressedNavRight:)];
-            [buttonItemView addGestureRecognizer:tapGes];
-            UILongPressGestureRecognizer *longPressGes = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressedNavRightLong:)];
-            [buttonItemView addGestureRecognizer:longPressGes];
-            UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:buttonItemView];
+            UIButtons *button = [[UIButtons alloc] initWithDelegate: self];
+            UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView: button];
             self.navigationItem.rightBarButtonItem = barItem;
             
             [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemEdit target: self action: @selector( pressedNavLeft:)] animated: YES];
@@ -672,6 +668,23 @@ typedef NS_ENUM(int, CDSelectedMap) {
             }
             break;
             
+        } case CTTags: { //Using Buttons *
+            break;
+            
+        }
+            
+    }
+    
+}
+
+- (void)buttonTapped:(UIButtons *)button {
+    switch (currentView) {
+        case CTMapView: {
+            break;
+            
+        } case CTStoriesView: {
+            break;
+            
         } case CTTags: {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Tag" message: @"enter the title" delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"Add", nil];
             [alert setTag: 1];
@@ -687,24 +700,23 @@ typedef NS_ENUM(int, CDSelectedMap) {
     
 }
 
-- (void)pressedNavRightLong:(id)sender {
-    if ([sender state] == UIGestureRecognizerStateBegan)
-        switch (currentView) {
-            case CTMapView: {
-                break;
-                
-            } case CTStoriesView: {
-                break;
-                
-            } case CTTags: {
-                UIActionSheet *actionAdd = [[UIActionSheet alloc] initWithTitle: nil delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: @"Add Tag Group", @"Add Tag", nil];
-                [actionAdd setTag: 1];
-                [actionAdd showInView: self.view];
-                break;
-                
-            }
-                
+- (void)buttonLongTap:(UIButtons *)button {
+    switch (currentView) {
+        case CTMapView: {
+            break;
+            
+        } case CTStoriesView: {
+            break;
+            
+        } case CTTags: {
+            UIActionSheet *actionAdd = [[UIActionSheet alloc] initWithTitle: nil delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: @"Add Tag Group", @"Add Tag", nil];
+            [actionAdd setTag: 1];
+            [actionAdd showInView: self.view];
+            break;
+            
         }
+            
+    }
     
 }
 
