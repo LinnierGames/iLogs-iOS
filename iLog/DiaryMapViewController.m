@@ -289,8 +289,7 @@ typedef NS_ENUM(int, CDSelectedMap) {
         } case CTTags: {
             [self.navigationItem setPrompt: @"Tags"];
             
-            UIButtons *button = [[UIButtons alloc] initWithDelegate: self];
-            UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView: button];
+            UIButtons *button = [UIButtons buttonWithType: CTButtonsAdd withDelegate: self];            UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView: button];
             self.navigationItem.rightBarButtonItem = barItem;
             
             [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemEdit target: self action: @selector( pressedNavLeft:)] animated: YES];

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-static const NSString *kBuildSerial = @"CONI";
+static const NSString *kBuildSerial = @"CONI ALPHA";
 
 @interface ViewController : UIViewController
 

@@ -11,7 +11,7 @@
 #import <markdown_peg.h>
 #import <markdown_lib.h> 
 
-@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, DetailedEntryViewControllerDelegate, EntryViewConrollerDelegate> {
+@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, DetailedEntryViewControllerDelegate, EntryViewConrollerDelegate, UIButtonsDelegate> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayTable;
         NSMutableArray *arrayDiaries;
@@ -170,6 +170,12 @@
 }
 
 - (void)pressNavRight:(id)sender {
+    
+}
+
+#pragma mark IBActions > Pre-Defined Functions (BUTTONS)
+
+- (void)buttonTapped:(UIButtons *)button {
     if ([arrayDiaries count] > 0) {
         UINavigationController *viewNew = [EntryViewController newEntryWithDelegate: self];
         [self presentViewController: viewNew animated: YES];
@@ -181,7 +187,6 @@
         
     }
     
-    
 }
 
 #pragma mark - View Lifecycle
@@ -190,7 +195,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target: self action: @selector( pressNavLeft:)]];
-    [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCompose target: self action: @selector( pressNavRight:)]];
+    [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithCustomView: [UIButtons buttonWithType: CTButtonsCompose withDelegate: self]]];
+    //[self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCompose target: self action: @selector( pressNavRight:)]];
     
     [table setRowHeight: UITableViewAutomaticDimension];
     [table setEstimatedRowHeight: 44.0];
