@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		E12640591B38709300E423E7 /* UIContentPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E12640581B38709300E423E7 /* UIContentPicker.m */; };
 		E126405B1B3870A000E423E7 /* UIContentPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = E126405A1B3870A000E423E7 /* UIContentPicker.xib */; };
-		E1340DC81CA3B688004D44B4 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = E1340DC71CA3B688004D44B4 /* index.html */; };
 		E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC381B2E1AD4007C1E91 /* Main.storyboard */; };
 		E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC3D1B2E1AD4007C1E91 /* LaunchScreen.xib */; };
 		E146E49C1B347037006DC1EC /* EntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E49A1B347037006DC1EC /* EntryViewController.m */; };
@@ -17,6 +16,8 @@
 		E146E4A21B347A45006DC1EC /* UICustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4A01B347A45006DC1EC /* UICustomTableViewCell.m */; };
 		E146E4A31B347A45006DC1EC /* UICustomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E146E4A11B347A45006DC1EC /* UICustomTableViewCell.xib */; };
 		E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */; };
+		E1745F2A1CAA0F5300F83AD4 /* UIMarkdownInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1745F281CAA0F5300F83AD4 /* UIMarkdownInputView.m */; };
+		E1745F2B1CAA0F5300F83AD4 /* UIMarkdownInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1745F291CAA0F5300F83AD4 /* UIMarkdownInputView.xib */; };
 		E17EEC311B2E1AD4007C1E91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC301B2E1AD4007C1E91 /* main.m */; };
 		E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC331B2E1AD4007C1E91 /* AppDelegate.m */; };
 		E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EEC361B2E1AD4007C1E91 /* ViewController.m */; };
@@ -28,21 +29,26 @@
 		E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA11B2F9FA2007C1E91 /* SettingsViewController.m */; };
 		E17EECA51B2FA04F007C1E91 /* DiaryController.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA41B2FA04F007C1E91 /* DiaryController.m */; };
 		E17EECAB1B311F15007C1E91 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = E17EECA91B311F15007C1E91 /* ISO8601DateFormatter.m */; };
+		E1A4C3E61D011E06005BAA6E /* UIButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = E1A4C3E51D011E06005BAA6E /* UIButtons.m */; };
 		E1AAC1691C878DE9008BBB10 /* LoggingAssertionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AAC1681C878DE9008BBB10 /* LoggingAssertionHandler.m */; };
 		E1B0184A1CA0F72F0068B701 /* DetailedEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B018491CA0F72F0068B701 /* DetailedEntryViewController.m */; };
 		E1B0184C1CA0F7E10068B701 /* DetailedEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1B0184B1CA0F7E10068B701 /* DetailedEntryViewController.xib */; };
+		E1D6CA621CB353E500124FF8 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1D6CA611CB353E500124FF8 /* CoreText.framework */; };
 		E1DCA16D1BE7F0D20037F84E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DCA16C1BE7F0D20037F84E /* libz.tbd */; };
 		E1DCA16F1BE7F0D90037F84E /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DCA16E1BE7F0D90037F84E /* libsqlite3.tbd */; };
 		E1EF7AEE1B3BC95A00C9C995 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */; };
 		E1EF7AF21B3C5BBA00C9C995 /* UITableViewModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EF7AF01B3C5BBA00C9C995 /* UITableViewModuleViewController.m */; };
 		E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AF11B3C5BBA00C9C995 /* UITableViewModuleViewController.xib */; };
+		E5E98C90F6A638F83E0B4EC4 /* libPods-iLogs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C74DDF02B93609AFA6DAD0A /* libPods-iLogs.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		30E814ABA697225280E34322 /* Pods-iLogs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iLogs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iLogs/Pods-iLogs.debug.xcconfig"; sourceTree = "<group>"; };
+		4C74DDF02B93609AFA6DAD0A /* libPods-iLogs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iLogs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BFC3499FDDFB014097232DD /* Pods-iLogs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iLogs.release.xcconfig"; path = "Pods/Target Support Files/Pods-iLogs/Pods-iLogs.release.xcconfig"; sourceTree = "<group>"; };
 		E12640571B38709300E423E7 /* UIContentPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIContentPicker.h; sourceTree = "<group>"; };
 		E12640581B38709300E423E7 /* UIContentPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIContentPicker.m; sourceTree = "<group>"; };
 		E126405A1B3870A000E423E7 /* UIContentPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UIContentPicker.xib; sourceTree = "<group>"; };
-		E1340DC71CA3B688004D44B4 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = ../../../../../../../Desktop/index.html; sourceTree = "<group>"; };
 		E146E4991B347037006DC1EC /* EntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntryViewController.h; sourceTree = "<group>"; };
 		E146E49A1B347037006DC1EC /* EntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntryViewController.m; sourceTree = "<group>"; };
 		E146E49B1B347037006DC1EC /* EntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryViewController.xib; sourceTree = "<group>"; };
@@ -52,6 +58,10 @@
 		E146E4A61B347A5C006DC1EC /* UICustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustom.h; sourceTree = "<group>"; };
 		E146E4A91B348B79006DC1EC /* CategoriesClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesClasses.h; sourceTree = "<group>"; };
 		E146E4AA1B348B79006DC1EC /* CategoriesClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesClasses.m; sourceTree = "<group>"; };
+		E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMMarkdown.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/workspace-aqlprggvgzcwapffmtwcqmfooskc/Build/Products/Debug-iphoneos/MMMarkdown.framework"; sourceTree = "<group>"; };
+		E1745F271CAA0F5300F83AD4 /* UIMarkdownInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIMarkdownInputView.h; path = "../../../../../TESTS/MAC/XCode/Test72 - MMMarkdown Framework/Test72 - MMMarkdown Framework/UIMarkdownInputView.h"; sourceTree = "<group>"; };
+		E1745F281CAA0F5300F83AD4 /* UIMarkdownInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIMarkdownInputView.m; path = "../../../../../TESTS/MAC/XCode/Test72 - MMMarkdown Framework/Test72 - MMMarkdown Framework/UIMarkdownInputView.m"; sourceTree = "<group>"; };
+		E1745F291CAA0F5300F83AD4 /* UIMarkdownInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UIMarkdownInputView.xib; path = "../../../../../TESTS/MAC/XCode/Test72 - MMMarkdown Framework/Test72 - MMMarkdown Framework/UIMarkdownInputView.xib"; sourceTree = "<group>"; };
 		E17EEC2B1B2E1AD4007C1E91 /* iLogs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iLogs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E17EEC2F1B2E1AD4007C1E91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E17EEC301B2E1AD4007C1E91 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -79,11 +89,14 @@
 		E17EECA41B2FA04F007C1E91 /* DiaryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryController.m; sourceTree = "<group>"; };
 		E17EECA81B311F15007C1E91 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		E17EECA91B311F15007C1E91 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		E1A4C3E41D011E06005BAA6E /* UIButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIButtons.h; sourceTree = "<group>"; };
+		E1A4C3E51D011E06005BAA6E /* UIButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIButtons.m; sourceTree = "<group>"; };
 		E1AAC1671C878DE9008BBB10 /* LoggingAssertionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingAssertionHandler.h; sourceTree = "<group>"; };
 		E1AAC1681C878DE9008BBB10 /* LoggingAssertionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoggingAssertionHandler.m; sourceTree = "<group>"; };
 		E1B018481CA0F72F0068B701 /* DetailedEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailedEntryViewController.h; sourceTree = "<group>"; };
 		E1B018491CA0F72F0068B701 /* DetailedEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailedEntryViewController.m; sourceTree = "<group>"; };
 		E1B0184B1CA0F7E10068B701 /* DetailedEntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailedEntryViewController.xib; sourceTree = "<group>"; };
+		E1D6CA611CB353E500124FF8 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		E1DCA16C1BE7F0D20037F84E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		E1DCA16E1BE7F0D90037F84E /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		E1E22BDA1B75A01C00662606 /* Change Log - Releases.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Releases.rtf"; sourceTree = "<group>"; };
@@ -99,21 +112,40 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1D6CA621CB353E500124FF8 /* CoreText.framework in Frameworks */,
 				E1DCA16F1BE7F0D90037F84E /* libsqlite3.tbd in Frameworks */,
 				E1DCA16D1BE7F0D20037F84E /* libz.tbd in Frameworks */,
+				E5E98C90F6A638F83E0B4EC4 /* libPods-iLogs.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2826F78B5A1F4E68A583EA63 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E1D6CA611CB353E500124FF8 /* CoreText.framework */,
+				4C74DDF02B93609AFA6DAD0A /* libPods-iLogs.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2B0F608E57F0F6CB796830DD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				30E814ABA697225280E34322 /* Pods-iLogs.debug.xcconfig */,
+				8BFC3499FDDFB014097232DD /* Pods-iLogs.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		E146E49E1B34703D006DC1EC /* Editors */ = {
 			isa = PBXGroup;
 			children = (
 				E1B018481CA0F72F0068B701 /* DetailedEntryViewController.h */,
 				E1B018491CA0F72F0068B701 /* DetailedEntryViewController.m */,
 				E1B0184B1CA0F7E10068B701 /* DetailedEntryViewController.xib */,
-				E1340DC71CA3B688004D44B4 /* index.html */,
 				E146E4991B347037006DC1EC /* EntryViewController.h */,
 				E146E49A1B347037006DC1EC /* EntryViewController.m */,
 				E146E49B1B347037006DC1EC /* EntryViewController.xib */,
@@ -135,6 +167,11 @@
 				E12640571B38709300E423E7 /* UIContentPicker.h */,
 				E12640581B38709300E423E7 /* UIContentPicker.m */,
 				E126405A1B3870A000E423E7 /* UIContentPicker.xib */,
+				E1745F271CAA0F5300F83AD4 /* UIMarkdownInputView.h */,
+				E1745F281CAA0F5300F83AD4 /* UIMarkdownInputView.m */,
+				E1745F291CAA0F5300F83AD4 /* UIMarkdownInputView.xib */,
+				E1A4C3E41D011E06005BAA6E /* UIButtons.h */,
+				E1A4C3E51D011E06005BAA6E /* UIButtons.m */,
 			);
 			name = headers;
 			sourceTree = "<group>";
@@ -144,6 +181,7 @@
 			children = (
 				E146E4A61B347A5C006DC1EC /* UICustom.h */,
 				E146E4A41B347A48006DC1EC /* headers */,
+				E1745F201CAA0BB600F83AD4 /* MMMarkdown.framework */,
 			);
 			name = UICustom;
 			sourceTree = "<group>";
@@ -174,6 +212,8 @@
 				E17EEC2D1B2E1AD4007C1E91 /* iLogs */,
 				E17EEC471B2E1AD4007C1E91 /* iLogTests */,
 				E17EEC2C1B2E1AD4007C1E91 /* Products */,
+				2B0F608E57F0F6CB796830DD /* Pods */,
+				2826F78B5A1F4E68A583EA63 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -302,9 +342,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E17EEC4E1B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLogs" */;
 			buildPhases = (
+				6D88626A41768EBE1CCC85DD /* Check Pods Manifest.lock */,
 				E17EEC271B2E1AD4007C1E91 /* Sources */,
 				E17EEC281B2E1AD4007C1E91 /* Frameworks */,
 				E17EEC291B2E1AD4007C1E91 /* Resources */,
+				6AA22A74FD4FF351AB2D70E7 /* Embed Pods Frameworks */,
+				604AAA75264A41E6FEF64F21 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -358,7 +401,7 @@
 				E17EEC581B2E1C58007C1E91 /* DiaryTabBarViewController.xib in Resources */,
 				E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */,
 				E1EF7AEE1B3BC95A00C9C995 /* Images.xcassets in Resources */,
-				E1340DC81CA3B688004D44B4 /* index.html in Resources */,
+				E1745F2B1CAA0F5300F83AD4 /* UIMarkdownInputView.xib in Resources */,
 				E146E49D1B347037006DC1EC /* EntryViewController.xib in Resources */,
 				E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */,
 				E146E4981B3217DA006DC1EC /* LaunchScreen.xib in Resources */,
@@ -368,6 +411,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		604AAA75264A41E6FEF64F21 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iLogs/Pods-iLogs-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6AA22A74FD4FF351AB2D70E7 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iLogs/Pods-iLogs-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6D88626A41768EBE1CCC85DD /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E17EEC271B2E1AD4007C1E91 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -376,11 +467,13 @@
 				E12640591B38709300E423E7 /* UIContentPicker.m in Sources */,
 				E1AAC1691C878DE9008BBB10 /* LoggingAssertionHandler.m in Sources */,
 				E17EEC921B2F47C4007C1E91 /* DiaryTabBarViewController.m in Sources */,
+				E1A4C3E61D011E06005BAA6E /* UIButtons.m in Sources */,
 				E146E4A21B347A45006DC1EC /* UICustomTableViewCell.m in Sources */,
 				E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */,
 				E146E49C1B347037006DC1EC /* EntryViewController.m in Sources */,
 				E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */,
 				E1EF7AF21B3C5BBA00C9C995 /* UITableViewModuleViewController.m in Sources */,
+				E1745F2A1CAA0F5300F83AD4 /* UIMarkdownInputView.m in Sources */,
 				E1B0184A1CA0F72F0068B701 /* DetailedEntryViewController.m in Sources */,
 				E17EEC991B2F9D77007C1E91 /* DiaryViewController.m in Sources */,
 				E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */,
@@ -499,6 +592,7 @@
 		};
 		E17EEC4F1B2E1AD4007C1E91 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 30E814ABA697225280E34322 /* Pods-iLogs.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Icon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -514,6 +608,7 @@
 		};
 		E17EEC501B2E1AD4007C1E91 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8BFC3499FDDFB014097232DD /* Pods-iLogs.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Icon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

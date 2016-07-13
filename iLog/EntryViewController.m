@@ -10,7 +10,9 @@
 #import "UITableViewModuleViewController.h"
 #import "DiaryController.h"
 
-@interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, UIContentPickerDelegate, UIActionSheetDelegate, UITableViewModuleViewController> {
+#import "UIMarkdownInputView.h"
+
+@interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, UIContentPickerDelegate, UIActionSheetDelegate, UITableViewModuleViewController, UIMarkdownInputViewDelegate> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayM;
         UICustomTableViewCell *cellSubject;
@@ -230,17 +232,9 @@
             [cell.textview setDelegate: self];
             [cell.textview setTag: 1];
             [cell.textview setText: [arrayM objectEntry_body]];
+            [cell.textview setInputAccessoryView: [[UIMarkdownInputView alloc] initWithTextInput: cell.textview withParentViewController: self]];
             
             cellBody = cell; return cell; break;
-            
-            /*
-             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-             if (!cell)
-             cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
-             
-             [cell.textLabel setText: @"Edit Body"];
-             
-             return cell; break;*/
             
         } default:
             return nil; break;

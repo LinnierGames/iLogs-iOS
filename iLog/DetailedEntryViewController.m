@@ -56,6 +56,13 @@
 
 #pragma mark - Void's
 
+#pragma mark Void's > Pre-Defined Functions (ENTRY VIEW CONTROLLER)
+
+- (void)entryViewController:(EntryViewController *)entry didFinishWithEntry:(const NSArray *)array {
+    arrayM = [NSMutableArray arrayWithArray: (NSArray *)array];
+    
+}
+
 #pragma mark - IBActions
 
 - (void)pressNavRight:(id)sender {
@@ -66,11 +73,15 @@
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
-    [self setTitle: [arrayM objectEntry_subject]];
     
     [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self.navigationController action: @selector( popViewControllerAnimated:)]];
     
     [webview.scrollView setContentOffset: CGPointMake( 0, 0)];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self setTitle: [arrayM objectEntry_subject]];
     
 }
 
