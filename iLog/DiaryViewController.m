@@ -189,6 +189,20 @@
     
 }
 
+- (void)buttonLongTap:(UIButtons *)button {
+    if ([arrayDiaries count] > 0) {
+        [[UniversalVariables globalVariables] ENTRIES_writeNewForEntry: [NSMutableArray arrayNEWEntryWithSubject: @"New Entry" body: [[NSDate date] stringValue: CTCharacterDateTime]]];
+        [self viewWillAppear: NO];
+        
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Diary" message: @"there must be a Diary before adding an entry. Please add a Diary" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
+        [alert show];
+        
+    }
+    
+}
+
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
