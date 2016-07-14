@@ -48,7 +48,10 @@
 }
 
 - (id)initWithModule:(CDTableViewModule)moduleValue {
-    return [self initWithModule: moduleValue withContent: moduleValue == CTTableViewModule ? [NSArray array] : moduleValue == CTTableViewDiaries ? [NSArray array] : moduleValue == CTTableViewTags ? @{@"groupedTags":[UniversalFunctions TAGGROUPS_returnGroupedTags]} : [NSArray array]];
+    return [self initWithModule: moduleValue withContent:
+            moduleValue == CTTableViewModule ? [NSArray array] :
+            moduleValue == CTTableViewDiaries ? [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries] :
+            moduleValue == CTTableViewTags ? @{@"groupedTags": [UniversalFunctions TAGGROUPS_returnGroupedTags]} : [NSArray array]];
     
 }
 
@@ -102,6 +105,14 @@
                 [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self action: @selector( pressRightNav:)]];
                 break;
                 
+            } case CTTableViewDiaries: {
+                arrayTable = [[NSMutableArray alloc] initWithArray: content];
+                module = moduleValue;
+                
+                [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self action: @selector( pressLeftNav:)]];
+                [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemEdit target: self action: @selector( pressRightNav:)]];
+                break;
+                
             } default:
                 break;
                 
@@ -133,6 +144,8 @@
             return [arrayM count] +1; /*Search Bar on Top*/ break;
         case CTTableViewStories:
             return [arrayM count] +1; /*Search Bar on Top*/ break;
+        case CTTableViewDiaries:
+            return 2; /*Search Bar on Top*/ break;
         default:
             return 0; break;
             
@@ -190,8 +203,14 @@
                 return [[arrayTable objectAtIndex: section -1] count];
             break;
             
-        }
-        default:
+        } case CTTableViewDiaries: {
+            if (section == 0)
+                return 1;
+            else
+                return [arrayTable count] +1 /*Add Diary Button*/;
+            break;
+            
+        } default:
             return 0; break;
             
     }
@@ -200,6 +219,22 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return CVTableViewCellDefaultCellHeight;
+    
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (module) {
+        case CTTableViewDiaries:
+            if (indexPath.section != 0 && indexPath.row != 0)
+                return YES;
+            else
+                return NO;
+            break;
+            
+        default:
+            return NO; break;
+            
+    }
     
 }
 
@@ -214,49 +249,84 @@
         cellSearch = cell; return cell;
         
     } else { //Record
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-        if (!cell)
-            cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
-        //Customize Cell
-        
-        NSArray *arrayRecord = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
-        if ([[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue])
-            [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
-        else
-            [cell setAccessoryType: UITableViewCellAccessoryNone];
-        
         switch (module) {
-            case CTTableViewTags: {
-                [cell.textLabel setText: [arrayRecord objectTag_title]];
+            case CTTableViewStories: case CTTableViewTags: {
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                if (!cell)
+                    cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+                //Customize Cell
                 
-                break;
-                
-            } case CTTableViewStories: {
-                [cell.textLabel setText: [arrayRecord objectStory_title]];
+                NSArray *arrayRecord = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
                 if ([[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue])
                     [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
                 else
                     [cell setAccessoryType: UITableViewCellAccessoryNone];
                 
-                if ([[[[[[arrayM objectAtIndex: indexPath.section -1] lastObject] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"]]) {
-                    [cell.textLabel setTextColor: [UIColor blackColor]];
-                    [cell setUserInteractionEnabled: YES];
-                    
-                } else {
-                    [cell.textLabel setTextColor: [UIColor lightGrayColor]];
-                    [cell setUserInteractionEnabled: NO];
-                    
+                switch (module) {
+                    case CTTableViewTags: {
+                        [cell.textLabel setText: [arrayRecord objectTag_title]];
+                        
+                        break;
+                        
+                    } case CTTableViewStories: {
+                        [cell.textLabel setText: [arrayRecord objectStory_title]];
+                        if ([[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue])
+                            [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
+                        else
+                            [cell setAccessoryType: UITableViewCellAccessoryNone];
+                        
+                        if ([[[[[[arrayM objectAtIndex: indexPath.section -1] lastObject] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"]]) {
+                            [cell.textLabel setTextColor: [UIColor blackColor]];
+                            [cell setUserInteractionEnabled: YES];
+                            
+                        } else {
+                            [cell.textLabel setTextColor: [UIColor lightGrayColor]];
+                            [cell setUserInteractionEnabled: NO];
+                            
+                        }
+                        
+                        break;
+                        
+                    } default:
+                        break;
+                        
                 }
                 
+                return cell; break;
+                
+            } case CTTableViewDiaries: {
+                if (indexPath.row == 0) {
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                    if (!cell)
+                        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+                    //Customize Cell
+                    
+                    [cell.textLabel setText: @"Add Diary"];
+                    
+                    return cell;
+                    
+                } else {
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                    if (!cell)
+                        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+                    //Customize Cell
+                    
+                    NSArray *arrayRecord = [arrayTable objectAtIndex: indexPath.row -1];
+                    [cell.textLabel setText: [arrayRecord objectDiary_title]];
+                    
+                    return cell;
+                    
+                }
                 break;
                 
             } default:
-                break;
+                return nil; break;
+                
         }
         
-        return cell;
-        
     }
+    
+    return nil;
     
 }
 
@@ -297,10 +367,40 @@
             
             break;
             
-        }
-        default:
+        } case CTTableViewDiaries: {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"New Diary" message: @"enter the title of this new diary" preferredStyle: UIAlertControllerStyleAlert];
+            [alert addTextFieldWithConfigurationHandler: ^(UITextField * _Nonnull textField) {
+                [textField setAutocapitalizationType: UITextAutocapitalizationTypeWords];
+                [textField setAutocorrectionType: UITextAutocorrectionTypeYes];
+                [textField setPlaceholder: @"title"];
+                
+            }];
+            [alert addAction: [UIAlertAction actionWithTitle: @"Cancel" style: UIAlertActionStyleCancel handler: NULL]];
+            [alert addAction: [UIAlertAction actionWithTitle: @"Add" style: UIAlertActionStyleDefault handler: ^(UIAlertAction * _Nonnull action) {
+                [UniversalFunctions SQL_DIARIES_voidInsertRowWithArray: [NSArray arrayNEWDiaryWithTitle: [[[alert textFields] firstObject] text]]];
+                arrayTable = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
+                [tableView reloadData];
+                
+            }]];
+            [self presentViewController: alert animated: YES completion: NULL];
+            break;
+        } default:
             break;
             
+    }
+    
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (module) {
+        case CTTableViewDiaries: {
+            [UniversalFunctions SQL_DIARIES_voidDeleteRowWithArray: [arrayTable objectAtIndex: indexPath.row -1]];
+            [arrayTable removeObjectAtIndex: indexPath.row -1];
+            [tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationAutomatic];
+            break;
+            
+        } default:
+            break;
     }
     
 }
@@ -385,10 +485,21 @@
 }
 
 - (void)pressRightNav:(id)sender {
-    if ([delegate respondsToSelector: @selector( tableViewModule:didFinishWithChanges:)])
-         [delegate tableViewModule: self didFinishWithChanges: dicChanges];
-    //Dismiss
-    [self pressLeftNav: nil];
+    switch (module) {
+        case CTTableViewDiaries: {
+            [table setEditing: !table.isEditing animated: YES];
+            break;
+            
+        } default: {
+            if ([delegate respondsToSelector: @selector( tableViewModule:didFinishWithChanges:)])
+                [delegate tableViewModule: self didFinishWithChanges: dicChanges];
+            //Dismiss
+            [self pressLeftNav: nil];
+            break;
+            
+        }
+            
+    }
     
 }
 

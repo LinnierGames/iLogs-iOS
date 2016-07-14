@@ -176,11 +176,7 @@
 #pragma mark - IBActions
 
 - (void)pressNavLeft:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Diary" message: @"enter the title of this new diary" delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"Add", nil];
-    [alert setTag: 1];
-    [alert setAlertViewStyle: UIAlertViewStylePlainTextInput];
-    [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
-    [alert show];
+    [self presentViewController: [UITableViewModuleViewController allocWithModule: CTTableViewDiaries] animated: YES];
     
 }
 
