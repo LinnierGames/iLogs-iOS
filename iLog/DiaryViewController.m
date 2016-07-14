@@ -151,6 +151,21 @@
     
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (editingStyle) {
+        case UITableViewCellEditingStyleDelete: {
+            [[UniversalVariables globalVariables] ENTRIES_deleteForEntry: [arrayTable objectAtIndex: indexPath.row]];
+            [arrayTable removeObjectAtIndex: indexPath.row];
+            [tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationAutomatic];
+            break;
+            
+        } default:
+            break;
+            
+    }
+    
+}
+
 #pragma mark Void's > Pre-Defined Functions (ENTRY VIEW CONTROLLER)
 
 - (void)entryViewController:(EntryViewController *)entry didFinishWithEntry:(const NSArray *)array {
