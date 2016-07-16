@@ -78,7 +78,7 @@
 
 //Sections
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    return 5;
     
 }
 
@@ -86,9 +86,15 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 3; break;
-        case 1: case 2: case 3:
-            return 1; break;
+            return 4; break;
+        case 1:
+            return 2; break;
+        case 2:
+            return 2; break;
+        case 3:
+            return 0; break;
+        case 4:
+            return 0; break;
         default:
             return 0; break;
             
@@ -98,10 +104,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
-        case 0:{
+        case 0: {
             switch (indexPath.row) {
-                case 0: case 1:
-                    return CVTableViewCellDefaultCellHeight; break;
                 case 2:
                     return 40; break;
                 default:
@@ -109,10 +113,21 @@
                     
             } break;
             
-        } case 1: case 2:
+        } case 1:
             return CVTableViewCellDefaultCellHeight; break;
-        case 3:
-            return 216; break;
+        case 2: {
+            switch (indexPath.row) {
+                case 1:
+                    return 96; break;
+                default:
+                    return CVTableViewCellDefaultCellHeight; break;
+                    
+            } break;
+            
+        } case 3:
+            return 100; break;
+        case 4:
+            return 100; break;
         default:
             return CVTableViewCellDefaultCellHeight; break;
             
@@ -192,27 +207,36 @@
                     
                     return cell; break;
                     
+                } case 3: {
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                    if (!cell)
+                        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
+                    
+                    [cell.textLabel setText: [[arrayM objectEntry_date] stringValue: CTCharacterDateTime]];
+                    
+                    return cell; break;
+                    
                 } default:
                     return nil; break;
                     
             } break;
             
-        } case 1: case 2: {
+        } case 1: {
             UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Textfield"];
             if (!cell)
                 cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTextField];
             
             [cell.textfield setInputView: [UIView new]];
             [cell.textfield setDelegate: self];
-            switch (indexPath.section) {
-                case 1: {
+            switch (indexPath.row) {
+                case 0: {
                     [cell.textfield setTag: 2];
                     [cell.textfield setBorderStyle: UITextBorderStyleNone];
                     [cell.textfield setPlaceholder: @"Stories"];
                     cellStories = cell;
                     break;
                     
-                } case 2: {
+                } case 1: {
                     [cell.textfield setTag: 3];
                     [cell.textfield setBorderStyle: UITextBorderStyleNone];
                     [cell.textfield setPlaceholder: @"Tags"];
@@ -220,21 +244,45 @@
                     break;
                     
                 } default: break;
+                    
             }
             
             return cell;
             
-        } case 3: {
-            UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Textview"];
+        } case 2: {
+            switch (indexPath.row) {
+                case 0: {
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                    if (!cell)
+                        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
+                    
+                    [cell.textLabel setText: @"Body | Outline"];
+                    
+                    return cell; break;
+                    
+                } case 1: {
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                    if (!cell)
+                        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
+                    
+                    [cell.textLabel setText: @"Body"];
+                    
+                    return cell; break;
+                    
+                } default:
+                    return nil; break;
+                    
+            }
+            break;
+        
+        } case 3: case 4: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
             if (!cell)
-                cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTextView];
+                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
             
-            [cell.textview setDelegate: self];
-            [cell.textview setTag: 1];
-            [cell.textview setText: [arrayM objectEntry_body]];
-            [cell.textview setInputAccessoryView: [[UIMarkdownInputView alloc] initWithTextInput: cell.textview withParentViewController: self]];
+            [cell.textLabel setText: @"Media"];
             
-            cellBody = cell; return cell; break;
+            return cell; break;
             
         } default:
             return nil; break;
