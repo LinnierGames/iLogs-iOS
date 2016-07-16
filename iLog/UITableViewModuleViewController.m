@@ -7,11 +7,13 @@
 //
 
 #import "UITableViewModuleViewController.h"
+#import "UIMarkdownInputView.h"
 
-@interface UITableViewModuleViewController () < UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UITextFieldDelegate> {
+@interface UITableViewModuleViewController () < UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UIMarkdownInputViewDelegate> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayTable;
         UICustomTableViewCell *cellSearch;
+        UICustomTableViewCell *cellTextview;
     NSMutableDictionary *dicChanges;
     
     NSArray *arrayEntry;
@@ -32,7 +34,7 @@
 @end
 
 @implementation UITableViewModuleViewController
-@synthesize arrayM, module, delegate;
+@synthesize arrayM, stringM, module, delegate;
 
 #pragma mark - Return Functions
 
@@ -113,6 +115,14 @@
                 [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemEdit target: self action: @selector( pressRightNav:)]];
                 break;
                 
+            } case CTTableViewBody: {
+                stringM = [NSMutableString stringWithString: content];
+                module = moduleValue;
+                
+                [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target: self action: @selector( pressLeftNav:)]];
+                [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self action: @selector( pressRightNav:)]];
+                break;
+                
             } default:
                 break;
                 
@@ -146,6 +156,8 @@
             return [arrayM count] +1; /*Search Bar on Top*/ break;
         case CTTableViewDiaries:
             return 2; /*Search Bar on Top*/ break;
+        case CTTableViewBody:
+            return 1; break;
         default:
             return 0; break;
             
@@ -210,7 +222,9 @@
                 return [arrayTable count] +1 /*Add Diary Button*/;
             break;
             
-        } default:
+        } case CTTableViewBody:
+            return 1; break;
+        default:
             return 0; break;
             
     }
@@ -218,7 +232,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return CVTableViewCellDefaultCellHeight;
+    switch (module) {
+        case CTTableViewBody:
+            return 224; break;
+        default:
+            return CVTableViewCellDefaultCellHeight; break;
+            
+    }
     
 }
 
@@ -239,94 +259,114 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) { //Search Bar
-        UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Searchbar"];
-        if (!cell)
-            cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellSearchBar];
-        //Customize Cell
-        [cell.searchBar setDelegate: self];
-        
-        cellSearch = cell; return cell;
-        
-    } else { //Record
-        switch (module) {
-            case CTTableViewStories: case CTTableViewTags: {
-                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+    switch (module) {
+        case CTTableViewBody: {
+            UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Textview"];
+            if (!cell)
+                cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTextView];
+            
+            [cell.textview setDelegate: self];
+            [cell.textview setTag: 1];
+            [cell.textview setText: stringM];
+            [cell.textview setInputAccessoryView: [[UIMarkdownInputView alloc] initWithTextInput: cell.textview withParentViewController: self]];
+            
+            cellTextview = cell; return cell; break;
+            
+            return nil;
+            break;
+            
+        } default: {
+            if (indexPath.section == 0) { //Search Bar
+                UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Searchbar"];
                 if (!cell)
-                    cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+                    cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellSearchBar];
                 //Customize Cell
+                [cell.searchBar setDelegate: self];
                 
-                NSArray *arrayRecord = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
-                if ([[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue])
-                    [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
-                else
-                    [cell setAccessoryType: UITableViewCellAccessoryNone];
+                cellSearch = cell; return cell;
                 
+            } else { //Record
                 switch (module) {
-                    case CTTableViewTags: {
-                        [cell.textLabel setText: [arrayRecord objectTag_title]];
+                    case CTTableViewStories: case CTTableViewTags: {
+                        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                        if (!cell)
+                            cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+                        //Customize Cell
                         
-                        break;
-                        
-                    } case CTTableViewStories: {
-                        [cell.textLabel setText: [arrayRecord objectStory_title]];
+                        NSArray *arrayRecord = [[arrayTable objectAtIndex: indexPath.section -1] objectAtIndex: indexPath.row];
                         if ([[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue])
                             [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
                         else
                             [cell setAccessoryType: UITableViewCellAccessoryNone];
                         
-                        if ([[[[[[arrayM objectAtIndex: indexPath.section -1] lastObject] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"]]) {
-                            [cell.textLabel setTextColor: [UIColor blackColor]];
-                            [cell setUserInteractionEnabled: YES];
-                            
-                        } else {
-                            [cell.textLabel setTextColor: [UIColor lightGrayColor]];
-                            [cell setUserInteractionEnabled: NO];
-                            
+                        switch (module) {
+                            case CTTableViewTags: {
+                                [cell.textLabel setText: [arrayRecord objectTag_title]];
+                                
+                                break;
+                                
+                            } case CTTableViewStories: {
+                                [cell.textLabel setText: [arrayRecord objectStory_title]];
+                                if ([[[arrayRecord optionsDictionary] objectForKey: @"highlighted"] boolValue])
+                                    [cell setAccessoryType: UITableViewCellAccessoryCheckmark];
+                                else
+                                    [cell setAccessoryType: UITableViewCellAccessoryNone];
+                                
+                                if ([[[[[[arrayM objectAtIndex: indexPath.section -1] lastObject] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"] isEqualToNumber: [[[[arrayEntry optionsDictionary] objectForKey: @"diary"] optionsDictionary] objectForKey: @"id"]]) {
+                                    [cell.textLabel setTextColor: [UIColor blackColor]];
+                                    [cell setUserInteractionEnabled: YES];
+                                    
+                                } else {
+                                    [cell.textLabel setTextColor: [UIColor lightGrayColor]];
+                                    [cell setUserInteractionEnabled: NO];
+                                    
+                                }
+                                
+                                break;
+                                
+                            } default:
+                                break;
+                                
                         }
                         
+                        return cell; break;
+                        
+                    } case CTTableViewDiaries: {
+                        if (indexPath.row == 0) {
+                            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                            if (!cell)
+                                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+                            //Customize Cell
+                            
+                            [cell.textLabel setText: @"Add Diary"];
+                            
+                            return cell;
+                            
+                        } else {
+                            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                            if (!cell)
+                                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
+                            //Customize Cell
+                            
+                            NSArray *arrayRecord = [arrayTable objectAtIndex: indexPath.row -1];
+                            [cell.textLabel setText: [arrayRecord objectDiary_title]];
+                            
+                            return cell;
+                            
+                        }
                         break;
                         
                     } default:
-                        break;
+                        return nil; break;
                         
                 }
                 
-                return cell; break;
-                
-            } case CTTableViewDiaries: {
-                if (indexPath.row == 0) {
-                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-                    if (!cell)
-                        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
-                    //Customize Cell
-                    
-                    [cell.textLabel setText: @"Add Diary"];
-                    
-                    return cell;
-                    
-                } else {
-                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-                    if (!cell)
-                        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleDefault reuseIdentifier: @"cell"];
-                    //Customize Cell
-                    
-                    NSArray *arrayRecord = [arrayTable objectAtIndex: indexPath.row -1];
-                    [cell.textLabel setText: [arrayRecord objectDiary_title]];
-                    
-                    return cell;
-                    
-                }
-                break;
-                
-            } default:
-                return nil; break;
-                
+            }
+            break;
+            
         }
-        
+            
     }
-    
-    return nil;
     
 }
 
@@ -477,10 +517,14 @@
     
 }
 
+#pragma mark Void's > Pre-Defined Functions (TEXT VIEW)
+
 #pragma mark - IBActions
 
 - (void)pressLeftNav:(id)sender {
     [self dismissViewControllerAnimated: YES completion: ^{ }];
+    if ([cellTextview.textview isFirstResponder])
+        [cellTextview.textview resignFirstResponder];
     
 }
 
@@ -490,6 +534,10 @@
             [table setEditing: !table.isEditing animated: YES];
             break;
             
+        } case CTTableViewBody: {
+            stringM = [NSMutableString stringWithString: cellTextview.textview.text];
+            [dicChanges setValue: stringM forKey: @"body"];
+        
         } default: {
             if ([delegate respondsToSelector: @selector( tableViewModule:didFinishWithChanges:)])
                 [delegate tableViewModule: self didFinishWithChanges: dicChanges];
@@ -508,6 +556,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear: animated];
+    
+    switch (module) {
+        case CTTableViewBody: {
+            [cellTextview.textview becomeFirstResponder];
+            break;
+            
+        } default:
+            break;
+            
+    }
+    
 }
 
 @end
