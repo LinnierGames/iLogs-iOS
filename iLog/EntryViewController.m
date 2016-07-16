@@ -10,7 +10,9 @@
 #import "UITableViewModuleViewController.h"
 #import "DiaryController.h"
 
-@interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, UIContentPickerDelegate, UIActionSheetDelegate, UITableViewModuleViewController> {
+#import "UIMarkdownInputView.h"
+
+@interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, UIContentPickerDelegate, UIActionSheetDelegate, UITableViewModuleViewController, UIMarkdownInputViewDelegate> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayM;
         UICustomTableViewCell *cellSubject;
@@ -57,9 +59,9 @@
     if (self) {
         arrayM = [[NSMutableArray alloc] initWithArray: arrayEntry];
         
-        if (![[arrayM optionsDictionary] objectForKey: @"tagChanges"])
+        if ([[arrayM optionsDictionary] objectForKey: @"tagChanges"] == nil)
             [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"tagChanges"];
-        if (![[arrayM optionsDictionary] objectForKey: @"storyChanges"])
+        if ([[arrayM optionsDictionary] objectForKey: @"storyChanges"] == nil)
             [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"storyChanges"];
         
         array = [NSMutableArray new];
@@ -76,7 +78,7 @@
 
 //Sections
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    return 5;
     
 }
 
@@ -85,8 +87,14 @@
     switch (section) {
         case 0:
             return 3; break;
-        case 1: case 2: case 3:
-            return 1; break;
+        case 1:
+            return 2; break;
+        case 2:
+            return 2; break;
+        case 3:
+            return 0; break;
+        case 4:
+            return 0; break;
         default:
             return 0; break;
             
@@ -96,10 +104,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
-        case 0:{
+        case 0: {
             switch (indexPath.row) {
-                case 0: case 1:
-                    return CVTableViewCellDefaultCellHeight; break;
                 case 2:
                     return 40; break;
                 default:
@@ -107,10 +113,21 @@
                     
             } break;
             
-        } case 1: case 2:
+        } case 1:
             return CVTableViewCellDefaultCellHeight; break;
-        case 3:
-            return 216; break;
+        case 2: {
+            switch (indexPath.row) {
+                case 1:
+                    return 96; break;
+                default:
+                    return CVTableViewCellDefaultCellHeight; break;
+                    
+            } break;
+            
+        } case 3:
+            return 100; break;
+        case 4:
+            return 100; break;
         default:
             return CVTableViewCellDefaultCellHeight; break;
             
@@ -190,26 +207,40 @@
                     
                     return cell; break;
                     
+                } case 3: {
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                    if (!cell)
+                        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
+                    
+                    [cell.textLabel setText: [[arrayM objectEntry_date] stringValue: CTCharacterDateTime]];
+                    if ([[arrayM objectEntry_startDate] isEqualToDate: [NSDate dateWithTimeIntervalSince1970: 0]])
+                        [cell.detailTextLabel setText: @""];
+                    else
+                        [cell.detailTextLabel setText: [[arrayM objectEntry_startDate] stringValue: CTCharacterDate]];
+                    
+                    return cell; break;
+                    
                 } default:
                     return nil; break;
                     
             } break;
             
-        } case 1: case 2: {
+        } case 1: {
             UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Textfield"];
             if (!cell)
                 cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTextField];
             
+            [cell.textfield setInputView: [UIView new]];
             [cell.textfield setDelegate: self];
-            switch (indexPath.section) {
-                case 1: {
+            switch (indexPath.row) {
+                case 0: {
                     [cell.textfield setTag: 2];
                     [cell.textfield setBorderStyle: UITextBorderStyleNone];
                     [cell.textfield setPlaceholder: @"Stories"];
                     cellStories = cell;
                     break;
                     
-                } case 2: {
+                } case 1: {
                     [cell.textfield setTag: 3];
                     [cell.textfield setBorderStyle: UITextBorderStyleNone];
                     [cell.textfield setPlaceholder: @"Tags"];
@@ -217,29 +248,53 @@
                     break;
                     
                 } default: break;
+                    
             }
             
             return cell;
             
-        } case 3: {
-            UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Textview"];
+        } case 2: {
+            switch (indexPath.row) {
+                case 0: {
+                    UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Segment Buttons"];
+                    if (!cell)
+                        cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellSegmentButtons];
+                    
+                    [cell.button1 setTitle: @"Body" forState: UIControlStateNormal];
+                    [cell.button1 setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
+                    [cell.button1 setBackgroundColor: [UIColor colorWithHexString: @"#037AFF" withAlpha: 1]];
+                    [cell.button2 setTitle: @"Outline" forState: UIControlStateNormal];
+                    [cell.button2 setTag: 1];
+                    [cell setDelegate: self];
+                    
+                    return cell; break;
+                    
+                } case 1: {
+                    UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Textview"];
+                    if (!cell)
+                        cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTextView];
+                    
+                    [cell.textview setText: [arrayM objectEntry_body]];
+                    [cell.textview setUserInteractionEnabled: NO];
+                    [cell setSelectionStyle: UITableViewCellSelectionStyleDefault];
+                    [cell setAccessoryType: UITableViewCellAccessoryDisclosureIndicator];
+                    
+                    return cell; break;
+                    
+                } default:
+                    return nil; break;
+                    
+            }
+            break;
+        
+        } case 3: case 4: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
             if (!cell)
-                cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTextView];
+                cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
             
-            [cell.textview setDelegate: self];
-            [cell.textview setTag: 1];
-            [cell.textview setText: [arrayM objectEntry_body]];
+            [cell.textLabel setText: @"Media"];
             
-            cellBody = cell; return cell; break;
-            
-            /*
-             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-             if (!cell)
-             cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
-             
-             [cell.textLabel setText: @"Edit Body"];
-             
-             return cell; break;*/
+            return cell; break;
             
         } default:
             return nil; break;
@@ -279,14 +334,37 @@
     switch (indexPath.section) {
         case 0: {
             switch (indexPath.row) {
-                case 1: {
-                    UIActionSheet *actionDiaries = [[UIActionSheet alloc] initWithTitle: @"select a diary" delegate: self cancelButtonTitle: @"Cancel" destructiveButtonTitle: nil otherButtonTitles: nil];
-                    [actionDiaries setTag: 1];
+                case 1: { //Select Diary
+                    UIAlertController *alertDiaries = [UIAlertController alertControllerWithTitle: @"" message: @"select a diary" preferredStyle: UIAlertControllerStyleActionSheet];
                     array = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
-                    for (NSArray *arrayDiary in array)
-                        [actionDiaries addButtonWithTitle: [arrayDiary objectDiary_title]];
+                    for ( int buttonIndex = 0; buttonIndex < [array count]; buttonIndex += 1) {
+                        NSArray *arrayDiary = [array objectAtIndex: buttonIndex];
+                        [alertDiaries addAction: [UIAlertAction actionWithTitle: [arrayDiary objectDiary_title] style: UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            
+                            if (![[[arrayM optionsDictionary] objectForKey: @"diary"] isEqualToArray: arrayDiary]) {
+                                [[arrayM optionsDictionary] setValue: [array objectAtIndex: buttonIndex] forKey: @"diary"];
+                                
+                                while ([[[arrayM optionsDictionary] objectForKey: @"stories"] count] > 0) {
+                                    NSNumber *numberStoryID = [[[[[arrayM optionsDictionary] objectForKey: @"stories"] firstObject] optionsDictionary] objectForKey: @"id"];
+                                    if ([[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] containsObject: numberStoryID])
+                                        [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"insert"] removeObjectIdenticalTo: numberStoryID];
+                                    else
+                                        [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] addObject: numberStoryID];
+                                    [[[arrayM optionsDictionary] objectForKey: @"stories"] removeObjectAtIndex: 0];
+                                    
+                                }
+                                [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
+                                
+                            }
+                            
+                        }]];
+                        
+                    }
+                    [alertDiaries addAction: [UIAlertAction actionWithTitle: @"Cancel" style: UIAlertActionStyleCancel handler: ^(UIAlertAction * _Nonnull action) { }]];
                     [self dismissFirstResponder];
-                    [actionDiaries showInView: self.view];
+                    [self presentViewController: alertDiaries animated: YES];
+                    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
+                    
                     break;
                     
                 } default:
@@ -295,9 +373,13 @@
             }
             break;
             
-        } case 3: {
-//            [self.navigationController pushViewController: [[UITableViewModuleViewController alloc] initWithContent: [NSArray array]] animated: YES];
-            break;
+        } case 2: {
+            if (indexPath.row == 1) {
+                UINavigationController *navBody = [UITableViewModuleViewController allocWithModule: CTTableViewBody withContent: [arrayM objectEntry_body]];
+                [(UITableViewModuleViewController *)navBody.topViewController setDelegate: self];
+                [self presentViewController: navBody animated: YES];
+                
+            } break;
             
         } default:
             break;
@@ -354,65 +436,46 @@
     
 }
 
-#pragma mark Void's > Pre-Defined Functions (ACTION SHEET)
+#pragma mark Void's > Pre-Defined Functions (CUSTOM TABLE VIEW CELL)
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch ([actionSheet tag]) {
-        case 1: { //Select Diary
-            if (buttonIndex != 0) {
-                [[arrayM optionsDictionary] setValue: [array objectAtIndex: buttonIndex -1] forKey: @"diary"];
-                while ([[[arrayM optionsDictionary] objectForKey: @"stories"] count] > 0) {
-                    NSNumber *numberStoryID = [[[[[arrayM optionsDictionary] objectForKey: @"stories"] firstObject] optionsDictionary] objectForKey: @"id"];
-                    if (![[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] containsObject: numberStoryID]) {
-                        [[[[arrayM optionsDictionary] objectForKey: @"storyChanges"] objectForKey: @"delete"] addObject: numberStoryID];
-                        for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: @"stories"] count]; index += 1) {
-                            if ([[[[[[arrayM optionsDictionary] objectForKey: @"stories"] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberStoryID]) {
-                                [[[arrayM optionsDictionary] objectForKey: @"stories"] removeObjectAtIndex: index];
-                                break;
-                                
-                            }
-                            
-                        }
-                        
-                    }
+- (void)customCell:(UICustomTableViewCell *)cell buttonPressed:(id)button {
+    NSIndexPath *indexPath = [table indexPathForCell: cell];
+    switch (indexPath.section) {
+        case 0: {
+            switch ([button tag]) {
+                case 1: { //Emotions
+                    UIContentPicker *pickerEmotion = [[UIContentPicker alloc] initWithSelectedEmotion: [arrayM objectEntry_emotion] delegate: self];
+                    [self dismissFirstResponder];
+                    [pickerEmotion showAnimated: YES];
+                    break;
+                    
+                } case 2: { //Weather
+                    UIContentPicker *pickerWeatherCondition = [[UIContentPicker alloc] initWithSelectedWeatherCondition: [arrayM objectEntry_weatherCondition] temperature: [arrayM objectEntry_temperature] delegate: self];
+                    [self dismissFirstResponder];
+                    [pickerWeatherCondition showAnimated: YES];
+                    break;
+                    
+                } case 3: { //Highlight
+                    break;
+                    
+                } case 4: { //Bookmark
+                    [arrayM replaceObjectAtIndex: ENTRIES_isBookmarked withObject: [NSNumber numberWithBool: [arrayM objectEntry_isBookmarked] ? NO : YES]];
+                    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
+                    break;
                     
                 }
-                [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
+                    
+            } break;
+            
+        } case 2: {
+            if ([button tag] == 1) {
+                NSLog( @"Outline");
                 
             }
             break;
             
         } default:
             break;
-    }
-    
-}
-
-#pragma mark Void's > Pre-Defined Functions (CUSTOM TABLE VIEW CELL)
-
-- (void)customCell:(UICustomTableViewCell *)cell buttonPressed:(id)button {
-    switch ([button tag]) {
-        case 1: { //Emotions
-            UIContentPicker *pickerEmotion = [[UIContentPicker alloc] initWithSelectedEmotion: [arrayM objectEntry_emotion] delegate: self];
-            [self dismissFirstResponder];
-            [pickerEmotion showAnimated: YES];
-            break;
-            
-        } case 2: { //Weather
-            UIContentPicker *pickerWeatherCondition = [[UIContentPicker alloc] initWithSelectedWeatherCondition: [arrayM objectEntry_weatherCondition] temperature: [arrayM objectEntry_temperature] delegate: self];
-            [self dismissFirstResponder];
-            [pickerWeatherCondition showAnimated: YES];
-            break;
-            
-        } case 3: { //Highlight
-            break;
-            
-        } case 4: { //Bookmark
-            [arrayM replaceObjectAtIndex: ENTRIES_isBookmarked withObject: [NSNumber numberWithBool: [arrayM objectEntry_isBookmarked] ? NO : YES]];
-            [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
-            break;
-            
-        }
             
     }
     
@@ -436,63 +499,79 @@
 #pragma mark Void's > Pre-Defined Functions (TABLE VIEW MODULE)
 
 - (void)tableViewModule:(UITableViewModuleViewController *)tableViewModule didFinishWithChanges:(NSDictionary *)dictionary {
-    NSString *stringChangesHash = @"", *stringPluralHash = @"";
-    CDSQLTables databaseTable;
-    
-    switch (tableViewModule.module) {
-        case CTTableViewStories: {
-            stringChangesHash = @"storyChanges";
-            stringPluralHash = @"stories";
-            databaseTable = CTSQLStories;
+    switch ([tableViewModule module]) {
+        case CTTableViewStories: case CTTableViewTags: {
+            NSString *stringChangesHash = @"", *stringPluralHash = @"";
+            CDSQLTables databaseTable;
             
-            break;
-        } case CTTableViewTags: {
-            stringChangesHash = @"tagChanges";
-            stringPluralHash = @"tags";
-            databaseTable = CTSQLTags;
+            switch (tableViewModule.module) {
+                case CTTableViewStories: {
+                    stringChangesHash = @"storyChanges";
+                    stringPluralHash = @"stories";
+                    databaseTable = CTSQLStories;
+                    
+                    break;
+                } case CTTableViewTags: {
+                    stringChangesHash = @"tagChanges";
+                    stringPluralHash = @"tags";
+                    databaseTable = CTSQLTags;
+                    
+                    break;
+                    
+                } default:
+                    stringChangesHash = @"tagChanges";
+                    stringPluralHash = @"tags";
+                    databaseTable = CTSQLTags;
+                    break;
+                    
+            }
             
-            break;
-            
-        } default:
-            break;
-    }
-    
-    //Add non duplicate object of id value to :_Changes:insert
-    for (NSNumber *numberID in [dictionary objectForKey: @"insert"]) {
-        if ([[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"delete"] containsObject: numberID]) { //Adding ID that is being removed
-            [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"delete"] removeObjectIdenticalTo: numberID];
-            
-        } else { //Add the ID to be added
-            [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"insert"] addObject: numberID];
-            
-        }
-        
-        //Add the tag to the :_ hash
-        NSArray *arrayNewTag = [[UniversalFunctions SQL_returnContentOfTable: CTSQLTags withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberID intValue]]] firstObject];
-        [[[arrayM optionsDictionary] objectForKey: stringPluralHash] addObject: arrayNewTag];
-        
-    }
-    
-    //Add non duplicate object of id value to :_Changes:delete
-    for (NSNumber *numberID in [dictionary objectForKey: @"delete"]) {
-        if ([[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"insert"] containsObject: numberID]) { //Removing ID that is being added
-            [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"insert"] removeObjectIdenticalTo: numberID];
-            
-        } else { //Add the ID to be removed
-            [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"delete"] addObject: numberID];
-            
-        }
-        
-        //Remove the ID to the :_ hash
-        for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: stringPluralHash] count]; index += 1) {
-            if ([[[[[[arrayM optionsDictionary] objectForKey: stringPluralHash] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberID]) {
-                [[[arrayM optionsDictionary] objectForKey: stringPluralHash] removeObjectAtIndex: index];
-                break;
+            //Add non duplicate object of id value to :_Changes:insert
+            for (NSNumber *numberID in [dictionary objectForKey: @"insert"]) {
+                if ([[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"delete"] containsObject: numberID]) { //Adding ID that is being removed
+                    [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"delete"] removeObjectIdenticalTo: numberID];
+                    
+                } else { //Add the ID to be added
+                    [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"insert"] addObject: numberID];
+                    
+                }
+                
+                //Add the tag to the :_ hash
+                NSArray *arrayNew_ = [[UniversalFunctions SQL_returnContentOfTable: databaseTable withSuffix: [NSString stringWithFormat: @"WHERE id = %d", [numberID intValue]]] firstObject];
+                [[[arrayM optionsDictionary] objectForKey: stringPluralHash] addObject: arrayNew_];
                 
             }
             
-        }
+            //Add non duplicate object of id value to :_Changes:delete
+            for (NSNumber *numberID in [dictionary objectForKey: @"delete"]) {
+                if ([[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"insert"] containsObject: numberID]) { //Removing ID that is being added
+                    [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"insert"] removeObjectIdenticalTo: numberID];
+                    
+                } else { //Add the ID to be removed
+                    [[[[arrayM optionsDictionary] objectForKey: stringChangesHash] objectForKey: @"delete"] addObject: numberID];
+                    
+                }
+                
+                //Remove the ID from the :_ hash
+                for (int index = 0; index < [[[arrayM optionsDictionary] objectForKey: stringPluralHash] count]; index += 1) {
+                    if ([[[[[[arrayM optionsDictionary] objectForKey: stringPluralHash] objectAtIndex: index] optionsDictionary] objectForKey: @"id"] isEqualToNumber: numberID]) {
+                        [[[arrayM optionsDictionary] objectForKey: stringPluralHash] removeObjectAtIndex: index];
+                        break;
+                        
+                    }
+                    
+                }
+                
+            }
+            break;
+            
+        } case CTTableViewBody: {
+            [arrayM replaceObjectAtIndex: ENTRIES_body withObject: [dictionary objectForKey: @"body"]];
+            [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 2]] withRowAnimation: UITableViewRowAnimationNone];
+            break;
         
+        } default:
+            break;
     }
     
 }

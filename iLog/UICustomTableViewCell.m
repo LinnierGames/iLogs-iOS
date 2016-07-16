@@ -8,6 +8,18 @@
 
 #import "UICustomTableViewCell.h"
 
+#import <PureLayout.h>
+
+static CGFloat kLabelHorizontalInsets = 15.0;
+static CGFloat kLabelVerticalInsets = 10.0;
+
+@interface UICustomTableViewCell () {
+    BOOL didSetupConstraints;
+    
+}
+
+@end
+
 @implementation UICustomTableViewCell
 @synthesize delegate;
 
@@ -24,6 +36,32 @@
     [super setSelected:selected animated:animated];
     
     // Configure the view for the selected state
+}
+
+- (void)updateConstraints {
+    if (!didSetupConstraints) {
+        [NSLayoutConstraint autoSetPriority: UILayoutPriorityRequired forConstraints: ^{
+            [self.labelTitle autoSetContentCompressionResistancePriorityForAxis: ALAxisVertical];
+            [self.labelSubtitle autoSetContentCompressionResistancePriorityForAxis: ALAxisVertical];
+            
+        }];
+        
+        [self.labelTitle autoPinEdgeToSuperviewEdge: ALEdgeTop withInset: kLabelVerticalInsets];
+        [self.labelTitle autoPinEdgeToSuperviewEdge: ALEdgeLeading withInset: kLabelHorizontalInsets];
+        [self.labelTitle autoPinEdgeToSuperviewEdge: ALEdgeTrailing withInset: kLabelHorizontalInsets];
+        
+        [self.labelSubtitle autoPinEdge: ALEdgeTop toEdge: ALEdgeBottom ofView: self.labelTitle withOffset: 0 relation: NSLayoutRelationGreaterThanOrEqual];
+        
+        [self.labelSubtitle autoPinEdgeToSuperviewEdge: ALEdgeLeading withInset: kLabelHorizontalInsets];
+        [self.labelSubtitle autoPinEdgeToSuperviewEdge: ALEdgeTrailing withInset: kLabelHorizontalInsets];
+        [self.labelSubtitle autoPinEdgeToSuperviewEdge: ALEdgeBottom withInset: kLabelVerticalInsets];
+        
+        didSetupConstraints = true;
+        
+    }
+    
+    [super updateConstraints];
+    
 }
 
 #pragma mark - IBActions

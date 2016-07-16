@@ -8,7 +8,10 @@
 
 #import "DiaryViewController.h"
 
-@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, EntryViewConrollerDelegate> {
+#import <markdown_peg.h>
+#import <markdown_lib.h> 
+
+@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, DetailedEntryViewControllerDelegate, EntryViewConrollerDelegate, UIButtonsDelegate> {
     IBOutlet UITableView *table;
         NSMutableArray *arrayTable;
         NSMutableArray *arrayDiaries;
@@ -47,41 +50,24 @@
     
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [[[arrayTable objectAtIndex: indexPath.row] objectEntry_body] boundingRectWithSize:CGSizeMake([[UIApplication sharedApplication] keyWindow].frame.size.width, 0)
-                                                                                      options: NSStringDrawingUsesLineFragmentOrigin
-                                                                                   attributes: @{}
-                                                                                      context: nil].size.height +42;
-    
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Title - Textview"];
     if (!cell)
         cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTitleTextView];
     
-    [cell.labelTitle setFont: [UIFont boldSystemFontOfSize: 12]];
     [cell.labelTitle setUserInteractionEnabled: NO];
     [cell.labelTitle setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject]];
-    [cell.textview setUserInteractionEnabled: NO];
-    [cell.textview setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body]];
+    [cell.labelSubtitle setUserInteractionEnabled: NO];
+    [cell.labelSubtitle setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body]];
+    
+    cell.labelSubtitle.attributedText = markdown_to_attr_string(cell.labelSubtitle.text, 0, [[UniversalVariables globalVariables] attributedMarkdown]);
+    
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraints];
     
     [cell setBackgroundColor: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_date] dayNightColorByTimeOfDay]];
     
     return cell;
-    /*
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
-    if (!cell)
-        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier: @"cell"];
-    //Customize Cell
-    [cell.textLabel setFont: [UIFont boldSystemFontOfSize: 12]];
-    [cell.textLabel setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject]];
-    [cell.detailTextLabel setNumberOfLines: 25];
-    [cell.detailTextLabel setText: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_body] presentationString]];
-    [cell setBackgroundColor: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_date] dayNightColorByTimeOfDay]];
-    
-    return cell;
-    */
 }
 
 #pragma mark - Void's
@@ -161,10 +147,22 @@
 #pragma mark Void's > Pre-Defined Functions (TABLE VIEW)
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject] message: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body] delegate: self cancelButtonTitle: @"Dismiss" otherButtonTitles: @"Edit", nil];
-    [alert setTag: 2];
-    indexpath = indexPath;
-    [alert show];
+    [self.navigationController pushViewController: [[DetailedEntryViewController alloc] initWithEntry: [arrayTable objectAtIndex: indexPath.row] delegate: self] animated: YES];
+    
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (editingStyle) {
+        case UITableViewCellEditingStyleDelete: {
+            [[UniversalVariables globalVariables] ENTRIES_deleteForEntry: [arrayTable objectAtIndex: indexPath.row]];
+            [arrayTable removeObjectAtIndex: indexPath.row];
+            [tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationAutomatic];
+            break;
+            
+        } default:
+            break;
+            
+    }
     
 }
 
@@ -178,15 +176,17 @@
 #pragma mark - IBActions
 
 - (void)pressNavLeft:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Diary" message: @"enter the title of this new diary" delegate: self cancelButtonTitle: @"Cancel" otherButtonTitles: @"Add", nil];
-    [alert setTag: 1];
-    [alert setAlertViewStyle: UIAlertViewStylePlainTextInput];
-    [[alert textFieldAtIndex: 0] setAutocapitalizationType: UITextAutocapitalizationTypeWords];
-    [alert show];
+    [self presentViewController: [UITableViewModuleViewController allocWithModule: CTTableViewDiaries] animated: YES];
     
 }
 
 - (void)pressNavRight:(id)sender {
+    
+}
+
+#pragma mark IBActions > Pre-Defined Functions (BUTTONS)
+
+- (void)buttonTapped:(UIButtons *)button {
     if ([arrayDiaries count] > 0) {
         UINavigationController *viewNew = [EntryViewController newEntryWithDelegate: self];
         [self presentViewController: viewNew animated: YES];
@@ -198,6 +198,19 @@
         
     }
     
+}
+
+- (void)buttonLongTap:(UIButtons *)button {
+    if ([arrayDiaries count] > 0) {
+        [[UniversalVariables globalVariables] ENTRIES_writeNewForEntry: [NSMutableArray arrayNEWEntryWithSubject: @"New Entry" body: @"asdl;fkasdflk;jadsf ajsdf asfjkasf askfj asdf asdf jafsdkj fsadkf asdf asdflkjasd faskdf af jasfl;kj afdlkasj flk;asf jasklf; jaskfl ;jasfk ljasdflkjsfdlkjasfkl;jasfdkl; jiowe owenovnjvxcm,noweinovdn vn o noavni cvoxicvhadoi doas sn"]];
+        [self viewWillAppear: NO];
+        
+        
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Diary" message: @"there must be a Diary before adding an entry. Please add a Diary" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
+        [alert show];
+        
+    }
     
 }
 
@@ -207,7 +220,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target: self action: @selector( pressNavLeft:)]];
-    [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCompose target: self action: @selector( pressNavRight:)]];
+    [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithCustomView: [UIButtons buttonWithType: CTButtonsCompose withDelegate: self]]];
+    //[self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCompose target: self action: @selector( pressNavRight:)]];
+    
+    [table setRowHeight: UITableViewAutomaticDimension];
+    [table setEstimatedRowHeight: 44.0];
+    
     arrayTable = [NSMutableArray new];
     arrayDiaries = [NSMutableArray new];
     array = [NSMutableArray new];
