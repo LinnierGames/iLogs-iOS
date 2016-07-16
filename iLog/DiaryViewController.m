@@ -202,7 +202,7 @@
 
 - (void)buttonLongTap:(UIButtons *)button {
     if ([arrayDiaries count] > 0) {
-        [[UniversalVariables globalVariables] ENTRIES_writeNewForEntry: [NSMutableArray arrayNEWEntryWithSubject: @"New Entry" body: [[NSDate date] stringValue: CTCharacterDateTime]]];
+        [[UniversalVariables globalVariables] ENTRIES_writeNewForEntry: [NSMutableArray arrayNEWEntryWithSubject: @"New Entry" body: @"asdl;fkasdflk;jadsf ajsdf asfjkasf askfj asdf asdf jafsdkj fsadkf asdf asdflkjasd faskdf af jasfl;kj afdlkasj flk;asf jasklf; jaskfl ;jasfk ljasdflkjsfdlkjasfkl;jasfdkl; jiowe owenovnjvxcm,noweinovdn vn o noavni cvoxicvhadoi doas sn"]];
         [self viewWillAppear: NO];
         
         

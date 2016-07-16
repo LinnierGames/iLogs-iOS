@@ -13,6 +13,7 @@ typedef NS_ENUM(NSUInteger, CDUICustomTableViewCells) {
     CTUICustomTableViewCellTextView = 1,
     CTUICustomTableViewCellTitleTextView = 2,
     CTUICustomTableViewCellSearchBar = 4,
+    CTUICustomTableViewCellSegmentButtons = 5,
     /*app-Diary*/
     CTUICustomTableViewCellDiaryEntryAttributes = 3
     

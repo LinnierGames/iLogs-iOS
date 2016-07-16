@@ -213,6 +213,10 @@
                         cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
                     
                     [cell.textLabel setText: [[arrayM objectEntry_date] stringValue: CTCharacterDateTime]];
+                    if ([[arrayM objectEntry_startDate] isEqualToDate: [NSDate dateWithTimeIntervalSince1970: 0]])
+                        [cell.detailTextLabel setText: @""];
+                    else
+                        [cell.detailTextLabel setText: [[arrayM objectEntry_startDate] stringValue: CTCharacterDate]];
                     
                     return cell; break;
                     
@@ -252,20 +256,28 @@
         } case 2: {
             switch (indexPath.row) {
                 case 0: {
-                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                    UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Segment Buttons"];
                     if (!cell)
-                        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
+                        cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellSegmentButtons];
                     
-                    [cell.textLabel setText: @"Body | Outline"];
+                    [cell.button1 setTitle: @"Body" forState: UIControlStateNormal];
+                    [cell.button1 setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
+                    [cell.button1 setBackgroundColor: [UIColor colorWithHexString: @"#037AFF" withAlpha: 1]];
+                    [cell.button2 setTitle: @"Outline" forState: UIControlStateNormal];
+                    [cell.button2 setTag: 1];
+                    [cell setDelegate: self];
                     
                     return cell; break;
                     
                 } case 1: {
-                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+                    UICustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"Textview"];
                     if (!cell)
-                        cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
+                        cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTextView];
                     
-                    [cell.textLabel setText: @"Body"];
+                    [cell.textview setText: [arrayM objectEntry_body]];
+                    [cell.textview setUserInteractionEnabled: NO];
+                    [cell setSelectionStyle: UITableViewCellSelectionStyleDefault];
+                    [cell setAccessoryType: UITableViewCellAccessoryDisclosureIndicator];
                     
                     return cell; break;
                     
@@ -361,9 +373,11 @@
             }
             break;
             
-        } case 3: {
-//            [self.navigationController pushViewController: [[UITableViewModuleViewController alloc] initWithContent: [NSArray array]] animated: YES];
-            break;
+        } case 2: {
+            if (indexPath.row == 1) {
+                [self presentViewController: [UITableViewModuleViewController allocWithModule: CTTableViewBody withContent: [arrayM objectEntry_body]] animated: YES];
+                
+            } break;
             
         } default:
             break;
@@ -423,28 +437,43 @@
 #pragma mark Void's > Pre-Defined Functions (CUSTOM TABLE VIEW CELL)
 
 - (void)customCell:(UICustomTableViewCell *)cell buttonPressed:(id)button {
-    switch ([button tag]) {
-        case 1: { //Emotions
-            UIContentPicker *pickerEmotion = [[UIContentPicker alloc] initWithSelectedEmotion: [arrayM objectEntry_emotion] delegate: self];
-            [self dismissFirstResponder];
-            [pickerEmotion showAnimated: YES];
+    NSIndexPath *indexPath = [table indexPathForCell: cell];
+    switch (indexPath.section) {
+        case 0: {
+            switch ([button tag]) {
+                case 1: { //Emotions
+                    UIContentPicker *pickerEmotion = [[UIContentPicker alloc] initWithSelectedEmotion: [arrayM objectEntry_emotion] delegate: self];
+                    [self dismissFirstResponder];
+                    [pickerEmotion showAnimated: YES];
+                    break;
+                    
+                } case 2: { //Weather
+                    UIContentPicker *pickerWeatherCondition = [[UIContentPicker alloc] initWithSelectedWeatherCondition: [arrayM objectEntry_weatherCondition] temperature: [arrayM objectEntry_temperature] delegate: self];
+                    [self dismissFirstResponder];
+                    [pickerWeatherCondition showAnimated: YES];
+                    break;
+                    
+                } case 3: { //Highlight
+                    break;
+                    
+                } case 4: { //Bookmark
+                    [arrayM replaceObjectAtIndex: ENTRIES_isBookmarked withObject: [NSNumber numberWithBool: [arrayM objectEntry_isBookmarked] ? NO : YES]];
+                    [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
+                    break;
+                    
+                }
+                    
+            } break;
+            
+        } case 2: {
+            if ([button tag] == 1) {
+                NSLog( @"Outline");
+                
+            }
             break;
             
-        } case 2: { //Weather
-            UIContentPicker *pickerWeatherCondition = [[UIContentPicker alloc] initWithSelectedWeatherCondition: [arrayM objectEntry_weatherCondition] temperature: [arrayM objectEntry_temperature] delegate: self];
-            [self dismissFirstResponder];
-            [pickerWeatherCondition showAnimated: YES];
+        } default:
             break;
-            
-        } case 3: { //Highlight
-            break;
-            
-        } case 4: { //Bookmark
-            [arrayM replaceObjectAtIndex: ENTRIES_isBookmarked withObject: [NSNumber numberWithBool: [arrayM objectEntry_isBookmarked] ? NO : YES]];
-            [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
-            break;
-            
-        }
             
     }
     

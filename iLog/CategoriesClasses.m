@@ -43,7 +43,7 @@
 
 @implementation UIColor (HEXColors)
 
-+ (UIColor *)colorFromHexString:(NSString *)hexString withAlpha:(CGFloat)alpha {
++ (UIColor *)colorWithHexString:(NSString *)hexString withAlpha:(CGFloat)alpha {
     unsigned rgbValue = 0;
     NSScanner *scanner = [NSScanner scannerWithString:hexString];
     [scanner setScanLocation:1]; // bypass '#' character
@@ -102,182 +102,182 @@
 }
 
 + (UIColor *)theme1RedWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#FF0000" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#FF0000" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme1OrangeWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#FF8000" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#FF8000" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme1LemonWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#FFFF00" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#FFFF00" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme1NeonGreenWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#40FF00" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#40FF00" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme1RobbinsEggBlueWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#00FFFF" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#00FFFF" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme1SkyBlueWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#00BFFF" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#00BFFF" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme1ElectricBlueWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#0000FF" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#0000FF" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme1PurpleWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#8000FF" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#8000FF" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme1HotPinkWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#FF00FF" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#FF00FF" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme2GuavaWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#FF7373" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#FF7373" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme2PeachWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#FFB973" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#FFB973" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme2NectarineWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#FFE599" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#FFE599" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme2KiwiWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#B9FF73" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#B9FF73" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme2PearWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#73FFB9" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#73FFB9" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme2GrapeWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#7396FF" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#7396FF" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme2LavendarWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#BFBFFF" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#BFBFFF" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme2EggplantWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#9673FF" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#9673FF" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme2PinkLadyWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#FF99FF" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#FF99FF" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme3BloodWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#8C0000" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#8C0000" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme3RootWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#8C4600" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#8C4600" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme3FallWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#8C8C00" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#8C8C00" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme3MossWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#468C00" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#468C00" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme3OceanReefWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#008C8C" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#008C8C" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme3NavyBlueWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#00468C" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#00468C" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme3MidnightBlueWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#00008C" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#00008C" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme3RoyalPurpleWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#330066" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#330066" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme3MaroonWithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#660066" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#660066" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme4GrayStyle1WithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#EEEEEE" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#EEEEEE" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme4GrayStyle2WithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#DDDDDD" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#DDDDDD" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme4GrayStyle3WithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#DDDDDD" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#DDDDDD" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme4GrayStyle4WithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#CCCCCC" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#CCCCCC" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme4GrayStyle5WithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#BBBBBB" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#BBBBBB" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme4GrayStyle6WithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#888888" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#888888" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme4GrayStyle7WithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#888888" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#888888" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme4GrayStyle8WithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#444444" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#444444" withAlpha: alpha];
     
 }
 
 + (UIColor *)theme4GrayStyle9WithAlpha:(CGFloat)alpha {
-    return [UIColor colorFromHexString: @"#000000" withAlpha: alpha];
+    return [UIColor colorWithHexString: @"#000000" withAlpha: alpha];
     
 }
 

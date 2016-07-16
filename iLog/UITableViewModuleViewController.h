@@ -12,7 +12,8 @@ typedef NS_ENUM(NSUInteger, CDTableViewModule) {
     CTTableViewModule,
     CTTableViewDiaries,
     CTTableViewStories,
-    CTTableViewTags
+    CTTableViewTags,
+    CTTableViewBody
     
 };
 
