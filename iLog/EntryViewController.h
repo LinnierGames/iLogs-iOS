@@ -17,6 +17,8 @@
 + (UINavigationController *)newEntryWithDelegate:(id< EntryViewConrollerDelegate>)delegateValue;
 + (UINavigationController *)modifyEntry:(NSArray *)arrayEntry delegate:(id< EntryViewConrollerDelegate>)delegateValue;
 
+- (id)initWithCRUD:(CRUD)value entry:(NSArray *)arrayEntry delegate:(id< EntryViewConrollerDelegate>)delegateValue;
+
 @end
 
 @protocol EntryViewConrollerDelegate <NSObject>

@@ -27,6 +27,12 @@
 
 @end
 
+@interface UIColor (HEXColors)
+
++ (UIColor *)colorWithHexString:(NSString *)hexString withAlpha:(CGFloat)alpha;
+
+@end
+
 @interface UIColor (CustomUIColor)
 
 + (UIColor *)incomeColorWithAlpha:(CGFloat)alpha;

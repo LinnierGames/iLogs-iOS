@@ -12,7 +12,8 @@ typedef NS_ENUM(NSUInteger, CDTableViewModule) {
     CTTableViewModule,
     CTTableViewDiaries,
     CTTableViewStories,
-    CTTableViewTags
+    CTTableViewTags,
+    CTTableViewBody
     
 };
 
@@ -24,6 +25,7 @@ typedef NS_ENUM(NSUInteger, CDTableViewModule) {
  * Entry Array
  */
 @property ( nonatomic, retain) NSMutableArray *arrayM;
+@property ( nonatomic, retain) NSMutableString *stringM;
 @property ( assign, readonly) CDTableViewModule module;
 
 @property ( assign) id<UITableViewModuleViewController > delegate;

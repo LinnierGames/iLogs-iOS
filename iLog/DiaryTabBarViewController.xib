@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -10,7 +10,7 @@
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tabBarController id="93d-OE-a5w" customClass="DiaryTabBarViewController">
             <nil key="simulatedBottomBarMetrics"/>
-            <tabBar key="tabBar" contentMode="scaleToFill" selectedItem="6dm-YJ-Z1z" id="Ma5-wZ-zqO">
+            <tabBar key="tabBar" contentMode="scaleToFill" id="Ma5-wZ-zqO">
                 <rect key="frame" x="0.0" y="551" width="600" height="49"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -49,7 +49,7 @@
                                 </constraints>
                             </view>
                             <tabBarItem key="tabBarItem" title="Today's Diary" image="navbar_todaysDiary" selectedImage="navbar_todaysDiary-highlighted" id="g8W-gp-1TA"/>
-                            <navigationItem key="navigationItem" title="Today's Diary" prompt="Prompt" id="a4W-BR-deC"/>
+                            <navigationItem key="navigationItem" title="Today's Diary" id="a4W-BR-deC"/>
                             <connections>
                                 <outlet property="table" destination="Wbc-Ni-4FE" id="JZK-IN-krp"/>
                             </connections>
