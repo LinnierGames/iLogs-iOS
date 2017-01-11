@@ -38,6 +38,7 @@
 		E1D6CA621CB353E500124FF8 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1D6CA611CB353E500124FF8 /* CoreText.framework */; };
 		E1DCA16D1BE7F0D20037F84E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DCA16C1BE7F0D20037F84E /* libz.tbd */; };
 		E1DCA16F1BE7F0D90037F84E /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E1DCA16E1BE7F0D90037F84E /* libsqlite3.tbd */; };
+		E1EC959A1E26BB7700F0DF04 /* DiaryController+CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EC95991E26BB7700F0DF04 /* DiaryController+CoreData.m */; };
 		E1EF7AEE1B3BC95A00C9C995 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */; };
 		E1EF7AF21B3C5BBA00C9C995 /* UITableViewModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EF7AF01B3C5BBA00C9C995 /* UITableViewModuleViewController.m */; };
 		E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AF11B3C5BBA00C9C995 /* UITableViewModuleViewController.xib */; };
@@ -102,6 +103,8 @@
 		E1DCA16E1BE7F0D90037F84E /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		E1E22BDA1B75A01C00662606 /* Change Log - Releases.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Releases.rtf"; sourceTree = "<group>"; };
 		E1E22BDB1B75A07C00662606 /* Change Log - Builds.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Change Log - Builds.rtf"; sourceTree = "<group>"; };
+		E1EC95981E26BB7700F0DF04 /* DiaryController+CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DiaryController+CoreData.h"; sourceTree = "<group>"; };
+		E1EC95991E26BB7700F0DF04 /* DiaryController+CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DiaryController+CoreData.m"; sourceTree = "<group>"; };
 		E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E1EF7AEF1B3C5BBA00C9C995 /* UITableViewModuleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewModuleViewController.h; sourceTree = "<group>"; };
 		E1EF7AF01B3C5BBA00C9C995 /* UITableViewModuleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewModuleViewController.m; sourceTree = "<group>"; };
@@ -291,6 +294,8 @@
 				E17EEC911B2F47C4007C1E91 /* DiaryTabBarViewController.m */,
 				E17EECA31B2FA04F007C1E91 /* DiaryController.h */,
 				E17EECA41B2FA04F007C1E91 /* DiaryController.m */,
+				E1EC95981E26BB7700F0DF04 /* DiaryController+CoreData.h */,
+				E1EC95991E26BB7700F0DF04 /* DiaryController+CoreData.m */,
 				E17EEC9A1B2F9D7E007C1E91 /* Today's Diary */,
 				E17EEC9E1B2F9DBA007C1E91 /* Diary Map */,
 				E17EEC9F1B2F9F92007C1E91 /* Settings */,
@@ -474,6 +479,7 @@
 				E146E4A21B347A45006DC1EC /* UICustomTableViewCell.m in Sources */,
 				E146E4AB1B348B79006DC1EC /* CategoriesClasses.m in Sources */,
 				E146E49C1B347037006DC1EC /* EntryViewController.m in Sources */,
+				E1EC959A1E26BB7700F0DF04 /* DiaryController+CoreData.m in Sources */,
 				E17EEC951B2F9442007C1E91 /* UniversalOperations.m in Sources */,
 				E1EF7AF21B3C5BBA00C9C995 /* UITableViewModuleViewController.m in Sources */,
 				E1745F2A1CAA0F5300F83AD4 /* UIMarkdownInputView.m in Sources */,

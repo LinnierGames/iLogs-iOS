@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Diary" representedClassName="Diary" syncable="YES" codeGenerationType="class">
-        <attribute name="colorTrait" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="colorTrait" attributeType="Integer 16" valueTransformerName="Color" minValueString="0" defaultValueString="0" usesScalarValueType="YES" customClassName="Colors" syncable="YES"/>
         <attribute name="created" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="isHidden" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isProtected" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
@@ -33,8 +33,11 @@
         <relationship name="stories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Story" inverseName="entries" inverseEntity="Story" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="entries" inverseEntity="Tag" syncable="YES"/>
         <relationship name="weather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weather" inverseName="entry" inverseEntity="Weather" syncable="YES"/>
-        <fetchedProperty name="today" optional="YES" syncable="YES">
-            <fetchRequest name="fetchedPropertyFetchRequest" entity="Entry" predicateString=""/>
+        <fetchedProperty name="todayEntries" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Entry" predicateString="date == CAST(today, &quot;NSDate&quot;)"/>
+            <userInfo>
+                <entry key="today" value="date(&quot;today&quot;)"/>
+            </userInfo>
         </fetchedProperty>
     </entity>
     <entity name="Highlight" representedClassName="Highlight" syncable="YES" codeGenerationType="class">
@@ -81,16 +84,17 @@
         <attribute name="weatherScale" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="3" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="entry" maxCount="1" deletionRule="Cascade" destinationEntity="Entry" inverseName="weather" inverseEntity="Entry" syncable="YES"/>
     </entity>
+    <fetchRequest name="FetchRequest" entity="Entry" predicateString="date == CAST(today, &quot;NSDate&quot;)"/>
     <elements>
         <element name="Diary" positionX="-333" positionY="-297" width="128" height="178"/>
+        <element name="Emotion" positionX="106" positionY="-351" width="128" height="88"/>
         <element name="Entry" positionX="-146" positionY="-297" width="128" height="311"/>
-        <element name="Weather" positionX="115" positionY="-261" width="128" height="88"/>
-        <element name="Outline" positionX="178" positionY="-171" width="128" height="103"/>
-        <element name="Story" positionX="196" positionY="171" width="128" height="193"/>
-        <element name="TagGroup" positionX="324" positionY="-172" width="128" height="73"/>
-        <element name="Tag" positionX="513" positionY="-126" width="128" height="88"/>
         <element name="Highlight" positionX="187" positionY="-54" width="128" height="103"/>
         <element name="Media" positionX="198" positionY="54" width="126" height="103"/>
-        <element name="Emotion" positionX="106" positionY="-351" width="128" height="88"/>
+        <element name="Outline" positionX="178" positionY="-171" width="128" height="103"/>
+        <element name="Story" positionX="196" positionY="171" width="128" height="193"/>
+        <element name="Tag" positionX="513" positionY="-126" width="128" height="88"/>
+        <element name="TagGroup" positionX="324" positionY="-172" width="128" height="73"/>
+        <element name="Weather" positionX="115" positionY="-261" width="128" height="88"/>
     </elements>
 </model>
