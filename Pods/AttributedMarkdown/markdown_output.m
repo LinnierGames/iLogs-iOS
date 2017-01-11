@@ -271,7 +271,7 @@ static void print_attr_element(NSMutableAttributedString *out, element *elt, NSD
             print_attr_element_list(out, elt->children, attributes, merge(current, attributes[elt->key]));
             //pad(out, 1);
             if (elt->next != NULL) //!does not breakline on last text
-                print_attr_string(out, @"\n",current); //!next content
+                print_attr_string(out, @"\n",current); //!next element
             padded = 0;
             break;
         case REFERENCE:

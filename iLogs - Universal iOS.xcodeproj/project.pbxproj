@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AAF9476C2B94007FE065975C /* libPods-iLogs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1849AFF3C45DDB14A562991 /* libPods-iLogs.a */; };
 		E12640591B38709300E423E7 /* UIContentPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E12640581B38709300E423E7 /* UIContentPicker.m */; };
 		E126405B1B3870A000E423E7 /* UIContentPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = E126405A1B3870A000E423E7 /* UIContentPicker.xib */; };
 		E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC381B2E1AD4007C1E91 /* Main.storyboard */; };
@@ -39,13 +40,10 @@
 		E1EF7AEE1B3BC95A00C9C995 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AED1B3BC95A00C9C995 /* Images.xcassets */; };
 		E1EF7AF21B3C5BBA00C9C995 /* UITableViewModuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EF7AF01B3C5BBA00C9C995 /* UITableViewModuleViewController.m */; };
 		E1EF7AF31B3C5BBA00C9C995 /* UITableViewModuleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1EF7AF11B3C5BBA00C9C995 /* UITableViewModuleViewController.xib */; };
-		E5E98C90F6A638F83E0B4EC4 /* libPods-iLogs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C74DDF02B93609AFA6DAD0A /* libPods-iLogs.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		30E814ABA697225280E34322 /* Pods-iLogs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iLogs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iLogs/Pods-iLogs.debug.xcconfig"; sourceTree = "<group>"; };
-		4C74DDF02B93609AFA6DAD0A /* libPods-iLogs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iLogs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8BFC3499FDDFB014097232DD /* Pods-iLogs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iLogs.release.xcconfig"; path = "Pods/Target Support Files/Pods-iLogs/Pods-iLogs.release.xcconfig"; sourceTree = "<group>"; };
+		4F3F435B2ACE145B317A19A5 /* Pods-iLogs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iLogs.release.xcconfig"; path = "Pods/Target Support Files/Pods-iLogs/Pods-iLogs.release.xcconfig"; sourceTree = "<group>"; };
 		E12640571B38709300E423E7 /* UIContentPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIContentPicker.h; sourceTree = "<group>"; };
 		E12640581B38709300E423E7 /* UIContentPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIContentPicker.m; sourceTree = "<group>"; };
 		E126405A1B3870A000E423E7 /* UIContentPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UIContentPicker.xib; sourceTree = "<group>"; };
@@ -89,6 +87,7 @@
 		E17EECA41B2FA04F007C1E91 /* DiaryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiaryController.m; sourceTree = "<group>"; };
 		E17EECA81B311F15007C1E91 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		E17EECA91B311F15007C1E91 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		E1849AFF3C45DDB14A562991 /* libPods-iLogs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iLogs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1A4C3E41D011E06005BAA6E /* UIButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIButtons.h; sourceTree = "<group>"; };
 		E1A4C3E51D011E06005BAA6E /* UIButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIButtons.m; sourceTree = "<group>"; };
 		E1AAC1671C878DE9008BBB10 /* LoggingAssertionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingAssertionHandler.h; sourceTree = "<group>"; };
@@ -105,6 +104,7 @@
 		E1EF7AEF1B3C5BBA00C9C995 /* UITableViewModuleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewModuleViewController.h; sourceTree = "<group>"; };
 		E1EF7AF01B3C5BBA00C9C995 /* UITableViewModuleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewModuleViewController.m; sourceTree = "<group>"; };
 		E1EF7AF11B3C5BBA00C9C995 /* UITableViewModuleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UITableViewModuleViewController.xib; sourceTree = "<group>"; };
+		E80758F2E96CDAF00704BD3C /* Pods-iLogs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iLogs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iLogs/Pods-iLogs.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +115,7 @@
 				E1D6CA621CB353E500124FF8 /* CoreText.framework in Frameworks */,
 				E1DCA16F1BE7F0D90037F84E /* libsqlite3.tbd in Frameworks */,
 				E1DCA16D1BE7F0D20037F84E /* libz.tbd in Frameworks */,
-				E5E98C90F6A638F83E0B4EC4 /* libPods-iLogs.a in Frameworks */,
+				AAF9476C2B94007FE065975C /* libPods-iLogs.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,16 +126,16 @@
 			isa = PBXGroup;
 			children = (
 				E1D6CA611CB353E500124FF8 /* CoreText.framework */,
-				4C74DDF02B93609AFA6DAD0A /* libPods-iLogs.a */,
+				E1849AFF3C45DDB14A562991 /* libPods-iLogs.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2B0F608E57F0F6CB796830DD /* Pods */ = {
+		D0C046A514E3885E1AF3EE87 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				30E814ABA697225280E34322 /* Pods-iLogs.debug.xcconfig */,
-				8BFC3499FDDFB014097232DD /* Pods-iLogs.release.xcconfig */,
+				E80758F2E96CDAF00704BD3C /* Pods-iLogs.debug.xcconfig */,
+				4F3F435B2ACE145B317A19A5 /* Pods-iLogs.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -212,8 +212,8 @@
 				E17EEC2D1B2E1AD4007C1E91 /* iLogs */,
 				E17EEC471B2E1AD4007C1E91 /* iLogTests */,
 				E17EEC2C1B2E1AD4007C1E91 /* Products */,
-				2B0F608E57F0F6CB796830DD /* Pods */,
 				2826F78B5A1F4E68A583EA63 /* Frameworks */,
+				D0C046A514E3885E1AF3EE87 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -342,12 +342,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E17EEC4E1B2E1AD4007C1E91 /* Build configuration list for PBXNativeTarget "iLogs" */;
 			buildPhases = (
-				6D88626A41768EBE1CCC85DD /* Check Pods Manifest.lock */,
+				C2909CC370DB282D36EF40F3 /* [CP] Check Pods Manifest.lock */,
 				E17EEC271B2E1AD4007C1E91 /* Sources */,
 				E17EEC281B2E1AD4007C1E91 /* Frameworks */,
 				E17EEC291B2E1AD4007C1E91 /* Resources */,
-				6AA22A74FD4FF351AB2D70E7 /* Embed Pods Frameworks */,
-				604AAA75264A41E6FEF64F21 /* Copy Pods Resources */,
+				3DFA5B0C74245C5C448731CE /* [CP] Embed Pods Frameworks */,
+				4F8D50D7E71DF9D70AF87732 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -412,29 +412,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		604AAA75264A41E6FEF64F21 /* Copy Pods Resources */ = {
+		3DFA5B0C74245C5C448731CE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iLogs/Pods-iLogs-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6AA22A74FD4FF351AB2D70E7 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,19 +427,34 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iLogs/Pods-iLogs-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6D88626A41768EBE1CCC85DD /* Check Pods Manifest.lock */ = {
+		4F8D50D7E71DF9D70AF87732 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iLogs/Pods-iLogs-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C2909CC370DB282D36EF40F3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -592,7 +592,7 @@
 		};
 		E17EEC4F1B2E1AD4007C1E91 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 30E814ABA697225280E34322 /* Pods-iLogs.debug.xcconfig */;
+			baseConfigurationReference = E80758F2E96CDAF00704BD3C /* Pods-iLogs.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Icon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -608,7 +608,7 @@
 		};
 		E17EEC501B2E1AD4007C1E91 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8BFC3499FDDFB014097232DD /* Pods-iLogs.release.xcconfig */;
+			baseConfigurationReference = 4F3F435B2ACE145B317A19A5 /* Pods-iLogs.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Icon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
