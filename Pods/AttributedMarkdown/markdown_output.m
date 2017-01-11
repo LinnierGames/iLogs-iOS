@@ -219,9 +219,8 @@ static void print_attr_element(NSMutableAttributedString *out, element *elt, NSD
             break;
         case H1: case H2: case H3: case H4: case H5: case H6:
             print_attr_element_list(out, elt->children, attributes, merge(current, attributes[elt->key]));
-            //!print_attr_string(out, @"\n",current);
-            if (elt->next != NULL) //!does not breakline on last text
-                print_attr_string(out, @"\n",current);
+            print_attr_string(out, @"\n",current);
+            print_attr_string(out, @"\n",current);
             break;
         case PLAIN:
             print_attr_element_list(out, elt->children, attributes, merge(current, attributes[elt->key]));
@@ -229,9 +228,8 @@ static void print_attr_element(NSMutableAttributedString *out, element *elt, NSD
         case PARA:
             //NSLog(@"%@",merge(current, attributes[elt->key]));
             print_attr_element_list(out, elt->children, attributes, merge(current, attributes[elt->key]));
-            //!print_attr_string(out, @"\n",current);
-            if (elt->next != NULL) //!does not breakline on last text
-                print_attr_string(out, @"\n",current);
+            print_attr_string(out, @"\n",current);
+            print_attr_string(out, @"\n",current);
             break;
         case HRULE:         print_attr_string(out, @"\n-----------------------------------------------------\n", merge(current, attributes[elt->key])); break;
         case HTMLBLOCK:     print_attr_string(out, elt->contents.str, merge(current, attributes[elt->key])); break;
@@ -239,13 +237,12 @@ static void print_attr_element(NSMutableAttributedString *out, element *elt, NSD
         case BULLETLIST:
             //pad(out, 2);
             padded = 0;
-            //!print_attr_string(out, @"\n",current);
+            print_attr_string(out, @"\n",current);
             indentation+=1;
             print_attr_element_list(out, elt->children, attributes, merge(current, attributes[elt->key]));
             //pad(out, 1);
             indentation-=1;
-            if (elt->next != NULL) //!does not breakline on last text
-                print_attr_string(out, @"\n",current);
+            print_attr_string(out, @"\n",current);
             padded = 0;
             break;
         case ORDEREDLIST:
@@ -260,8 +257,7 @@ static void print_attr_element(NSMutableAttributedString *out, element *elt, NSD
             print_attr_string(out, @"\u2022  ",current);
             padded = 2;
             print_attr_element_list(out, elt->children, attributes, merge(current, attributes[elt->key]));
-            if (elt->next != NULL) //!does not breakline on last text
-                print_attr_string(out, @"\n",current); //!next item
+            print_attr_string(out, @"\n",current);
             padded = 0;
             break;
         case BLOCKQUOTE:
@@ -270,8 +266,6 @@ static void print_attr_element(NSMutableAttributedString *out, element *elt, NSD
             //NSLog(@"block");
             print_attr_element_list(out, elt->children, attributes, merge(current, attributes[elt->key]));
             //pad(out, 1);
-            if (elt->next != NULL) //!does not breakline on last text
-                print_attr_string(out, @"\n",current); //!next content
             padded = 0;
             break;
         case REFERENCE:
