@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AAF9476C2B94007FE065975C /* libPods-iLogs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1849AFF3C45DDB14A562991 /* libPods-iLogs.a */; };
+		E11FDBA01E26A78E004DD150 /* Diary-Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E11FDB9E1E26A78E004DD150 /* Diary-Model.xcdatamodeld */; };
 		E12640591B38709300E423E7 /* UIContentPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E12640581B38709300E423E7 /* UIContentPicker.m */; };
 		E126405B1B3870A000E423E7 /* UIContentPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = E126405A1B3870A000E423E7 /* UIContentPicker.xib */; };
 		E146E4971B3217D7006DC1EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E17EEC381B2E1AD4007C1E91 /* Main.storyboard */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		4F3F435B2ACE145B317A19A5 /* Pods-iLogs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iLogs.release.xcconfig"; path = "Pods/Target Support Files/Pods-iLogs/Pods-iLogs.release.xcconfig"; sourceTree = "<group>"; };
+		E11FDB9F1E26A78E004DD150 /* Diary-Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Diary-Model.xcdatamodel"; sourceTree = "<group>"; };
 		E12640571B38709300E423E7 /* UIContentPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIContentPicker.h; sourceTree = "<group>"; };
 		E12640581B38709300E423E7 /* UIContentPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIContentPicker.m; sourceTree = "<group>"; };
 		E126405A1B3870A000E423E7 /* UIContentPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UIContentPicker.xib; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				E17EEC9E1B2F9DBA007C1E91 /* Diary Map */,
 				E17EEC9F1B2F9F92007C1E91 /* Settings */,
 				E17EEC561B2E1C58007C1E91 /* DiaryTabBarViewController.xib */,
+				E11FDB9E1E26A78E004DD150 /* Diary-Model.xcdatamodeld */,
 			);
 			name = Diary;
 			sourceTree = "<group>";
@@ -479,6 +482,7 @@
 				E17EECA21B2F9FA2007C1E91 /* SettingsViewController.m in Sources */,
 				E17EEC9D1B2F9DA1007C1E91 /* DiaryMapViewController.m in Sources */,
 				E17EEC371B2E1AD4007C1E91 /* ViewController.m in Sources */,
+				E11FDBA01E26A78E004DD150 /* Diary-Model.xcdatamodeld in Sources */,
 				E17EEC341B2E1AD4007C1E91 /* AppDelegate.m in Sources */,
 				E17EECA51B2FA04F007C1E91 /* DiaryController.m in Sources */,
 				E17EEC311B2E1AD4007C1E91 /* main.m in Sources */,
@@ -644,6 +648,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E11FDB9E1E26A78E004DD150 /* Diary-Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E11FDB9F1E26A78E004DD150 /* Diary-Model.xcdatamodel */,
+			);
+			currentVersion = E11FDB9F1E26A78E004DD150 /* Diary-Model.xcdatamodel */;
+			path = "Diary-Model.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E17EEC231B2E1AD4007C1E91 /* Project object */;
 }
