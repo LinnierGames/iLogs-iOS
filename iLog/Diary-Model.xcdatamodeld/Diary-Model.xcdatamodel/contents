@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Diary" representedClassName="Diary" syncable="YES" codeGenerationType="class">
+        <attribute name="colorTrait" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="created" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isHidden" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isProtected" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="maskTitle" attributeType="String" defaultValueString="Locked Diary" syncable="YES"/>
+        <attribute name="passcode" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="title" attributeType="String" defaultValueString="Untitled Diary" syncable="YES"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Entry" inverseName="diary" inverseEntity="Entry" syncable="YES"/>
+        <relationship name="stories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Story" inverseName="diary" inverseEntity="Story" syncable="YES"/>
+    </entity>
+    <entity name="Emotion" representedClassName="Emotion" syncable="YES" codeGenerationType="class">
+        <attribute name="emotion" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="emotionScale" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="3" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="entry" maxCount="1" deletionRule="Cascade" destinationEntity="Entry" inverseName="emotions" inverseEntity="Entry" syncable="YES"/>
+    </entity>
+    <entity name="Entry" representedClassName="Entry" syncable="YES" codeGenerationType="class">
+        <attribute name="body" attributeType="String" syncable="YES"/>
+        <attribute name="created" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isBookmarked" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="subject" attributeType="String" syncable="YES"/>
+        <attribute name="temperature" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="temperatureValue" optional="YES" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="diary" maxCount="1" deletionRule="Cascade" destinationEntity="Diary" inverseName="entries" inverseEntity="Diary" syncable="YES"/>
+        <relationship name="emotions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Emotion" inverseName="entry" inverseEntity="Emotion" syncable="YES"/>
+        <relationship name="highlights" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Highlight" inverseName="entry" inverseEntity="Highlight" syncable="YES"/>
+        <relationship name="media" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Media" inverseName="entry" inverseEntity="Media" syncable="YES"/>
+        <relationship name="outlines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Outline" inverseName="entry" inverseEntity="Outline" syncable="YES"/>
+        <relationship name="stories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Story" inverseName="entries" inverseEntity="Story" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="entries" inverseEntity="Tag" syncable="YES"/>
+        <relationship name="weather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Weather" inverseName="entry" inverseEntity="Weather" syncable="YES"/>
+        <fetchedProperty name="today" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Entry" predicateString=""/>
+        </fetchedProperty>
+    </entity>
+    <entity name="Highlight" representedClassName="Highlight" syncable="YES" codeGenerationType="class">
+        <attribute name="created" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="header" attributeType="String" syncable="YES"/>
+        <attribute name="subtitle" attributeType="String" syncable="YES"/>
+        <relationship name="entry" maxCount="1" deletionRule="Cascade" destinationEntity="Entry" inverseName="highlights" inverseEntity="Entry" syncable="YES"/>
+    </entity>
+    <entity name="Media" representedClassName="Media" syncable="YES" codeGenerationType="class">
+        <attribute name="caption" attributeType="String" defaultValueString="Untitled" syncable="YES"/>
+        <attribute name="created" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="type" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="entry" maxCount="1" deletionRule="Cascade" destinationEntity="Entry" inverseName="media" inverseEntity="Entry" syncable="YES"/>
+    </entity>
+    <entity name="Outline" representedClassName="Outline" syncable="YES" codeGenerationType="class">
+        <attribute name="created" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isDone" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="title" attributeType="String" defaultValueString="Untitled" syncable="YES"/>
+        <relationship name="entry" maxCount="1" deletionRule="Cascade" destinationEntity="Entry" inverseName="outlines" inverseEntity="Entry" syncable="YES"/>
+    </entity>
+    <entity name="Story" representedClassName="Story" syncable="YES" codeGenerationType="class">
+        <attribute name="authenticationRequired" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="color" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="created" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isProtected" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="maskTitle" attributeType="String" defaultValueString="Locked Story" syncable="YES"/>
+        <attribute name="passcode" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="subtitle" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" defaultValueString="Untitled Story" syncable="YES"/>
+        <relationship name="diary" maxCount="1" deletionRule="Cascade" destinationEntity="Diary" inverseName="stories" inverseEntity="Diary" syncable="YES"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Entry" inverseName="stories" inverseEntity="Entry" syncable="YES"/>
+    </entity>
+    <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
+        <attribute name="title" attributeType="String" defaultValueString="Untitled Tag" syncable="YES"/>
+        <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Entry" inverseName="tags" inverseEntity="Entry" syncable="YES"/>
+        <relationship name="tagGroup" maxCount="1" deletionRule="Cascade" destinationEntity="TagGroup" inverseName="tags" inverseEntity="TagGroup" syncable="YES"/>
+    </entity>
+    <entity name="TagGroup" representedClassName="TagGroup" syncable="YES" codeGenerationType="class">
+        <attribute name="title" attributeType="String" defaultValueString="Untitled Tag Group" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="tagGroup" inverseEntity="Tag" syncable="YES"/>
+    </entity>
+    <entity name="Weather" representedClassName="Weather" syncable="YES" codeGenerationType="class">
+        <attribute name="weatherCondition" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="weatherScale" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="3" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="entry" maxCount="1" deletionRule="Cascade" destinationEntity="Entry" inverseName="weather" inverseEntity="Entry" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Diary" positionX="-333" positionY="-297" width="128" height="178"/>
+        <element name="Entry" positionX="-146" positionY="-297" width="128" height="311"/>
+        <element name="Weather" positionX="115" positionY="-261" width="128" height="88"/>
+        <element name="Outline" positionX="178" positionY="-171" width="128" height="103"/>
+        <element name="Story" positionX="196" positionY="171" width="128" height="193"/>
+        <element name="TagGroup" positionX="324" positionY="-172" width="128" height="73"/>
+        <element name="Tag" positionX="513" positionY="-126" width="128" height="88"/>
+        <element name="Highlight" positionX="187" positionY="-54" width="128" height="103"/>
+        <element name="Media" positionX="198" positionY="54" width="126" height="103"/>
+        <element name="Emotion" positionX="106" positionY="-351" width="128" height="88"/>
+    </elements>
+</model>
