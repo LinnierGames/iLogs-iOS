@@ -43,11 +43,13 @@
 }
 
 + (UINavigationController *)newEntryWithDelegate:(id<EntryViewConrollerDelegate>)delegateValue {
+    [[[UniversalFunctions viewContext] undoManager] beginUndoGrouping];
     return [[UINavigationController alloc] initWithRootViewController: [[EntryViewController alloc] initWithCRUD: CTCreate entry: [Entry entry] delegate: delegateValue]];
     
 }
 
 + (UINavigationController *)modifyEntry:(Entry *)entryValue delegate:(id<EntryViewConrollerDelegate>)delegateValue {
+    [[[UniversalFunctions viewContext] undoManager] beginUndoGrouping];
     return [[UINavigationController alloc] initWithRootViewController: [[EntryViewController alloc] initWithCRUD: CTRead entry: entryValue delegate: delegateValue]];
     
 }
@@ -464,8 +466,7 @@
             } break;
             
         } case 2: {
-            if ([button tag] == 1) {
-                NSLog( @"Outlines are\n%@", self.entry.outlines);
+            if ([button tag] == 1) { //Outlines
                 
             }
             break;
@@ -585,7 +586,8 @@
 - (void)pressNavLeft:(id)sender {
     [self dismissFirstResponder];
     
-    #warning missing cancel handler
+    [[[UniversalFunctions viewContext] undoManager] endUndoGrouping];
+    [[UniversalFunctions viewContext] undo];
     
     [self dismissViewControllerAnimated: YES completion: ^{ }];
     
@@ -594,7 +596,9 @@
 - (void)pressNavRight:(id)sender {
     [self dismissFirstResponder];
     
-    #warning missing save handler
+    [[[UniversalFunctions viewContext] undoManager] endUndoGrouping];
+    [[[UniversalFunctions viewContext] undoManager] removeAllActions];
+    [UniversalFunctions saveContext];
     
     [self dismissViewControllerAnimated: YES completion: ^{ }];
     if ([delegate respondsToSelector: @selector( entryViewController:didFinishWithEntry:)])

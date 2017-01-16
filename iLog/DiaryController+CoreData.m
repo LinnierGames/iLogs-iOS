@@ -18,6 +18,7 @@ static NSPersistentContainer *_container;
         if (_container == nil) {
             _container = [[NSPersistentContainer alloc] initWithName:@"Diary-Model"];
             [_container loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error) {
+                [_container.viewContext setUndoManager: [NSUndoManager new]];
                 if (error != nil) {
                     // Replace this implementation with code to handle the error appropriately.
                     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -54,7 +55,7 @@ static NSPersistentContainer *_container;
     if ([context hasChanges] && ![context save:&error]) {
         // Replace this implementation with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, error.userInfo);
+        NSLog(@"Unresolved error %@, \n\n%@", error, error.userInfo);
         abort();
     }
 }
@@ -67,6 +68,7 @@ static NSPersistentContainer *_container;
 
 + (Diary *)diary {
     Diary *diary = [NSEntityDescription insertNewObjectForEntityForName: CVDiaryEntity inManagedObjectContext: [UniversalFunctions viewContext]];
+    diary.created = [NSDate date];
     
     return diary;
     
@@ -109,6 +111,9 @@ static NSPersistentContainer *_container;
 + (Entry *)entry {
     Entry *entry = [NSEntityDescription insertNewObjectForEntityForName: CVEntryEntity inManagedObjectContext: [UniversalFunctions viewContext]];
     [Diary assignDiaryToEntry: entry];
+    
+    entry.body = entry.subject = @"";
+    entry.created = entry.date = [NSDate date];
     
     return entry;
 }
