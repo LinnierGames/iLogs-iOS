@@ -44,25 +44,21 @@
 }
 
 + (UINavigationController *)newEntryWithDelegate:(id<EntryViewConrollerDelegate>)delegateValue {
-    return [[UINavigationController alloc] initWithRootViewController: [[EntryViewController alloc] initWithCRUD: CTCreate entry: [NSArray arrayNEWEntry] delegate: delegateValue]];
+    return [[UINavigationController alloc] initWithRootViewController: [[EntryViewController alloc] initWithCRUD: CTCreate entry: [Entry entry] delegate: delegateValue]];
     
 }
 
-+ (UINavigationController *)modifyEntry:(NSArray *)arrayEntry delegate:(id<EntryViewConrollerDelegate>)delegateValue {
-    return [[UINavigationController alloc] initWithRootViewController: [[EntryViewController alloc] initWithCRUD: CTRead entry: arrayEntry delegate: delegateValue]];
++ (UINavigationController *)modifyEntry:(Entry *)entryValue delegate:(id<EntryViewConrollerDelegate>)delegateValue {
+    return [[UINavigationController alloc] initWithRootViewController: [[EntryViewController alloc] initWithCRUD: CTRead entry: entryValue delegate: delegateValue]];
     
 }
 
-- (id)initWithCRUD:(CRUD)value entry:(NSArray *)arrayEntry delegate:(id< EntryViewConrollerDelegate>)delegateValue {
+- (id)initWithCRUD:(CRUD)value entry:(Entry *)entryValue delegate:(id< EntryViewConrollerDelegate>)delegateValue {
     self = [super initWithNibName: @"EntryViewController" bundle: [NSBundle mainBundle]];
     
     if (self) {
-        arrayM = [[NSMutableArray alloc] initWithArray: arrayEntry];
-        
-        if ([[arrayM optionsDictionary] objectForKey: @"tagChanges"] == nil)
-            [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"tagChanges"];
-        if ([[arrayM optionsDictionary] objectForKey: @"storyChanges"] == nil)
-            [[arrayM optionsDictionary] setObject: [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSMutableArray array], @"insert", [NSMutableArray array], @"delete", nil] forKey: @"storyChanges"];
+        self.entry = entryValue;
+        NSLog( @"Title is %@", self.entry.diary.title);
         
         array = [NSMutableArray new];
         option = value;

@@ -6,11 +6,23 @@
 //  Copyright © 2017 Erick Sanchez. All rights reserved.
 //
 
-#include <CoreData/CoreData.h>
+#include "Diary-Model+CoreDataModel.h"
 
-@interface UniversalFunctions (DIARY_CoreData_)
+@interface UniversalFunctions (DIARY_COREDATA_)
 
 + (NSPersistentContainer *)viewStore;
++ (NSManagedObjectContext *)viewContext;
+
+@end
+
+#pragma mark - Diaries
+
+static NSString *CVDiaryEntity = @"Diary";
+
+@interface Diary (DIARY_COREDATA_)
+
++ (Diary *)diary;
++ (NSArray<Diary *> *)executeFetchRequest;
 
 @end
 
@@ -415,6 +427,14 @@ static inline NSArray* NSTemperatureArray() {
             @(CTEntryTemperatureFreezing), nil];
     
 }
+
+static NSString *CVEntryEntity = @"Entry";
+
+@interface Entry (DIARY_COREDATA_)
+
++ (Entry *)entry;
+
+@end
 
 #pragma mark NSDate category (COLOR_)
 

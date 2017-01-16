@@ -19,6 +19,8 @@
     NSMutableArray *array;
 }
 
+@property (strong,nonatomic) NSArray<Diary *> *diaries;
+
 @end
 
 @implementation DiaryViewController
@@ -34,6 +36,13 @@
     
     return self;
     
+}
+
+- (NSArray<Diary *> *)diaries {
+    //!if (_diaries == nil) core data refreshes itself? to stay updated on the result from any changes to diaries
+    _diaries = [Diary executeFetchRequest];
+    
+    return _diaries;
 }
 
 #pragma mark Return Functions > Pre-Defined Functions (TABLE VIEW)
@@ -73,6 +82,7 @@
 #pragma mark - Void's
 
 - (void)reloadTable {
+    #warning remove update to table with arrays
     arrayTable = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLEntries]];
     arrayDiaries = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
     [table reloadData];
@@ -176,18 +186,17 @@
 #pragma mark - IBActions
 
 - (void)pressNavLeft:(id)sender {
-    [self presentViewController: [UITableViewModuleViewController allocWithModule: CTTableViewDiaries] animated: YES];
-    
-}
-
-- (void)pressNavRight:(id)sender {
+    #warning temporary add a diary
+    Diary *newDiary = [Diary diary];
+    NSLog( @"Added diary: %@", newDiary);
+    //[self presentViewController: [UITableViewModuleViewController allocWithModule: CTTableViewDiaries] animated: YES];
     
 }
 
 #pragma mark IBActions > Pre-Defined Functions (BUTTONS)
 
 - (void)buttonTapped:(UIButtons *)button {
-    if ([arrayDiaries count] > 0) {
+    if ([self.diaries count] > 0) {
         UINavigationController *viewNew = [EntryViewController newEntryWithDelegate: self];
         [self presentViewController: viewNew animated: YES];
         

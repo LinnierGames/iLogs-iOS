@@ -10,6 +10,9 @@
         <attribute name="title" attributeType="String" defaultValueString="Untitled Diary" syncable="YES"/>
         <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Entry" inverseName="diary" inverseEntity="Entry" syncable="YES"/>
         <relationship name="stories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Story" inverseName="diary" inverseEntity="Story" syncable="YES"/>
+        <fetchedProperty name="defaultDiary" optional="YES" syncable="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Diary" predicateString="title == &quot;Personal&quot;"/>
+        </fetchedProperty>
     </entity>
     <entity name="Emotion" representedClassName="Emotion" syncable="YES" codeGenerationType="class">
         <attribute name="emotion" attributeType="Integer 16" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -84,9 +87,8 @@
         <attribute name="weatherScale" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="3" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="entry" maxCount="1" deletionRule="Cascade" destinationEntity="Entry" inverseName="weather" inverseEntity="Entry" syncable="YES"/>
     </entity>
-    <fetchRequest name="FetchRequest" entity="Entry" predicateString="date == CAST(today, &quot;NSDate&quot;)"/>
     <elements>
-        <element name="Diary" positionX="-333" positionY="-297" width="128" height="178"/>
+        <element name="Diary" positionX="-333" positionY="-297" width="128" height="206"/>
         <element name="Emotion" positionX="106" positionY="-351" width="128" height="88"/>
         <element name="Entry" positionX="-146" positionY="-297" width="128" height="311"/>
         <element name="Highlight" positionX="187" positionY="-54" width="128" height="103"/>

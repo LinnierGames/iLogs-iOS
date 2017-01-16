@@ -41,6 +41,11 @@ static NSPersistentContainer *_container;
     
 }
 
++ (NSManagedObjectContext *)viewContext {
+    return [UniversalFunctions viewStore].viewContext;
+    
+}
+
 #pragma mark Core Data Saving support
 
 - (void)saveContext {
@@ -56,7 +61,59 @@ static NSPersistentContainer *_container;
 
 @end
 
+#pragma mark - Diaries
+
+@implementation Diary (DIARY_CoreData_)
+
++ (Diary *)diary {
+    Diary *diary = [NSEntityDescription insertNewObjectForEntityForName: CVDiaryEntity inManagedObjectContext: [UniversalFunctions viewContext]];
+    
+    return diary;
+    
+}
+
++ (NSArray<Diary *> *)executeFetchRequest {
+    NSFetchRequest<Diary *> *fetchDiaries = [Diary fetchRequest];
+    [fetchDiaries setSortDescriptors: @[[NSSortDescriptor sortDescriptorWithKey: @"title" ascending: YES]]];
+    
+    NSError *err;
+    NSArray<Diary *> *diaries = [[UniversalFunctions viewContext] executeFetchRequest: fetchDiaries error: &err];
+    if (err) {
+        NSLog( @"%@", err.localizedDescription);
+        
+        return nil;
+    } else
+        return diaries;
+    
+}
+
+/**
+ * Assigns the given entry to the default diary
+ * @warning in this case, it'll be the first diary in alphabetical order from +executeFetchRequest
+ */
++ (void)assignDiaryToEntry:(Entry *)entryValue {
+    Diary *firstDiary = [[Diary executeFetchRequest] firstObject];
+    if (firstDiary != nil)
+        [entryValue setDiary: firstDiary];
+    else
+        NSAssert(firstDiary, @"No diaries found to assign to entry!");
+    
+}
+
+@end
+
 #pragma mark - Entries
+
+@implementation Entry (DIARY_CoreData_)
+
++ (Entry *)entry {
+    Entry *entry = [NSEntityDescription insertNewObjectForEntityForName: CVEntryEntity inManagedObjectContext: [UniversalFunctions viewContext]];
+    [Diary assignDiaryToEntry: entry];
+    
+    return entry;
+}
+
+@end
 
 #pragma mark NSDate category (COLOR_)
 
