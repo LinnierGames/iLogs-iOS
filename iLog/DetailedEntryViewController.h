@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class Entry;
+
 @protocol DetailedEntryViewControllerDelegate;
 
 @interface DetailedEntryViewController : UIViewController
 
-+ (UINavigationController *)detailEntry:(NSArray *)arrayEntry delegate:(id< DetailedEntryViewControllerDelegate>)delegateValue;
+@property ( nonatomic, retain) Entry *entry;
 
-- (id)initWithEntry:(NSArray *)arrayEntry delegate:(id< DetailedEntryViewControllerDelegate>)delegateValue;
++ (UINavigationController *)detailEntry:(Entry *)entryValue delegate:(id< DetailedEntryViewControllerDelegate>)delegateValue;
+
+- (id)initWithEntry:(Entry *)entryValue delegate:(id< DetailedEntryViewControllerDelegate>)delegateValue;
 
 @end
 

@@ -17,12 +17,9 @@
     
 }
 
-@property ( nonatomic, retain) NSMutableArray *arrayM;
-
 @end
 
 @implementation DetailedEntryViewController
-@synthesize arrayM;
 
 #pragma mark - Return Functions
 
@@ -37,18 +34,18 @@
     
 }
 
-+ (UINavigationController *)detailEntry:(NSArray *)arrayEntry delegate:(id< DetailedEntryViewControllerDelegate>)delegateValue {
-    return [[UINavigationController alloc] initWithRootViewController: [[DetailedEntryViewController alloc] initWithEntry: arrayEntry delegate: delegateValue]];
++ (UINavigationController *)detailEntry:(Entry *)entryValue delegate:(id< DetailedEntryViewControllerDelegate>)delegateValue {
+    return [[UINavigationController alloc] initWithRootViewController: [[DetailedEntryViewController alloc] initWithEntry: entryValue delegate: delegateValue]];
     
 }
 
-- (id)initWithEntry:(NSArray *)arrayEntry delegate:(id< DetailedEntryViewControllerDelegate>)delegateValue {
+- (id)initWithEntry:(Entry *)entryValue delegate:(id< DetailedEntryViewControllerDelegate>)delegateValue {
     self = [super initWithNibName: @"DetailedEntryViewController" bundle: [NSBundle mainBundle]];
     
     [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemEdit target: self action: @selector( pressNavRight:)]];
     [self setHidesBottomBarWhenPushed: YES];
     
-    arrayM = [[NSMutableArray alloc] initWithArray: arrayEntry];
+    self.entry = entryValue;
     
     return self;
     
@@ -58,15 +55,14 @@
 
 #pragma mark Void's > Pre-Defined Functions (ENTRY VIEW CONTROLLER)
 
-- (void)entryViewController:(EntryViewController *)entry didFinishWithEntry:(const NSArray *)array {
-    arrayM = [NSMutableArray arrayWithArray: (NSArray *)array];
+- (void)entryViewController:(EntryViewController *)entry didFinishWithEntry:(const Entry *)entry {
     
 }
 
 #pragma mark - IBActions
 
 - (void)pressNavRight:(id)sender {
-    [self presentViewController: [EntryViewController modifyEntry: arrayM delegate: self] animated: YES];
+    [self presentViewController: [EntryViewController modifyEntry: self.entry delegate: self] animated: YES];
     
 }
 
@@ -81,7 +77,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self setTitle: [arrayM objectEntry_subject]];
+    [self setTitle: self.entry.subject];
     
 }
 
