@@ -12,6 +12,7 @@
 
 + (NSPersistentContainer *)viewStore;
 + (NSManagedObjectContext *)viewContext;
++ (void)saveContext;
 
 @end
 

@@ -14,7 +14,6 @@
 
 @interface EntryViewController () < UITableViewDataSource, UITableViewDelegate, UICustomTableViewCellDelegate, UITextFieldDelegate, UITextViewDelegate, UIContentPickerDelegate, UIActionSheetDelegate, UITableViewModuleViewController, UIMarkdownInputViewDelegate> {
     IBOutlet UITableView *table;
-        NSMutableArray *arrayM;
         UICustomTableViewCell *cellSubject;
         UICustomTableViewCell *cellBody;
         UICustomTableViewCell *cellStories;
@@ -58,9 +57,7 @@
     
     if (self) {
         self.entry = entryValue;
-        NSLog( @"Title is %@", self.entry.diary.title);
         
-        array = [NSMutableArray new];
         option = value;
         delegate = delegateValue;
         
@@ -144,7 +141,7 @@
                     [cell.textfield setBorderStyle: UITextBorderStyleNone];
                     [cell.textfield setClearButtonMode: UITextFieldViewModeWhileEditing];
                     [cell.textfield setPlaceholder: @"Subject"];
-                    [cell.textfield setText: [arrayM objectEntry_subject]];
+                    [cell.textfield setText: self.entry.subject];
                     [cell.textfield setDelegate: self];
                     
                     cellSubject = cell; return cell; break;
@@ -154,7 +151,7 @@
                     if (!cell)
                         cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
                     
-                    [cell.textLabel setText: [[[arrayM optionsDictionary] objectForKey: @"diary"] objectDiary_title]];
+                    [cell.textLabel setText: self.entry.diary.title];
                     
                     return cell; break;
                     
@@ -163,6 +160,8 @@
                     if (!cell)
                         cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellDiaryEntryAttributes];
                     
+                    #warning multiple emtions vs one
+                    /*
                     [cell.imageview1 setImage: NSImageByEmotion( [arrayM objectEntry_emotion])];
                     switch ([arrayM objectEntry_emotion]) {
                         case CTEntryEmotionNoone: {
@@ -177,7 +176,9 @@
                             
                         }
                             
-                    }
+                     } */
+                    #warning multiple weather conditions vs one
+                    /*
                     BOOL weather = [arrayM objectEntry_weatherCondition] != CTEntryWeatherConditionNoone, temperature = [arrayM objectEntry_temperature] != CTEntryTemperatureNoone;
                     if (weather) {
                         [cell.imageview2 setImage: NSImageByWeatherCondition( [arrayM objectEntry_weatherCondition])];
@@ -194,8 +195,8 @@
                         [cell.imageview2 setImage: [UIImage imageNamed: @"misc_weather-disabled"]];
                         [cell.button2 setTitle: @"empty" forState: UIControlStateNormal];
                         
-                    }
-                    if ([arrayM objectEntry_isBookmarked])
+                    }*/
+                    if (self.entry.isBookmarked)
                         [cell.button4 setBackgroundImage: [UIImage imageNamed: @"misc_bookmark-enabled"] forState: UIControlStateNormal];
                     else
                         [cell.button4 setBackgroundImage: [UIImage imageNamed: @"misc_bookmark-disabled"] forState: UIControlStateNormal];
@@ -208,11 +209,11 @@
                     if (!cell)
                         cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
                     
-                    [cell.textLabel setText: [[arrayM objectEntry_date] stringValue: CTCharacterDateTime]];
-                    if ([[arrayM objectEntry_startDate] isEqualToDate: [NSDate dateWithTimeIntervalSince1970: 0]])
+                    [cell.textLabel setText: [self.entry.date stringValue: CTCharacterDateTime]];
+                    if (self.entry.startDate == nil)
                         [cell.detailTextLabel setText: @""];
                     else
-                        [cell.detailTextLabel setText: [[arrayM objectEntry_startDate] stringValue: CTCharacterDate]];
+                        [cell.detailTextLabel setText: [self.entry.startDate stringValue: CTCharacterDate]];
                     
                     return cell; break;
                     
@@ -270,7 +271,7 @@
                     if (!cell)
                         cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTextView];
                     
-                    [cell.textview setText: [arrayM objectEntry_body]];
+                    [cell.textview setText: self.entry.body];
                     [cell.textview setUserInteractionEnabled: NO];
                     [cell setSelectionStyle: UITableViewCellSelectionStyleDefault];
                     [cell setAccessoryType: UITableViewCellAccessoryDisclosureIndicator];
@@ -331,6 +332,8 @@
         case 0: {
             switch (indexPath.row) {
                 case 1: { //Select Diary
+#warning allow undos on changes such as -stories when a new diary is selected
+                    /*
                     UIAlertController *alertDiaries = [UIAlertController alertControllerWithTitle: @"" message: @"select a diary" preferredStyle: UIAlertControllerStyleActionSheet];
                     array = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
                     for ( int buttonIndex = 0; buttonIndex < [array count]; buttonIndex += 1) {
@@ -359,6 +362,7 @@
                     [alertDiaries addAction: [UIAlertAction actionWithTitle: @"Cancel" style: UIAlertActionStyleCancel handler: ^(UIAlertAction * _Nonnull action) { }]];
                     [self dismissFirstResponder];
                     [self presentViewController: alertDiaries animated: YES];
+                     */
                     [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
                     
                     break;
@@ -371,7 +375,7 @@
             
         } case 2: {
             if (indexPath.row == 1) {
-                UINavigationController *navBody = [UITableViewModuleViewController allocWithModule: CTTableViewBody withContent: [arrayM objectEntry_body]];
+                UINavigationController *navBody = [UITableViewModuleViewController allocWithModule: CTTableViewBody withContent: self.entry.body];
                 [(UITableViewModuleViewController *)navBody.topViewController setDelegate: self];
                 [self presentViewController: navBody animated: YES];
                 
@@ -395,6 +399,8 @@
 #pragma mark Void's > Pre-Defined Functions (TEXT FIELD)
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+#warning pass only the entry, which will contain tags and stories while the module itself will retreieve the tags and stories
+    /*
     if ([cellStories.textfield isEqual: textField]) {
         UINavigationController *navStories = [UITableViewModuleViewController allocWithModule: CTTableViewStories withContent: @{@"stories": [[arrayM optionsDictionary] objectForKey: @"stories"], @"groupedStories": [UniversalFunctions STORIES_returnGroupedStories], @"entry": arrayM}];
         [(UITableViewModuleViewController *)navStories.topViewController setDelegate: self];
@@ -406,31 +412,19 @@
         [self presentViewController: navTags animated: YES completion: ^{ }];
         
     }
+     */
     
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if ([textField isEqual: cellSubject.textfield]) {
-        [arrayM replaceObjectAtIndex: ENTRIES_subject withObject: textField.text];
+        self.entry.subject = textField.text;
         
     }
     
 }
 
 #pragma mark Void's > Pre-Defined Functions (TEXT VIEW)
-
-- (void)textViewDidBeginEditing:(UITextView *)textView {
-    [table setContentOffset: CGPointMake( 0, 124) animated: YES];
-    
-}
-
-- (void)textViewDidEndEditing:(UITextView *)textView {
-    if ([textView isEqual: cellBody.textview]) {
-        [arrayM replaceObjectAtIndex: ENTRIES_body withObject: textView.text];
-        
-    }
-    
-}
 
 #pragma mark Void's > Pre-Defined Functions (CUSTOM TABLE VIEW CELL)
 
@@ -440,22 +434,28 @@
         case 0: {
             switch ([button tag]) {
                 case 1: { //Emotions
+#warning present a different content picker for emotions
+                    /*
                     UIContentPicker *pickerEmotion = [[UIContentPicker alloc] initWithSelectedEmotion: [arrayM objectEntry_emotion] delegate: self];
                     [self dismissFirstResponder];
                     [pickerEmotion showAnimated: YES];
+                     */
                     break;
                     
                 } case 2: { //Weather
+#warning present a different content picker for weather
+                    /*
                     UIContentPicker *pickerWeatherCondition = [[UIContentPicker alloc] initWithSelectedWeatherCondition: [arrayM objectEntry_weatherCondition] temperature: [arrayM objectEntry_temperature] delegate: self];
                     [self dismissFirstResponder];
                     [pickerWeatherCondition showAnimated: YES];
+                     */
                     break;
                     
                 } case 3: { //Highlight
                     break;
                     
                 } case 4: { //Bookmark
-                    [arrayM replaceObjectAtIndex: ENTRIES_isBookmarked withObject: [NSNumber numberWithBool: [arrayM objectEntry_isBookmarked] ? NO : YES]];
+                    self.entry.isBookmarked  = self.entry.isBookmarked ? NO : YES;
                     [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationNone];
                     break;
                     
@@ -465,7 +465,7 @@
             
         } case 2: {
             if ([button tag] == 1) {
-                NSLog( @"Outline");
+                NSLog( @"Outlines are\n%@", self.entry.outlines);
                 
             }
             break;
@@ -479,23 +479,31 @@
 
 #pragma mark Void's > Pre-Defined Functions (CONTENT PICKER)
 
+#warning implement a different content picker protocol for emotions
+/*
 - (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryEmotion:(CDEntryEmotions)selectedEmotion {
     [arrayM replaceObjectAtIndex: ENTRIES_emotion withObject: [NSNumber numberWithInt: selectedEmotion]];
     [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
     
 }
+ */
 
+#warning implement a different content picker protocol for weather
+/*
 - (void)contentPicker:(UIContentPicker *)contentPicker didFinishWithEntryWeatherCondition:(CDEntryWeatherCondition)selectedWeatherCondition temperature:(CDEntryTemerature)selectedTemperature {
     [arrayM replaceObjectAtIndex: ENTRIES_weatherCondition withObject: [NSNumber numberWithInt: selectedWeatherCondition]];
     [arrayM replaceObjectAtIndex: ENTRIES_temperature withObject: [NSNumber numberWithInt: selectedTemperature]];
     [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 2 inSection: 0]] withRowAnimation: UITableViewRowAnimationFade];
     
 }
+ */
 
 #pragma mark Void's > Pre-Defined Functions (TABLE VIEW MODULE)
 
 - (void)tableViewModule:(UITableViewModuleViewController *)tableViewModule didFinishWithChanges:(NSDictionary *)dictionary {
     switch ([tableViewModule module]) {
+#warning allow undos on changes when updating tags and stories protocol
+            /*
         case CTTableViewStories: case CTTableViewTags: {
             NSString *stringChangesHash = @"", *stringPluralHash = @"";
             CDSQLTables databaseTable;
@@ -561,8 +569,8 @@
             }
             break;
             
-        } case CTTableViewBody: {
-            [arrayM replaceObjectAtIndex: ENTRIES_body withObject: [dictionary objectForKey: @"body"]];
+        } */case CTTableViewBody: {
+            self.entry.body = [dictionary objectForKey: @"body"];
             [table reloadRowsAtIndexPaths: @[[NSIndexPath indexPathForRow: 1 inSection: 2]] withRowAnimation: UITableViewRowAnimationNone];
             break;
         
@@ -577,28 +585,20 @@
 - (void)pressNavLeft:(id)sender {
     [self dismissFirstResponder];
     
+    #warning missing cancel handler
+    
     [self dismissViewControllerAnimated: YES completion: ^{ }];
     
 }
 
 - (void)pressNavRight:(id)sender {
     [self dismissFirstResponder];
-    switch (option) {
-        case CTCreate: {
-            [[UniversalVariables globalVariables] ENTRIES_writeNewForEntry: arrayM];
-            break;
-            
-        } case CTRead: {
-            [[UniversalVariables globalVariables] ENTRIES_updateForEntry: arrayM];
-            break;
-            
-        }
-            
-    }
+    
+    #warning missing save handler
     
     [self dismissViewControllerAnimated: YES completion: ^{ }];
     if ([delegate respondsToSelector: @selector( entryViewController:didFinishWithEntry:)])
-        [delegate entryViewController: self didFinishWithEntry: arrayM];
+        [delegate entryViewController: self didFinishWithEntry: self.entry];
     
 }
 
@@ -609,7 +609,7 @@
     // Do any additional setup after loading the view from its nib.
     [self.navigationItem setLeftBarButtonItem: [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style: UIBarButtonItemStylePlain target: self action: @selector( pressNavLeft:)]];
     [self.navigationItem setRightBarButtonItem: [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleDone target: self action: @selector( pressNavRight:)]];
-    [self.navigationItem setTitle: [[arrayM objectEntry_date] stringValue: CTCharacterDateTime]];
+    [self.navigationItem setTitle: [self.entry.date stringValue: CTCharacterDateTime]];
     
 }
 

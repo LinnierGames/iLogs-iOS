@@ -27,6 +27,6 @@
 @protocol EntryViewConrollerDelegate <NSObject>
 
 @optional
-- (void)entryViewController:(EntryViewController *)entry didFinishWithEntry:(const NSArray *)array;
+- (void)entryViewController:(EntryViewController *)entry didFinishWithEntry:(const Entry *)entry;
 
 @end

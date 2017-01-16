@@ -48,7 +48,7 @@ static NSPersistentContainer *_container;
 
 #pragma mark Core Data Saving support
 
-- (void)saveContext {
++ (void)saveContext {
     NSManagedObjectContext *context = [[UniversalFunctions viewStore] viewContext];
     NSError *error = nil;
     if ([context hasChanges] && ![context save:&error]) {
