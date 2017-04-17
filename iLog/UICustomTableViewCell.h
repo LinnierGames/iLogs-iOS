@@ -43,6 +43,8 @@ typedef NS_ENUM(NSUInteger, CDUICustomTableViewCells) {
 
 + (UICustomTableViewCell *)cellType:(CDUICustomTableViewCells)cellType;
 
+- (void)updateLayoutWithEntry:(Entry *)entryValue;
+
 - (IBAction)pressButton:(id)sender;
 
 @end

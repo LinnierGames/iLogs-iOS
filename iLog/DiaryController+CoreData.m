@@ -60,6 +60,12 @@ static NSPersistentContainer *_container;
     }
 }
 
++ (void)deleteObject:(NSManagedObject *)object {
+    [[UniversalFunctions viewContext] deleteObject: object];
+    [UniversalFunctions saveContext];
+      
+}
+
 @end
 
 #pragma mark - Diaries

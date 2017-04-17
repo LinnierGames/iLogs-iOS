@@ -8,6 +8,9 @@
 
 #import "UICustomTableViewCell.h"
 
+#import <markdown_peg.h>
+#import <markdown_lib.h>
+
 #import <PureLayout.h>
 
 static CGFloat kLabelHorizontalInsets = 15.0;
@@ -61,6 +64,22 @@ static CGFloat kLabelVerticalInsets = 10.0;
     }
     
     [super updateConstraints];
+    
+}
+
+- (void)updateLayoutWithEntry:(Entry *)entryValue {
+    
+    [self.labelTitle setUserInteractionEnabled: NO];
+    [self.labelTitle setText: [entryValue subject]];
+    [self.labelSubtitle setUserInteractionEnabled: NO];
+    [self.labelSubtitle setText: [entryValue body]];
+    
+    self.labelSubtitle.attributedText = markdown_to_attr_string(self.labelSubtitle.text, 0, [[UniversalVariables globalVariables] attributedMarkdown]);
+    
+    [self setNeedsUpdateConstraints];
+    [self updateConstraints];
+    
+    [self setBackgroundColor: [[entryValue date] dayNightColorByTimeOfDay]];
     
 }
 

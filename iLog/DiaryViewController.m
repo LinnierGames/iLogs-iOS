@@ -8,14 +8,9 @@
 
 #import "DiaryViewController.h"
 
-#import <markdown_peg.h>
-#import <markdown_lib.h> 
-
 @interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, DetailedEntryViewControllerDelegate, EntryViewConrollerDelegate, UIButtonsDelegate> {
     IBOutlet UITableView *table;
         NSFetchedResultsController *entriesController;
-        NSMutableArray<Entry *> *arrayTable;
-        NSMutableArray *arrayDiaries;
         NSIndexPath *indexpath;
     NSMutableArray *array;
 }
@@ -42,7 +37,6 @@
 }
 
 - (NSArray<Diary *> *)diaries {
-    //!if (_diaries == nil) core data refreshes itself? to stay updated on the result from any changes to diaries
     _diaries = [Diary executeFetchRequest];
     
     return _diaries;
@@ -70,30 +64,12 @@
     
     Entry *entry = [self.fetchedResultsController objectAtIndexPath: indexPath];
     
-    [cell.labelTitle setUserInteractionEnabled: NO];
-    [cell.labelTitle setText: [entry subject]];
-    [cell.labelSubtitle setUserInteractionEnabled: NO];
-    [cell.labelSubtitle setText: [entry body]];
-    
-    cell.labelSubtitle.attributedText = markdown_to_attr_string(cell.labelSubtitle.text, 0, [[UniversalVariables globalVariables] attributedMarkdown]);
-    
-    [cell setNeedsUpdateConstraints];
-    [cell updateConstraints];
-    
-    [cell setBackgroundColor: [[entry date] dayNightColorByTimeOfDay]];
+    [cell updateLayoutWithEntry: entry];
     
     return cell;
 }
 
 #pragma mark - Void's
-
-- (void)reloadTable {
-    //entriesController = [Entry executeFetchRequestForDate: [NSDate date]];
-    #warning remove update to table with arrays
-    arrayDiaries = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
-    [table reloadData];
-    
-}
 
 - (void)statusBarTappedAction:(NSNotification *)notification {
     [self dismissViewControllerAnimated: YES completion: ^{}];
@@ -111,11 +87,7 @@
         return _fetchedResultsController;
     }
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Entry" inManagedObjectContext:[UniversalFunctions viewContext]];
-    
-    [fetchRequest setEntity: entity];
+    NSFetchRequest *fetchRequest = [Entry fetchRequest];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
@@ -165,6 +137,7 @@
     }
     
     return _fetchedResultsController;
+    
 }
 
 #pragma mark Void's > Pre-Defined Functions (ALERT VIEW)
@@ -179,21 +152,11 @@
                 [[UniversalVariables globalVariables] DIARIES_writeNewForDiary: arrayNewDiary];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Diary" message: [NSString stringWithFormat: @"new diary, %@, was added!", [alertView textFieldAtIndex: 0].text] delegate: nil cancelButtonTitle: @"Dismiss" otherButtonTitles: nil];
                 [alert show];
-                [self reloadTable];
                 
             }
             break;
             
-        } case 2: { //View Entry > Edit Entry
-            if (buttonIndex == 1) {
-                UINavigationController *viewEdit = [EntryViewController modifyEntry: [arrayTable objectAtIndex: indexpath.row] delegate: self];
-                [self presentViewController: viewEdit animated: YES completion: ^{ }];
-                
-            }
-            
-        }
-            
-        default:
+        } default:
             break;
     }
     
@@ -203,17 +166,6 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch ([actionSheet tag]) {
-        case 1: { //Add Entry > Select Diary
-            if (buttonIndex != 0) {
-                buttonIndex -= 1;
-                [[array optionsDictionary] setValue: [[(NSArray *)[arrayDiaries objectAtIndex: buttonIndex] optionsDictionary] objectForKey: @"id"] forKey: @"diaryID"];
-                [[UniversalVariables globalVariables] ENTRIES_writeNewForEntry: array];
-                [self reloadTable];
-                
-            }
-            break;
-            
-        }
             
         default:
             break;
@@ -254,7 +206,7 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-            //[self configureCell:[tableView cellForRowAtIndexPath:indexPath] withObject:anObject];
+            [(UICustomTableViewCell *)[tableView cellForRowAtIndexPath: indexPath] updateLayoutWithEntry: anObject];
             break;
             
         case NSFetchedResultsChangeMove:
@@ -285,9 +237,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (editingStyle) {
         case UITableViewCellEditingStyleDelete: {
-            [[UniversalVariables globalVariables] ENTRIES_deleteForEntry: [arrayTable objectAtIndex: indexPath.row]];
-            [arrayTable removeObjectAtIndex: indexPath.row];
-            [tableView deleteRowsAtIndexPaths: @[indexPath] withRowAnimation: UITableViewRowAnimationAutomatic];
+            [UniversalFunctions deleteObject: [self.fetchedResultsController objectAtIndexPath: indexPath]];
             break;
             
         } default:
@@ -300,7 +250,6 @@
 #pragma mark Void's > Pre-Defined Functions (ENTRY VIEW CONTROLLER)
 
 - (void)entryViewController:(EntryViewController *)entry didFinishWithEntry:(const NSArray *)array {
-    [self reloadTable];
     
 }
 
@@ -324,7 +273,7 @@
         
         
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Diary" message: @"there must be a Diary before adding an entry. Please add a Diary" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Entry" message: @"there must be a Diary before adding an entry. Please add a Diary" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
         [alert show];
         
     }
@@ -332,17 +281,10 @@
 }
 
 - (void)buttonLongTap:(UIButtons *)button {
-    
-    [self.navigationController pushViewController: [[DetailedEntryViewController alloc] initWithEntry: [[[self.diaries firstObject] entries] anyObject] delegate: self] animated: YES];
-    
-    return;
-    if ([arrayDiaries count] > 0) {
-        [[UniversalVariables globalVariables] ENTRIES_writeNewForEntry: [NSMutableArray arrayNEWEntryWithSubject: @"New Entry" body: @"asdl;fkasdflk;jadsf ajsdf asfjkasf askfj asdf asdf jafsdkj fsadkf asdf asdflkjasd faskdf af jasfl;kj afdlkasj flk;asf jasklf; jaskfl ;jasfk ljasdflkjsfdlkjasfkl;jasfdkl; jiowe owenovnjvxcm,noweinovdn vn o noavni cvoxicvhadoi doas sn"]];
-        [self viewWillAppear: NO];
-        
+    if ([self.diaries count] > 0) {
         
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Diary" message: @"there must be a Diary before adding an entry. Please add a Diary" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"New Entry" message: @"there must be a Diary before adding an entry. Please add a Diary" delegate: nil cancelButtonTitle: @"Okay" otherButtonTitles: nil];
         [alert show];
         
     }
@@ -360,9 +302,6 @@
     
     [table setRowHeight: UITableViewAutomaticDimension];
     [table setEstimatedRowHeight: 44.0];
-    
-    arrayTable = [NSMutableArray new];
-    arrayDiaries = [NSMutableArray new];
     array = [NSMutableArray new];
     
 }
@@ -370,7 +309,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear: animated];
     [[UniversalVariables globalVariables] setViewController: self asCurrentView: self];
-    [self reloadTable];
     
 }
 

@@ -13,6 +13,7 @@
 + (NSPersistentContainer *)viewStore;
 + (NSManagedObjectContext *)viewContext;
 + (void)saveContext;
++ (void)deleteObject:(NSManagedObject *)object;
 
 @end
 
