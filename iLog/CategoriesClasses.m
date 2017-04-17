@@ -389,6 +389,29 @@
     
 }
 
+- (BOOL)isEqualToDate:(NSDate *)otherDate options:(NSDictionary<NSString *,NSArray *> *)options {
+    static NSCalendar *calendar = nil;
+    if (!calendar)
+        calendar = [[NSCalendar alloc] initWithCalendarIdentifier: NSCalendarIdentifierGregorian];
+    NSDateComponents *selfComponents = [calendar components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate: self];
+    NSDateComponents *otherComponents = [calendar components: NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate: otherDate];
+    
+    if ([options objectForKey: @"date"]) {
+        NSArray<NSString *> *dateOptions = [options objectForKey: @"date"];
+        if ([dateOptions containsObject: @"day"]) {
+            if ([selfComponents day] != [otherComponents day])
+                return false;
+        }
+        
+    }
+    
+    if ([options objectForKey: @"time"]) {
+        
+    }
+    
+    return true;
+}
+
 @end
 
 @implementation UILongPressGesture

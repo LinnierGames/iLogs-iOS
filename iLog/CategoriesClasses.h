@@ -554,6 +554,7 @@ typedef enum {
 @interface NSDate (DATE_)
 
 - (NSString *)stringValue:(CDDateLayout)layout;
+- (BOOL)isEqualToDate:(NSDate *)otherDate options:(NSDictionary<NSString *,NSArray *> *)options;
 
 @end
 

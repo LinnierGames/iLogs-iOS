@@ -11,15 +11,18 @@
 #import <markdown_peg.h>
 #import <markdown_lib.h> 
 
-@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, DetailedEntryViewControllerDelegate, EntryViewConrollerDelegate, UIButtonsDelegate> {
+@interface DiaryViewController () < UIAlertViewDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, DetailedEntryViewControllerDelegate, EntryViewConrollerDelegate, UIButtonsDelegate> {
     IBOutlet UITableView *table;
-        NSMutableArray *arrayTable;
+        NSFetchedResultsController *entriesController;
+        NSMutableArray<Entry *> *arrayTable;
         NSMutableArray *arrayDiaries;
         NSIndexPath *indexpath;
     NSMutableArray *array;
 }
 
 @property (strong,nonatomic) NSArray<Diary *> *diaries;
+
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -49,13 +52,14 @@
 
 //Sections
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return [[self.fetchedResultsController sections] count];
     
 }
 
 //Rows
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [arrayTable count];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    return [sectionInfo numberOfObjects];
     
 }
 
@@ -64,17 +68,19 @@
     if (!cell)
         cell = [UICustomTableViewCell cellType: CTUICustomTableViewCellTitleTextView];
     
+    Entry *entry = [self.fetchedResultsController objectAtIndexPath: indexPath];
+    
     [cell.labelTitle setUserInteractionEnabled: NO];
-    [cell.labelTitle setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_subject]];
+    [cell.labelTitle setText: [entry subject]];
     [cell.labelSubtitle setUserInteractionEnabled: NO];
-    [cell.labelSubtitle setText: [[arrayTable objectAtIndex: indexPath.row] objectEntry_body]];
+    [cell.labelSubtitle setText: [entry body]];
     
     cell.labelSubtitle.attributedText = markdown_to_attr_string(cell.labelSubtitle.text, 0, [[UniversalVariables globalVariables] attributedMarkdown]);
     
     [cell setNeedsUpdateConstraints];
     [cell updateConstraints];
     
-    [cell setBackgroundColor: [[[arrayTable objectAtIndex: indexPath.row] objectEntry_date] dayNightColorByTimeOfDay]];
+    [cell setBackgroundColor: [[entry date] dayNightColorByTimeOfDay]];
     
     return cell;
 }
@@ -82,8 +88,8 @@
 #pragma mark - Void's
 
 - (void)reloadTable {
+    //entriesController = [Entry executeFetchRequestForDate: [NSDate date]];
     #warning remove update to table with arrays
-    arrayTable = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLEntries]];
     arrayDiaries = [NSMutableArray arrayWithArray: [UniversalFunctions SQL_returnContentsOfTable: CTSQLDiaries]];
     [table reloadData];
     
@@ -98,6 +104,67 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
     
+}
+
+- (NSFetchedResultsController *)fetchedResultsController {
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Entry" inManagedObjectContext:[UniversalFunctions viewContext]];
+    
+    [fetchRequest setEntity: entity];
+    
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey: @"date" ascending:NO];
+    
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    
+    //gather current calendar
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    //gather date components from date
+    NSDateComponents *date1Components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate: [NSDate date]];
+    
+    //set date components
+    [date1Components setHour:0];
+    [date1Components setMinute:0];
+    [date1Components setSecond:0];
+    
+    //return date relative from date
+    NSDate *startOfDay = [calendar dateFromComponents: date1Components];
+    
+    NSDateComponents *date2Components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate: [[NSDate date] dateByAddingTimeInterval: 60*60*24]];
+    
+    //set date components
+    [date2Components setHour:0];
+    [date2Components setMinute:0];
+    [date2Components setSecond:0];
+    
+    NSDate *endOfDay = [calendar dateFromComponents: date2Components];
+    
+    [fetchRequest setPredicate: [NSPredicate predicateWithFormat: @"(date >= %@) AND (date < %@)", startOfDay, endOfDay]];
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[UniversalFunctions viewContext] sectionNameKeyPath:nil cacheName:@"today's entries"];
+    aFetchedResultsController.delegate = self;
+    self.fetchedResultsController = aFetchedResultsController;
+    
+    NSError *error = nil;
+    if (![self.fetchedResultsController performFetch:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return _fetchedResultsController;
 }
 
 #pragma mark Void's > Pre-Defined Functions (ALERT VIEW)
@@ -156,8 +223,62 @@
 
 #pragma mark Void's > Pre-Defined Functions (TABLE VIEW)
 
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [table beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [table insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [table deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        default:
+            return;
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+    UITableView *tableView = table;
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            //[self configureCell:[tableView cellForRowAtIndexPath:indexPath] withObject:anObject];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [table endUpdates];
+}
+
+/*
+ // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
+ 
+ - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+ {
+ // In the simplest, most efficient, case, reload the table view.
+ [self.tableView reloadData];
+ }
+ */
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.navigationController pushViewController: [[DetailedEntryViewController alloc] initWithEntry: [arrayTable objectAtIndex: indexPath.row] delegate: self] animated: YES];
+    [self.navigationController pushViewController: [[DetailedEntryViewController alloc] initWithEntry: [self.fetchedResultsController objectAtIndexPath: indexPath] delegate: self] animated: YES];
     
 }
 
